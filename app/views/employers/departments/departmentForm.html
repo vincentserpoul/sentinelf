@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h1>Department</h1>
+</div>
+<table class="table-modal-body">
+	<tr>
+		<td>Label : </td>
+		<td><input ng-model="formDepartment.label" required/></td>
+	</tr>
+	<tr>
+		<td>Description : </td>
+		<td><input ng-model="formDepartment.description" /></td>
+	</tr>
+	<tr>
+		<td>Work Type : </td>
+		<td><select ng-model="formDepartment.work_type"  ng-options="work_type.label for work_type in departmentWorkTypeList" required></select></td>
+	</tr>
+	<tr>
+		<td>Employee Hourly Rate : </td>
+		<td><input ng-model="formDepartment.employee_hourly_rate" /></td>
+	</tr>
+	<tr>
+		<td>Employee Hourly Rate Currency: </td>
+		<td><select ng-model="formDepartment.employee_hourly_rate_currency" ng-options="currency.label for currency in departmentCurrencyList" required></select></td>
+	</tr>
+	<tr>
+		<td>Employer Hourly Rate : </td>
+		<td><input ng-model="formDepartment.employer_hourly_rate" /></td>
+	</tr>	
+	<tr>
+		<td>Employer Hourly Rate Currency: </td>
+		<td><select ng-model="formDepartment.employer_hourly_rate_currency" ng-options="currency.label for currency in departmentCurrencyList" required></select></td>
+	</tr>
+</table>
+<div class="modal-footer">
+	<button ng-click="saveDialog(formDepartment)" class="btn btn-primary">Save</button>
+    <button ng-click="closeDialog()" class="btn btn-primary" >Close</button>
+</div>

@@ -1,0 +1,39 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Sex</th>
+            <th>Country</th>
+            <th>D.O.B</th>
+            <th>Mobile</th>
+            <th>school</th>
+            <th>Joined</th>
+            <th>Race</th>
+            <th>Status</th>
+            <th>Work pass</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="employee in employees">
+            <td>{{employee.id}}</td>
+            <td class="dropdown">
+                <a class="dropdown-toggle">{{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}</a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="eventPeriod in event.event_periods">
+                        <a>{{eventPeriod.id}} : {{eventPeriod.start_datetime}} -> {{eventPeriod.end_datetime}}</a>
+                    </li>
+                </ul>
+            </td>
+            <td>{{(employeeStaticLabels['sex'] | filter:employee.sex_id)[0].label}}</td>
+            <td>{{employee.country_code}}</td>
+            <td>{{employee.date_of_birth | date:'yyyy/MM/dd'}}</td>
+            <td>{{employee.mobile_phone_number}}</td>
+            <td>{{employee.school}}</td>
+            <td>{{employee.join_date}}</td>
+            <td>{{(employeeStaticLabels['race'] | filter:employee.race_id)[0].label}}</td>
+            <td>{{(employeeStaticLabels['status'] | filter:employee.status_id)[0].label}}</td>
+            <td>{{(employeeStaticLabels['work_pass_type'] | filter:employee.work_pass_type_id)[0].label}}</td>            
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h1>Employer</h1>
+</div>
+<table class="table-modal-body">
+    <tr>
+        <td>Name : </td>
+        <td><input ng-model="formEmployer.name" required/></td>
+    </tr>
+    <tr>
+        <td>Address : </td>
+        <td><input ng-model="formEmployer.address" required/></td>
+    </tr>
+    <tr>
+        <td>City : </td>
+        <td><input ng-model="formEmployer.city" required/></td>
+    </tr>
+    <tr>
+        <td>Postcode : </td>
+        <td><input ng-model="formEmployer.postcode" required/></td>
+    </tr>
+    <tr>
+        <td>Country : </td>
+        <td><select ng-model="formEmployer.country" ng-options="country.label for country in employerCountryList" required></select></td>
+    </tr>
+    <tr>
+        <td>Phone Number : </td>
+        <td><input ng-model="formEmployer.phone_number" required/></td>
+    </tr>
+    <tr>
+        <td>Fax Number : </td>
+        <td><input ng-model="formEmployer.fax_number" required/></td>
+    </tr>
+</table>
+<div class="modal-footer">
+    <button ng-click="saveDialog()" class="btn btn-primary">Save</button>
+    <button ng-click="closeDialog()" class="btn btn-primary">Close</button>
+</div>

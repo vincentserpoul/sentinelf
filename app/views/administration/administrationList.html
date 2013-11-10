@@ -1,0 +1,16 @@
+<div>
+	<tabset>
+		<tab ng-repeat="tab in tabs" heading="{{tab.heading}}" select="select(tab)"></tab>
+	</tabset>
+	<div ng-switch on="selection">
+		<div ng-switch-when="users">
+			<div ng-include src="'views/administration/users/usersList.html'" ng-controller="UsersCtrl"></div>
+		</div>
+		<div ng-switch-when="groups">
+			<div ng-include src="'views/administration/groups/groupsList.html'" ng-controller="GroupsCtrl"></div>
+		</div>
+		<div ng-switch-when="permissions">
+			<div ng-include src="'views/administration/permissions/permissionsList.html'"></div>
+		</div>
+	</div>
+</div>

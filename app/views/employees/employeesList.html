@@ -1,0 +1,33 @@
+        <button type="button" class="btn btn-primary pull-right" ng-click="editEmployee()">Add employee</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Country</th>
+                    <th>D.O.B</th>
+                    <th>Mobile</th>
+                    <th>school</th>
+                    <th>Joined</th>
+                    <th>Race</th>
+                    <th>Status</th>
+                    <th>Work pass</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employees">
+                    <td>{{employee.id}}</td>
+                    <td><a href="employeeview/{{employee.id}}">{{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}</a></td>
+                    <td>{{(employeeStaticLabels['sex'] | filter:employee.sex_id)[0].label}}</td>
+                    <td>{{employee.country_code}}</td>
+                    <td>{{employee.date_of_birth | date:'yyyy/MM/dd'}}</td>
+                    <td>{{employee.mobile_phone_number}}</td>
+                    <td>{{employee.school}}</td>
+                    <td>{{employee.join_date}}</td>
+                    <td>{{(employeeStaticLabels['race'] | filter:employee.race_id)[0].label}}</td>
+                    <td>{{(employeeStaticLabels['status'] | filter:employee.status_id)[0].label}}</td>
+                    <td>{{(employeeStaticLabels['work_pass_type'] | filter:employee.work_pass_type_id)[0].label}}</td>
+                </tr>
+            </tbody>
+        </table>

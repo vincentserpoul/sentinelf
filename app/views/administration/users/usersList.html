@@ -1,0 +1,23 @@
+<div>
+	<table class="table">
+		<thead>
+			<th>Email</th>
+			<th>Group</th>
+			<th>Actions</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in users">
+				<td>{{user.email}}</td>
+				<td>
+					<select ng-model="user.group" ng-options="group.name for group in groups">
+						<option value="">--choose a group--</option>
+					</select>
+				</td>
+				<td>
+					<button class="btn btn-primary pull-center" ng-click="editUser(user)">Save</button>
+					<button class="btn btn-primary pull-center" ng-click="deleteUser(user)">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

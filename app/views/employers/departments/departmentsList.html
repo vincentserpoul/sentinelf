@@ -1,0 +1,9 @@
+<div class="collapse-header">
+	<span>{{employer.name}}'s Departments</span>
+	<button type="button" class="btn btn-primary pull-right" ng-click="editDepartment('insert')">Add Root Department</button>
+</div>
+<div class="departments-tree">
+	<ul ng-tree="departments"> 
+		<li select="showDepartments()" add="editDepartment('insert')" delete="deleteDepartment()" edit="editDepartment('edit')">{{item.label}}</li>
+	</ul>
+</div>

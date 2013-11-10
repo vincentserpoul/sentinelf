@@ -1,0 +1,27 @@
+<div>
+    <p>title: <div click-to-edit-select-by-id="employee.title_id" ng-model-labels="employeeStaticLabels['title']"></div></p>
+    <p>first name: <div click-to-edit-text="employee.first_name"></div></p>
+    <p>last name: <div click-to-edit-text="employee.last_name"></div></p>
+    <p>sex: <div click-to-edit-select-by-id="employee.sex_id" ng-model-labels="employeeStaticLabels['sex']"></div></p>
+    <p>country: <div click-to-edit-select-by-code="employee.country_code" ng-model-labels="employeeIsoLabels['country']"></div></p>
+    <p>date of birth:  <div click-to-edit-date="employee.date_of_birth"></div></p>
+    <p>mobile phone: <div click-to-edit-text="employee.mobile_phone_number"></div></p>
+    <p>school: <div click-to-edit-text="employee.school"></div></p>
+    <p>join date: <input ng-model="employee.join_date"/></p>
+    <p>race: <div click-to-edit-select-by-id="employee.race_id" ng-model-labels="employeeStaticLabels['race']"></div></p>
+    <p>status: <div click-to-edit-select-by-id="employee.status_id" ng-model-labels="employeeStaticLabels['status']"></div></p>
+    <p>work pass type: <div click-to-edit-select-by-id="employee.work_pass_type_id" ng-model-labels="employeeStaticLabels['work_pass_type']"></div></p>
+<!--    <ul>
+        <li ng-repeat="color in document_">
+          Name: <input ng-model="color.name">
+          [<a href ng-click="colors.splice($index, 1)">X</a>]
+        </li>
+        <li>
+          [<a href ng-click="colors.push({})">add</a>]
+        </li>
+    </ul>-->
+</div>
+<div class="modal-footer">
+    <button ng-click="superLog();" class="btn btn-primary">SuperLog</button>
+    <button ng-click="save();" class="btn btn-primary">Save</button>
+</div>

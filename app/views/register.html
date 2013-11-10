@@ -1,0 +1,33 @@
+<div id="login" class="hero-unit">
+  <h2>Register</h2>
+  <h3>Welcome to Sentinel</h3>  
+  <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert()">{{alert.message}}</alert>
+  <form ng-submit="register()" class="form-horizontal" name="loginForm">
+      <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+          <input type="text" name="email" placeholder="Email" ng-model="credentials.email" required/>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <label class="control-label" for="password">Password</label>
+        <div class="controls">
+          <input type="password" name="password" placeholder="Password" ng-model="credentials.password" required/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="password_confirmation">Confirm Password</label>
+        <div class="controls">
+          <input type="password" name="password_confirmation" placeholder="Password Confirmation" ng-model="credentials.password_confirmation" required/>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="controls">
+          <button class="btn" type="submit">Submit</button>
+        </div>
+      </div>
+  </form>
+</div>

@@ -1,0 +1,18 @@
+<div ng-init="initEmployees();">
+    <table class="table-striped table-bordered table-condensed">
+        <thead>
+        <tr>
+            <th><input type="checkbox" ng-model="areAllSelected" ng-change="onAllSelected()"/></th>
+            <th>Employee Name</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng:repeat="item in employees">
+            <td><input type="checkbox" value="item.id" ng-model="item.isSelected" ng-checked="item.isSelected"></td>
+            <td>{{item.first_name}} {{item.last_name}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn" ng-click="saveAssignment()">Save</button>
+</div>

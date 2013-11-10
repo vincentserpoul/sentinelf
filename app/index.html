@@ -1,0 +1,113 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="other-components/angular-treeview/css/angular.treeview.css">
+        <!-- endbuild -->
+</head>
+  <body ng-app="sentinelfApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <div ng-include src="'views/navigation.html'" ng-controller="NavigationCtrl"></div>
+
+    <!-- Add your site or application content here -->
+    <div class="container" ng-view=""></div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <script src="bower_components/jquery/jquery.js"></script>    
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="other-components/angular-treeview/angular.treeview.js"></script>
+    <script src="other-components/angular-http-auth/http-auth-interceptor.js"></script>    
+
+        <!-- build:js scripts/plugins.js -->
+        <script src="bower_components/sass-bootstrap/js/affix.js"></script>
+        <script src="bower_components/sass-bootstrap/js/alert.js"></script>
+        <script src="bower_components/sass-bootstrap/js/button.js"></script>
+        <script src="bower_components/sass-bootstrap/js/carousel.js"></script>
+        <script src="bower_components/sass-bootstrap/js/transition.js"></script>
+        <script src="bower_components/sass-bootstrap/js/collapse.js"></script>
+        <script src="bower_components/sass-bootstrap/js/dropdown.js"></script>
+        <script src="bower_components/sass-bootstrap/js/modal.js"></script>
+        <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
+        <script src="bower_components/sass-bootstrap/js/tab.js"></script>
+        <script src="bower_components/sass-bootstrap/js/tooltip.js"></script>
+        <script src="bower_components/sass-bootstrap/js/popover.js"></script>
+        <!-- endbuild -->
+
+        <!-- build:js scripts/modules.js -->
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>                
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/alerts.js"></script>
+        <script src="scripts/services/authentication/authentication.js"></script>
+        <script src="scripts/services/employees.js"></script>
+        <script src="scripts/services/employers.js"></script>
+        <script src="scripts/services/employers/departments.js"></script>
+        <script src="scripts/services/employers/contacts.js"></script>
+        <script src="scripts/services/form.js"></script>
+        <script src="scripts/services/modelstaticlabels.js"></script>
+        <script src="scripts/services/modelisolabels.js"></script>
+        <script src="scripts/services/events.js"></script>
+        <script src="scripts/services/administration/users.js"></script>
+        <script src="scripts/services/administration/groups.js"></script>
+        <script src="scripts/services/administration/permissions.js"></script>
+        <script src="scripts/services/administration/usersgroups.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/controllers/navigation.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/employees/employeesList.js"></script>
+        <script src="scripts/controllers/employees/employeeView.js"></script>
+        <script src="scripts/controllers/events.js"></script>
+        <script src="scripts/controllers/events/eventPeriods/eventPeriods.js"></script>
+        <script src="scripts/controllers/events/eventPeriods/assignments.js"></script>
+        <script src="scripts/controllers/events/assignments/assignments.js"></script>
+        <script src="scripts/controllers/employers.js"></script>
+        <script src="scripts/controllers/employers/departments.js"></script>
+        <script src="scripts/controllers/employers/contacts.js"></script>
+        <script src="scripts/controllers/administration.js"></script>
+        <script src="scripts/controllers/administration/users.js"></script>
+        <script src="scripts/controllers/administration/groups.js"></script>
+        <script src="scripts/directives/auth-access.js"></script>
+        <script src="scripts/directives/clickToEditText.js"></script>
+        <script src="scripts/directives/clickToEditDate.js"></script>
+        <script src="scripts/directives/clickToEditDateTime.js"></script>
+        <script src="scripts/directives/clickToEditSelectById.js"></script>
+        <script src="scripts/directives/clickToEditSelectByCode.js"></script>        
+        <!-- endbuild -->
+</body>
+</html>

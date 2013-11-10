@@ -1,0 +1,32 @@
+<div  ng-controller="EventPeriodsCtrl">
+<button type="button" class="btn btn-primary pull-right" ng-click="openNewEditEventPeriodDialog(0, event)">Add event period</button>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th># of staff</th>
+        <th>Actions</th>
+    </tr>
+    <tbody ng-repeat="eventPeriod in event.event_periods">
+        <tr>
+            <td>{{ eventPeriod.id }}</td>
+            <td>{{ eventPeriod.start_datetime }}</td>
+            <td>{{ eventPeriod.end_datetime }}</td>
+            <td>{{ eventPeriod.number_of_employee_needed }}</td>
+            <td class="btn-toolbar">
+                <button type="button" class="btn btn-primary pull-left" ng-click="openNewEditEventPeriodDialog(eventPeriod, event)">Edit</button>
+                <button type="button" class="btn btn-primary pull-center" ng-click="deleteEventPeriod()">Delete</button>
+                <button type="button" class="btn btn-primary pull-center" ng-click="assignmentListCollapsed=!assignmentListCollapsed">Assign</button>
+            </td>
+        </tr>
+        <tr style="border: none;">
+            <td colspan="5" style="border: none; padding: 0px;">
+                <div collapse="assignmentListCollapsed">
+                    <div class="well" ng-include src="'views/events/eventPeriods/assignmentsList.html'" ng-controller="EventPeriodsAssignmentsCtrl"></div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>

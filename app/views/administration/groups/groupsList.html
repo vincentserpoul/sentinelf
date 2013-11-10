@@ -1,0 +1,27 @@
+<div>
+	<button class="btn btn-primary pull-right" ng-click="addGroup()">Add Group</button>
+	<table class="table">
+		<thead>
+			<th>Group</th>
+			<th>Permissions</th>
+			<th>Actions</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="group in groups">
+				<td ng-dblclick="editName(group)">
+					<input type="text" ng-model="group.name" ng-readonly="group.readonly" />
+				</td>
+				<td>
+					<label ng-repeat="permission in group.permissions">
+						<input type="checkbox" name="group.permissions[]" value="permission.name" ng-checked="permission.isPermitted" ng-model="permission.isPermitted" />
+						<span>{{permission.name}}</span>
+					</label>
+				</td>
+				<td>
+					<button class="btn btn-primary pull-center" ng-click="editGroup(group)">Save</button>
+					<button class="btn btn-primary pull-center" ng-click="deleteGroup(group)">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
