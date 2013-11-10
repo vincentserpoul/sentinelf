@@ -12,7 +12,7 @@ Once everything is downloaded and puppet is done running, you can log in to the 
 
         $ vagrant ssh
         $ cd /var/www/dev.sentinelf.com
-        $ sudo npm install
+        $ npm install
         $ sudo bower install
         $ grunt server
         $ (grunt server OR nohup grunt server > /dev/null 2>&1 &)
