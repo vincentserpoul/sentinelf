@@ -1,7 +1,7 @@
 sentinelf
 =========
 
-First follow the tuto here https://github.com/vincentserpoul/vagrant-yeoman-env,then
+First follow the tuto here https://github.com/vincentserpoul/vagrant-yeoman-env
 
         cd vagrant.sentinelf.com/www
         git clone git@github.com:vincentserpoul/sentinelf.git dev.sentinelf.com
