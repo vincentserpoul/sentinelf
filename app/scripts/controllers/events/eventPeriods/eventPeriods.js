@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodsCtrl", ['$scope', '$dialog', '$http' ,'eventsFactory','eventPeriodFactory',function($scope, $dialog , $http ,eventsFactory, eventPeriodFactory){
+sentinelfApp.controller("EventPeriodsCtrl", ['$scope', '$modal', '$http' ,'eventsFactory','eventPeriodFactory',function($scope, $modal , $http ,eventsFactory, eventPeriodFactory){
 
     $scope.assignmentListCollapsed = true;
 
@@ -16,7 +16,8 @@ sentinelfApp.controller("EventPeriodsCtrl", ['$scope', '$dialog', '$http' ,'even
                 event: function() {return event;}
             }
         };
-        var d = $dialog.dialog(opts);
+
+        var modalInstance = $modal.open(opts);
 
         d.open().then(
             function(eventPeriodForm){
@@ -27,7 +28,7 @@ sentinelfApp.controller("EventPeriodsCtrl", ['$scope', '$dialog', '$http' ,'even
 
 }]);
 
-sentinelfApp.controller("EventPeriodEditCtrl", ['$scope', '$dialog', '$http' ,'eventsFactory', 'eventPeriodFactory', 'eventPeriodForm', 'event', 'dialog',function($scope, $dialog, $http ,eventsFactory, eventPeriodFactory ,eventPeriodForm, event, dialog){
+sentinelfApp.controller("EventPeriodEditCtrl", ['$scope', '$modalInstance', '$http' ,'eventsFactory', 'eventPeriodFactory', 'eventPeriodForm', 'event', 'dialog',function($scope, modalInstance, $http ,eventsFactory, eventPeriodFactory ,eventPeriodForm, event, dialog){
 
     init();
 
@@ -66,7 +67,7 @@ sentinelfApp.controller("EventPeriodEditCtrl", ['$scope', '$dialog', '$http' ,'e
                 eventPeriodFactory.save(eventPeriodForm);
             }
         }
-        dialog.close(eventPeriodForm);
+        modalInstance.close(eventPeriodForm);
     };
 
 }]);

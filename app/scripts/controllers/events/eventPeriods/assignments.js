@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$dialog', '$http','$filter', function($scope, $dialog, $http, $filter){
+sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$http','$filter', function($scope, $http, $filter){
 
     //Fetch all events
     $scope.initEmployees = function(){

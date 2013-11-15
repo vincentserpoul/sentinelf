@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$dialog', 'departmentsFactory', 'treeUIService', 'modelStaticLabelsFactory', function($scope, $dialog, departmentsFactory, treeUIService, modelStaticLabelsFactory) {
+sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$modal', 'departmentsFactory', 'modelStaticLabelsFactory', function($scope, $modal, departmentsFactory, modelStaticLabelsFactory) {
 
     init();
 
@@ -28,7 +28,7 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$dialog', 'departmentsFac
 
     /**
     /* the function is called when users want to add a new department or edit an department
-    /* a dialog will pop up with a table for users to fill in the information
+    /* a modal will pop up with a table for users to fill in the information
     */
     $scope.editDepartment = function(action){
 
@@ -51,15 +51,15 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$dialog', 'departmentsFac
             }
         };
 
-        var d = $dialog.dialog(opts);
+        var modalInstance = $modal.open(opts);
 
-        d.open().then(
+        modalInstance.result.then(
             function(data){
 
                 /* If it is successful */
                 if(data && data['error'] == false){
 
-                    /* If department is returned by the dialog and it is an insert */
+                    /* If department is returned by the modal and it is an insert */
                     if(data && data['EmployerDepartment'] && data['action'] === 'insert'){
 
                         /* Add the department on top of he list */
@@ -67,7 +67,6 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$dialog', 'departmentsFac
                             if(!$scope.originalDepartment.children)                        
                                 $scope.originalDepartment.children = new Array();
                             $scope.originalDepartment.children.unshift(data['EmployerDepartment']);
-                            treeUIService.triggerClickEvent($scope);
                         }
                         else $scope.departments.unshift(data['EmployerDepartment']);
 
@@ -96,7 +95,7 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$dialog', 'departmentsFac
 
         var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
 
-        $dialog.messageBox(name, msg, btns)
+        $modal.messageBox(name, msg, btns)
         .open()
         .then(function(result){
             if(result == 'confirm'){
@@ -118,7 +117,7 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$dialog', 'departmentsFac
 /*
 /* controller for adding a new department or editing an department
 */
-sentinelfApp.controller('DepartmentEditCtrl', ['$scope', 'dialog', 'departmentsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedDepartment', 'formService', function($scope, dialog, departmentsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedDepartment, formService){
+sentinelfApp.controller('DepartmentEditCtrl', ['$scope', '$modalInstance', 'departmentsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedDepartment', 'formService', function($scope, modalInstance, departmentsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedDepartment, formService){
     // Prefill default value or edited customer
     if(selectedDepartment.action === 'edit'){ 
         $scope.formDepartment = selectedDepartment.selectedDepartment;
@@ -166,21 +165,21 @@ sentinelfApp.controller('DepartmentEditCtrl', ['$scope', 'dialog', 'departmentsF
             /* Call the factory to update the new department in db */
             departmentsFactory.update($scope.formDepartment, 
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         } else {
             /* Call the factory to update the department in db */
             departmentsFactory.save($scope.formDepartment,
                 function(data){
-                        dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         }
     }
 
     $scope.closeDialog = function(){
-        dialog.close();
+        modalInstance.close();
     }
 
 }])

@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('GroupsCtrl', ['$scope', '$dialog', 'groupsFactory', 'UsersGroupsService', function($scope, $dialog, groupsFactory, UsersGroupsService){
+sentinelfApp.controller('GroupsCtrl', ['$scope', '$modal', 'groupsFactory', 'UsersGroupsService', function($scope, $modal, groupsFactory, UsersGroupsService){
 	
 	$scope.addGroup = function(){
 		var opts = {
@@ -18,9 +18,9 @@ sentinelfApp.controller('GroupsCtrl', ['$scope', '$dialog', 'groupsFactory', 'Us
             }
         };
 
-        var d = $dialog.dialog(opts);
+        var modalInstance = $modal.open(opts);
 
-        d.open().then(
+        modalInstance.result.then(
             function(data){
             	if(data && data['error'] == false){
             		$scope.$parent.$parent.groups = data['groups'];
@@ -48,7 +48,7 @@ sentinelfApp.controller('GroupsCtrl', ['$scope', '$dialog', 'groupsFactory', 'Us
 
         var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
 
-        $dialog.messageBox(name, msg, btns)
+        $modal.messageBox(name, msg, btns)
         .open()
         .then(function(result){
             if(result == 'confirm'){
@@ -73,7 +73,7 @@ sentinelfApp.controller('GroupsCtrl', ['$scope', '$dialog', 'groupsFactory', 'Us
     }
 }]);
 
-sentinelfApp.controller('GroupAddCtrl', ['$scope', 'dialog', 'groupsFactory', 'permissions', function($scope, dialog, groupsFactory, permissions){
+sentinelfApp.controller('GroupAddCtrl', ['$scope', '$modalInstance', 'groupsFactory', 'permissions', function($scope, modalInstance, groupsFactory, permissions){
 	var groupPermissions = {};
 
 	for(var i = 0; i < permissions.permissions.length; i++){
@@ -90,11 +90,11 @@ sentinelfApp.controller('GroupAddCtrl', ['$scope', 'dialog', 'groupsFactory', 'p
 
 	$scope.saveDialog = function(group){
 		groupsFactory.save($scope.formGroup, function(data){
-			dialog.close(data);
+			modalInstance.close(data);
 		})
 	}
 
 	$scope.closeDialog = function(){
-		dialog.close();
+		modalInstance.close();
 	}
 }])
