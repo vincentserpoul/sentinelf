@@ -14,10 +14,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
         $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://dev.sentinelb.com/**']);
         $httpProvider.defaults.useXDomain = true;
         $httpProvider.defaults.withCredentials = true;
-        $httpProvider.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
-        $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://dev.sentinelb.com/**';
         $httpProvider.defaults.xsrfCookieName = 'laravel_session';
-        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+/*        delete $httpProvider.defaults.headers.common['X-Requested-With'];*/
 
         $routeProvider.when('/',
             {
