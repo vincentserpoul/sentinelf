@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('GroupsCtrl', ['$scope', '$modal', 'groupsFactory', 'UsersGroupsService', function($scope, $modal, groupsFactory, UsersGroupsService){
+sentinelfApp.controller('GroupsCtrl', ['$scope', 'formService', 'groupsFactory', 'UsersGroupsService', function($scope, formService, groupsFactory, UsersGroupsService){
 	
 	$scope.addGroup = function(){
 		var opts = {
@@ -40,30 +40,23 @@ sentinelfApp.controller('GroupsCtrl', ['$scope', '$modal', 'groupsFactory', 'Use
 	}
 
 	/* Delete group button for each group */
-    $scope.deleteGroup = function(group){
+    $scope.deleteGroup = function (group) {
 
-        var name = "Delete group";
-        var msg = "Are you sure you want to delete group "
-                    + group.name + "?";
+        var modalInstance = formService.popup('group', group.name);
 
-        var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
-
-        $modal.messageBox(name, msg, btns)
-        .open()
-        .then(function(result){
-            if(result == 'confirm'){
-                groupsFactory.delete({groupId:group.id},
-                    function(data){
-                        if(data && data['error'] == false){
-                        	$scope.$parent.$parent.groups = data['groups'];
-                        	UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
-                        } else {
-                            console.log(data['error']);
-                        }
+        // when confirmed
+        modalInstance.result.then(function () {
+            groupsFactory.delete({groupId:group.id},
+                function(data){
+                    if(data && data['error'] == false){
+                        $scope.$parent.$parent.groups = data['groups'];
+                        UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
+                    } else {
+                        console.log(data['error']);
                     }
-                );
-            }
-        });
+                }
+            );
+        })
     }
 
 

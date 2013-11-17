@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('UsersCtrl', ['$scope', 'usersFactory', '$dialog', 'UsersGroupsService', function($scope, usersFactory, $dialog, UsersGroupsService){
+sentinelfApp.controller('UsersCtrl', ['$scope', 'formService', 'usersFactory', 'UsersGroupsService', function($scope, formService, usersFactory, UsersGroupsService){
 	
 	$scope.editUser = function(user){
 		usersFactory.update(user, function(data){
@@ -14,28 +14,20 @@ sentinelfApp.controller('UsersCtrl', ['$scope', 'usersFactory', '$dialog', 'User
 	/* Delete user button for each user */
     $scope.deleteUser = function(user){
 
-        var name = "Delete user";
-        var msg = "Are you sure you want to delete user "
-                    + user.email + "?";
+        var modalInstance = formService.popup('user', user.email);
 
-        var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
-
-        $dialog.messageBox(name, msg, btns)
-        .open()
-        .then(function(result){
-            if(result == 'confirm'){
-                usersFactory.delete({userId:user.id},
-                    function(data){
-                        if(data && data['error'] == false){
-                        	$scope.$parent.$parent.users = data['users'];
-                        	UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
-                        } else {
-                            console.log(data['error']);
-                        }
+        //when confirmed 
+        modalInstance.result.then(function () {
+            usersFactory.delete({userId:user.id},
+                function(data){
+                    if(data && data['error'] == false){
+                        $scope.$parent.$parent.users = data['users'];
+                        UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
+                    } else {
+                        console.log(data['error']);
                     }
-                );
-            }
-        });
+                }
+            );
+        })
     }
-
 }])

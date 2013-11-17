@@ -25,16 +25,18 @@ sentinelfApp.controller('AdministrationCtrl', ['$scope', 'usersFactory', 'groups
 
 	function init(){
 		usersFactory.get(function(data){
+			// get users' data
 			$scope.users = data['users'];
-		}).$then(function(){
 			groupsFactory.get(function(data){
+				// get groups' data
 				$scope.groups = data['groups'];
-			}).$then(function(data){
+				// merge users and groups permissions
 				UsersGroupsService.merge($scope.users, $scope.groups);
+				// get permissions
 				permissionsFactory.get(function(data){
 					$scope.permissions = data['permissions'];
-				})
+				});
 			});
-		});		
+		});
 	}
 }])
