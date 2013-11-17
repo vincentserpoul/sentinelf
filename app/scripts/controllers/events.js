@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function($scope, $modal, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'formService', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function($scope, $modal, formService, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
 
    $scope.eventPeriodsListCollapsed = true;
    $scope.assignmentsListCollapsed = true;
@@ -10,15 +10,13 @@ sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'eventsFactory', 'emp
     function init(){
         //Fetch all events and events' periods
         eventsFactory.get(function(data){
-            $scope.events = data['Globalevents'];        
-        }).$then(function(){
+            $scope.events = data['Globalevents'];  
             eventPeriodFactory.get(function(data){
                 $scope.eventsPeriods = data['GlobaleventPeriods'];
-            }).$then(function(){
                 for(var i = 0; i < $scope.events.length; i++){
                     $scope.events[i]['event_periods'] = $scope.eventsPeriods.filter(function(value, index){return value.globalevent_id == $scope.events[i]['id']})
-                }     
-            })
+                } 
+            });
         });
 
         //Fetch all events
@@ -81,29 +79,22 @@ sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'eventsFactory', 'emp
     };
 
     $scope.deleteEvent = function(){
+
         $scope.originalEvent = this.event;
 
-        var name = "Delete event";
-        var msg = "Are you sure you want to delete event "
-                    + $scope.originalEvent.label + "?";
+        var modalInstance = formService.popup('event', $scope.originalEvent.label);
 
-        var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
-
-        $modal.messageBox(name, msg, btns)
-        .open()
-        .then(function(result){
-            if(result == 'confirm'){
-                eventsFactory.delete({eventId:$scope.originalEvent.id},
-                    function(data){
-                        if(data && data['error'] == false){
-                            $scope.originalEvent.delete();
-                        } else {
-                            console.log(data['error']);
-                        }
-
+        modalInstance.result.then(function () {
+            eventsFactory.delete({eventId:$scope.originalEvent.id},
+                function(data){
+                    if(data && data['error'] == false){
+                        $scope.originalEvent.delete();
+                    } else {
+                        console.log(data['error']);
                     }
-                );
-            }
+
+                }
+            );
         });
     }
 

@@ -1,6 +1,6 @@
 <div>
     <button type="button" class="btn btn-primary pull-right" ng-click="editEvent()">Add event</button>
-    <table class="table">
+    <table class="table table-condensed">
         <thead>
             <tr>
                 <th>ID</th>
@@ -18,11 +18,11 @@
                 <td>{{(employers | filter: {id: event.employer_id})[0].name}}</td>
                 <td>{{(departments | filter:{employer_id:event.employer_id} | filter: {id: event.employer_department_id})[0].label}}</td>
                 <td>{{event.date | date:"longDate"}}</td>
-                <td class="btn-toolbar">
-                    <button type="button" class="btn btn-primary pull-left" ng-click="editEvent()">Edit</button>
-                    <button type="button" class="btn btn-primary pull-left" ng-click="deleteEvent()">Delete</button>
-                    <button type="button" class="btn btn-primary pull-center" ng-click="eventPeriodsListCollapsed=!eventPeriodsListCollapsed">Event Period</button>
-                    <button type="button" class="btn btn-primary pull-center" ng-click="assignmentsListCollapsed=!assignmentsListCollapsed">Assignments</button> 
+                <td class="btn-group">
+                    <button type="button" class="btn btn-primary" ng-click="editEvent()">Edit</button>
+                    <button type="button" class="btn btn-warning" ng-click="deleteEvent()">Delete</button>
+                    <button type="button" class="btn btn-primary" ng-click="eventPeriodsListCollapsed=!eventPeriodsListCollapsed">Event Period</button>
+                    <button type="button" class="btn btn-primary" ng-click="assignmentsListCollapsed=!assignmentsListCollapsed">Assignments</button> 
                 </td>
             </tr>
             <tr style="border: none;">

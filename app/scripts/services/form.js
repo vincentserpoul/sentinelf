@@ -2,7 +2,7 @@
 /*
 /* a service to reset the object to original values if users do not confirm changes
 */
-sentinelfApp.factory('formService', function($resource) {
+sentinelfApp.factory('formService', function($resource, $modal) {
  	return {
  		copyProps : function(source, destination){
  			for(var prop in source){
@@ -22,10 +22,9 @@ sentinelfApp.factory('formService', function($resource) {
             return listObject[0];
         },
         popup: function (name, identity){
-            console.log('open');
             var modalInstance = $modal.open({
-                templateUrl: 'popup.html',
-                controller: popupController,
+                templateUrl: 'views/popup.html',
+                controller: 'popupCtrl',
                 resolve: {
                     name: function () {
                         return name;
@@ -40,15 +39,15 @@ sentinelfApp.factory('formService', function($resource) {
  	}   
 });
 
-sentinelfApp.controller('popupController', ['$scope', 'modalInstance', 'name', 'identity', function($scope, modalInstance, name, identity){
+sentinelfApp.controller('popupCtrl', ['$scope', '$modalInstance', 'name', 'identity', function($scope, $modalInstance, name, identity){
     $scope.name = name;
     $scope.identity = identity;
 
     $scope.confirm = function () {
-        modalInstance.close();
+        $modalInstance.close();
     }
 
     $scope.cancel = function () {
-        modalInstance.dismiss();
+        $modalInstance.dismiss();
     }
 }])
