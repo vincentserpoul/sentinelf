@@ -2,8 +2,8 @@
 
 sentinelfApp.controller(
     'EmployeesListCtrl', [
-    '$scope', '$dialog', 'employeesFactory', 'modelStaticLabelsFactory',
-    function($scope, $dialog, employeesFactory, modelStaticLabelsFactory) {
+    '$scope', 'employeesFactory', 'modelStaticLabelsFactory',
+    function($scope, employeesFactory, modelStaticLabelsFactory) {
 
         init();
 

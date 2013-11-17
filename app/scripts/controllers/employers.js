@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('EmployersCtrl', ['$scope', '$dialog', 'employersFactory', 'modelStaticLabelsFactory', function($scope, $dialog, employersFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('EmployersCtrl', ['$scope', '$modal', 'employersFactory', 'modelStaticLabelsFactory', function($scope, $modal, employersFactory, modelStaticLabelsFactory) {
 
     init();
 
@@ -22,7 +22,7 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', '$dialog', 'employersFactory
 
     /**
     /* the function is called when users want to add a new employer or edit an employer
-    /* a dialog will pop up with a table for users to fill in the information
+    /* a modal will pop up with a table for users to fill in the information
     */
     $scope.editEmployer = function(){
 
@@ -39,15 +39,15 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', '$dialog', 'employersFactory
             }
         };
 
-        var d = $dialog.dialog(opts);
+        var modalInstance = $modal.open(opts);
 
-        d.open().then(
+        modalInstance.result.then(
             function(data){
 
                 /* If it is successful */
                 if(data && data['error'] == false){
 
-                    /* If employee is returned by the dialog and it is an insert */
+                    /* If employee is returned by the modal and it is an insert */
                     if(data && data['employer'] && data['action'] == 'insert'){
 
                         /* Add the employee on top of he list */
@@ -81,7 +81,7 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', '$dialog', 'employersFactory
 
         var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
 
-        $dialog.messageBox(name, msg, btns)
+        $modal.messageBox(name, msg, btns)
         .open()
         .then(function(result){
             if(result == 'confirm'){
@@ -104,7 +104,7 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', '$dialog', 'employersFactory
 /*
 /* controller for adding a new employer or editing an employer
 */
-sentinelfApp.controller('EmployerEditCtrl', ['$scope', 'dialog', 'employersFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedEmployer', 'formService', '$http', function($scope, dialog, employersFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedEmployer, formService, $http){
+sentinelfApp.controller('EmployerEditCtrl', ['$scope', '$modalInstance', 'employersFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedEmployer', 'formService', '$http', function($scope, modalInstance, employersFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedEmployer, formService, $http){
     // Prefill default value or edited customer
     if(selectedEmployer){ 
         $scope.formEmployer = selectedEmployer;
@@ -148,21 +148,21 @@ sentinelfApp.controller('EmployerEditCtrl', ['$scope', 'dialog', 'employersFacto
             /* Call the factory to update the new employee in db */
             employersFactory.update($scope.formEmployer, 
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         } else {
             /* Call the factory to create the new employee in db */
             employersFactory.save($scope.formEmployer,
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         }
     }
 
     $scope.closeDialog = function(){
-        dialog.close();
+        modalInstance.close();
     }
 
 }])

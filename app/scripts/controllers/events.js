@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', '$dialog', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function($scope, $dialog, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function($scope, $modal, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
 
    $scope.eventPeriodsListCollapsed = true;
    $scope.assignmentsListCollapsed = true;
@@ -49,9 +49,9 @@ sentinelfApp.controller("EventsCtrl", ['$scope', '$dialog', 'eventsFactory', 'em
                 }
         };
 
-        var d = $dialog.dialog(opts);
+        var modalInstance = $modal.open(opts);
 
-        d.open().then(
+        modalInstance.result.then(
             function(data){
 
                 /* If it is successful */
@@ -89,7 +89,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', '$dialog', 'eventsFactory', 'em
 
         var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
 
-        $dialog.messageBox(name, msg, btns)
+        $modal.messageBox(name, msg, btns)
         .open()
         .then(function(result){
             if(result == 'confirm'){
@@ -112,7 +112,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', '$dialog', 'eventsFactory', 'em
 /*
 /* controller for adding a new event or editing an event
 */
-sentinelfApp.controller('EventEditCtrl', ['$scope', 'dialog', 'eventsFactory', 'selectedEvent', 'employers', 'departments', 'formService', function($scope, dialog, eventsFactory, selectedEvent, employers, departments, formService){
+sentinelfApp.controller('EventEditCtrl', ['$scope', '$modalInstance', 'eventsFactory', 'selectedEvent', 'employers', 'departments', 'formService', function($scope, modalInstance, eventsFactory, selectedEvent, employers, departments, formService){
     
     // Prefill default value or edited customer
     if(selectedEvent){ 
@@ -141,21 +141,21 @@ sentinelfApp.controller('EventEditCtrl', ['$scope', 'dialog', 'eventsFactory', '
             /* Call the factory to update the new employee in db */
             eventsFactory.update($scope.formEvent, 
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         } else {
             /* Call the factory to create the new employee in db */
             eventsFactory.save($scope.formEvent,
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         }
     }
 
     $scope.closeDialog = function(){
-        dialog.close();
+        modalInstance.close();
     }
 
     $scope.employerChange = function(){

@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('ContactsCtrl', ['$scope', '$dialog', 'contactsFactory', 'modelStaticLabelsFactory', function($scope, $dialog, contactsFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('ContactsCtrl', ['$scope', '$modal', 'contactsFactory', 'modelStaticLabelsFactory', function($scope, $modal, contactsFactory, modelStaticLabelsFactory) {
 
     init();
 
@@ -22,7 +22,7 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', '$dialog', 'contactsFactory',
 
     /**
     /* the function is called when users want to add a new contact or edit an contact
-    /* a dialog will pop up with a table for users to fill in the information
+    /* a modal will pop up with a table for users to fill in the information
     */
     $scope.editContact = function(){
         $scope.originalContact = this.contact;
@@ -43,15 +43,15 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', '$dialog', 'contactsFactory',
             }
         };
 
-        var d = $dialog.dialog(opts);
+        var modalInstance = $modal.open(opts);
 
-        d.open().then(
+        modalInstance.result.then(
             function(data){
 
                 /* If it is successful */
                 if(data && data['error'] == false){
 
-                    /* If contact is returned by the dialog and it is an insert */
+                    /* If contact is returned by the modal and it is an insert */
                     if(data && data['EmployerContact'] && data['action'] == 'insert'){
 
                         /* Add the contact on top of he list */
@@ -81,7 +81,7 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', '$dialog', 'contactsFactory',
 
         var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
 
-        $dialog.messageBox(name, msg, btns)
+        $modal.messageBox(name, msg, btns)
         .open()
         .then(function(result){
             if(result == 'confirm'){
@@ -113,7 +113,7 @@ sentinelfApp.filter('checkmark', function(){
 /*
 /* controller for adding a new contact or editing an contact
 */
-sentinelfApp.controller('ContactEditCtrl', ['$scope', 'dialog', 'contactsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedContact', 'formService', function($scope, dialog, contactsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedContact, formService){
+sentinelfApp.controller('ContactEditCtrl', ['$scope', '$modalInstance', 'contactsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedContact', 'formService', function($scope, modalInstance, contactsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedContact, formService){
     // Prefill default value or edited customer
     if(selectedContact.selectedContact){ 
         $scope.formContact = selectedContact.selectedContact;
@@ -163,21 +163,21 @@ sentinelfApp.controller('ContactEditCtrl', ['$scope', 'dialog', 'contactsFactory
             /* Call the factory to update the new contact in db */
             contactsFactory.update($scope.formContact, 
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         } else {
             /* Call the factory to create the new contact in db */
             contactsFactory.save($scope.formContact,
                 function(data){
-                        dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         }
     }
 
     $scope.closeDialog = function(){
-        dialog.close();
+        modalInstance.close();
     }
 
 }])

@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('EmployeesCtrl', ['$scope', '$dialog', 'employeesFactory', 'modelStaticLabelsFactory', function($scope, $dialog, employeesFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('EmployeesCtrl', ['$scope', '$modal', 'employeesFactory', 'modelStaticLabelsFactory', function($scope, $modal, employeesFactory, modelStaticLabelsFactory) {
 
     init();
 
@@ -34,9 +34,9 @@ sentinelfApp.controller('EmployeesCtrl', ['$scope', '$dialog', 'employeesFactory
                 }
         };
 
-        var d = $dialog.dialog(opts);
+        var modalInstance = $modal.open(opts);
 
-        d.open().then(
+        modalInstance.result.then(
             function(data){
 
                 /* If it is successful */
@@ -78,7 +78,7 @@ sentinelfApp.controller('EmployeesCtrl', ['$scope', '$dialog', 'employeesFactory
 
         var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
 
-        $dialog.messageBox(name, msg, btns)
+        $modal.messageBox(name, msg, btns)
         .open()
         .then(function(result){
             if(result == 'confirm'){
@@ -98,7 +98,7 @@ sentinelfApp.controller('EmployeesCtrl', ['$scope', '$dialog', 'employeesFactory
 
 }]);
 
-sentinelfApp.controller('EmployeeEditCtrl', ['$scope', '$filter', 'dialog', 'employeesFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedEmployee', function($scope, $filter, dialog, employeesFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedEmployee){
+sentinelfApp.controller('EmployeeEditCtrl', ['$scope', '$filter', '$modalInstance', 'employeesFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedEmployee', function($scope, $filter, modalInstance, employeesFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedEmployee){
 
     // Prefill the form with edited customer
     if(selectedEmployee){
@@ -211,14 +211,14 @@ sentinelfApp.controller('EmployeeEditCtrl', ['$scope', '$filter', 'dialog', 'emp
             /* Call the factory to update the new employee in db */
             employeesFactory.update($scope.formEmployee,
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         } else {
             /* Call the factory to create the new employee in db */
             employeesFactory.save($scope.formEmployee,
                 function(data){
-                    dialog.close(data);
+                    modalInstance.close(data);
                 }
             );
         }
@@ -226,7 +226,7 @@ sentinelfApp.controller('EmployeeEditCtrl', ['$scope', '$filter', 'dialog', 'emp
     };
 
     $scope.closeDialog = function(){
-        dialog.close();
+        modalInstance.close();
     }
 
 }]);
