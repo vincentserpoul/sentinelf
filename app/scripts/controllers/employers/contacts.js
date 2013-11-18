@@ -25,6 +25,7 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', '$modal', 'contactsFactory', 
     /* a modal will pop up with a table for users to fill in the information
     */
     $scope.editContact = function(){
+
         $scope.originalContact = this.contact;
         
         var opts = {

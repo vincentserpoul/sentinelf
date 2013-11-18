@@ -2,8 +2,6 @@
 
 sentinelfApp.controller("EventPeriodsCtrl", ['$scope', '$modal', '$http' ,'eventsFactory','eventPeriodFactory',function($scope, $modal , $http ,eventsFactory, eventPeriodFactory){
 
-    $scope.assignmentListCollapsed = true;
-
     $scope.openNewEditEventPeriodDialog = function(eventPeriodForm, event){
         var opts = {
             backdrop: false,

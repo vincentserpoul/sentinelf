@@ -7,13 +7,6 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', '$modal', 'employersFactory'
     /* Regroup init of the page in one single function */
 	function init() {
 
-        /**
-        /* initialize the collapse values for departments and contacts contents
-        /* "true" means that the 2 contents will be hidden at the beginning
-        */
-        $scope.dListCollapsed = true;
-        $scope.cListCollapsed = true;
-
         /* Initialize the list of employers */
         employersFactory.get(function(data){
             $scope.employers = data['employers'];

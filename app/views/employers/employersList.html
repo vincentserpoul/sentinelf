@@ -1,5 +1,10 @@
 <div ng-controller="EmployersCtrl">
-    <button type="button" class="btn btn-primary pull-right" ng-click="editEmployer()">Add Employer</button>
+    <div class="page-header">
+        <h2>
+            Employers
+            <button type="button" class="btn btn-primary btn-sm" ng-click="editEmployer()">New</button>
+        </h2>
+    </div>
     <table class="table">
         <thead>
         <tr>
@@ -25,31 +30,27 @@
                 <td>{{employer.phone_number}}</td>
                 <td>{{employer.fax_number}}</td>
                 <!-- action buttons -->
-                <td class="btn-toolbar">
-                    <button type="button" class="btn btn-primary pull-left" ng-click="editEmployer()">Edit</button>
+                <td class="btn-group">
+                    <button type="button" class="btn btn-primary" ng-click="editEmployer()">Edit</button>
+                    <button type="button" class="btn btn-warning" ng-click="deleteEmployer()">Delete</button>                
                     <!-- whenever the button is clicked, the collapse value (Department List Collapse) will be toggled -->
-                    <button type="button" class="btn btn-primary pull-center" ng-click="dListCollapsed = !dListCollapsed">Departments</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseDepartments{{employer.id}}">Departments</button>
                     <!-- whenever the button is clicked, the collapse value (Contacts List Collapse) will be toggled -->
-                    <button type="button" class="btn btn-primary pull-center" ng-click="cListCollapsed = !cListCollapsed">Contacts</button>
-                    <button type="button" class="btn btn-primary pull-center" ng-click="deleteEmployer()">Delete</button>                
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseContacts{{employer.id}}">Contacts</button>                    
                 </td>
             <!-- department row -->
             </tr>
             <tr style="border: none;">
                 <td colspan="8" style="border: none; padding: 0px;">
                     <!-- department collapse content -->
-                    <div collapse="dListCollapsed">
-                        <div class="well" ng-include src="'views/employers/departments/departmentsList.html'" ng-controller="DepartmentsCtrl"></div> 
-                    </div>
+                    <div class="collapse" id="collapseDepartments{{employer.id}}" ng-include src="'views/employers/departments/departmentsList.html'"></div>
                 </td>            
             </tr>
             <!-- contacts row -->
             <tr style="border: none;">
                 <td colspan="8" style="border: none; padding: 0px;">
                     <!-- contacts collapse content -->
-                    <div collapse="cListCollapsed">      
-                        <div class="well" ng-include src="'views/employers/contacts/contactsList.html'" ng-controller="ContactsCtrl"></div> 
-                    </div>
+                    <div class="collapse" id="collapseContacts{{employer.id}}" ng-include src="'views/employers/contacts/contactsList.html'"></div>
                 </td>
             </tr>
         </tbody>

@@ -2,9 +2,6 @@
 
 sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'formService', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function($scope, $modal, formService, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
 
-   $scope.eventPeriodsListCollapsed = true;
-   $scope.assignmentsListCollapsed = true;
-
    init();
 
     function init(){

@@ -9,16 +9,15 @@
 		<tbody>
 			<tr ng-repeat="group in groups">
 				<td ng-dblclick="editName(group)">
-					<input type="text" ng-model="group.name" ng-readonly="group.readonly" />
+					<input type="text" ng-model="group.name" ng-readonly="group.readonly" class="form-control"/>
 				</td>
 				<td>
-					<label ng-repeat="permission in group.permissions">
-						<input type="checkbox" name="group.permissions[]" value="permission.name" ng-checked="permission.isPermitted" ng-model="permission.isPermitted" />
-						<span>{{permission.name}}</span>
+					<label ng-repeat="permission in group.permissions" class="checkbox-inline">
+						<input type="checkbox" name="group.permissions[]" value="permission.name" ng-checked="permission.isPermitted" ng-model="permission.isPermitted" />{{permission.name}}
 					</label>
 				</td>
 				<td class="btn-group">
-					<button class="btn btn-primary" ng-click="editGroup(group)">Save</button>
+					<button class="btn btn-success" ng-click="editGroup(group)">Save</button>
 					<button class="btn btn-warning" ng-click="deleteGroup(group)">Delete</button>
 				</td>
 			</tr>

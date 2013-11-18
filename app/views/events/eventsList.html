@@ -1,5 +1,10 @@
 <div>
-    <button type="button" class="btn btn-primary pull-right" ng-click="editEvent()">Add event</button>
+    <div class="page-header">
+        <h2>
+            Events
+            <button type="button" class="btn btn-primary btn-sm" ng-click="editEvent()">New</button>
+        </h2>
+    </div>
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -21,22 +26,18 @@
                 <td class="btn-group">
                     <button type="button" class="btn btn-primary" ng-click="editEvent()">Edit</button>
                     <button type="button" class="btn btn-warning" ng-click="deleteEvent()">Delete</button>
-                    <button type="button" class="btn btn-primary" ng-click="eventPeriodsListCollapsed=!eventPeriodsListCollapsed">Event Period</button>
-                    <button type="button" class="btn btn-primary" ng-click="assignmentsListCollapsed=!assignmentsListCollapsed">Assignments</button> 
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseEventPeriod{{event.id}}">Event Period</button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseAssignment{{event.id}}">Assignments</button> 
                 </td>
             </tr>
             <tr style="border: none;">
                 <td colspan="6" style="border: none; padding: 0px;">
-                    <div collapse="eventPeriodsListCollapsed">
-                        <div class="well" ng-include src="'views/events/eventPeriods/eventPeriodsList.html'" ng-controller="EventPeriodsCtrl"></div>
-                    </div>
+                    <div class="collapse" id="collapseEventPeriod{{event.id}}" ng-include src="'views/events/eventPeriods/eventPeriodsList.html'"></div>
                  </td>
             </tr>        
             <tr style="border: none;">
                 <td colspan="6" style="border: none; padding: 0px;">
-                    <div collapse="assignmentsListCollapsed">
-                        <div class="well" ng-include src="'views/events/assignments/assignmentsList.html'" ng-controller="EventsAssignmentsCtrl"></div>
-                    </div>
+                    <div class="collapse" id="collapseAssignment{{event.id}}" ng-include src="'views/events/assignments/assignmentsList.html'"></div>
                 </td>
             </tr>
         </tbody>

@@ -1,58 +1,71 @@
-            <!-- Main hero unit for a primary marketing message or call to action -->
-            <div class="hero-unit">
-                <h1>Hello, William!</h1>
-                <p>This is your new software. Do you remember the old untrustable one? Forget it! Here we are!</p>
-                <p>... But still not yet there!</p>
-                <p>What we did:
-                    <ul>
-                        <li>New database structure to make your software and data <b>RELIABLE</b></li>
-                        <li>Migration of your old data to the new database</li>
-                        <li>Implement latest technologies to get a nice new fast presentation layer</li>
-                        <li>Implement a strong "backend" to make yourdata available from the wen but also from your tablet and phone</li>
-                        <li>Recreate the employee section (edit, create, delete)</li>
-                        <li>Recreate the employer, departments and contact section (edit, create, delete)</li>
-                        <li>Recreate a first alpha version of the event and assignment section (edit, create, delete)</li>
-                    </ul>
-                </p>
-                <p>What is left:
-                    <ul>
-                        <li>Functionnality: payments (not invoices, which should be delt with in quickbook)</li>
-                        <li>Functionnality: searches</li>
-                        <li>Functionnality: plugin - extract to quickbook</li>
-                        <li>Functionnality: payments (not invoices, which should be delt with in quickbook)</li>
-                        <li>Functionnality: plugin - handle CEMAS specific things</li>
-                        <li>Functionnality: plugin - handle MBS specific things</li>
-                        <li>Functionality: Authentication and right management</li>
-                        <li>Polishing: Error handling</li>
-                        <li>Polishing: js and php unit tests</li>
-                        <li>Optimisation: to make the software very fast</li>
-                        <li>Optimisation: the ergonomy of the whole software</li>
-                        <li>Architecture: Hosting (beg of september)</li>
-                      
-                    </ul>
-                </p>
-                <p><a class="btn btn-primary btn-large" href="./employees">View more &raquo;</a></p>
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div>
+    <div class="jumbotron">
+        <h1>Hello, William!</h1>
+        <div class="lead">
+            <p>This is your new software. Do you remember the old untrustable one? Forget it! Here we are!</p>
+            <p>... But still not yet there!</p>
+            <p><a class="btn btn-success btn-large" href="./employees" role="button">View more &raquo;</a></p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                What've been done:
             </div>
-
-            <!-- Example row of columns -->
-            <div class="row">
-                <div class="span4">
-                    <h2>Employees</h2>
-                    <p>Organize your employees, fast and easy.</p>
-                    <p><a class="btn" href="./employees">View details &raquo;</a></p>
-                </div>
-                <div class="span4">
-                    <h2>Employers</h2>
-                    <p>Marina bay sands, Mandarin hotel and their many departments and contacts, all in a simple page.</p>
-                    <p><a class="btn" href="./employers">View details &raquo;</a></p>
-               </div>
-                <div class="span4">
-                    <h2>Events</h2>
-                    <p>An event to organize for Holidays? No more pain assigning the right people!</p>
-                    <p><a class="btn" href="./events">View details &raquo;</a></p>
-                </div>
+            <ul class="list-group">
+                <li class="list-group-item">New database structure to make your software and data <b>RELIABLE</b></li>
+                <li class="list-group-item">Migration of your old data to the new database</li>
+                <li class="list-group-item">Implement latest technologies to get a nice new fast presentation layer</li>
+                <li class="list-group-item">Implement a strong "backend" to make yourdata available from the wen but also from your tablet and phone</li>
+                <li class="list-group-item">Recreate the employee section (edit, create, delete)</li>
+                <li class="list-group-item">Recreate the employer, departments and contact section (edit, create, delete)</li>
+                <li class="list-group-item">Recreate a first alpha version of the event and assignment section (edit, create, delete)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                What're to be done:
             </div>
+            <ul class="list-group">
+                <li class="list-group-item">Functionnality: payments (not invoices, which should be delt with in quickbook)</li>
+                <li class="list-group-item">Functionnality: searches</li>
+                <li class="list-group-item">Functionnality: plugin - extract to quickbook</li>
+                <li class="list-group-item">Functionnality: payments (not invoices, which should be delt with in quickbook)</li>
+                <li class="list-group-item">Functionnality: plugin - handle CEMAS specific things</li>
+                <li class="list-group-item">Functionnality: plugin - handle MBS specific things</li>
+                <li class="list-group-item">Functionality: Authentication and right management</li>
+                <li class="list-group-item">Polishing: Error handling</li>
+                <li class="list-group-item">Polishing: js and php unit tests</li>
+                <li class="list-group-item">Optimisation: to make the software very fast</li>
+                <li class="list-group-item">Optimisation: the ergonomy of the whole software</li>
+                <li class="list-group-item">Architecture: Hosting (beg of september)</li>              
+            </ul>
+        </div>
+    </div>
+</div>
 
-            <hr>
-            
-            <div ng-include src="'views/footer.html'"></div>
+<!-- Example row of columns -->
+<div class="row">
+    <div class="col-md-4">
+        <h2>Employees</h2>
+        <p>Organize your employees, fast and easy.</p>
+        <p><a class="btn" href="./employees">View details &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Employers</h2>
+        <p>Marina bay sands, Mandarin hotel and their many departments and contacts, all in a simple page.</p>
+        <p><a class="btn" href="./employers">View details &raquo;</a></p>
+   </div>
+    <div class="col-md-4">
+        <h2>Events</h2>
+        <p>An event to organize for Holidays? No more pain assigning the right people!</p>
+        <p><a class="btn" href="./events">View details &raquo;</a></p>
+    </div>
+</div>
+
+<hr>
+
+<div ng-include src="'views/footer.html'"></div>

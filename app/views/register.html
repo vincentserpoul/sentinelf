@@ -1,33 +1,49 @@
-<div id="login" class="hero-unit">
-  <h2>Register</h2>
-  <h3>Welcome to Sentinel</h3>  
-  <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert()">{{alert.message}}</alert>
-  <form ng-submit="register()" class="form-horizontal" name="loginForm">
-      <div class="control-group">
-        <label class="control-label" for="email">Email</label>
-        <div class="controls">
-          <input type="text" name="email" placeholder="Email" ng-model="credentials.email" required/>
+<div id="register">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
+            <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              {{alert.message}}
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Register</h3>
+                </div>
+                <form ng-submit="register()" name="registerForm" role="form" autocomplete="off">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 separator social-login-box"> <br />
+                            <a href="" class="btn facebook btn-block" role="button">Sign up using Facebook</a>
+                            <br />
+                            <a href="" class="btn twitter btn-block" role="button">Sign up using Twitter</a>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 login-box">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                <input type="text" class="form-control" placeholder="Email" name="email" ng-model="credentials.email" required autofocus autocomplete="off"/>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                <input type="password" class="form-control" placeholder="Password" name="password" ng-model="credentials.password" required autocomplete="off"/>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                <input type="password" class="form-control" placeholder="Password Confirmation" name="password_confirmation" ng-model="credentials.password" required autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-12">
+                            <button type="submit" class="btn btn-labeled btn-success pull-right">
+                                <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>Sign up</button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
         </div>
-      </div>
-      
-      <div class="control-group">
-        <label class="control-label" for="password">Password</label>
-        <div class="controls">
-          <input type="password" name="password" placeholder="Password" ng-model="credentials.password" required/>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label class="control-label" for="password_confirmation">Confirm Password</label>
-        <div class="controls">
-          <input type="password" name="password_confirmation" placeholder="Password Confirmation" ng-model="credentials.password_confirmation" required/>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <div class="controls">
-          <button class="btn" type="submit">Submit</button>
-        </div>
-      </div>
-  </form>
+    </div>
 </div>
