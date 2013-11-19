@@ -28,7 +28,8 @@
                     <td>{{(employeeStaticLabels['race'] | filter:employee.race_id)[0].label}}</td>
                     <td>{{(employeeStaticLabels['status'] | filter:employee.status_id)[0].label}}</td>
                     <td>{{(employeeStaticLabels['work_pass_type'] | filter:employee.work_pass_type_id)[0].label}}</td>
-                    <td><button type="button" class="btn btn-primary btn-xs">Details</button></td>
+                    <td><button type="button" class="btn btn-primary btn-xs">Details</button>
+                    <a class="btn btn-danger btn-xs" href="#"><i class="fa fa-ban"></i> Ban</a>
                 </tr>
             </tbody>
         </table>
