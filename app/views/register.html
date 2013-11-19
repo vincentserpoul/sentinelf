@@ -1,49 +1,48 @@
 <div id="register">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
-            <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              {{alert.message}}
+    <div class="main">
+        <div class="row">
+            <div class="col-md-12">
+                <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{alert.message}}
+                </div>
             </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Register</h3>
+            <h3>Register with</h3>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="btn-toolbar" role="toolbar" style="text-align:center">
+                    <button class="btn btn-primary btn-circle btn-lg">
+                        <i class="fa fa-facebook"></i>
+                    </button>
+                    <button class="btn btn-info btn-circle btn-lg">
+                        <i class="fa fa-twitter"></i>
+                    </button>
+                    <button class="btn btn-danger btn-circle btn-lg">
+                        <i class="fa fa-google-plus"></i>
+                    </button>
                 </div>
-                <form ng-submit="register()" name="registerForm" role="form" autocomplete="off">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6 separator social-login-box"> <br />
-                            <a href="" class="btn facebook btn-block" role="button">Sign up using Facebook</a>
-                            <br />
-                            <a href="" class="btn twitter btn-block" role="button">Sign up using Twitter</a>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 login-box">
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                                <input type="text" class="form-control" placeholder="Email" name="email" ng-model="credentials.email" required autofocus autocomplete="off"/>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                                <input type="password" class="form-control" placeholder="Password" name="password" ng-model="credentials.password" required autocomplete="off"/>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                                <input type="password" class="form-control" placeholder="Password Confirmation" name="password_confirmation" ng-model="credentials.password" required autocomplete="off"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-12">
-                            <button type="submit" class="btn btn-labeled btn-success pull-right">
-                                <span class="btn-label"><i class="glyphicon glyphicon-ok"></i></span>Sign up</button>
-                        </div>
-                    </div>
-                </div>
-                </form>
             </div>
         </div>
+        <div class="login-or">
+            <hr class="hr-or">
+            <span class="span-or">or</span>
+        </div>
+
+        <form ng-submit="register()" name="registerForm" role="form" autocomplete="off">
+            <div class="form-group">
+                <label for="inputUsernameEmail">Email</label>
+                <input type="text" class="form-control" placeholder="Email" name="email" ng-model="credentials.email" required autofocus autocomplete="off"/>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" placeholder="Password" name="password" ng-model="credentials.password" required autocomplete="off"/>
+            </div>
+            <div class="form-group">
+                <label for="inputPasswordConfirmation">Password Confirmation</label>
+                <input type="password" class="form-control" placeholder="Password Confirmation" name="password_confirmation" ng-model="credentials.password_confirmation" required autocomplete="off"/>
+            </div>
+            <button type="submit" class="btn btn-labeled btn-primary btn-block">
+                Register
+            </button>
+        </form>
     </div>
 </div>

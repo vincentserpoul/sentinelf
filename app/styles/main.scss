@@ -3,14 +3,17 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 @import 'sass-bootstrap/lib/bootstrap';
 
 /* Login css */
-.btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
-.btn-labeled {padding-top: 0;padding-bottom: 0;}
-.input-group { margin-bottom:10px; }
-.separator { border-right: 1px solid #dfdfe0; }
-.facebook,.twitter { min-width:170px; }
-.facebook { background-color:#354E84;color:#fff; }
-.twitter { background-color:#00A5E3;color:#fff; }
-.facebook:hover,.twitter:hover { color:#fff; }
+.main{max-width:320px;margin:0 auto}
+.login-or{position:relative;font-size:18px;color:#aaa;margin-top:10px;margin-bottom:10px;padding-top:10px;padding-bottom:10px}
+.span-or{display:block;position:absolute;left:50%;top:-2px;margin-left:-25px;background-color:#fff;width:50px;text-align:center}
+.hr-or{background-color:#cdcdcd;height:1px;margin-top:0!important;margin-bottom:0!important}
+#login h3{text-align:center;line-height:300%}
+#register h3{text-align:center;line-height:300%}
+.btn-circle{width:30px;height:30px;text-align:center;font-size:12px;line-height:1.428571429;border-radius:15px;padding:6px 0}
+.btn-circle.btn-lg{width:50px;height:50px;font-size:18px;line-height:1.33;border-radius:25px;padding:10px 16px}
+.btn-circle.btn-xl{width:70px;height:70px;font-size:24px;line-height:1.33;border-radius:35px;padding:10px 16px}
+.account-wall{margin-top:20px;background-color:#f7f7f7;-moz-box-shadow:0 2px 2px rgba(0,0,0,0.3);-webkit-box-shadow:0 2px 2px rgba(0,0,0,0.3);box-shadow:0 2px 2px rgba(0,0,0,0.3);padding:40px 0 20px}
+/* end login css */
 
 .browsehappy {
     margin: 0.2em 0;
