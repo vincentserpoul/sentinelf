@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('EmployersCtrl', ['$scope', '$modal', 'employersFactory', 'modelStaticLabelsFactory', function($scope, $modal, employersFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('EmployersCtrl', ['$scope', 'employersFactory', 'modelStaticLabelsFactory', function($scope, employersFactory, modelStaticLabelsFactory) {
 
     init();
 
@@ -12,87 +12,43 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', '$modal', 'employersFactory'
             $scope.employers = data['employers'];
         });
     };
+}]);
 
+sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', 'modelStaticLabelsFactory', function($scope, formService, employersFactory, modelStaticLabelsFactory){
     /**
     /* the function is called when users want to add a new employer or edit an employer
     /* a modal will pop up with a table for users to fill in the information
     */
-    $scope.editEmployer = function(){
+    $scope.selection = 'doneEditing';
 
-        $scope.originalEmployer = this.employer;
-        
-        var opts = {
-            backdrop: false,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl:  'views/employers/employerForm.html', // OR: templateUrl: 'path/to/view.html',
-            controller: 'EmployerEditCtrl',
-            resolve: {
-                selectedEmployer: function () { return angular.copy($scope.originalEmployer); }
-            }
-        };
+    $scope.editEmployer = function(choice){
+        if(choice == null)
+            $scope.selection = 'toEdit';
 
-        var modalInstance = $modal.open(opts);
-
-        modalInstance.result.then(
-            function(data){
-
-                /* If it is successful */
-                if(data && data['error'] == false){
-
-                    /* If employee is returned by the modal and it is an insert */
-                    if(data && data['employer'] && data['action'] == 'insert'){
-
-                        /* Add the employee on top of he list */
-                        $scope.employers.unshift(data['employer']);
-
-                    } else if(data && data['employer'] && data['action'] == 'update'){
-
-                        /* Copy back the modified data to the list of employee */
-                        /* Note that we can't do a simple "=" between object, angularjs will not append it. We need to use angalar.copy */
-                        angular.copy(data['employer'], $scope.originalEmployer);
-
-                    }
-
-                } else {
-                    console.log(data['error']);
-                    /* display error */
-                }
-                
-            }
-        );
+        else {
+            $scope.selection = 'doneEditing';
+        }
     };
 
     /* Delete employee button for each employee */
     $scope.deleteEmployer = function(){
 
-        $scope.originalEmployer = this.employer;
+        var modalInstance = formService.popup('employer', $scope.employer.name);
 
-        var name = "Delete employer";
-        var msg = "Are you sure you want to delete employer "
-                    + $scope.originalEmployer.name + "?";
-
-        var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
-
-        $modal.messageBox(name, msg, btns)
-        .open()
-        .then(function(result){
-            if(result == 'confirm'){
-                employersFactory.delete({employerId:$scope.originalEmployer.id},
-                    function(data){
-                        if(data && data['error'] == false){
-                            $scope.originalEmployer.delete();
-                        } else {
-                            console.log(data['error']);
-                        }
-
+        modalInstance.result.then(function(){
+            employersFactory.delete({employerId:$scope.employer.id},
+                function(data){
+                    if(data && data['error'] == false){
+                        $scope.employer.delete();
+                    } else {
+                        console.log(data['error']);
                     }
-                );
-            }
+
+                }
+            );
         });
     }
-
-}]);
+}])
 
 /*
 /* controller for adding a new employer or editing an employer
