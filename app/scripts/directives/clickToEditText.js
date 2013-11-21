@@ -56,8 +56,8 @@ sentinelfApp
 .directive("textEditor"
     , function() {
 
-        var editorTemplate = 
-            '<div ng-switch on="editor">' + 
+        var editorTemplate =
+            '<div ng-switch on="editor">' +
                 '<div ng-switch-when="disabled">' +
                     '{{value}} ' +
                 '</div>' +
@@ -70,8 +70,9 @@ sentinelfApp
             restrict: "A",
             replace: true,
             template: editorTemplate,
+            transclude: true,
             scope: {
-                value: '=',
+                value: '@',
                 editor: '='
             },
             controller: function($scope) {

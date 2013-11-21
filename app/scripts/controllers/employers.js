@@ -52,6 +52,10 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
             );
         });
     }
+
+    $scope.saveEmployer = function(){
+        console.log($scope.employer);
+    }
 }])
 
 /*
@@ -59,7 +63,7 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
 */
 sentinelfApp.controller('EmployerEditCtrl', ['$scope', '$modalInstance', 'employersFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedEmployer', 'formService', '$http', function($scope, modalInstance, employersFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedEmployer, formService, $http){
     // Prefill default value or edited customer
-    if(selectedEmployer){ 
+    if(selectedEmployer){
         $scope.formEmployer = selectedEmployer;
     } else {
     // Prefill the form with default values
@@ -87,7 +91,7 @@ sentinelfApp.controller('EmployerEditCtrl', ['$scope', '$modalInstance', 'employ
         // Init title select and preselect the right value
         $scope.employerCountryList = data['labels']['country'];
         // defaulting the selected value
-        $scope.formEmployer.country = findObjectByCode($scope.employerCountryList, $scope.formEmployer.country_code); 
+        $scope.formEmployer.country = findObjectByCode($scope.employerCountryList, $scope.formEmployer.country_code);
 
     });
 
@@ -99,7 +103,7 @@ sentinelfApp.controller('EmployerEditCtrl', ['$scope', '$modalInstance', 'employ
 
         if($scope.formEmployer.id){
             /* Call the factory to update the new employee in db */
-            employersFactory.update($scope.formEmployer, 
+            employersFactory.update($scope.formEmployer,
                 function(data){
                     modalInstance.close(data);
                 }

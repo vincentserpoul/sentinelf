@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -16,7 +16,7 @@
         <li ng-class="{active: routeIs('/login')}" data-access-level="['public']" active-nav><a href="/login">Login</a></li>
         <li ng-class="{active: routeIs('/register')}" data-access-level="['public']" active-nav><a href="/register">Register</a></li>
         <li ng-class="{active: routeIs('/')}" data-access-level="['user']" active-nav><a href="/">Home</a></li>
-        <li ng-class="{active: routeIs('/employees')}" data-access-level="['user']" active-nav><a href="/employees">Employees</a></li>
+        <li ng-class="{active: routeIs('/#/employees')}" data-access-level="['user']" active-nav><a href="/#/employees">Employees</a></li>
         <li ng-class="{active: routeIs('/employers')}" data-access-level="['user']" active-nav><a href="/employers">Employers</a></li>
         <li ng-class="{active: routeIs('/events')}" data-access-level="['user']" active-nav><a href="/events">Events</a></li>
         <li ng-class="{active: routeIs('/administration')}" data-access-level="['admin']" active-nav><a href="/administration">Administration</a></li>

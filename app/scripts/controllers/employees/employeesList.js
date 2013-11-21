@@ -20,5 +20,9 @@ sentinelfApp.controller(
                 $scope.employeeStaticLabels = data['labels'];
             });
         }
+
+        $scope.details = function(){
+            employeeId = this.id;
+        }
     }
 ]);
