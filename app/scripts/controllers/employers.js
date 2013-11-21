@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('EmployersCtrl', ['$scope', 'employersFactory', 'modelStaticLabelsFactory', function($scope, employersFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('EmployersCtrl', ['$scope', 'employersFactory', 'modelIsoLabelsFactory', function($scope, employersFactory, modelIsoLabelsFactory) {
 
     init();
 
@@ -11,22 +11,26 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'employersFactory', 'modelSt
         employersFactory.get(function(data){
             $scope.employers = data['employers'];
         });
+
+        modelIsoLabelsFactory.get({model:'country'}, function(data){
+            $scope.isoLabels = data['labels'];
+        });
     };
 }]);
 
-sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', 'modelStaticLabelsFactory', function($scope, formService, employersFactory, modelStaticLabelsFactory){
+sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', function($scope, formService, employersFactory){
     /**
     /* the function is called when users want to add a new employer or edit an employer
     /* a modal will pop up with a table for users to fill in the information
     */
-    $scope.selection = 'doneEditing';
+    $scope.editor = 'disabled';
 
     $scope.editEmployer = function(choice){
         if(choice == null)
-            $scope.selection = 'toEdit';
+            $scope.editor = 'enabled';
 
         else {
-            $scope.selection = 'doneEditing';
+            $scope.editor = 'disabled';
         }
     };
 

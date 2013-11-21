@@ -22,22 +22,24 @@
         <tbody ng-repeat="employer in employers">
             <!-- information row -->
             <tr ng-controller="EmployerCtrl">
-                <td>{{employer.name}}</td>
-                <td>{{employer.address}}</td>
-                <td>{{employer.city}}</td>
-                <td>{{employer.postcode}}</td>
-                <td>{{employer.country_code}}</td>
-                <td>{{employer.phone_number}}</td>
-                <td>{{employer.fax_number}}</td>
+                <td><div text-editor value="employer.name" editor="editor"></div></td>
+                <td><div text-editor value="employer.address" editor="editor"></div></td>
+                <td><div text-editor value="employer.city" editor="editor"></td>
+                <td><div text-editor value="employer.postcode" editor="editor"></td>
+                <td><div code-editor code="employer.country_code" editor="editor" ng-model-labels="isoLabels['country']"></td>
+                <td><div text-editor value="employer.phone_number" editor="editor"></td>
+                <td><div text-editor value="employer.fax_number" editor="editor"></td>
                 <!-- action buttons -->
-                <td class="btn-toolbar">
-                    <div ng-switch on="selection" class="btn-group">
-                        <button ng-switch-when="doneEditing" type="button" class="btn btn-primary btn-sm" ng-click="editEmployer()">Edit</button>
-                        <button ng-switch-when="toEdit" type="button" class="btn btn-success btn-sm" ng-click="editEmployer('save')">Save</button>
-                        <button ng-switch-when="toEdit" type="button" class="btn btn-warning btn-sm" ng-click="editEmployer('cancel')">Cancel</button>
+                <td ng-switch on="editor" class="btn-toolbar">
+                    <div ng-switch-when="disabled" class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="editEmployer()">Edit</button>
                     </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteEmployer()">Delete</button>                
+                    <div ng-switch-when="enabled" class="btn-group">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="editEmployer('save')">Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="editEmployer('cancel')">Cancel</button>
+                    </div>
+                    <div ng-switch-when="enabled" class="btn-group">
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteEmployer()">Delete</button> 
                     </div>
                     <div class="btn-group">
                         <!-- whenever the button is clicked, the collapse value (Department List Collapse) will be toggled -->

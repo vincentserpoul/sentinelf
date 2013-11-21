@@ -51,3 +51,37 @@ sentinelfApp
         };
     }
 );
+
+sentinelfApp
+.directive("textEditor"
+    , function() {
+
+        var editorTemplate = 
+            '<div ng-switch on="editor">' + 
+                '<div ng-switch-when="disabled">' +
+                    '{{value}} ' +
+                '</div>' +
+                '<div ng-switch-when="enabled">' +
+                    '<input class="form-control" ng-model="editableValue">' +
+                '</div>' +
+            '</div>';
+
+        return {
+            restrict: "A",
+            replace: true,
+            template: editorTemplate,
+            scope: {
+                value: '=',
+                editor: '='
+            },
+            controller: function($scope) {
+                $scope.editableValue = $scope.value;
+
+                $scope.save = function() {
+                    $scope.value = $scope.editableValue;
+                    $scope.disableEditor();
+                };
+            }
+        };
+    }
+);
