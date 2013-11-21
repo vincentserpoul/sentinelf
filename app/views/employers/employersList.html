@@ -22,13 +22,13 @@
         <tbody ng-repeat="employer in employers">
             <!-- information row -->
             <tr ng-controller="EmployerCtrl">
-                <td><div text-editor value="employer.name" editor="editor"></div></td>
-                <td><div text-editor value="employer.address" editor="editor"></div></td>
-                <td><div text-editor value="employer.city" editor="editor"></td>
-                <td><div text-editor value="employer.postcode" editor="editor"></td>
-                <td><div code-editor code="employer.country_code" editor="editor" ng-model-labels="isoLabels['country']"></td>
-                <td><div text-editor value="employer.phone_number" editor="editor"></td>
-                <td><div text-editor value="employer.fax_number" editor="editor"></td>
+                <td><div text-editor value="formEmployer.name" editor="editor"></div></td>
+                <td><div text-editor value="formEmployer.address" editor="editor"></div></td>
+                <td><div text-editor value="formEmployer.city" editor="editor"></td>
+                <td><div text-editor value="formEmployer.postcode" editor="editor"></td>
+                <td><div code-editor code="formEmployer.country_code" editor="editor" ng-model-labels="isoLabels['country']"></td>
+                <td><div text-editor value="formEmployer.phone_number" editor="editor"></td>
+                <td><div text-editor value="formEmployer.fax_number" editor="editor"></td>
                 <!-- action buttons -->
                 <td ng-switch on="editor" class="btn-toolbar">
                     <div ng-switch-when="disabled" class="btn-group">
