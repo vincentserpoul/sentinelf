@@ -62,26 +62,21 @@ sentinelfApp
                     '{{value}} ' +
                 '</div>' +
                 '<div ng-switch-when="enabled">' +
-                    '<input class="form-control" ng-model="editableValue">' +
+                    '<input class="form-control" ng-change="change(value)" ng-model="value">' +
                 '</div>' +
             '</div>';
 
         return {
-            restrict: "A",
-            replace: true,
             template: editorTemplate,
             transclude: true,
             scope: {
                 value: '@',
                 editor: '='
             },
-            controller: function($scope) {
-                $scope.editableValue = $scope.value;
-
-                $scope.save = function() {
-                    $scope.value = $scope.editableValue;
-                    $scope.disableEditor();
-                };
+            controller: function ($scope) {
+                $scope.change = function (value) {
+                    $scope.value = value;
+                }
             }
         };
     }

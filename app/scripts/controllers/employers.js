@@ -25,12 +25,25 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
     */
     $scope.editor = 'disabled';
 
+    $scope.formEmployer = angular.copy($scope.employer);
+
     $scope.editEmployer = function(choice){
         if(choice == null)
             $scope.editor = 'enabled';
 
         else {
             $scope.editor = 'disabled';
+            if (choice == 'save') {
+                /* Call the factory to update the new employer in db */
+                employersFactory.update($scope.formEmployer,
+                    function(data){
+                        $scope.employer = data['employer'];
+                        $scope.formEmployer = angular.copy($scope.employer);
+                    }
+                );
+            } else {
+                $scope.formEmployer = angular.copy($scope.employer);
+            }
         }
     };
 
