@@ -19,32 +19,31 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'employersFactory', 'modelIs
 }]);
 
 sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', function($scope, formService, employersFactory){
-    /**
-    /* the function is called when users want to add a new employer or edit an employer
-    /* a modal will pop up with a table for users to fill in the information
-    */
-    $scope.editor = 'disabled';
 
-    $scope.formEmployer = angular.copy($scope.employer);
+    $scope.editEmployer = function(){
+        // Save employer in case of cancel, to rollback to previous values
+        $scope.savEmployer = angular.copy($scope.employer);
+        // Activate the edit
+        $scope.edit = true;
+    }
 
-    $scope.editEmployer = function(choice){
-        if(choice == null)
-            $scope.editor = 'enabled';
-
-        else {
-            $scope.editor = 'disabled';
-            if (choice == 'save') {
-                /* Call the factory to update the new employer in db */
-                employersFactory.update($scope.formEmployer,
-                    function(data){
-                        $scope.employer = data['employer'];
-                        $scope.formEmployer = angular.copy($scope.employer);
-                    }
-                );
-            } else {
-                $scope.formEmployer = angular.copy($scope.employer);
+    $scope.saveEmployer = function(){
+        /* Call the factory to update the new employer in db */
+        //console.log($scope.employer);
+        employersFactory.update($scope.employer,
+            function(data){
+                // when success, reset the savEmployer
+                $scope.savEmployer = null;
+                $scope.edit = false;
             }
-        }
+        );
+    };
+
+    $scope.cancelEditEmployer = function(){
+        // Reset the data to what it was before the edit
+        $scope.employer = $scope.savEmployer;
+        // Deactivate the edit
+        $scope.edit = false;
     };
 
     /* Delete employee button for each employee */
@@ -66,9 +65,6 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
         });
     }
 
-    $scope.saveEmployer = function(){
-        console.log($scope.employer);
-    }
 }])
 
 /*
