@@ -9,7 +9,7 @@ sentinelfApp
                     '{{value}} ' +
                 '</div>' +
                 '<div ng-show="edit">' +
-                    '<input class="form-control" ng-model="value">' +
+                    '<input class="form-control input-sm" ng-model="value">' +
                 '</div>' +
             '</div>';
 

@@ -1,7 +1,7 @@
 <div class="panel panel-default" ng-controller="ContactsCtrl">
     <div class="panel-heading">
         {{employer.name}}'s Contacts
-        <button access-level="['add_employer_contact']" type="button" class="btn btn-primary btn-sm" ng-click="editContact()">Add</button>
+        <button access-level="['add_employer_contact']" type="button" class="btn btn-primary btn-xs" ng-click="editContact()"><i class="fa fa-plus fa-fw"></i> Add</button>
     </div>
     <div>
         <table class="table">
@@ -25,7 +25,7 @@
                     <td>{{contact.mobile_phone_number}}</td>
                     <td>{{contact.primary_contact | checkmark}}</td>
                     <td class="btn-group">
-                        <button type="button" class="btn btn-primary btn-sm" ng-click="editContact(contact)">Edit</button>            
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="editContact(contact)">Edit</button>            
                     </td>
                 </tr>
             </tbody>

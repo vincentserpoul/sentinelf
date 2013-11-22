@@ -1,28 +1,51 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodsCtrl", ['$scope', '$modal', '$http' ,'eventsFactory','eventPeriodFactory',function($scope, $modal , $http ,eventsFactory, eventPeriodFactory){
+sentinelfApp.controller("EventPeriodCtrl", ['$scope', '$modal', '$http' ,'eventsFactory','eventPeriodFactory',function($scope, $modal , $http ,eventsFactory, eventPeriodFactory){
 
-    $scope.openNewEditEventPeriodDialog = function(eventPeriodForm, event){
-        var opts = {
-            backdrop: false,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl:  'views/events/eventPeriods/eventPeriodForm.html',
-            controller: 'EventPeriodEditCtrl',
-            resolve: {
-                eventPeriodForm: function () { return eventPeriodForm; },
-                event: function() {return event;}
-            }
-        };
+    $scope.editEventPeriod = function(){
+        // Save eventPeriod in case of cancel, to rollback to previous values
+        $scope.savEventPeriod = angular.copy($scope.eventPeriod);
+        // Activate the edit
+        $scope.edit = true;
+    }
 
-        var modalInstance = $modal.open(opts);
-
-        d.open().then(
-            function(eventPeriodForm){
-                $scope.init();
+    $scope.saveEventPeriod = function(){
+        /* Call the factory to update the new eventPeriod in db */
+        //console.log($scope.eventPeriod);
+        eventPeriodsFactory.update($scope.eventPeriod,
+            function(data){
+                // when success, reset the savEventPeriod
+                $scope.savEventPeriod = null;
+                $scope.edit = false;
             }
         );
     };
+
+    $scope.cancelEditEventPeriod = function(){
+        // Reset the data to what it was before the edit
+        $scope.eventPeriod = $scope.savEventPeriod;
+        // Deactivate the edit
+        $scope.edit = false;
+    };
+
+    /* Delete employee button for each employee */
+    $scope.deleteEventPeriod = function(){
+
+        var modalInstance = formService.popup('eventPeriod', $scope.eventPeriod.name);
+
+        modalInstance.result.then(function(){
+            eventPeriodsFactory.delete({eventPeriodId:$scope.eventPeriod.id},
+                function(data){
+                    if(data && data['error'] == false){
+                        $scope.eventPeriod.delete();
+                    } else {
+                        console.log(data['error']);
+                    }
+
+                }
+            );
+        });
+    }
 
 }]);
 
