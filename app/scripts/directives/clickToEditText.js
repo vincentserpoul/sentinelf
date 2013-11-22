@@ -15,7 +15,6 @@ sentinelfApp
 
         return {
             template: editTemplate,
-            transclude: true,
             scope: {
                 value: '=',
                 edit: '='
