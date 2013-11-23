@@ -1,9 +1,9 @@
-<div class="panel panel-info" ng-controller="EventPeriodsCtrl">
+<div class="panel panel-default">
     <div class="panel-heading">
         Event Period
-        <button type="button" class="btn btn-primary btn-sm" ng-click="openNewEditEventPeriodDialog(0, event)">Add</button>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="openNewEditEventPeriodDialog(0, event)"><i class="fa fa-plus fa-fw"></i> Add</button>
     </div>
-    <table class="table table-striped">
+    <table class="table">
         <tr>
             <th>ID</th>
             <th>Start Date</th>
@@ -12,15 +12,29 @@
             <th>Actions</th>
         </tr>
         <tbody ng-repeat="eventPeriod in event.event_periods">
-            <tr>
+            <tr ng-controller='EventPeriodCtrl'>
                 <td>{{ eventPeriod.id }}</td>
                 <td>{{ eventPeriod.start_datetime }}</td>
                 <td>{{ eventPeriod.end_datetime }}</td>
                 <td>{{ eventPeriod.number_of_employee_needed }}</td>
-                <td class="btn-group">
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="openNewEditEventPeriodDialog(eventPeriod, event)">Edit</button>
-                    <button type="button" class="btn btn-warning btn-sm" ng-click="deleteEventPeriod()">Delete</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}">Assign</button>
+                <td class="btn-toolbar">
+                    <div ng-hide="edit" class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm" ng-click="editEventPeriod()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a data-ng-click="deleteEventPeriod()"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+                        </ul>
+                    </div>
+                    <div ng-show="edit" class="btn-group">
+                        <button type="button" class="btn btn-success btn-sm" ng-click="saveEventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancelEditEventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}"><i class="fa fa-user fa-fw"></i> Assign</button> 
+                    </div>
                 </td>
             </tr>
             <tr style="border: none;">

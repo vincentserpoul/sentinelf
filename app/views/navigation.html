@@ -13,18 +13,18 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-        <li ng-class="{active: routeIs('/login')}" data-access-level="['public']" active-nav><a href="/login">Login</a></li>
-        <li ng-class="{active: routeIs('/register')}" data-access-level="['public']" active-nav><a href="/register">Register</a></li>
+        <li ng-class="{active: routeIs('/#/login')}" data-access-level="['public']" active-nav><a href="/#/login">Login</a></li>
+        <li ng-class="{active: routeIs('/#/register')}" data-access-level="['public']" active-nav><a href="/#/register">Register</a></li>
         <li ng-class="{active: routeIs('/')}" data-access-level="['user']" active-nav><a href="/">Home</a></li>
         <li ng-class="{active: routeIs('/#/employees')}" data-access-level="['user']" active-nav><a href="/#/employees">Employees</a></li>
-        <li ng-class="{active: routeIs('/employers')}" data-access-level="['user']" active-nav><a href="/employers">Employers</a></li>
-        <li ng-class="{active: routeIs('/events')}" data-access-level="['user']" active-nav><a href="/events">Events</a></li>
-        <li ng-class="{active: routeIs('/administration')}" data-access-level="['admin']" active-nav><a href="/administration">Administration</a></li>
+        <li ng-class="{active: routeIs('/#/employers')}" data-access-level="['user']" active-nav><a href="/#/employers">Employers</a></li>
+        <li ng-class="{active: routeIs('/#/events')}" data-access-level="['user']" active-nav><a href="/#/events">Events</a></li>
+        <li ng-class="{active: routeIs('/#/administration')}" data-access-level="['admin']" active-nav><a href="/#/administration">Administration</a></li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
         <p class="navbar-text" id="userInfo" data-access-level="['user']">Welcome {{user.email}} ({{user.userRole.title}})</a></p>
-        <li data-access-level="['user']" ng-controller="LoginCtrl"><a href="" data-ng-click="logout()">Logout</a></li>
+        <li data-access-level="['user']" ng-controller="LoginCtrl"><a href="" data-ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>

@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'formService', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function($scope, $modal, formService, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'formService', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function ($scope, $modal, formService, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
 
    init();
 
@@ -27,65 +27,47 @@ sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'formService', 'event
         });
     };
 
+}]);
 
+
+sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function ($scope, $modal, formService, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory) {
+    
     $scope.editEvent = function(){
-        $scope.originalEvent = this.event;
+        // Save event in case of cancel, to rollback to previous values
+        $scope.savEvent = angular.copy($scope.event);
+        // Activate the edit
+        $scope.edit = true;
+    }
 
-        var opts = {
-                backdrop: false,
-                keyboard: true,
-                backdropClick: false,
-                templateUrl:  'views/events/eventForm.html', // OR: templateUrl: 'path/to/view.html',
-                controller: 'EventEditCtrl',
-                resolve: {
-                    selectedEvent: function () { return angular.copy($scope.originalEvent); },
-                    employers: function() {return $scope.employers;},
-                    departments: function() {return $scope.departments;}
-                }
-        };
-
-        var modalInstance = $modal.open(opts);
-
-        modalInstance.result.then(
+    $scope.saveEvent = function(){
+        /* Call the factory to update the new event in db */
+        //console.log($scope.event);
+        eventsFactory.update($scope.event,
             function(data){
-
-                /* If it is successful */
-                if(data && data['error'] == false){
-
-                    /* If event is returned by the dialog and it is an insert */
-                    if(data && data['event'] && data['action'] == 'insert'){
-
-                        /* Add the event on top of he list */
-                        $scope.events.unshift(data['event']);
-
-                    } else if(data && data['event'] && data['action'] == 'update'){
-
-                        /* Copy back the modified data to the list of event */
-                        /* Note that we can't do a simple "=" between object, angularjs will not append it. We need to use angalar.copy */
-                        angular.copy(data['event'], $scope.originalEvent);
-
-                    }
-
-                } else {
-                    console.log(data['error']);
-                    /* display error */
-                }
-
+                // when success, reset the savEvent
+                $scope.savEvent = null;
+                $scope.edit = false;
             }
         );
     };
 
+    $scope.cancelEditEvent = function(){
+        // Reset the data to what it was before the edit
+        $scope.event = $scope.savEvent;
+        // Deactivate the edit
+        $scope.edit = false;
+    };
+
+    /* Delete employee button for each employee */
     $scope.deleteEvent = function(){
 
-        $scope.originalEvent = this.event;
+        var modalInstance = formService.popup('event', $scope.event.name);
 
-        var modalInstance = formService.popup('event', $scope.originalEvent.label);
-
-        modalInstance.result.then(function () {
-            eventsFactory.delete({eventId:$scope.originalEvent.id},
+        modalInstance.result.then(function(){
+            eventsFactory.delete({eventId:$scope.event.id},
                 function(data){
                     if(data && data['error'] == false){
-                        $scope.originalEvent.delete();
+                        $scope.event.delete();
                     } else {
                         console.log(data['error']);
                     }
@@ -94,13 +76,12 @@ sentinelfApp.controller("EventsCtrl", ['$scope', '$modal', 'formService', 'event
             );
         });
     }
-
+    
 }]);
-
 /*
 /* controller for adding a new event or editing an event
 */
-sentinelfApp.controller('EventEditCtrl', ['$scope', '$modalInstance', 'eventsFactory', 'selectedEvent', 'employers', 'departments', 'formService', function($scope, modalInstance, eventsFactory, selectedEvent, employers, departments, formService){
+sentinelfApp.controller('EventEditCtrl', ['$scope', '$modalInstance', 'eventsFactory', 'selectedEvent', 'employers', 'departments', 'formService', function ($scope, modalInstance, eventsFactory, selectedEvent, employers, departments, formService){
     
     // Prefill default value or edited customer
     if(selectedEvent){ 
