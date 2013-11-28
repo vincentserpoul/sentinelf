@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('EmployersCtrl', ['$scope', 'employersFactory', 'modelIsoLabelsFactory', function($scope, employersFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'employersFactory', 'modelIsoLabelsFactory', function($scope, formService, employersFactory, modelIsoLabelsFactory) {
 
     init();
 
@@ -10,15 +10,17 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'employersFactory', 'modelIs
         /* Initialize the list of employers */
         employersFactory.get(function(data){
             $scope.employers = data['employers'];
-        });
-
-        modelIsoLabelsFactory.get({model:'country'}, function(data){
-            $scope.isoLabels = data['labels'];
+            // get model iso labels for country of employers
+            modelIsoLabelsFactory.get({model:'country'}, function(data){
+                $scope.isoLabels = data['labels'];
+                for (var i = 0; i < $scope.employers.length; i++)
+                    $scope.employers[i].country = formService.findObjectByCode($scope.isoLabels['country'], $scope.employers[i].country_code);
+            });
         });
     };
 }]);
 
-sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', function($scope, formService, employersFactory){
+sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', 'AlertService', function($scope, formService, employersFactory, AlertService){
 
     $scope.editEmployer = function(){
         // Save employer in case of cancel, to rollback to previous values
@@ -29,12 +31,20 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
 
     $scope.saveEmployer = function(){
         /* Call the factory to update the new employer in db */
+        //update codes
+        $scope.employer.country_code = $scope.employer.country['code'];
         //console.log($scope.employer);
         employersFactory.update($scope.employer,
-            function(data){
-                // when success, reset the savEmployer
-                $scope.savEmployer = null;
-                $scope.editForm = false;
+            function (data) {
+                if (data) {
+                    // when success, reset the savEmployer
+                    $scope.savEmployer = null;
+                    $scope.editForm = false;   
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                }
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
             }
         );
     };
@@ -53,13 +63,13 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
 
         modalInstance.result.then(function(){
             employersFactory.delete({employerId:$scope.employer.id},
-                function(data){
-                    if(data && data['error'] == false){
-                        $scope.employer.delete();
-                    } else {
-                        console.log(data['error']);
-                    }
-
+                function (data) {
+                    $scope.employer.delete();
+                    if (data)
+                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                }, function (error) { 
+                    if (error['data'])
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
                 }
             );
         });

@@ -9,13 +9,13 @@
 			<tr ng-repeat="user in users">
 				<td>{{user.email}}</td>
 				<td>
-					<select ng-model="user.group" ng-options="group.name for group in groups" class="form-control">
+					<select ng-model="user.group" ng-options="group.name for group in groups" class="form-control input-sm">
 						<option value="">--choose a group--</option>
 					</select>
 				</td>
 				<td class="btn-group">
-					<button class="btn btn-success" ng-click="editUser(user)">Save</button>
-					<button class="btn btn-warning" ng-click="deleteUser(user)">Delete</button>
+					<button class="btn btn-success btn-xs" ng-click="editUser(user)"><i class="fa fa-save fa-fw"></i> Save</button>
+					<button class="btn btn-warning btn-xs" ng-click="deleteUser(user)"><i class="fa fa-ban fa-fw"></i> Delete</button>
 				</td>
 			</tr>
 		</tbody>

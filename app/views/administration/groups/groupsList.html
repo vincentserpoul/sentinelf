@@ -1,5 +1,5 @@
 <div>
-	<button class="btn btn-primary pull-right" ng-click="addGroup()">Add Group</button>
+	<button class="btn btn-primary pull-right btn-xs" ng-click="addGroup()">Add Group</button>
 	<table class="table">
 		<thead>
 			<th>Group</th>
@@ -9,7 +9,7 @@
 		<tbody>
 			<tr ng-repeat="group in groups">
 				<td ng-dblclick="editName(group)">
-					<input type="text" ng-model="group.name" ng-readonly="group.readonly" class="form-control"/>
+					<input type="text" ng-model="group.name" ng-readonly="group.readonly" class="form-control input-sm"/>
 				</td>
 				<td>
 					<label ng-repeat="permission in group.permissions" class="checkbox-inline">
@@ -17,8 +17,8 @@
 					</label>
 				</td>
 				<td class="btn-group">
-					<button class="btn btn-success" ng-click="editGroup(group)">Save</button>
-					<button class="btn btn-warning" ng-click="deleteGroup(group)">Delete</button>
+					<button class="btn btn-success btn-xs" ng-click="editGroup(group)"><i class="fa fa-save fa-fw"></i> Save</button>
+					<button class="btn btn-warning btn-xs" ng-click="deleteGroup(group)"><i class="fa fa-ban fa-fw"></i> Delete</button>
 				</td>
 			</tr>
 		</tbody>

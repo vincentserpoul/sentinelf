@@ -1,116 +1,46 @@
 'use strict';
 
-sentinelfApp.controller('DepartmentsCtrl', ['$scope', '$modal', 'departmentsFactory', 'modelStaticLabelsFactory', function($scope, $modal, departmentsFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsFactory', 'modelStaticLabelsFactory', function($scope, formService, AlertService, departmentsFactory, modelStaticLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
     function init() {
-        /* Initialize the list of departments */
-        $scope.employer = $scope.$parent.employer;
-        
         departmentsFactory.get({employer_id : $scope.employer.id}, function(data){
             $scope.departments = data['EmployerDepartments'];
+            /* Get the labels necessary for the list not to be only numbers */
+            modelStaticLabelsFactory.get({model:'department'}, function(data){
+                $scope.departmentStaticLabels = data['labels'];
+            }); 
         });
 
-        /* Get the labels necessary for the list not to be only numbers */
-        modelStaticLabelsFactory.get({model:'department'}, function(data){
-            $scope.departmentStaticLabels = data['labels'];
-        });
+        $scope.selectedDepartment = {'label': 'None'};
     };
 
-    /*show departments */
-
-    $scope.showDepartments = function(){
-        var item = this.item;
-        item.selected = this.$selected;
-    };
-
-    /**
-    /* the function is called when users want to add a new department or edit an department
-    /* a modal will pop up with a table for users to fill in the information
-    */
-    $scope.editDepartment = function(action){
-
-        $scope.originalDepartment = this.item;
-        
-        var opts = {
-            backdrop: false,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl:  'views/employers/departments/departmentForm.html', // OR: templateUrl: 'path/to/view.html',
-            controller: 'DepartmentEditCtrl',
-            resolve: {
-                selectedDepartment: function () { 
-                    return {
-                        'action': action, 
-                        'selectedDepartment': angular.copy($scope.originalDepartment), 
-                        'employer_id': $scope.employer.id
-                    }; 
-                }
-            }
-        };
-
-        var modalInstance = $modal.open(opts);
-
-        modalInstance.result.then(
-            function(data){
-
-                /* If it is successful */
-                if(data && data['error'] == false){
-
-                    /* If department is returned by the modal and it is an insert */
-                    if(data && data['EmployerDepartment'] && data['action'] === 'insert'){
-
-                        /* Add the department on top of he list */
-                        if($scope.originalDepartment){
-                            if(!$scope.originalDepartment.children)                        
-                                $scope.originalDepartment.children = new Array();
-                            $scope.originalDepartment.children.unshift(data['EmployerDepartment']);
-                        }
-                        else $scope.departments.unshift(data['EmployerDepartment']);
-
-                    } else if(data && data['EmployerDepartment'] && data['action'] === 'update'){
-
-                        /* Copy back the modified data to the list of department */
-                        /* Note that we can't do a simple "=" between object, angularjs will not append it. We need to use angalar.copy */
-                        angular.copy(data['EmployerDepartment'], $scope.originalDepartment);
-
-                    }
-
-                } 
-                
-            }
-        );
-    };
-
-    /* Delete department button for each department */
+    /* Delete employee button for each employee */
     $scope.deleteDepartment = function(){
 
-        $scope.originalDepartment = this.item;
+        var modalInstance = formService.popup('department', $scope.selectedDepartment.label);
 
-        var name = "Delete department";
-        var msg = "Are you sure you want to delete department "
-                    + $scope.originalDepartment.label + "?";
-
-        var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
-
-        $modal.messageBox(name, msg, btns)
-        .open()
-        .then(function(result){
-            if(result == 'confirm'){
-                departmentsFactory.delete({departmentId:$scope.originalDepartment.id},
-                    function(data){
-                        if(data && data['error'] == false){
-                            $scope.departments = data['EmployerDepartments'];
-                        } else {
-                            console.log(data['error']);
-                        }
-                    }
-                );
-            }
+        modalInstance.result.then(function(){
+            departmentsFactory.delete({departmentId:$scope.selectedDepartment.id},
+                function (data) {
+                    $scope.selectedDepartment.delete();
+                    if (data)
+                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                }, function (error) { 
+                    if (error['data'])
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                }
+            );
         });
     }
+
+    $scope.$watch( 'departmentTree.currentNode', function( newObj, oldObj ) {
+        if( $scope.departmentTree && angular.isObject($scope.departmentTree.currentNode) ) {
+            $scope.selectedDepartment = $scope.departmentTree.currentNode;
+        }
+    }, false);
 
 }]);
 

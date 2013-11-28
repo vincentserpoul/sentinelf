@@ -1,22 +1,23 @@
 'use strict';
 
 sentinelfApp
-.directive("editInputText"
+.directive("editInputCode"
     , function() {
 
         var editTemplate =
                 '<div ng-hide="editForm">' +
-                    '{{value}} ' +
+                    '{{code["label"]}} ' +
                 '</div>' +
                 '<div ng-show="editForm">' +
-                    '<input class="form-control input-sm" ng-model="value">' +
+                    '<select class="form-control input-sm" ng-model="code" ng-options="modelLabel.label for modelLabel in ngModelLabels" required></select>' +
                 '</div>';
 
         return {
             template: editTemplate,
             scope: {
-                value: '=',
-                editForm: '='
+                code: '=',
+                editForm: '=', 
+                ngModelLabels: '='
             }
         };
     }

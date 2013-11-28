@@ -5,6 +5,12 @@
             <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployer()"><i class="fa fa-plus fa-fw"></i> New</button>
         </h2>
     </div>
+    <div>
+        <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{alert.message}}
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -27,7 +33,7 @@
                     <td><div edit-input-text value="employer.address" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.city" edit-form="editForm"></td>
                     <td><div edit-input-text value="employer.postcode" edit-form="editForm"></td>
-                    <td><div code-editor code="employer.country_code" ng-model-labels="isoLabels['country']" edit-form="editForm"></td>
+                    <td><div edit-input-code code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></td>
                     <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></td>
                     <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></td>
                     <!-- action buttons -->
