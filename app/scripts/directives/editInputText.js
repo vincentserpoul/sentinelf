@@ -1,14 +1,14 @@
 'use strict';
 
 sentinelfApp
-.directive("clickToEditText"
+.directive("editInputText"
     , function() {
 
         var editTemplate =
-                '<div ng-hide="edit">' +
+                '<div ng-hide="editForm">' +
                     '{{value}} ' +
                 '</div>' +
-                '<div ng-show="edit">' +
+                '<div ng-show="editForm">' +
                     '<input class="form-control input-sm" ng-model="value">' +
                 '</div>' +
             '</div>';
@@ -17,7 +17,7 @@ sentinelfApp
             template: editTemplate,
             scope: {
                 value: '=',
-                edit: '='
+                editForm: '='
             }
         };
     }

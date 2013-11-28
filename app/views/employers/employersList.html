@@ -23,16 +23,16 @@
             <tbody ng-repeat="employer in employers">
                 <!-- information row -->
                 <tr ng-controller="EmployerCtrl">
-                    <td><div click-to-edit-text value="employer.name" edit="edit"></div></td>
-                    <td><div click-to-edit-text value="employer.address" edit="edit"></div></td>
-                    <td><div click-to-edit-text value="employer.city" edit="edit"></td>
-                    <td><div click-to-edit-text value="employer.postcode" edit="edit"></td>
-                    <td><div code-editor code="employer.country_code" ng-model-labels="isoLabels['country']" edit="edit"></td>
-                    <td><div click-to-edit-text value="employer.phone_number" edit="edit"></td>
-                    <td><div click-to-edit-text value="employer.fax_number" edit="edit"></td>
+                    <td><div edit-input-text value="employer.name" edit-form="editForm"></div></td>
+                    <td><div edit-input-text value="employer.address" edit-form="editForm"></div></td>
+                    <td><div edit-input-text value="employer.city" edit-form="editForm"></td>
+                    <td><div edit-input-text value="employer.postcode" edit-form="editForm"></td>
+                    <td><div code-editor code="employer.country_code" ng-model-labels="isoLabels['country']" edit-form="editForm"></td>
+                    <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></td>
+                    <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></td>
                     <!-- action buttons -->
                     <td class="btn-toolbar">
-                        <div ng-hide="edit" class="btn-group">
+                        <div ng-hide="editForm" class="btn-group">
                             <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployer()"><i class="fa fa-edit fa-fw"></i> Edit</button>
                             <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
@@ -42,7 +42,7 @@
                                 <li ng-click="deleteEmployer()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
                             </ul>
                         </div>
-                        <div ng-show="edit" class="btn-group">
+                        <div ng-show="editForm" class="btn-group">
                             <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
                             <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                         </div>

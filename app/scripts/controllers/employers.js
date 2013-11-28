@@ -24,7 +24,7 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
         // Save employer in case of cancel, to rollback to previous values
         $scope.savEmployer = angular.copy($scope.employer);
         // Activate the edit
-        $scope.edit = true;
+        $scope.editForm = true;
     }
 
     $scope.saveEmployer = function(){
@@ -34,7 +34,7 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
             function(data){
                 // when success, reset the savEmployer
                 $scope.savEmployer = null;
-                $scope.edit = false;
+                $scope.editForm = false;
             }
         );
     };
@@ -43,7 +43,7 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
         // Reset the data to what it was before the edit
         $scope.employer = $scope.savEmployer;
         // Deactivate the edit
-        $scope.edit = false;
+        $scope.editForm = false;
     };
 
     /* Delete employee button for each employee */

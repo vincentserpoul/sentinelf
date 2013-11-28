@@ -9,7 +9,7 @@ sentinelfApp.controller(
 
 	    /* Regroup init of the page in one single function */
 	    function init() {
-	        /* Gt the employee list */
+	        /* Get the employee list */
 	        employeesFactory.get({employeeId:$routeParams['employeeId']}, function(data){
 	            $scope.employee = data['employees'][0];
 	        });

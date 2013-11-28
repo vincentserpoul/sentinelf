@@ -12,3 +12,12 @@ sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
 
     return employeesResource;
 }]);
+
+sentinelfApp.factory('employeesGlobaleventFactory', ['$resource', function($resource) {
+
+    var employeesResource = $resource('http://dev.sentinelb.com/api/v1/employee/:employeeId/globalevent_period',
+                                        {employeeId: "@id"}
+                            );
+
+    return employeesResource;
+}]);
