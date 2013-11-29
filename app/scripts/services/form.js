@@ -4,18 +4,13 @@
 */
 sentinelfApp.factory('formService', function($resource, $modal) {
  	return {
- 		copyProps : function(source, destination){
- 			for(var prop in source){
- 				destination[prop] = source[prop];
- 			}
- 		}, 
- 		findObjectById : function(listObject, idObject){
+ 		findObjectById : function (listObject, idObject){
             for(var i in listObject){
                 if(listObject[i].id == idObject) {return listObject[i]};
             }
             return listObject[0];
         },
-        findObjectByCode : function(listObject, codeObject){
+        findObjectByCode : function (listObject, codeObject){
             for(var i in listObject){
                 if(listObject[i].code == codeObject) {return listObject[i]};
             }
@@ -35,6 +30,13 @@ sentinelfApp.factory('formService', function($resource, $modal) {
                 }
             });
             return modalInstance;
+        },
+        findInArray: function (arrayObj, id) {
+            for (var i in arrayObj) {
+                if (id == arrayObj[i].id)
+                    return i; 
+            }
+            return -1;
         }
  	}   
 });

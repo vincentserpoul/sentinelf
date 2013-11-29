@@ -2,13 +2,35 @@
     <div class="page-header">
         <h2>
             Employers
-            <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployer()"><i class="fa fa-plus fa-fw"></i> New</button>
+            <button type="button" class="btn btn-primary btn-xs" ng-click="newEmployer()"><i class="fa fa-plus fa-fw"></i> New</button>
         </h2>
     </div>
     <div>
         <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             {{alert.message}}
+        </div>
+    </div>
+    <div class="panel panel-info collapse" id="collapseNewEmployer">
+        <div class="panel-heading">New Employer</div>
+        <div class="panel-body">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><div edit-input-text value="createdEmployer.name" edit-form="newForm"></div></td>
+                        <td><div edit-input-text value="createdEmployer.address" edit-form="newForm"></div></td>
+                        <td><div edit-input-text value="createdEmployer.city" edit-form="newForm"></div></td>
+                        <td><div edit-input-text value="createdEmployer.postcode" edit-form="newForm"></div></td>
+                        <td><div edit-input-code code="createdEmployer.country" ng-model-labels="isoLabels['country']" edit-form="newForm"></div></td>
+                        <td><div edit-input-text value="createdEmployer.phone_number" edit-form="newForm"></div></td>
+                        <td><div edit-input-text value="createdEmployer.fax_number" edit-form="newForm"></div></td>
+                        <td class="btn-group">
+                            <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
+                            <button type="button" class="btn btn-default btn-xs" ng-click="closeNewEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="table-responsive">
@@ -31,11 +53,11 @@
                 <tr ng-controller="EmployerCtrl">
                     <td><div edit-input-text value="employer.name" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.address" edit-form="editForm"></div></td>
-                    <td><div edit-input-text value="employer.city" edit-form="editForm"></td>
-                    <td><div edit-input-text value="employer.postcode" edit-form="editForm"></td>
-                    <td><div edit-input-code code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></td>
-                    <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></td>
-                    <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></td>
+                    <td><div edit-input-text value="employer.city" edit-form="editForm"></div></td>
+                    <td><div edit-input-text value="employer.postcode" edit-form="editForm"></div></td>
+                    <td><div edit-input-code code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></div></td>
+                    <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></div></td>
+                    <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></div></td>
                     <!-- action buttons -->
                     <td class="btn-toolbar">
                         <div ng-hide="editForm" class="btn-group">

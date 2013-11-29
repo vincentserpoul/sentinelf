@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'employersFactory', 'modelIsoLabelsFactory', function($scope, formService, employersFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService', 'employersFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, employersFactory, modelIsoLabelsFactory) {
 
     init();
 
@@ -13,33 +13,74 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'employersFac
             // get model iso labels for country of employers
             modelIsoLabelsFactory.get({model:'country'}, function(data){
                 $scope.isoLabels = data['labels'];
-                for (var i = 0; i < $scope.employers.length; i++)
+                for (var i in $scope.employers) {
                     $scope.employers[i].country = formService.findObjectByCode($scope.isoLabels['country'], $scope.employers[i].country_code);
+                }
             });
         });
+
+        $scope.newForm = true;
     };
+
+    $scope.newEmployer = function () {
+        // preselected values for new employer
+        $scope.createdEmployer = {
+            "name":"Employer's Name",
+            "address":"5 jalan bukit merah",
+            "city": "Singapore",
+            "postcode" : "159960",
+            "country_code":"SGP",
+            "phone_number":"+6599999999",
+            "fax_number":"+6599999999"};
+        $scope.createdEmployer.country = formService.findObjectByCode($scope.isoLabels['country'], $scope.createdEmployer.country_code);
+        $('#collapseNewEmployer').collapse('show');
+    }
+
+    $scope.saveEmployer = function () {
+        /* Call the factory to update the new employer in db */
+        //update codes
+        $scope.createdEmployer.country_code = $scope.createdEmployer.country['code'];
+        employersFactory.save($scope.createdEmployer,
+            function (data) {
+                if (data) {
+                    data['employer'].country = formService.findObjectByCode($scope.isoLabels['country'], data['employer'].country_code);
+                    $scope.employers.push(data['employer']);
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);     
+                }
+                $('#collapseNewEmployer').collapse('hide');
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                $('#collapseNewEmployer').collapse('hide');
+            }
+        );
+    }
+
+    $scope.closeNewEmployer = function () {
+        $('#collapseNewEmployer').collapse('hide');
+    }
 }]);
 
 sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', 'AlertService', function($scope, formService, employersFactory, AlertService){
 
-    $scope.editEmployer = function(){
+    $scope.editEmployer = function () {
         // Save employer in case of cancel, to rollback to previous values
         $scope.savEmployer = angular.copy($scope.employer);
+        // shallow copy code
+        $scope.savEmployer.country = $scope.employer.country;
         // Activate the edit
         $scope.editForm = true;
     }
 
-    $scope.saveEmployer = function(){
+    $scope.saveEmployer = function () {
         /* Call the factory to update the new employer in db */
         //update codes
         $scope.employer.country_code = $scope.employer.country['code'];
-        //console.log($scope.employer);
         employersFactory.update($scope.employer,
             function (data) {
                 if (data) {
                     // when success, reset the savEmployer
                     $scope.savEmployer = null;
-                    $scope.editForm = false;   
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }
             }, function (error) {
@@ -47,9 +88,10 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
                     AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
             }
         );
+        $scope.editForm = false;   
     };
 
-    $scope.cancelEditEmployer = function(){
+    $scope.cancelEditEmployer = function () {
         // Reset the data to what it was before the edit
         $scope.employer = $scope.savEmployer;
         // Deactivate the edit
@@ -57,14 +99,14 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
     };
 
     /* Delete employee button for each employee */
-    $scope.deleteEmployer = function(){
+    $scope.deleteEmployer = function () {
 
         var modalInstance = formService.popup('employer', $scope.employer.name);
 
         modalInstance.result.then(function(){
             employersFactory.delete({employerId:$scope.employer.id},
                 function (data) {
-                    $scope.employer.delete();
+                    $scope.employers.splice(formService.findInArray($scope.employers, $scope.employer.id), 1);
                     if (data)
                         AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }, function (error) { 
@@ -73,72 +115,6 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
                 }
             );
         });
-    }
-
-}])
-
-/*
-/* controller for adding a new employer or editing an employer
-*/
-sentinelfApp.controller('EmployerEditCtrl', ['$scope', '$modalInstance', 'employersFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedEmployer', 'formService', '$http', function($scope, modalInstance, employersFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedEmployer, formService, $http){
-    // Prefill default value or edited customer
-    if(selectedEmployer){
-        $scope.formEmployer = selectedEmployer;
-    } else {
-    // Prefill the form with default values
-        $scope.formEmployer = {
-                                "name":"employer name",
-                                "address":"5 jalan bukit merah",
-                                "city": "Singapore",
-                                "postcode" : "159960",
-                                "country_code":"SGP",
-                                "phone_number":"+6599999999",
-                                "fax_number":"+6599999999",
-         };
-   }
-
-    modelIsoLabelsFactory.get({model:'country'}, function(data){
-
-        /* For some static label, the iso code is the primary key. So with the key given in the employee table, we need to find the label */
-        function findObjectByCode(listObject, codeObject){
-            for(var i in listObject){
-                if(listObject[i].code == codeObject) {return listObject[i]};
-            }
-            return listObject[0];
-        }
-
-        // Init title select and preselect the right value
-        $scope.employerCountryList = data['labels']['country'];
-        // defaulting the selected value
-        $scope.formEmployer.country = findObjectByCode($scope.employerCountryList, $scope.formEmployer.country_code);
-
-    });
-
-
-    $scope.saveDialog = function(employer){
-
-        // reset the "id values" from the objects contained in the retrieved form
-        $scope.formEmployer.country_code = $scope.formEmployer.country.code;
-
-        if($scope.formEmployer.id){
-            /* Call the factory to update the new employee in db */
-            employersFactory.update($scope.formEmployer,
-                function(data){
-                    modalInstance.close(data);
-                }
-            );
-        } else {
-            /* Call the factory to create the new employee in db */
-            employersFactory.save($scope.formEmployer,
-                function(data){
-                    modalInstance.close(data);
-                }
-            );
-        }
-    }
-
-    $scope.closeDialog = function(){
-        modalInstance.close();
     }
 
 }])

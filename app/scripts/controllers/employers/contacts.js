@@ -1,184 +1,129 @@
 'use strict';
 
-sentinelfApp.controller('ContactsCtrl', ['$scope', '$modal', 'contactsFactory', 'modelStaticLabelsFactory', function($scope, $modal, contactsFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService', 'contactsFactory', 'modelStaticLabelsFactory', function($scope, formService, AlertService, contactsFactory, modelStaticLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
     function init() {
-        /* Initialize employer of the contacts*/
-        $scope.employer = $scope.$parent.employer;
-
         /* Initialize the list of contacts */
         contactsFactory.get({employer_id : $scope.employer.id}, function(data){
             $scope.contacts = data['EmployerContacts'];
+            /* Get the labels necessary for the list not to be only numbers */
+            modelStaticLabelsFactory.get({model:'contact'}, function(data){
+                $scope.contactStaticLabels = data['labels'];
+                // get labels from id
+                for (var i in $scope.contacts) {
+                    $scope.contacts[i].title = formService.findObjectById($scope.contactStaticLabels['title'], $scope.contacts[i].title_id);
+                    $scope.contacts[i].sex = formService.findObjectById($scope.contactStaticLabels['sex'], $scope.contacts[i].sex_id);
+                }
+            });
         });
-
-        /* Get the labels necessary for the list not to be only numbers */
-        modelStaticLabelsFactory.get({model:'contact'}, function(data){
-            $scope.contactStaticLabels = data['labels'];
-        });
+        $scope.newForm = true;
     };
 
-    /**
-    /* the function is called when users want to add a new contact or edit an contact
-    /* a modal will pop up with a table for users to fill in the information
-    */
-    $scope.editContact = function(){
+    $scope.newContact = function () {
+        // preselected values for new contact
+        $scope.createdContact = {
+            "employer_id": $scope.employer.id,
+            "first_name": "contact's first name",
+            "last_name": "contact's last name",
+            "title_id": 1,
+            "sex_id":1,
+            "mobile_phone_number": "+6599999999",
+            "primary_contact": 0};
+        $scope.createdContact.title = formService.findObjectById($scope.contactStaticLabels['title'], $scope.createdContact.title_id);
+        $scope.createdContact.sex = formService.findObjectById($scope.contactStaticLabels['sex'], $scope.createdContact.sex_id);
+        $('#collapseNewContact' + $scope.employer.id).collapse('show');
+    }
 
-        $scope.originalContact = this.contact;
-        
-        var opts = {
-            backdrop: false,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl:  'views/employers/contacts/contactForm.html', // OR: templateUrl: 'path/to/view.html',
-            controller: 'ContactEditCtrl',
-            resolve: {
-                selectedContact: function () { 
-                    return {
-                        'selectedContact': angular.copy($scope.originalContact),
-                        'employer_id': $scope.employer.id
-                    }
+    $scope.saveContact = function () {
+        /* Call the factory to update the new contact in db */
+        //update codes
+        //update title ids and sex ids
+        $scope.createdContact.title_id = $scope.createdContact.title['id'];
+        $scope.createdContact.sex_id = $scope.createdContact.sex['id'];
+
+        contactsFactory.save($scope.createdContact,
+            function (data) {
+                if (data) {
+                    data['EmployerContact'].title = formService.findObjectById($scope.contactStaticLabels['title'], data['EmployerContact'].title_id);
+                    data['EmployerContact'].sex = formService.findObjectById($scope.contactStaticLabels['sex'], data['EmployerContact'].sex_id);
+                    $scope.contacts.push(data['EmployerContact']);
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }
-            }
-        };
-
-        var modalInstance = $modal.open(opts);
-
-        modalInstance.result.then(
-            function(data){
-
-                /* If it is successful */
-                if(data && data['error'] == false){
-
-                    /* If contact is returned by the modal and it is an insert */
-                    if(data && data['EmployerContact'] && data['action'] == 'insert'){
-
-                        /* Add the contact on top of he list */
-                        $scope.contacts.unshift(data['EmployerContact']);
-
-                    } else if(data && data['EmployerContact'] && data['action'] == 'update'){
-
-                        /* Copy back the modified data to the list of contact */
-                        /* Note that we can't do a simple "=" between object, angularjs will not append it. We need to use angalar.copy */
-                        angular.copy(data['EmployerContact'], $scope.originalContact);
-
-                    }
-
-                }                 
+                $('#collapseNewContact' + $scope.employer.id).collapse('hide');
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                $('#collapseNewContact' + $scope.employer.id).collapse('hide');
             }
         );
-    };
-
-    /* Delete contact button for each contact */
-    $scope.deleteContact = function(){
-
-        $scope.originalContact = this.contact;
-
-        var name = "Delete contact";
-        var msg = "Are you sure you want to delete contact "
-                    + $scope.originalContact.first_name + " " + $scope.originalContact.last_name + "?";
-
-        var btns = [{result: 'cancel', label: 'Cancel'}, {result: 'confirm', label: 'Confirm', cssClass: 'btn-primary'}];
-
-        $modal.messageBox(name, msg, btns)
-        .open()
-        .then(function(result){
-            if(result == 'confirm'){
-                contactsFactory.delete({contactId:$scope.originalContact.id},
-                    function(data){
-                        if(data && data['error'] == false){
-                            $scope.originalContact.delete();
-                        } else {
-                            console.log(data['error']);
-                        }
-
-                    }
-                );
-            }
-        });
     }
 
+    $scope.closeNewContact = function () {
+        $('#collapseNewContact' + $scope.employer.id).collapse('hide');
+    }
 }])
 
-/*
-* create filter for property check
-*/
-sentinelfApp.filter('checkmark', function(){
-    return function(input){
-        return input ? '\u2713' : '';
+sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService', 'contactsFactory', 'modelStaticLabelsFactory', function($scope, formService, AlertService, contactsFactory, modelStaticLabelsFactory) {
+    /**
+    /* the function is called when users want to add a new contact or edit an contact
+    */
+    $scope.editContact = function(){
+        // Save contact in case of cancel, to rollback to previous values, deep copy
+        $scope.savContact = angular.copy($scope.contact);
+        // shallow copy code
+        $scope.savContact.title = $scope.contact.title;
+        $scope.savContact.sex = $scope.contact.sex;
+        // Activate the edit
+        $scope.editForm = true;
     }
-});
 
-/*
-/* controller for adding a new contact or editing an contact
-*/
-sentinelfApp.controller('ContactEditCtrl', ['$scope', '$modalInstance', 'contactsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'selectedContact', 'formService', function($scope, modalInstance, contactsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, selectedContact, formService){
-    // Prefill default value or edited customer
-    if(selectedContact.selectedContact){ 
-        $scope.formContact = selectedContact.selectedContact;
-    } else {
-    // Prefill the form with default values
-        $scope.formContact = {
-                                "employer_id":selectedContact.employer_id,
-                                "first_name":"contact's first name",
-                                "last_name":"contact's last name",
-                                "title_id": 1,
-                                "sex_id":1,
-                                "mobile_phone_number":"+6599999999",
-                                "primary_contact":1
-         };
-   }
-
-   modelStaticLabelsFactory.get({model:'contact'}, function(data){
-
-        /* On callback of the service, fill the big static select */
-
-        /* Function to find the object corresponding to the static labels for a given id */
-        function findObjectById(listObject, idObject){
-            for(var i in listObject){
-                if(listObject[i].id == idObject) {return listObject[i]};
+    $scope.saveContact = function(){
+        /* Call the factory to update the new contact in db */
+        //update title ids and sex ids
+        $scope.contact.title_id = $scope.contact.title['id'];
+        $scope.contact.sex_id = $scope.contact.sex['id'];
+        
+        contactsFactory.update($scope.contact,
+            function (data) {
+                if (data) {
+                    // when success, reset the savEmployer
+                    $scope.savContact = null;
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                }
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
             }
-            return listObject[0];
-        }
+        );
+        $scope.editForm = false;   
+    };
 
-        // Init title select and preselect the right value
-        $scope.contactTitleList = data['labels']['title'];
-        // defaulting the selected value
-        $scope.formContact.title = findObjectById($scope.contactTitleList, $scope.formContact.title_id); 
+    $scope.cancelEditContact = function(){
+        // Reset the data to what it was before the edit
+        $scope.contact = $scope.savContact;
+        // Deactivate the edit
+        $scope.editForm = false;
+    };
 
-        // Init title select and preselect the right value
-        $scope.contactSexList = data['labels']['sex'];
-        // defaulting the selected value
-        $scope.formContact.sex = findObjectById($scope.contactSexList, $scope.formContact.sex_id); 
-    });
+    /* Delete employee button for each employee */
+    $scope.deleteContact = function(){
 
-    $scope.saveDialog = function(contact){
+        var modalInstance = formService.popup('contact', $scope.contact.first_name + ' ' + $scope.contact.last_name);
 
-        // create the "id values" from the contact contained in the retrieved form
-        $scope.formContact.title_id = $scope.formContact.title.id;
-        $scope.formContact.sex_id = $scope.formContact.sex.id;
-
-        if($scope.formContact.id){
-            /* Call the factory to update the new contact in db */
-            contactsFactory.update($scope.formContact, 
-                function(data){
-                    modalInstance.close(data);
+        modalInstance.result.then(function(){
+            contactsFactory.delete({contactId:$scope.contact.id},
+                function (data) {
+                    $scope.contacts.splice(formService.findInArray($scope.contacts, $scope.contact.id), 1);
+                    if (data)
+                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                }, function (error) { 
+                    if (error['data'])
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
                 }
             );
-        } else {
-            /* Call the factory to create the new contact in db */
-            contactsFactory.save($scope.formContact,
-                function(data){
-                    modalInstance.close(data);
-                }
-            );
-        }
+        });
     }
-
-    $scope.closeDialog = function(){
-        modalInstance.close();
-    }
-
 }])
