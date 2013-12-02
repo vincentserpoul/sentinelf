@@ -45,12 +45,12 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
                 if (data) {
                     data['employer'].country = formService.findObjectByCode($scope.isoLabels['country'], data['employer'].country_code);
                     $scope.employers.push(data['employer']);
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);     
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
                 $('#collapseNewEmployer').collapse('hide');
             }, function (error) {
                 if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
                 $('#collapseNewEmployer').collapse('hide');
             }
         );
@@ -81,14 +81,14 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
                 if (data) {
                     // when success, reset the savEmployer
                     $scope.savEmployer = null;
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
                 if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
         );
-        $scope.editForm = false;   
+        $scope.editForm = false;
     };
 
     $scope.cancelEditEmployer = function () {
@@ -108,10 +108,10 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
                 function (data) {
                     $scope.employers.splice(formService.findInArray($scope.employers, $scope.employer.id), 1);
                     if (data)
-                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
-                }, function (error) { 
+                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }, function (error) {
                     if (error['data'])
-                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
                 }
             );
         });

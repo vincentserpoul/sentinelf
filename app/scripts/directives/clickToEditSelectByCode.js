@@ -50,13 +50,7 @@ sentinelfApp
                 };
 
         /* For some static label, the iso code is the primary key. So with the key given in the employee table, we need to find the label */
-                $scope.findObjectByCode = function (listObject, codeObject){
-                    for(var i in listObject){
-                        if(listObject[i].code == codeObject) {return listObject[i]};
-                    }
-                    console.log(listObject[0]);
-                    return listObject[0];
-                }
+
 
             }
         };
@@ -67,7 +61,7 @@ sentinelfApp
 .directive("codeEditor"
     , function(formService) {
 
-        var editorTemplate = 
+        var editorTemplate =
             '<div ng-switch on="editor">' +
                 '<div ng-switch-when="disabled">' +
                     '{{(ngModelLabels | filter:code)[0].label}} ' +

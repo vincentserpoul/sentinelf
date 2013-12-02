@@ -7,7 +7,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
     'ngSanitize',
     'ngRoute',
     'angularTreeview',
-    'http-auth-interceptor'
+    'http-auth-interceptor',
+    'ngAnimate'
 ])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider){
         /* To enable CORS AJAX requests */

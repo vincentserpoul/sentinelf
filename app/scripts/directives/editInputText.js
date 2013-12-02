@@ -4,16 +4,17 @@ sentinelfApp
 .directive("editInputText"
     , function() {
 
-        var editTemplate =
-                '<div ng-hide="editForm">' +
-                    '{{value}} ' +
-                '</div>' +
-                '<div ng-show="editForm">' +
-                    '<input class="form-control input-sm" ng-model="value">' +
-                '</div>';
+        var editInputTextTemplate =
+            '<div ng-hide="editForm" class="button-edit">' +
+                '{{value}} ' +
+            '</div>' +
+            '<div ng-show="editForm" class="button-edit">' +
+                '<input class="form-control input-sm" ng-model="value">' +
+            '</div>';
 
         return {
-            template: editTemplate,
+            restrict: 'E',
+            template: editInputTextTemplate,
             scope: {
                 value: '=',
                 editForm: '='

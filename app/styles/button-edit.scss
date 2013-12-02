@@ -1,0 +1,12 @@
+.button-edit.ng-show-add,
+.button-edit.ng-show-remove {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+
+  /* remember to add this */
+  display:block!important;
+  opacity:0;
+}
+.button-edit.ng-show {
+  opacity:1;
+}
