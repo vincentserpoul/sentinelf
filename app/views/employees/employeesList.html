@@ -10,24 +10,34 @@
         </button>
         <button class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
         <button class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
-        <ul ng-show="displayProfile">
-            <li>{{employee.country_code}}</li>
-            <li>{{employee.date_of_birth | date:'yyyy/MM/dd'}}</li>
-            <li>{{employee.mobile_phone_number}}</li>
-            <li>{{employee.school}}</li>
-            <li>{{employee.join_date}}</li>
-            <li>{{(employeeStaticLabels['race'] | filter:employee.race_id)[0].label}}</li>
-            <li>{{(employeeStaticLabels['status'] | filter:employee.status_id)[0].label}}</li>
-            <li>{{(employeeStaticLabels['work_pass_type'] | filter:employee.work_pass_type_id)[0].label}}</li>
-        </ul>
-        <ul ng-show="displayAssignments">
-            <li ng-repeat="globaleventPeriod in globaleventPeriods">
+        <div ng-show="displayProfile" class="form-inline">
+            <p><edit-input-select uniq-id-value="employee.country_code" uniq-id-type="code" model-ref-list="countryListPromise" edit-form="editForm"></edit-input-select></p>
+            <p><edit-input-text value="employee.date_of_birth" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-text value="employee.mobile_phone_number" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-text value="employee.school" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-text value="employee.join_date" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-text value="employee.race_id" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-text value="employee.status_id" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-text value="employee.work_pass_type_id" edit-form="editForm"></edit-input-text></p>
+            <p>
+                <div ng-hide="editForm" class="btn-group button-edit">
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployee()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployee()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+                </div>
+                <div ng-show="editForm" class="btn-group button-edit">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployee()"><i class="fa fa-save fa-fw"></i> Save</button>
+                    <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                </div>
+            </p>
+        </div>
+        <div ng-show="displayAssignments">
+            <p ng-repeat="globaleventPeriod in globaleventPeriods">
                 {{globaleventPeriod.label}} ({{globaleventPeriod.number_of_employee_needed}}) : from {{globaleventPeriod.start_datetime}} to {{globaleventPeriod.end_datetime}}
                 <ng-switch on="globaleventPeriod.amount">
                     <button ng-switch-default class="btn btn-xs btn-info disabled"><i class="fa fa-money"></i> Payed</button>
                     <button ng-switch-when="null" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Pay!</button>
                 </ng-switch>
-            </li>
-        </ul>
-    </li>
+            </p>
+        </div>
+    </p>
 </ul>
