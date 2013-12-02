@@ -17,13 +17,13 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <td><div edit-input-text value="createdEmployer.name" edit-form="newForm"></div></td>
-                        <td><div edit-input-text value="createdEmployer.address" edit-form="newForm"></div></td>
-                        <td><div edit-input-text value="createdEmployer.city" edit-form="newForm"></div></td>
-                        <td><div edit-input-text value="createdEmployer.postcode" edit-form="newForm"></div></td>
-                        <td><div edit-input-code code="createdEmployer.country" ng-model-labels="isoLabels['country']" edit-form="newForm"></div></td>
-                        <td><div edit-input-text value="createdEmployer.phone_number" edit-form="newForm"></div></td>
-                        <td><div edit-input-text value="createdEmployer.fax_number" edit-form="newForm"></div></td>
+                        <td><edit-input-text value="createdEmployer.name" edit-form="newForm"></edit-input-text></td>
+                        <td><edit-input-text value="createdEmployer.address" edit-form="newForm"></edit-input-text></td>
+                        <td><edit-input-text value="createdEmployer.city" edit-form="newForm"></edit-input-text></td>
+                        <td><edit-input-text value="createdEmployer.postcode" edit-form="newForm"></edit-input-text></td>
+                        <td><edit-input-code code="createdEmployer.country" ng-model-labels="isoLabels['country']" edit-form="newForm"></edit-input-code></td>
+                        <td><edit-input-text value="createdEmployer.phone_number" edit-form="newForm"></edit-input-text></td>
+                        <td><edit-input-text value="createdEmployer.fax_number" edit-form="newForm"></edit-input-text></td>
                         <td class="btn-group">
                             <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
                             <button type="button" class="btn btn-default btn-xs" ng-click="closeNewEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
@@ -55,7 +55,7 @@
                     <td><div edit-input-text value="employer.address" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.city" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.postcode" edit-form="editForm"></div></td>
-                    <td><div edit-input-code code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></div></td>
+                    <td><div editInputSelectCode selected-code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></div></td>
                     <!-- action buttons -->
