@@ -18,10 +18,10 @@ sentinelfApp
             scope: {
                 uniqIdValue: '=',
                 uniqIdType: '@',
-                modelReflist: '=',
+                modelRefList: '=',
                 editForm: '='
             },
-            link: function(scope, element, attrs){
+            link: function(scope){
 console.log(scope.modelRefList);
 // http://stackoverflow.com/questions/20333425/angularjs-pass-resource-as-a-directive-parameter
                 function init(){

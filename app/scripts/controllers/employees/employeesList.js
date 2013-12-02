@@ -15,8 +15,6 @@ sentinelfApp.controller(
                 $scope.employees = data['employees'];
             });
 
-$scope.countryList = modelIsoLabelsFactory.get({model:'country'});
-console.log($scope.countryList);
         }
     }
 ]);

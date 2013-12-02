@@ -15,7 +15,7 @@ sentinelfApp.controller(
             });
 
             /* Get the labels necessary for the list of countries not to be only codes */
-            $scope.countryList = $scope.$parent.countryList;
+            $scope.countryList = modelIsoLabelsFactory.get({model:'country'});
         }
 
         /* Display profile tab and hide the two others */
