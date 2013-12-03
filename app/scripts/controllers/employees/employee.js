@@ -7,15 +7,9 @@ sentinelfApp.controller(
 
         init();
 
-        function init(){
-
-            /* Get the labels necessary for the list not to be only numbers */
-            modelStaticLabelsFactory.get({model:'employee'}, function(data){
-                $scope.employeeStaticLabels = data['labels'];
-            });
-
-            /* Get the labels necessary for the list of countries not to be only codes */
-            $scope.countryList = modelIsoLabelsFactory.get({model:'country'});
+        /* Regroup init of the page in one single function */
+        function init() {
+            $scope.editForm = false;
         }
 
         /* Display profile tab and hide the two others */

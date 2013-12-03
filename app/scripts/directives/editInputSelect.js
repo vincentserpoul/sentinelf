@@ -6,7 +6,7 @@ sentinelfApp
 
         var editInputSelectTemplate =
             '<div ng-hide="editForm">' +
-                '{(modelRefList | filter:uniqIdValue)[0].label}} ' +
+                '{{ selectedItem.label }} ' +
             '</div>' +
             '<div ng-show="editForm">' +
                 '<select class="form-control input-sm" ng-model="selectedItem" ng-options="item.label for item in modelRefList" required></select>' +
@@ -17,40 +17,45 @@ sentinelfApp
             template: editInputSelectTemplate,
             scope: {
                 uniqIdValue: '=',
-                uniqIdType: '@',
-                modelRefList: '=',
+                modelRefResource: '=',
+                modelRefType: '@',
                 editForm: '='
             },
             link: function(scope){
-console.log(scope.modelRefList);
-// http://stackoverflow.com/questions/20333425/angularjs-pass-resource-as-a-directive-parameter
+
                 function init(){
-                    /* Preselect the select box with the given value uniqIdValue */
-                    //scope.selectedItem = scope.findItemByUniqId(scope.uniqIdType, scope.modelRefList, scope.uniqIdValue);
-                    //console.log(scope['modelRefList']);
+
+                    /* We have to wait for the resource to come back so we get its promise and move when it is there */
+                    scope.modelRefResource.$promise.then(function(modelRefResult){
+                        scope.modelRefList = modelRefResult.labels[scope.modelRefType];
+
+                        /* Preselect the select box with the given value uniqIdValue */
+                        scope.selectedItem = scope.findItemByUniqId(scope.modelRefList, scope.uniqIdValue);
+                    });
+
                 }
 
                 /**
                  * findObjectById: Function to find the item (object) corresponding to the id or code inside a given list
                  *
-                 * uniqIdType       string  either 'id' or 'code'
                  * modelRefList     array   ie for countries {{code: "ABW", label: "Aruba"}, {code: "AFG", label: "Afghanistan"}...}
                  * uniqIdValue      object  ie for countries, 'IND', 'FRA', 'CHN'...
                  *
                  * return
                  * selectedItem        object  {code: "ABW", label: "Aruba"}
                 **/
-                scope.findItemByUniqId = function (uniqIdType, modelRefList, uniqIdValue){
+                scope.findItemByUniqId = function (modelRefList, uniqIdValue){
 
                     /* We only search for the preselected item if there is an actual preselected uniqIdValue */
-                    if(uniqIdValue != '' && modelRefList != '' && uniqIdType != ''){
+                    if(uniqIdValue != '' && modelRefList != ''){
                         /* default selectedItem is the first one */
                         var selectedItem = modelRefList[0];
-
                         /* loop through the modelfRefList to find the item with the uniqIdValue */
                         angular.forEach(modelRefList, function(listItem){
                             /* if we find the uniqIdValue in the list, we put it inside selectedItem */
-                            if(listItem[uniqIdType] == uniqIdValue){
+                            if(listItem['code'] == uniqIdValue){
+                                selectedItem = listItem;
+                            } else if(listItem['id'] == uniqIdValue){
                                 selectedItem = listItem;
                             }
                         });

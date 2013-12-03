@@ -11,7 +11,7 @@
         <button class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
         <button class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
         <div ng-show="displayProfile" class="form-inline">
-            <p><edit-input-select uniq-id-value="employee.country_code" uniq-id-type="code" model-ref-list="countryListPromise" edit-form="editForm"></edit-input-select></p>
+            <p><edit-input-select uniq-id-value="employee.country_code" model-ref-type="country" model-ref-resource="countryListResource" edit-form="editForm"></edit-input-select></p>
             <p><edit-input-text value="employee.date_of_birth" edit-form="editForm"></edit-input-text></p>
             <p><edit-input-text value="employee.mobile_phone_number" edit-form="editForm"></edit-input-text></p>
             <p><edit-input-text value="employee.school" edit-form="editForm"></edit-input-text></p>
