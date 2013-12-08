@@ -1,102 +1,101 @@
-<div ng-controller="EmployersCtrl">
-    <div class="page-header">
-        <h2>
-            Employers
-            <button type="button" class="btn btn-primary btn-xs" ng-click="newEmployer()"><i class="fa fa-plus fa-fw"></i> New</button>
-        </h2>
+
+<div class="page-header">
+    <h2>
+        Employers
+        <button type="button" class="btn btn-primary btn-sm" ng-click="newEmployer()"><i class="fa fa-plus fa-fw"></i> New</button>
+    </h2>
+</div>
+<div>
+    <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{alert.message}}
     </div>
-    <div>
-        <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{alert.message}}
-        </div>
-    </div>
-    <div class="panel panel-info collapse" id="collapseNewEmployer">
-        <div class="panel-heading">New Employer</div>
-        <div class="panel-body">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td><edit-input-text value="createdEmployer.name" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdEmployer.address" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdEmployer.city" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdEmployer.postcode" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-code code="createdEmployer.country" ng-model-labels="isoLabels['country']" edit-form="newForm"></edit-input-code></td>
-                        <td><edit-input-text value="createdEmployer.phone_number" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdEmployer.fax_number" edit-form="newForm"></edit-input-text></td>
-                        <td class="btn-group">
-                            <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="closeNewEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>PostCode</th>
-                <th>Country</th>
-                <th>Phone</th>
-                <th>Fax</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <!-- use ng-repeat to render employers' information rows -->
-            <tbody ng-repeat="employer in employers">
-                <!-- information row -->
-                <tr ng-controller="EmployerCtrl">
-                    <td><div edit-input-text value="employer.name" edit-form="editForm"></div></td>
-                    <td><div edit-input-text value="employer.address" edit-form="editForm"></div></td>
-                    <td><div edit-input-text value="employer.city" edit-form="editForm"></div></td>
-                    <td><div edit-input-text value="employer.postcode" edit-form="editForm"></div></td>
-                    <td><div editInputSelectCode selected-code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></div></td>
-                    <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></div></td>
-                    <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></div></td>
-                    <!-- action buttons -->
-                    <td class="btn-toolbar">
-                        <div ng-hide="editForm" class="btn-group">
-                            <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployer()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li ng-click="deleteEmployer()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
-                            </ul>
-                        </div>
-                        <div ng-show="editForm" class="btn-group">
-                            <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                        </div>
-                        <div class="btn-group">
-                            <!-- whenever the button is clicked, the collapse value (Department List Collapse) will be toggled -->
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseDepartments{{employer.id}}">Departments</button>
-                            <!-- whenever the button is clicked, the collapse value (Contacts List Collapse) will be toggled -->
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseContacts{{employer.id}}">Contacts</button>
-                        </div>
-                    </td>
-                <!-- department row -->
-                </tr>
-                <tr style="border: none;">
-                    <td colspan="8" style="border: none; padding: 0px;">
-                        <!-- department collapse content -->
-                        <div class="collapse" id="collapseDepartments{{employer.id}}" ng-include src="'views/employers/departments/departmentsList.html'"></div>
-                    </td>
-                </tr>
-                <!-- contacts row -->
-                <tr style="border: none;">
-                    <td colspan="8" style="border: none; padding: 0px;">
-                        <!-- contacts collapse content -->
-                        <div class="collapse" id="collapseContacts{{employer.id}}" ng-include src="'views/employers/contacts/contactsList.html'"></div>
+</div>
+<div class="panel panel-info collapse" id="collapseNewEmployer">
+    <div class="panel-heading">New Employer</div>
+    <div class="panel-body">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><edit-input-text value="createdEmployer.name" edit-form="newForm"></edit-input-text></td>
+                    <td><edit-input-text value="createdEmployer.address" edit-form="newForm"></edit-input-text></td>
+                    <td><edit-input-text value="createdEmployer.city" edit-form="newForm"></edit-input-text></td>
+                    <td><edit-input-text value="createdEmployer.postcode" edit-form="newForm"></edit-input-text></td>
+                    <td><edit-input-code code="createdEmployer.country" ng-model-labels="isoLabels['country']" edit-form="newForm"></edit-input-code></td>
+                    <td><edit-input-text value="createdEmployer.phone_number" edit-form="newForm"></edit-input-text></td>
+                    <td><edit-input-text value="createdEmployer.fax_number" edit-form="newForm"></edit-input-text></td>
+                    <td class="btn-group">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="closeNewEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>PostCode</th>
+            <th>Country</th>
+            <th>Phone</th>
+            <th>Fax</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <!-- use ng-repeat to render employers' information rows -->
+        <tbody ng-repeat="employer in employers">
+            <!-- information row -->
+            <tr ng-controller="EmployerCtrl">
+                <td><div edit-input-text value="employer.name" edit-form="editForm"></div></td>
+                <td><div edit-input-text value="employer.address" edit-form="editForm"></div></td>
+                <td><div edit-input-text value="employer.city" edit-form="editForm"></div></td>
+                <td><div edit-input-text value="employer.postcode" edit-form="editForm"></div></td>
+                <td><div editInputSelectCode selected-code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></div></td>
+                <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></div></td>
+                <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></div></td>
+                <!-- action buttons -->
+                <td class="btn-toolbar">
+                    <div ng-hide="editForm" class="btn-group">
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployer()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+                        <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-click="deleteEmployer()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+                        </ul>
+                    </div>
+                    <div ng-show="editForm" class="btn-group">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                    </div>
+                    <div class="btn-group">
+                        <!-- whenever the button is clicked, the collapse value (Department List Collapse) will be toggled -->
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseDepartments{{employer.id}}">Departments</button>
+                        <!-- whenever the button is clicked, the collapse value (Contacts List Collapse) will be toggled -->
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseContacts{{employer.id}}">Contacts</button>
+                    </div>
+                </td>
+            <!-- department row -->
+            </tr>
+            <tr style="border: none;">
+                <td colspan="8" style="border: none; padding: 0px;">
+                    <!-- department collapse content -->
+                    <div class="collapse" id="collapseDepartments{{employer.id}}" ng-include src="'views/employers/departments/departmentsList.html'"></div>
+                </td>
+            </tr>
+            <!-- contacts row -->
+            <tr style="border: none;">
+                <td colspan="8" style="border: none; padding: 0px;">
+                    <!-- contacts collapse content -->
+                    <div class="collapse" id="collapseContacts{{employer.id}}" ng-include src="'views/employers/contacts/contactsList.html'"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
