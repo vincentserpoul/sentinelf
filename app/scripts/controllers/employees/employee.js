@@ -19,7 +19,7 @@ sentinelfApp.controller(
             $scope.displayAssignments = !$scope.displayAssignments;
 
             if($scope.displayAssignments){
-                employeesGlobaleventFactory.get({employeeId: 1}, function(data){
+                employeesGlobaleventFactory.get({employeeId: $scope.employee.id}, function(data){
                     $scope.globaleventPeriods = data['globalevent_periods'];
                 });
             }
@@ -38,6 +38,10 @@ sentinelfApp.controller(
             $scope.savEmployee = angular.copy($scope.employee);
             // Activate the edit
             $scope.editForm = true;
+            /* init the add employee doc form */
+            $scope.addNewEmployeeDocForm  = false;
+            /* init the add employee identity doc form */
+            $scope.addNewEmployeeIdentityDocForm  = false;
         }
 
         $scope.saveEmployee = function(){
@@ -78,4 +82,34 @@ sentinelfApp.controller(
             });
         }
 
+        /* EmployeeDoc related functions */
+        /* Delete employee doc */
+        $scope.deleteEmployeeDoc = function(employeeDoc){
+            var index = $scope.employee.employee_doc.indexOf(employeeDoc);
+            $scope.employee.employee_doc.splice(index, 1);
+        }
+        /* Add employee doc */
+        $scope.addEmployeeDoc = function(){
+            /* hide back the form */
+            $scope.employeeDocForm = false;
+            $scope.newEmployeeDoc.doc_type_id = $scope.newEmployeeDoc.doc_type.id;
+            /* We need to copy to make sure a new element is created each time */
+            $scope.employee.employee_doc.unshift(angular.copy($scope.newEmployeeDoc));
+        }
+
+        /* Employee Identity doc related function */
+        /* Delete employee identity doc */
+        $scope.deleteEmployeeIdentityDoc = function(employeeIdentityDoc){
+            var index = $scope.employee.employee_identity_doc.indexOf(employeeIdentityDoc);
+            $scope.employee.employee_identity_doc.splice(index, 1);
+        }
+
+        /* Add employee identity doc */
+        $scope.addEmployeeIdentityDoc = function(){
+            /* hide back the form */
+            $scope.employeeDocForm = false;
+            $scope.newEmployeeIdentityDoc.identity_doc_type_id = $scope.newEmployeeIdentityDoc.identity_doc_type.id;
+            /* We need to copy to make sure a new element is created each time */
+            $scope.employee.employee_identity_doc.unshift(angular.copy($scope.newEmployeeIdentityDoc));
+        }
 }])

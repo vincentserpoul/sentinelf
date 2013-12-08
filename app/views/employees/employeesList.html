@@ -1,3 +1,13 @@
+<h2>
+    Employees
+    <button type="button" class="btn btn-primary btn-sm" ng-click="newEmployee()"><i class="fa fa-plus fa-fw"></i> Add new</button>
+</h2>
+<div>
+    <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{alert.message}}
+    </div>
+</div>
 <ul>
     <li ng-repeat="employee in employees" ng-controller="EmployeeCtrl">
         {{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}
@@ -11,14 +21,56 @@
         <button class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
         <button class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
         <div ng-show="displayProfile" class="form-inline">
-            <p><edit-input-select uniq-id-value="employee.country_code" model-ref-type="country" model-ref-resource="countryListResource" edit-form="editForm"></edit-input-select></p>
+            <p><edit-input-select uniq-id-value="employee.country_code" model-ref-type="country" model-ref-resource="countryListResource" ng-model="employee.country" edit-form="editForm"></edit-input-select></p>
             <p><edit-input-text value="employee.date_of_birth" edit-form="editForm"></edit-input-text></p>
             <p><edit-input-text value="employee.mobile_phone_number" edit-form="editForm"></edit-input-text></p>
             <p><edit-input-text value="employee.school" edit-form="editForm"></edit-input-text></p>
             <p><edit-input-text value="employee.join_date" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-text value="employee.race_id" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-text value="employee.status_id" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-text value="employee.work_pass_type_id" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-select uniq-id-value="employee.race_id" ng-model="employee.race"  model-ref-type="race" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></p>
+            <p><edit-input-select uniq-id-value="employee.status_id" ng-model="employee.status" model-ref-type="status" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></edit-input-text></p>
+            <p><edit-input-select uniq-id-value="employee.work_pass_type_id" ng-model="employee.work_pass_type" model-ref-type="work_pass_type" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></edit-input-text></p>
+            <p>
+                Employee documents
+                <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-plus fa-fw"></i> Add new</button>
+                <ul>
+                    <li  ng-repeat="employee_doc_unit in employee.employee_doc">
+                        <img class="thumb" />{{(employeeStaticLabels['doc_type'] | filter:employee_doc_unit.doc_type_id)[0].label}}
+                        <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeDoc(employee_doc_unit)"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+                    </li>
+                    <li ng-show="employeeDocForm">
+                        <p><edit-input-select uniq-id-value="" model-ref-type="doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeDoc.doc_type"></edit-input-select></p>
+                        <p><input type="file" ng-model="newEmployeeDoc.doc_image"/></p>
+                        <p>
+                            <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeDoc()"><i class="fa fa-save fa-fw"></i> Add</button>
+                            <button type="button" class="btn btn-default btn-xs" ng-click="employeeDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                        </p>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                Employee identity documents
+                <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeIdentityDocForm = !employeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i> Add new</button>
+                <ul>
+                    <li  ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
+                        <img class="thumb" />
+                        {{(employeeStaticLabels['identity_doc_type'] | filter:employee_identity_doc_unit.identity_doc_type_id)[0].label}}:
+                        {{employee_identity_doc_unit.identity_doc_number}}
+                        ({{employee_identity_doc_unit.identity_doc_validity_start}} - {{employee_identity_doc_unit.identity_doc_validity_end}})
+                        <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeIdentityDoc(employee_identity_doc_unit)"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+                    </li>
+                    <li ng-show="employeeIdentityDocForm" >
+                        <p><edit-input-select uniq-id-value="" model-ref-type="identity_doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeIdentityDoc.identity_doc_type"></edit-input-select></p>
+                        <p><input type="file" /></p>
+                        <p><input type="text" ng-model="newEmployeeIdentityDoc.identity_doc_number" placeholder="identity doc number" /></p>
+                        <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_start" /></p>
+                        <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_end" /></p>
+                        <p>
+                            <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeIdentityDoc()"><i class="fa fa-save fa-fw"></i> Add</button>
+                            <button type="button" class="btn btn-default btn-xs" ng-click="employeeIdentityDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                        </p>
+                    </li>
+                </ul>
+            </p>
             <p>
                 <div ng-hide="editForm" class="btn-group button-edit">
                     <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployee()"><i class="fa fa-edit fa-fw"></i> Edit</button>

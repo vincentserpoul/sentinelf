@@ -6,10 +6,10 @@ sentinelfApp
 
         var editInputSelectTemplate =
             '<div ng-hide="editForm">' +
-                '{{ selectedItem.label }} ' +
+                '{{ ngModel.label }} ' +
             '</div>' +
             '<div ng-show="editForm">' +
-                '<select class="form-control input-sm" ng-model="selectedItem" ng-options="item.label for item in modelRefList" required></select>' +
+                '<select class="form-control input-sm" ng-model="ngModel" ng-options="item.label for item in modelRefList" required></select>' +
             '</div>';
 
         return {
@@ -19,7 +19,8 @@ sentinelfApp
                 uniqIdValue: '=',
                 modelRefResource: '=',
                 modelRefType: '@',
-                editForm: '='
+                editForm: '=',
+                ngModel: '='
             },
             link: function(scope){
 
@@ -30,7 +31,7 @@ sentinelfApp
                         scope.modelRefList = modelRefResult.labels[scope.modelRefType];
 
                         /* Preselect the select box with the given value uniqIdValue */
-                        scope.selectedItem = scope.findItemByUniqId(scope.modelRefList, scope.uniqIdValue);
+                        scope.ngModel = scope.findItemByUniqId(scope.modelRefList, scope.uniqIdValue);
                     });
 
                 }
