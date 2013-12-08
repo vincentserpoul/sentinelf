@@ -10,14 +10,10 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
         /* Initialize the list of employers */
         employersFactory.get(function(data){
             $scope.employers = data['employers'];
-            // get model iso labels for country of employers
-            modelIsoLabelsFactory.get({model:'country'}, function(data){
-                $scope.isoLabels = data['labels'];
-                for (var i in $scope.employers) {
-                    $scope.employers[i].country = formService.findObjectByCode($scope.isoLabels['country'], $scope.employers[i].country_code);
-                }
-            });
         });
+
+        /* Get the labels necessary for the list of countries not to be only codes */
+        $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
 
         $scope.newForm = true;
     };
@@ -38,8 +34,6 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
 
     $scope.saveEmployer = function () {
         /* Call the factory to update the new employer in db */
-        //update codes
-        $scope.createdEmployer.country_code = $scope.createdEmployer.country['code'];
         employersFactory.save($scope.createdEmployer,
             function (data) {
                 if (data) {
@@ -74,8 +68,6 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
 
     $scope.saveEmployer = function () {
         /* Call the factory to update the new employer in db */
-        //update codes
-        $scope.employer.country_code = $scope.employer.country['code'];
         employersFactory.update($scope.employer,
             function (data) {
                 if (data) {

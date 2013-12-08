@@ -6,7 +6,7 @@
         </h2>
     </div>
     <div>
-        <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
+        <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable repeat-animation">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             {{alert.message}}
         </div>
@@ -48,19 +48,19 @@
             </tr>
             </thead>
             <!-- use ng-repeat to render employers' information rows -->
-            <tbody ng-repeat="employer in employers">
+            <tbody ng-repeat="employer in employers" class="repeat-animation">
                 <!-- information row -->
                 <tr ng-controller="EmployerCtrl">
                     <td><div edit-input-text value="employer.name" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.address" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.city" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.postcode" edit-form="editForm"></div></td>
-                    <td><div editInputSelectCode selected-code="employer.country" ng-model-labels="isoLabels['country']" edit-form="editForm"></div></td>
+                    <td><div edit-input-select uniq-id-value="employer.country_code" model-ref-type="country" model-ref-resource="countryListResource" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.phone_number" edit-form="editForm"></div></td>
                     <td><div edit-input-text value="employer.fax_number" edit-form="editForm"></div></td>
                     <!-- action buttons -->
                     <td class="btn-toolbar">
-                        <div ng-hide="editForm" class="btn-group">
+                        <div ng-hide="editForm" class="btn-group show-hide-animation">
                             <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployer()"><i class="fa fa-edit fa-fw"></i> Edit</button>
                             <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
@@ -70,7 +70,7 @@
                                 <li ng-click="deleteEmployer()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
                             </ul>
                         </div>
-                        <div ng-show="editForm" class="btn-group">
+                        <div ng-show="editForm" class="btn-group show-hide-animation">
                             <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployer()"><i class="fa fa-save fa-fw"></i> Save</button>
                             <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEmployer()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                         </div>
