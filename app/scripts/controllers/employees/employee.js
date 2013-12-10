@@ -45,9 +45,15 @@ sentinelfApp.controller(
         }
 
         $scope.saveEmployee = function(){
-            /* Call the factory to update the new employer in db */
-            //console.log($scope.employee);
-            employeesFactory.update($scope.employer,
+
+            /* Needed because the input return a damn json array */
+            $scope.employee.country_code = $scope.employee.country.code;
+            $scope.employee.work_pass_type_id = $scope.employee.work_pass_type.id;
+            $scope.employee.race_id = $scope.employee.race.id;
+            $scope.employee.status_id = $scope.employee.status.id;
+
+            /* Call the factory to update the employee in db */
+            employeesFactory.update($scope.employee,
                 function(data){
                     // when success, reset the savEmployer
                     $scope.savEmployee = null;
@@ -107,7 +113,7 @@ sentinelfApp.controller(
         /* Add employee identity doc */
         $scope.addEmployeeIdentityDoc = function(){
             /* hide back the form */
-            $scope.employeeDocForm = false;
+            $scope.employeeIdentityDocForm = false;
             $scope.newEmployeeIdentityDoc.identity_doc_type_id = $scope.newEmployeeIdentityDoc.identity_doc_type.id;
             /* We need to copy to make sure a new element is created each time */
             $scope.employee.employee_identity_doc.unshift(angular.copy($scope.newEmployeeIdentityDoc));

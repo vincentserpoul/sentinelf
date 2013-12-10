@@ -1,7 +1,7 @@
 'use strict';
 
 sentinelfApp.factory('AuthenticationService', ['$http', function($http){
-	
+
 	var currentUser = {email: '', userRole: {title: 'public', permissions: ['public']}};
 
 	var xhr = new XMLHttpRequest();
@@ -18,6 +18,7 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 
 	return {
 		authorize: function(permissions) {
+			if(!permissions) return true;
 			if(!permissions.length) return true;
 			for(var i = 0; i < permissions.length; i++){
 				if(currentUser.userRole.permissions.indexOf(permissions[i]) > -1) return true;
@@ -32,13 +33,13 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 		},
 		register: function(user, success, error) {
 			var login =  $http({
-				url: 'http://dev.sentinelb.com/auth/register', 
-				method: "POST", 
+				url: 'http://dev.sentinelb.com/auth/register',
+				method: "POST",
 				data: user,
-				headers: { 
+				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
-				withCredentials: true, 
+				withCredentials: true,
 				transformRequest: function(obj) {
                     var str = [];
                     for(var p in obj)
@@ -49,10 +50,10 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 		},
 		login: function(user, success, error) {
 			var login =  $http({
-				url: 'http://dev.sentinelb.com/auth/login', 
-				method: "POST", 
+				url: 'http://dev.sentinelb.com/auth/login',
+				method: "POST",
 				data: user,
-				headers: { 
+				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				},
 				withCredentials: true,
@@ -64,20 +65,20 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
                 }
 			});
 			login.success(function(response){
-				changeUser(response.user); 
+				changeUser(response.user);
 				success(response);
 			});
 			login.error(error);
 			return login;
-		}, 
+		},
 		logout: function(success, error) {
 			var logout = $http({
-				url: 'http://dev.sentinelb.com/auth/logout', 
+				url: 'http://dev.sentinelb.com/auth/logout',
 				method: "GET",
 				withCredentials: true
-			}); 
+			});
 			logout.success(function(response){
-				changeUser(response.user); 
+				changeUser(response.user);
 				success(response);
 			});
 			logout.error(error);
@@ -88,7 +89,7 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 				url: 'http://dev.sentinelb.com/auth/token',
 				method: "GET",
 				withCredentials: true
-			}); 
+			});
 			return token;
 		},
         user: currentUser
