@@ -8,12 +8,12 @@
             <div class="panel-heading">New Contact</div>
             <div class="panel-body">
                 <table class="table">
-                    <tbody>
+                    <tbody ng-repeat="createdContact in createdContacts">
                         <tr>
-                            <td><div edit-input-code code="createdContact.title" ng-model-labels="contactStaticLabels['title']" edit-form="newForm"></td>
+                            <td><edit-input-select uniq-id-value="createdContact.title_id" ng-model="createdContact.title"  model-ref-type="title" model-ref-resource="contactStaticLabelsResource" edit-form="newForm"></edit-input-select></td>
                             <td><div edit-input-text value="createdContact.first_name" edit-form="newForm"></div></td>
                             <td><div edit-input-text value="createdContact.last_name" edit-form="newForm"></div></td>
-                            <td><div edit-input-code code="createdContact.sex" ng-model-labels="contactStaticLabels['sex']" edit-form="newForm"></div></td>
+                            <td><edit-input-select uniq-id-value="createdContact.sex_id" ng-model="createdContact.sex"  model-ref-type="sex" model-ref-resource="contactStaticLabelsResource" edit-form="newForm"></edit-input-select></td>
                             <td><div edit-input-text value="createdContact.mobile_phone_number" edit-form="newForm"></div></td>
                             <td><div edit-input-check value="createdContact.primary_contact" edit-form="newForm"></div></td>
                             <td class="btn-group">
@@ -39,10 +39,10 @@
             </thead>
             <tbody>
                 <tr ng-repeat="contact in contacts" ng-controller="ContactCtrl">
-                    <td><div edit-input-code code="contact.title" ng-model-labels="contactStaticLabels['title']" edit-form="editForm"></td>
-                    <td><div edit-input-text value="contact.first_name" edit-form="editForm"></div></td>
-                    <td><div edit-input-text value="contact.last_name" edit-form="editForm"></div></td>
-                    <td><div edit-input-code code="contact.sex" ng-model-labels="contactStaticLabels['sex']" edit-form="editForm"></div></td>
+                    <td><edit-input-select uniq-id-value="contact.title_id" ng-model="contact.title"  model-ref-type="title" model-ref-resource="contactStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
+                    <td><edit-input-text value="contact.first_name" edit-form="editForm"></edit-input-text></td>
+                    <td><edit-input-text value="contact.last_name" edit-form="editForm"></edit-input-text></td>
+                    <td><edit-input-select uniq-id-value="contact.sex_id" ng-model="contact.sex"  model-ref-type="sex" model-ref-resource="contactStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
                     <td><div edit-input-text value="contact.mobile_phone_number" edit-form="editForm"></div></td>
                     <td><div edit-input-check value="contact.primary_contact" edit-form="editForm"></div></td>
                     <td>

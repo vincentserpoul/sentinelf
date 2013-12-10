@@ -28,16 +28,16 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
             "country_code":"SGP",
             "phone_number":"+6599999999",
             "fax_number":"+6599999999"};
-        $scope.createdEmployer.country = formService.findObjectByCode($scope.isoLabels['country'], $scope.createdEmployer.country_code);
         $('#collapseNewEmployer').collapse('show');
     }
 
     $scope.saveEmployer = function () {
+        // get code from model
+        $scope.createdEmployer.country_code = $scope.createdEmployer.country['code'];
         /* Call the factory to update the new employer in db */
         employersFactory.save($scope.createdEmployer,
             function (data) {
                 if (data) {
-                    data['employer'].country = formService.findObjectByCode($scope.isoLabels['country'], data['employer'].country_code);
                     $scope.employers.push(data['employer']);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
@@ -67,6 +67,8 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
     }
 
     $scope.saveEmployer = function () {
+        // get code from model
+        $scope.employer.country_code = $scope.employer.country['code'];
         /* Call the factory to update the new employer in db */
         employersFactory.update($scope.employer,
             function (data) {

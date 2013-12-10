@@ -18,7 +18,7 @@ sentinelfApp.controller('LoginCtrl', ['$scope', '$location', 'AuthenticationServ
 				$location.path('/');
 			}, 
 			function(response) {
-				AlertService.show({ "message": response.message, "type": "alert-warning" }, false);  
+				AlertService.show({ "message": response.message, "type": "alert-warning" }, true);  
 			}
 		);
 	}

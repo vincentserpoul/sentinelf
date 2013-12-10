@@ -33,15 +33,15 @@
 			                <th>Actions</th>
 			            </tr>
 		            </thead>
-		            <tbody>
+		            <tbody ng-repeat="selectedDepartment in selectedDepartments">
 		                <tr>
-		                    <td><div edit-input-text value="selectedDepartment.label" edit-form="editForm"></td>
-		                    <td><div edit-input-text value="selectedDepartment.description" edit-form="editForm"></div></td>
-		                    <td><div edit-input-code code="selectedDepartment.work_type" ng-model-labels="departmentStaticLabels['work_type']" edit-form="editForm"></div></td>
-		                    <td><div edit-input-text value="selectedDepartment.employee_hourly_rate" edit-form="editForm"></div></td>
-		                    <td><div edit-input-code code="selectedDepartment.employee_hourly_rate_currency" ng-model-labels="currencyIsoLabels" edit-form="editForm"></div></td>
-		                    <td><div edit-input-text value="selectedDepartment.employer_hourly_rate" edit-form="editForm"></div></td>
-		                    <td><div edit-input-code code="selectedDepartment.employer_hourly_rate_currency" ng-model-labels="currencyIsoLabels" edit-form="editForm"></div></td>
+		                    <td><edit-input-text value="selectedDepartment.label" edit-form="editForm"></edit-input-text></td>
+		                    <td><edit-input-text value="selectedDepartment.description" edit-form="editForm"></edit-input-text></td>
+		                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
+		                    <td><edit-input-text value="selectedDepartment.employee_hourly_rate" edit-form="editForm"></edit-input-text></td>
+		                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_hourly_rate_currency_code" ng-model="selectedDepartment.employee_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+		                    <td><edit-input-text value="selectedDepartment.employer_hourly_rate" edit-form="editForm"></edit-input-text></td>
+		                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_hourly_rate_currency_code" ng-model="selectedDepartment.employer_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
 		                    <!-- action buttons -->
 		                    <td class="btn-toolbar">
 		                        <div ng-hide="editForm" class="btn-group">

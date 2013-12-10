@@ -120,7 +120,7 @@ var sentinelfApp = angular.module('sentinelfApp', [
         if (!AuthenticationService.authorize(next.access)) {
             if(AuthenticationService.isLoggedIn()) $location.path('/');
             else {
-                AlertService.show({ 'message': 'Please login to continue', 'type': 'alert-warning'});
+                AlertService.show({ 'message': 'Please login to continue', 'type': 'alert-warning'}, true);
                 $location.path('/login');
             }
         }

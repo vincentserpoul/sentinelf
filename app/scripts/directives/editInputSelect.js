@@ -5,10 +5,10 @@ sentinelfApp
     , function() {
 
         var editInputSelectTemplate =
-            '<div ng-hide="editForm">' +
+            '<div ng-hide="editForm" class="show-hide-animation">' +
                 '{{ ngModel.label }} ' +
             '</div>' +
-            '<div ng-show="editForm">' +
+            '<div ng-show="editForm" class="show-hide-animation">' +
                 '<select class="form-control input-sm" ng-model="ngModel" ng-options="item.label for item in modelRefList" required></select>' +
             '</div>';
 

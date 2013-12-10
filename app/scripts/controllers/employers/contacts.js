@@ -10,30 +10,23 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService'
         contactsFactory.get({employer_id : $scope.employer.id}, function(data){
             $scope.contacts = data['EmployerContacts'];
             /* Get the labels necessary for the list not to be only numbers */
-            modelStaticLabelsFactory.get({model:'contact'}, function(data){
-                $scope.contactStaticLabels = data['labels'];
-                // get labels from id
-                for (var i in $scope.contacts) {
-                    $scope.contacts[i].title = formService.findObjectById($scope.contactStaticLabels['title'], $scope.contacts[i].title_id);
-                    $scope.contacts[i].sex = formService.findObjectById($scope.contactStaticLabels['sex'], $scope.contacts[i].sex_id);
-                }
-            });
         });
+
+        $scope.contactStaticLabelsResource = modelStaticLabelsFactory.get({model:'contact'});
+
         $scope.newForm = true;
     };
 
     $scope.newContact = function () {
         // preselected values for new contact
-        $scope.createdContact = {
+        $scope.createdContacts = [{
             "employer_id": $scope.employer.id,
             "first_name": "contact's first name",
             "last_name": "contact's last name",
             "title_id": 1,
-            "sex_id":1,
+            "sex_id": 1,
             "mobile_phone_number": "+6599999999",
-            "primary_contact": 0};
-        $scope.createdContact.title = formService.findObjectById($scope.contactStaticLabels['title'], $scope.createdContact.title_id);
-        $scope.createdContact.sex = formService.findObjectById($scope.contactStaticLabels['sex'], $scope.createdContact.sex_id);
+            "primary_contact": 0}];
         $('#collapseNewContact' + $scope.employer.id).collapse('show');
     }
 
@@ -41,14 +34,12 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService'
         /* Call the factory to update the new contact in db */
         //update codes
         //update title ids and sex ids
-        $scope.createdContact.title_id = $scope.createdContact.title['id'];
-        $scope.createdContact.sex_id = $scope.createdContact.sex['id'];
+        $scope.createdContacts[0].title_id = $scope.createdContacts[0].title['id'];
+        $scope.createdContacts[0].sex_id = $scope.createdContacts[0].sex['id'];
 
-        contactsFactory.save($scope.createdContact,
+        contactsFactory.save($scope.createdContacts[0],
             function (data) {
                 if (data) {
-                    data['EmployerContact'].title = formService.findObjectById($scope.contactStaticLabels['title'], data['EmployerContact'].title_id);
-                    data['EmployerContact'].sex = formService.findObjectById($scope.contactStaticLabels['sex'], data['EmployerContact'].sex_id);
                     $scope.contacts.push(data['EmployerContact']);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }
