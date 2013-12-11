@@ -6,8 +6,8 @@
 			{{departmentTree.currentNode.label}} is selected 
 			<div class="btn-group">
 				<button type="button" class="btn btn-primary btn-xs {{detailReady}}" data-toggle="collapse" data-target="#collapseNewDepartment{{employer.id}}"><i class="fa fa-info-circle fa-fw"></i> Detail</button>
-	            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
-	                <span class="caret"></span>
+	            <button type="button" class="btn btn-primary btn-xs dropdown-toggle {{detailReady}}" data-toggle="dropdown">
+	                <span class="caret {{detailReady}}"></span>
 	                <span class="sr-only">Toggle Dropdown</span>
 	            </button>
 	            <ul class="dropdown-menu" role="menu">
@@ -17,51 +17,100 @@
 		</div>
 	</div>
 	<div class="panel-body">
-		<div class="panel panel-info collapse" id="collapseNewDepartment{{employer.id}}">
-			<div class="panel-heading">{{departmentTree.currentNode.label}}'s Detail</div>
-			<div class="panel-body">
-				<table class="table">
-		            <thead>
-			            <tr>            
-			                <th>Label</th>
-			                <th>Description</th>
-			                <th>Work Type</th>
-			                <th>Employee Hourly Rate</th>
-			                <th>Employee Hourly Rate Currency</th>
-			                <th>Employer Hourly Rate</th>
-			                <th>Employer Hourly Rate Currency</th>
-			                <th>Actions</th>
-			            </tr>
-		            </thead>
-		            <tbody ng-repeat="selectedDepartment in selectedDepartments">
-		                <tr>
-		                    <td><edit-input-text value="selectedDepartment.label" edit-form="editForm"></edit-input-text></td>
-		                    <td><edit-input-text value="selectedDepartment.description" edit-form="editForm"></edit-input-text></td>
-		                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
-		                    <td><edit-input-text value="selectedDepartment.employee_hourly_rate" edit-form="editForm"></edit-input-text></td>
-		                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_hourly_rate_currency_code" ng-model="selectedDepartment.employee_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
-		                    <td><edit-input-text value="selectedDepartment.employer_hourly_rate" edit-form="editForm"></edit-input-text></td>
-		                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_hourly_rate_currency_code" ng-model="selectedDepartment.employer_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
-		                    <!-- action buttons -->
-		                    <td class="btn-toolbar">
-		                        <div ng-hide="editForm" class="btn-group">
-		                            <button type="button" class="btn btn-primary btn-xs" ng-click="editDepartment()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-		                            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
-		                                <span class="caret"></span>
-		                                <span class="sr-only">Toggle Dropdown</span>
-		                            </button>
-		                            <ul class="dropdown-menu" role="menu">
-		                                <li ng-click="deleteDepartment()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
-		                            </ul>
-		                        </div>
-		                        <div ng-show="editForm" class="btn-group">
-		                            <button type="button" class="btn btn-success btn-xs" ng-click="saveDepartment()"><i class="fa fa-save fa-fw"></i> Save</button>
-		                            <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-		                        </div>
-		                    </td>
-		                </tr>
-		            </tbody>
-		        </table>
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-info collapse" id="collapseNewDepartment{{employer.id}}" data-parent="#accordion">
+				<div class="panel-heading">{{departmentTree.currentNode.label}}'s Detail</div>
+				<div class="panel-body">
+					<table class="table">
+			            <thead>
+				            <tr>            
+				                <th>Label</th>
+				                <th>Description</th>
+				                <th>Work Type</th>
+				                <th>Employee Hourly Rate</th>
+				                <th>Employee Hourly Rate Currency</th>
+				                <th>Employer Hourly Rate</th>
+				                <th>Employer Hourly Rate Currency</th>
+				                <th>Actions</th>
+				            </tr>
+			            </thead>
+			            <tbody ng-repeat="selectedDepartment in selectedDepartments">
+			                <tr>
+			                    <td><edit-input-text value="selectedDepartment.label" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-text value="selectedDepartment.description" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employee_hourly_rate" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_hourly_rate_currency_code" ng-model="selectedDepartment.employee_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employer_hourly_rate" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_hourly_rate_currency_code" ng-model="selectedDepartment.employer_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <!-- action buttons -->
+			                    <td class="btn-toolbar">
+			                        <div ng-hide="editForm" class="btn-group">
+			                            <button type="button" class="btn btn-primary btn-xs" ng-click="editDepartment()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+			                            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+			                                <span class="caret"></span>
+			                                <span class="sr-only">Toggle Dropdown</span>
+			                            </button>
+			                            <ul class="dropdown-menu" role="menu">
+			                                <li ng-click="deleteDepartment()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+			                            </ul>
+			                        </div>
+			                        <div ng-show="editForm" class="btn-group">
+			                            <button type="button" class="btn btn-success btn-xs" ng-click="saveDepartment()"><i class="fa fa-save fa-fw"></i> Save</button>
+			                            <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+			                        </div>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
+				</div>
+			</div>
+			<div class="panel panel-info collapse" id="collapseNewDepartment{{employer.id}}">
+				<div class="panel-heading">{{departmentTree.currentNode.label}}'s Detail</div>
+				<div class="panel-body">
+					<table class="table">
+			            <thead>
+				            <tr>            
+				                <th>Label</th>
+				                <th>Description</th>
+				                <th>Work Type</th>
+				                <th>Employee Hourly Rate</th>
+				                <th>Employee Hourly Rate Currency</th>
+				                <th>Employer Hourly Rate</th>
+				                <th>Employer Hourly Rate Currency</th>
+				                <th>Actions</th>
+				            </tr>
+			            </thead>
+			            <tbody ng-repeat="selectedDepartment in selectedDepartments">
+			                <tr>
+			                    <td><edit-input-text value="selectedDepartment.label" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-text value="selectedDepartment.description" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employee_hourly_rate" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_hourly_rate_currency_code" ng-model="selectedDepartment.employee_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employer_hourly_rate" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_hourly_rate_currency_code" ng-model="selectedDepartment.employer_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <!-- action buttons -->
+			                    <td class="btn-toolbar">
+			                        <div ng-hide="editForm" class="btn-group">
+			                            <button type="button" class="btn btn-primary btn-xs" ng-click="editDepartment()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+			                            <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+			                                <span class="caret"></span>
+			                                <span class="sr-only">Toggle Dropdown</span>
+			                            </button>
+			                            <ul class="dropdown-menu" role="menu">
+			                                <li ng-click="deleteDepartment()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+			                            </ul>
+			                        </div>
+			                        <div ng-show="editForm" class="btn-group">
+			                            <button type="button" class="btn btn-success btn-xs" ng-click="saveDepartment()"><i class="fa fa-save fa-fw"></i> Save</button>
+			                            <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+			                        </div>
+			                    </td>
+			                </tr>
+			            </tbody>
+			        </table>
+				</div>
 			</div>
 		</div>
 		<div

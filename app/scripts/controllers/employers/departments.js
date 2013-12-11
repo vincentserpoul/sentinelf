@@ -12,9 +12,7 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
         });
 
         $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
-        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'}, function (data) {
-            $scope.detailReady = 'enabled';
-        });
+        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
 
         $scope.selectedDepartments = [{'label': 'None'}];
     };
@@ -71,10 +69,29 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
         });
     }
 
-    $scope.$watch( 'departmentTree.currentNode', function( newObj, oldObj ) {
+    $scope.newSubdepartment = function () {
+        $scope.new = true;
+        $scope.editForm = true;
+        $scope.selectedDepartments = 
+            [{'label': 'New department', 
+            'description': 'description',
+            'work_type_id': 1,
+            'employer_hourly_rate': 9,
+            'employer_hourly_rate_currency_code': 'SGD', 
+            'employee_hourly_rate': 9, 
+            'employee_hourly_rate_currency_code': 'SGD'}];
+    }
+
+    $scope.$watch( 'departmentTree.currentNode', function (newObj, oldObj) {
         if( $scope.departmentTree && angular.isObject($scope.departmentTree.currentNode) ) {
             $scope.selectedDepartments = [angular.copy($scope.departmentTree.currentNode)];
             $scope.editForm = false;
         }
     }, false);
+
+    $scope.$watch( 'selectedDepartments', function (newObj, oldObj) {
+        if ($scope.selectedDepartments[0].label != 'None' && $scope.departmentsStaticLabelsResource && $scope.currencyIsoLabelsResource) {
+            $scope.detailReady = 'enabled';
+        }
+    });
 }]);
