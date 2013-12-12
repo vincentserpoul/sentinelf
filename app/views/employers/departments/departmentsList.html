@@ -1,25 +1,25 @@
-<div class="panel panel-default" ng-controller="DepartmentsCtrl">
+<div class="panel panel-default accordion" ng-controller="DepartmentsCtrl" id="accordion">
 	<div class="panel-heading">
 		{{employer.name}}'s Departments
 		<button type="button" class="btn btn-primary btn-xs" ng-click="editDepartment()"><i class="fa fa-plus fa-fw"></i> New Root</button>
 		<div class="pull-right">
 			{{departmentTree.currentNode.label}} is selected 
 			<div class="btn-group">
-				<button type="button" class="btn btn-primary btn-xs {{detailReady}}" data-toggle="collapse" data-target="#collapseNewDepartment{{employer.id}}"><i class="fa fa-info-circle fa-fw"></i> Detail</button>
+				<button type="button" class="btn btn-primary btn-xs {{detailReady}}" data-toggle="collapse" data-parent="#accordion" data-target="#collapseDepartment{{employer.id}}"><i class="fa fa-info-circle fa-fw"></i> Detail</button>
 	            <button type="button" class="btn btn-primary btn-xs dropdown-toggle {{detailReady}}" data-toggle="dropdown">
 	                <span class="caret {{detailReady}}"></span>
 	                <span class="sr-only">Toggle Dropdown</span>
 	            </button>
 	            <ul class="dropdown-menu" role="menu">
-	                <li ng-click="newSubdepartment()"><a><i class="fa fa-plus fa-fw"></i> New Subdepartment</a></li>
+	                <li ng-click="newSubdepartment()" data-toggle="collapse" data-parent="#accordion" data-target="#collapseNewDepartment{{employer.id}}"><a><i class="fa fa-plus fa-fw"></i> New Subdepartment</a></li>
 	            </ul>
             </div>
 		</div>
 	</div>
 	<div class="panel-body">
-		<div class="panel-group" id="accordion">
-			<div class="panel panel-info collapse" id="collapseNewDepartment{{employer.id}}" data-parent="#accordion">
-				<div class="panel-heading">{{departmentTree.currentNode.label}}'s Detail</div>
+		<div class="panel-group">
+			<div class="panel panel-info collapse" id="collapseDepartment{{employer.id}}">
+				<div class="panel-heading">{{departmentTree.currentNode.label}}'s New Subdepartment</div>
 				<div class="panel-body">
 					<table class="table">
 			            <thead>

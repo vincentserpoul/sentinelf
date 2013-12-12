@@ -1,94 +1,62 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodCtrl", ['$scope', '$modal', '$http' ,'eventsFactory','eventPeriodFactory',function($scope, $modal , $http ,eventsFactory, eventPeriodFactory){
+sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory) {
 
-    $scope.editEventPeriod = function(){
+    $scope.editEventPeriod = function () {
         // Save eventPeriod in case of cancel, to rollback to previous values
         $scope.savEventPeriod = angular.copy($scope.eventPeriod);
         // Activate the edit
-        $scope.edit = true;
+        $scope.editForm = true;
     }
 
-    $scope.saveEventPeriod = function(){
+    $scope.saveEventPeriod = function () {
+        // format datetime
+        console.log($scope.eventPeriod);
+        if ($scope.eventPeriod.start_datetime instanceof Date) {
+            $scope.eventPeriod.start_datetime = "" + $scope.eventPeriod.start_datetime.getFullYear() + "-" + $scope.eventPeriod.start_datetime.getMonth().toPrecision(2) + "-" + $scope.eventPeriod.start_datetime.getDate().toPrecision(2) + " " + $scope.eventPeriod.start_datetime.getHours().toPrecision(2) + ":" + $scope.eventPeriod.start_datetime.getMinutes().toPrecision(2) + ":00";   
+        } else if ($scope.eventPeriod.end_datetime instanceof Date) {
+            $scope.eventPeriod.end_datetime = "" + $scope.eventPeriod.end_datetime.getFullYear() + "-" + $scope.eventPeriod.end_datetime.getMonth().toPrecision(2) + "-" + $scope.eventPeriod.end_datetime.getDate().toPrecision(2) + " " + $scope.eventPeriod.end_datetime.getHours().toPrecision(2) + ":" + $scope.eventPeriod.end_datetime.getMinutes().toPrecision(2) + ":00";
+        }
         /* Call the factory to update the new eventPeriod in db */
-        //console.log($scope.eventPeriod);
-        eventPeriodsFactory.update($scope.eventPeriod,
-            function(data){
-                // when success, reset the savEventPeriod
-                $scope.savEventPeriod = null;
-                $scope.edit = false;
+        eventPeriodFactory.update($scope.eventPeriod,
+            function (data) {
+                if (data) {
+                    // when success, reset the savEventPeriod
+                    $scope.savEventPeriod = null;
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
         );
+        $scope.editForm = false;
     };
 
-    $scope.cancelEditEventPeriod = function(){
+    $scope.cancelEditEventPeriod = function () {
         // Reset the data to what it was before the edit
         $scope.eventPeriod = $scope.savEventPeriod;
         // Deactivate the edit
-        $scope.edit = false;
+        $scope.editForm = false;
     };
 
     /* Delete employee button for each employee */
-    $scope.deleteEventPeriod = function(){
+    $scope.deleteEventPeriod = function () {
 
         var modalInstance = formService.popup('eventPeriod', $scope.eventPeriod.name);
 
         modalInstance.result.then(function(){
             eventPeriodsFactory.delete({eventPeriodId:$scope.eventPeriod.id},
-                function(data){
-                    if(data && data['error'] == false){
-                        $scope.eventPeriod.delete();
-                    } else {
-                        console.log(data['error']);
-                    }
-
+                function (data) {
+                    $scope.eventPeriods.splice(formService.findInArray($scope.eventPeriods, $scope.eventPeriod.id), 1);
+                    if (data)
+                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }, function (error) {
+                    if (error['data'])
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
                 }
             );
         });
     }
-
-}]);
-
-sentinelfApp.controller("EventPeriodEditCtrl", ['$scope', '$modalInstance', '$http' ,'eventsFactory', 'eventPeriodFactory', 'eventPeriodForm', 'event', 'dialog',function($scope, modalInstance, $http ,eventsFactory, eventPeriodFactory ,eventPeriodForm, event, dialog){
-
-    init();
-
-    function init(){
-
-        /*$http.get("data/event-period.json")
-            .then(function(response){
-                $scope.eventperiods = response.data.GlobaleventPeriods;
-            });*/
-        eventPeriodFactory.get(function(data){
-            $scope.eventperiods = data.GlobaleventPeriods;
-        });
-
-        if(eventPeriodForm, event){
-            $scope.event = event;
-            $scope.eventPeriodForm = eventPeriodForm;
-        } else {
-            console.log("No event period form, an unexpected condition");
-        }
-    }
-
-
-
-    $scope.saveEventPeriod = function(eventPeriodForm, event){
-        if(eventPeriodForm){
-            if( ( (eventPeriodForm.id) && (eventPeriodForm.id > 0)) &&  ( (event.id) && (event.id >0) )){
-                eventPeriodForm.globalevent_id=event.id;
-                console.log("Updating event "+eventPeriodForm.globalevent_id);
-                console.log("Updating event "+JSON.stringify(eventPeriodForm));
-                eventPeriodFactory.update(eventPeriodForm);
-            }else if( ( (!eventPeriodForm.id) || (eventPeriodForm.id ==  0)) && ( (event.id) && (event.id >0) ) ){
-                eventPeriodForm.globalevent_id=event.id;
-                console.log("Saving event "+eventPeriodForm.globalevent_id);
-                console.log("Saving event "+JSON.stringify(eventPeriodForm));
-
-                eventPeriodFactory.save(eventPeriodForm);
-            }
-        }
-        modalInstance.close(eventPeriodForm);
-    };
 
 }]);

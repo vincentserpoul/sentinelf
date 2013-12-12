@@ -5,6 +5,12 @@
             <button type="button" class="btn btn-primary btn-xs" ng-click="editEvent()"><i class="fa fa-plus fa-fw"></i> New</button>
         </h2>
     </div>
+    <div>
+        <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable repeat-animation">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{alert.message}}
+        </div>
+    </div>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -16,15 +22,15 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody ng-repeat="event in events">
+        <tbody ng-repeat="event in events" class="repeat-animation">
             <tr ng-controller='EventCtrl'>
                 <td>{{event.id}}</td>
-                <td>{{event.label}}</td>
-                <td>{{(employers | filter: {id: event.employer_id})[0].name}}</td>
-                <td>{{(departments | filter:{employer_id:event.employer_id} | filter: {id: event.employer_department_id})[0].label}}</td>
-                <td>{{event.date | date:"longDate"}}</td>
+                <td><edit-input-text value="event.label" edit-form="editForm"></edit-input-text></td>
+                <td><edit-input-select uniq-id-value="event.employer_id" model-ref-resource="employersResource" model-ref-type="employers" edit-form="editForm" ng-model="event.employer" alt-label="name" alt-ref="none"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="event.employer_department_id" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="editForm" ng-model="event.employer_department" alt-ref="none"></edit-input-select></td>
+                <td><edit-input-date date="event.date" edit-form="editForm"></edit-input-datetime></td>
                 <td class="btn-toolbar">
-                    <div ng-hide="edit" class="btn-group">
+                    <div ng-hide="editForm" class="btn-group">
                         <button type="button" class="btn btn-primary btn-xs" ng-click="editEvent()"><i class="fa fa-edit fa-fw"></i> Edit</button>
                         <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
@@ -34,7 +40,7 @@
                             <li><a data-ng-click="deleteEvent()"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
                         </ul>
                     </div>
-                    <div ng-show="edit" class="btn-group">
+                    <div ng-show="editForm" class="btn-group">
                         <button type="button" class="btn btn-success btn-xs" ng-click="saveEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
                         <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                     </div>

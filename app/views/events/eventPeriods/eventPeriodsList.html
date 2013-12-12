@@ -8,17 +8,17 @@
             <th>ID</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th># of staff</th>
+            <th>Number of Employees needed</th>
             <th>Actions</th>
         </tr>
         <tbody ng-repeat="eventPeriod in event.event_periods">
             <tr ng-controller='EventPeriodCtrl'>
                 <td>{{ eventPeriod.id }}</td>
-                <td>{{ eventPeriod.start_datetime }}</td>
-                <td>{{ eventPeriod.end_datetime }}</td>
-                <td>{{ eventPeriod.number_of_employee_needed }}</td>
+                <td><edit-input-datetime datetime="eventPeriod.start_datetime" edit-form="editForm"></edit-input-datetime></td>
+                <td><edit-input-datetime datetime="eventPeriod.end_datetime" edit-form="editForm"></edit-input-datetime></td>
+                <td><edit-input-text value="eventPeriod.number_of_employee_needed" edit-form="editForm"></edit-input-text></td>
                 <td class="btn-toolbar">
-                    <div ng-hide="edit" class="btn-group">
+                    <div ng-hide="editForm" class="btn-group">
                         <button type="button" class="btn btn-primary btn-xs" ng-click="editEventPeriod()"><i class="fa fa-edit fa-fw"></i> Edit</button>
                         <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
@@ -28,7 +28,7 @@
                             <li><a data-ng-click="deleteEventPeriod()"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
                         </ul>
                     </div>
-                    <div ng-show="edit" class="btn-group">
+                    <div ng-show="editForm" class="btn-group">
                         <button type="button" class="btn btn-success btn-xs" ng-click="saveEventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
                         <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
                     </div>

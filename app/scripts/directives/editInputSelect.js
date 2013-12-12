@@ -6,10 +6,10 @@ sentinelfApp
 
         var editInputSelectTemplate =
             '<div ng-hide="editForm" class="show-hide-animation">' +
-                '{{ ngModel.label }} ' +
+                '{{ ngModel[label] }} ' +
             '</div>' +
             '<div ng-show="editForm" class="show-hide-animation">' +
-                '<select class="form-control input-sm" ng-model="ngModel" ng-options="item.label for item in modelRefList" required></select>' +
+                '<select class="form-control input-sm" ng-model="ngModel" ng-options="item[label] for item in modelRefList" required></select>' +
             '</div>';
 
         return {
@@ -17,23 +17,34 @@ sentinelfApp
             template: editInputSelectTemplate,
             scope: {
                 uniqIdValue: '=',
+                altLabel: '@',
+                altRef: '@',
                 modelRefResource: '=',
                 modelRefType: '@',
                 editForm: '=',
                 ngModel: '='
             },
             link: function(scope){
+                scope.label = 'label';
 
                 function init(){
 
                     /* We have to wait for the resource to come back so we get its promise and move when it is there */
                     scope.modelRefResource.$promise.then(function(modelRefResult){
-                        scope.modelRefList = modelRefResult.labels[scope.modelRefType];
+                        
+                        if (!scope.altRef) {
+                            scope.modelRefList = modelRefResult.labels[scope.modelRefType];
+                        } else if (scope.altRef == 'none') {
+                            scope.modelRefList = modelRefResult[scope.modelRefType];    
+                        } else {
+                            scope.modelRefList = modelRefResult[scope.altRef][scope.modelRefType];
+                        }
 
                         /* Preselect the select box with the given value uniqIdValue */
                         scope.ngModel = scope.findItemByUniqId(scope.modelRefList, scope.uniqIdValue);
                     });
 
+                    if (scope.altLabel) scope.label = scope.altLabel;
                 }
 
                 /**

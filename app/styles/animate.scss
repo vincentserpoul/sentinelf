@@ -28,3 +28,32 @@
   opacity:0;
   padding:0 10px;
 }
+
+.view-animation {
+  padding:10px;
+}
+
+.view-animation.ng-enter, .view-animation.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.0s;
+
+  display:block;
+  width:100%;
+
+  position:absolute;
+  top:auto;
+  left:auto;
+  right:auto;
+  bottom:auto;
+  padding:10px;
+}
+
+.view-animation.ng-enter {
+  left:100%;
+}
+.view-animation.ng-enter.ng-enter-active {
+  left:0;
+}
+.view-animation.ng-leave.ng-leave-active {
+  left:-100%;
+}

@@ -1,24 +1,24 @@
 'use strict';
 
 sentinelfApp
-.directive("clickToEditDate"
+.directive("editInputDate"
     , function() {
 
-        var editorTemplate =
-            '<div>{{selectedDate | date:\'fullDate\'}} ' +
-            	'<button ng-click="showDobCalendar = !showDobCalendar" class="btn btn-mini"><i class="icon-calendar"></i></button>' +
-        		'<div ng-show="showDobCalendar">' +
-            		'<datepicker ng-model="selectedDate" starting-day="1" show-weeks="0"></datepicker>'+
-        		'</div>' +
+        var editInputDateTemplate =
+            '<div ng-hide="editForm" class="show-hide-animation">' +
+                '{{date | date:\'fullDate\'}} ' +
+            '</div>' +
+            '<div ng-show="editForm" class="show-hide-animation">' +
+                '<datepicker ng-model="date" starting-day="1" show-weeks="0"></datepicker>' +
             '</div>';
 
         return {
-            restrict: "A",
-            replace: true,
-            template: function(){return editorTemplate;},
+            restrict: 'EA',
+            template: editInputDateTemplate,
             scope: {
-                selectedDate: '=clickToEditDate',
-            },
+                date: '=',
+                editForm: '='
+            }
         };
     }
 );
