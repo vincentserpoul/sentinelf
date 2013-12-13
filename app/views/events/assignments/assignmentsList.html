@@ -19,25 +19,25 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="employee in employees">
+            <tr ng-repeat="employee in employees" class="repeat-animation">
                 <td>{{employee.id}}</td>
                 <td class="dropdown">
-                    <a class="dropdown-toggle">{{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}</a>
+                    <a class="dropdown-toggle">{{employee.first_name}} {{employee.last_name}}</a>
                     <ul class="dropdown-menu">
                         <li ng-repeat="eventPeriod in event.event_periods">
-                            <a>{{eventPeriod.id}} : {{eventPeriod.start_datetime}} -> {{eventPeriod.end_datetime}}</a>
+                            <a ng-click="assign()">{{eventPeriod.id}} : {{eventPeriod.start_datetime}} -> {{eventPeriod.end_datetime}}</a>
                         </li>
                     </ul>
                 </td>
-                <td>{{(employeeStaticLabels['sex'] | filter:employee.sex_id)[0].label}}</td>
-                <td>{{employee.country_code}}</td>
-                <td>{{employee.date_of_birth | date:'yyyy/MM/dd'}}</td>
-                <td>{{employee.mobile_phone_number}}</td>
-                <td>{{employee.school}}</td>
-                <td>{{employee.join_date}}</td>
-                <td>{{(employeeStaticLabels['race'] | filter:employee.race_id)[0].label}}</td>
-                <td>{{(employeeStaticLabels['status'] | filter:employee.status_id)[0].label}}</td>
-                <td>{{(employeeStaticLabels['work_pass_type'] | filter:employee.work_pass_type_id)[0].label}}</td>            
+                <td><edit-input-select uniq-id-value="employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="employee.sex" edit-form="editForm"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="employee.country_code" model-ref-resource="countryListResource" model-ref-type="country" ng-model="employee.country" edit-form="editForm"></edit-input-select></td>
+                <td><edit-input-date date="employee.date_of_birth" edit-form="editForm"></edit-input-date></td>
+                <td><edit-input-text value="employee.mobile_phone_number" edit-form="editForm"></edit-input-text></td>
+                <td><edit-input-text value="employee.school" edit-form="editForm"></edit-input-text></td>
+                <td><edit-input-date date="employee.join_date" edit-form="editForm"></edit-input-date></td>
+                <td><edit-input-select uniq-id-value="employee.race_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="race" ng-model="employee.race" edit-form="editForm"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="employee.status_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="status" ng-model="employee.status" edit-form="editForm"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="employee.work_pass_type" edit-form="editForm"></edit-input-select></td>            
             </tr>
         </tbody>
     </table>

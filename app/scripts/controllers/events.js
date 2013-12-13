@@ -16,6 +16,9 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'eventsFactory', 'employersFact
             });
         });
 
+        //Fetch all assignments
+        
+
         //Fetch all events
         $scope.employersResource = employersFactory.get();
 

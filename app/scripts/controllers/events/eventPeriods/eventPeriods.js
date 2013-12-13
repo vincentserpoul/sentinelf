@@ -10,13 +10,6 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
     }
 
     $scope.saveEventPeriod = function () {
-        // format datetime
-        console.log($scope.eventPeriod);
-        if ($scope.eventPeriod.start_datetime instanceof Date) {
-            $scope.eventPeriod.start_datetime = "" + $scope.eventPeriod.start_datetime.getFullYear() + "-" + $scope.eventPeriod.start_datetime.getMonth().toPrecision(2) + "-" + $scope.eventPeriod.start_datetime.getDate().toPrecision(2) + " " + $scope.eventPeriod.start_datetime.getHours().toPrecision(2) + ":" + $scope.eventPeriod.start_datetime.getMinutes().toPrecision(2) + ":00";   
-        } else if ($scope.eventPeriod.end_datetime instanceof Date) {
-            $scope.eventPeriod.end_datetime = "" + $scope.eventPeriod.end_datetime.getFullYear() + "-" + $scope.eventPeriod.end_datetime.getMonth().toPrecision(2) + "-" + $scope.eventPeriod.end_datetime.getDate().toPrecision(2) + " " + $scope.eventPeriod.end_datetime.getHours().toPrecision(2) + ":" + $scope.eventPeriod.end_datetime.getMinutes().toPrecision(2) + ":00";
-        }
         /* Call the factory to update the new eventPeriod in db */
         eventPeriodFactory.update($scope.eventPeriod,
             function (data) {
@@ -46,7 +39,7 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
         var modalInstance = formService.popup('eventPeriod', $scope.eventPeriod.name);
 
         modalInstance.result.then(function(){
-            eventPeriodsFactory.delete({eventPeriodId:$scope.eventPeriod.id},
+            eventPeriodFactory.delete({eventPeriodId:$scope.eventPeriod.id},
                 function (data) {
                     $scope.eventPeriods.splice(formService.findInArray($scope.eventPeriods, $scope.eventPeriod.id), 1);
                     if (data)

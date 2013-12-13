@@ -6,11 +6,11 @@ sentinelfApp
 
         var editInputDatetimeTemplate =
             '<div ng-hide="editForm" class="show-hide-animation">' +
-                '{{datetime | date:\'short\'}} ' +
+                '{{datetime | date:\'yyyy-MM-dd HH:mm:ss\'}} ' +
             '</div>' +
             '<div ng-show="editForm" class="show-hide-animation">' +
                 '<datepicker ng-model="datetime" starting-day="1" show-weeks="0"></datepicker>' +
-                '<timepicker ng-change="change()" ng-model="datetime" hour-step="1" minute-step="15" show-meridian="false"></timepicker>'
+                '<timepicker ng-model="datetime" hour-step="1" minute-step="15" show-meridian="false"></timepicker>'
             '</div>';
 
         return {
