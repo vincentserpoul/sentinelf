@@ -2,8 +2,8 @@
 
 sentinelfApp.controller(
     'EmployeeCtrl', [
-    '$scope', 'employeesFactory', 'employeesGlobaleventFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function($scope, employeesFactory, employeesGlobaleventFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
+    '$scope', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
+    function($scope, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
 
         init();
 
@@ -17,10 +17,25 @@ sentinelfApp.controller(
             $scope.displayProfile=false;
             $scope.displayPayments=false;
             $scope.displayAssignments = !$scope.displayAssignments;
+            $scope.displayUnpaidAssignments=false;
 
             if($scope.displayAssignments){
-                employeesGlobaleventFactory.get({employeeId: $scope.employee.id}, function(data){
+                employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
                     $scope.globaleventPeriods = data['globalevent_periods'];
+                });
+            }
+        }
+
+        /* Display profile tab and hide the two others */
+        $scope.showUnpaidAssignments = function(){
+            $scope.displayProfile=false;
+            $scope.displayPayments=false;
+            $scope.displayAssignments = false;
+            $scope.displayUnpaidAssignments=!$scope.displayUnpaidAssignments;
+
+            if($scope.displayUnpaidAssignments){
+                employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
+                    $scope.unpaidGlobaleventPeriods = data['globalevent_periods'];
                 });
             }
         }
@@ -30,6 +45,7 @@ sentinelfApp.controller(
             $scope.displayProfile = !$scope.displayProfile;
             $scope.displayPayments=false;
             $scope.displayAssignments=false;
+            $scope.displayUnpaidAssignments=false;
         }
 
         $scope.editEmployee = function(){
