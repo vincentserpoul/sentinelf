@@ -1,12 +1,12 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'eventsFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', function ($scope, eventsFactory, employersFactory, departmentsFactory, eventPeriodFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function ($scope, formService, eventsFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
 
    init();
 
     function init(){
         //Fetch all events and events' periods
-        eventsFactory.get(function(data){
+        eventsFactory.get(function (data) {
             $scope.events = data['Globalevents'];  
             $scope.eventPeriodResource = eventPeriodFactory.get(function (data) {
                 $scope.eventsPeriods = data['GlobaleventPeriods'];
@@ -17,7 +17,28 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'eventsFactory', 'employersFact
         });
 
         //Fetch all assignments
-        
+        employeesFactory.get(function (data) {
+            $scope.employees = data['employees'];
+            eventPeriodEmployeeFactory.get(function (data) {
+                $scope.eventPeriodEmployees = data['GlobaleventPeriodEmployees'];
+                /*
+                for (var i = 0; i < $scope.eventPeriodEmployees.length; i++) {
+                    //assign event periods to employees
+                    var employee = formService.findObjectById($scope.employees, $scope.eventPeriodEmployees[i]['employee_id']);
+                    if (!employee.assignments) {
+                        employee.assignments = [$scope.eventPeriodEmployees[i]['globalevent_period_id']];
+                    } else {
+                        employee.assignments.push($scope.eventPeriodEmployees[i]['globalevent_period_id']);
+                    }
+                }
+                */
+            })
+        })
+
+        $scope.employeeStaticLabelsResource = modelStaticLabelsFactory.get({model: 'employee'});
+
+        /* Get the labels necessary for the list of countries not to be only codes */
+        $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
 
         //Fetch all events
         $scope.employersResource = employersFactory.get();

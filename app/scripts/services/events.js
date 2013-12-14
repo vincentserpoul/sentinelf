@@ -13,14 +13,26 @@ sentinelfApp.factory('eventsFactory', ['$resource', function($resource) {
 }]);
 
 
-sentinelfApp.factory('eventPeriodFactory', ['$resource', function($resource) {
+sentinelfApp.factory('eventPeriodFactory', ['$resource', function ($resource) {
 
-    var eventsResource = $resource('http://dev.sentinelb.com/api/v1/globalevent_period/:eventPeriodId',
+    var eventPeriodResource = $resource('http://dev.sentinelb.com/api/v1/globalevent_period/:eventPeriodId',
         {eventPeriodId: "@id" },
         {"update": {method:"PUT", params:{eventPeriodId: "@id"}} },
         {"delete": {method:"DELETE", params:{eventPeriodId: "@id"}} }
     );
 
-    return eventsResource;
+    return eventPeriodResource;
 
 }]);
+
+sentinelfApp.factory('eventPeriodEmployeeFactory', ['$resource', function ($resource) {
+
+    var eventPeriodEmployeeResource = $resource('http://dev.sentinelb.com/api/v1/globalevent_period_employee/:eventPeriodEmployeeId',
+        {eventPeriodEmployeeId: "@id" },
+        {"update": {method:"PUT", params:{eventPeriodEmployeeId: "@id"}} },
+        {"delete": {method:"DELETE", params:{eventPeriodEmployeeId: "@id"}} }
+    );
+
+    return eventPeriodEmployeeResource;
+
+}])

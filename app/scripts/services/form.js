@@ -10,6 +10,12 @@ sentinelfApp.factory('formService', function($resource, $modal) {
             }
             return listObject[0];
         },
+        findObjectByIdWithIdRef : function (listObject, idObject, idRef){
+            for(var i in listObject){
+                if(listObject[i][idRef] == idObject) {return listObject[i]};
+            }
+            return listObject[0];
+        },
         findObjectByCode : function (listObject, codeObject){
             for(var i in listObject){
                 if(listObject[i].code == codeObject) {return listObject[i]};

@@ -1,22 +1,28 @@
 <div ng-init="initEmployees();">
     <table class="table-striped table-bordered table-condensed">
         <thead>
-        <tr>
-            <th></th>
-            <th>Employee Name</th>
-        </tr>
+            <tr>
+                <th ng-show="unassignForm"></th>
+                <th>Employee Name</th>
+            </tr>
         </thead>
-
         <tbody>
-        <tr>
-            <td><input type="checkbox" ng-model="areAllSelected" ng-change="onAllSelected()"/></td>
-            <td>Select all</td>
-        </tr>
-        <tr ng:repeat="item in employees">
-            <td><input type="checkbox" value="item.id" ng-model="item.isSelected" ng-checked="item.isSelected"></td>
-            <td>{{item.first_name}} {{item.last_name}}</td>
-        </tr>
+            <tr ng-show="unassignForm">
+                <td><input type="checkbox" ng-model="areAllSelected" ng-change="onAllSelected()"/></td>
+                <td>Select all</td>
+            </tr>
+            <tr ng-repeat="employee in employees">
+                <td ng-show="unassignForm"><input type="checkbox" value="employee.id" ng-model="employee.isSelected" ng-checked="employee.isSelected"></td>
+                <td>{{employee.first_name}} {{employee.last_name}}</td>
+            </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-success btn-xs" style="margin-top: 5px" ng-click="saveAssignment()"><i class="fa fa-save fa-fw"></i> Save</button>
+    <br/>
+    <div ng-hide="unassignForm" class="btn-group">
+        <button type="button" class="btn btn-primary btn-xs" ng-click="unassign()"><i class="fa fa-edit fa-fw"></i> Unassign</button>
+    </div>
+    <div ng-show="unassignForm" class="btn-group">
+        <button type="button" class="btn btn-success btn-xs" ng-click="save()"><i class="fa fa-save fa-fw"></i> Save</button>
+        <button type="button" class="btn btn-default btn-xs" ng-click="cancel()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+    </div>
 </div>

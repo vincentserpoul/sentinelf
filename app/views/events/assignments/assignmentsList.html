@@ -25,7 +25,7 @@
                     <a class="dropdown-toggle">{{employee.first_name}} {{employee.last_name}}</a>
                     <ul class="dropdown-menu">
                         <li ng-repeat="eventPeriod in event.event_periods">
-                            <a ng-click="assign()">{{eventPeriod.id}} : {{eventPeriod.start_datetime}} -> {{eventPeriod.end_datetime}}</a>
+                            <a ng-click="assign(eventPeriod.id, employee.id)">{{eventPeriod.id}} : {{eventPeriod.start_datetime}} -> {{eventPeriod.end_datetime}}</a>
                         </li>
                     </ul>
                 </td>
