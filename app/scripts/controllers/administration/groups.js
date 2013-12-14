@@ -91,3 +91,41 @@ sentinelfApp.controller('GroupAddCtrl', ['$scope', '$modalInstance', 'groupsFact
 		modalInstance.close();
 	}
 }])
+
+sentinelfApp.controller('GroupCtrl', ['$scope', 'formService', 'groupsFactory', 'UsersGroupsService', function($scope, formService, groupsFactory, UsersGroupsService){
+
+    $scope.editGroup = function(group){
+        groupsFactory.update(group, function(data){
+            if(data && data['error'] == false){
+                $scope.$parent.$parent.groups = data['groups'];
+                UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
+            }
+        })
+    }
+
+    /* Delete group button for each group */
+    $scope.deleteGroup = function (group) {
+
+        var modalInstance = formService.popup('group', group.name);
+
+        // when confirmed
+        modalInstance.result.then(function () {
+            groupsFactory.delete({groupId:group.id},
+                function(data){
+                    if(data && data['error'] == false){
+                        $scope.$parent.$parent.groups = data['groups'];
+                        UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
+                    } else {
+                        console.log(data['error']);
+                    }
+                }
+            );
+        })
+    }
+
+
+    //edit name of group
+    $scope.editName = function(group){
+        group.readonly = !group.readonly;
+    }
+}]);

@@ -2,12 +2,18 @@
 	<div class="page-header">
 		<h2>Administration</h2>
 	</div>
+	<div>
+	    <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable repeat-animation">
+	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	        {{alert.message}}
+	    </div>
+	</div>
 	<tabset>
 		<tab ng-repeat="tab in tabs" heading="{{tab.heading}}" select="select(tab)"></tab>
 	</tabset>
 	<div ng-switch on="selection">
 		<div ng-switch-when="users">
-			<div ng-include src="'views/administration/users/usersList.html'" ng-controller="UsersCtrl"></div>
+			<div ng-include src="'views/administration/users/usersList.html'"></div>
 		</div>
 		<div ng-switch-when="groups">
 			<div ng-include src="'views/administration/groups/groupsList.html'" ng-controller="GroupsCtrl"></div>

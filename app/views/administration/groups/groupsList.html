@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="GroupsCtrl">
 	<button class="btn btn-primary pull-right btn-xs" ng-click="addGroup()">Add Group</button>
 	<table class="table">
 		<thead>
@@ -7,7 +7,7 @@
 			<th>Actions</th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="group in groups">
+			<tr ng-repeat="group in groups" class="repeat-animation">
 				<td ng-dblclick="editName(group)">
 					<input type="text" ng-model="group.name" ng-readonly="group.readonly" class="form-control input-sm"/>
 				</td>
