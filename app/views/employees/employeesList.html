@@ -19,6 +19,7 @@
              Profile
         </button>
         <button class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
+        <button class="btn btn-primary btn-xs" ng-click="showUnpaidAssignments()"><i class="fa fa-calendar"></i> Unpaid assignments</button>
         <button class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
         <div ng-show="displayProfile" class="form-inline">
             <p><edit-input-select uniq-id-value="employee.country_code" model-ref-type="country" model-ref-resource="countryListResource" ng-model="employee.country" edit-form="editForm"></edit-input-select></p>
@@ -85,10 +86,16 @@
         <div ng-show="displayAssignments">
             <p ng-repeat="globaleventPeriod in globaleventPeriods">
                 {{globaleventPeriod.label}} ({{globaleventPeriod.number_of_employee_needed}}) : from {{globaleventPeriod.start_datetime}} to {{globaleventPeriod.end_datetime}}
-                <ng-switch on="globaleventPeriod.amount">
+                <ng-switch on="globaleventPeriod.payment_id">
                     <button ng-switch-default class="btn btn-xs btn-info disabled"><i class="fa fa-money"></i> Payed</button>
                     <button ng-switch-when="null" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Pay!</button>
                 </ng-switch>
+            </p>
+        </div>
+        <div ng-show="displayUnpaidAssignments">
+            <p ng-repeat="unpaidGlobaleventPeriod in unpaidGlobaleventPeriods">
+                {{unpaidGlobaleventPeriod.label}} ({{unpaidGlobaleventPeriod.number_of_employee_needed}}) : from {{unpaidGlobaleventPeriod.start_datetime}} to {{unpaidGlobaleventPeriod.end_datetime}}
+                <button class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Unpaid</button>
             </p>
         </div>
     </p>
