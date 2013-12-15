@@ -67,6 +67,9 @@ sentinelfApp.controller(
             $scope.employee.work_pass_type_id = $scope.employee.work_pass_type.id;
             $scope.employee.race_id = $scope.employee.race.id;
             $scope.employee.status_id = $scope.employee.status.id;
+            /* hide back the doc forms */
+            $scope.employeeDocForm = false;
+            $scope.employeeIdentityDocForm = false;
 
             /* Call the factory to update the employee in db */
             employeesFactory.update($scope.employee,
