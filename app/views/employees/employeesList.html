@@ -34,13 +34,13 @@
                 Employee documents
                 <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-plus fa-fw"></i> Add new</button>
                 <ul>
-                    <li  ng-repeat="employee_doc_unit in employee.employee_doc">
-                        <img class="thumb" />{{(employeeStaticLabels['doc_type'] | filter:employee_doc_unit.doc_type_id)[0].label}}
+                    <li ng-repeat="employee_doc_unit in employee.employee_doc">
+                        <img ng-if="employee_doc_unit.image_name != null" ng-src="http://dev.sentinelb.com/images/employee_docs/{{employee_doc_unit.image_name}}" />{{(employeeStaticLabels['doc_type'] | filter:employee_doc_unit.doc_type_id)[0].label}}
                         <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeDoc(employee_doc_unit)"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
                     </li>
                     <li ng-show="employeeDocForm">
                         <p><edit-input-select uniq-id-value="" model-ref-type="doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeDoc.doc_type"></edit-input-select></p>
-                        <p><input type="file" ng-model="newEmployeeDoc.doc_image"/></p>
+                        <p><input type="file" image-drop accept="image/*" image="newEmployeeDoc.doc_image" /></p>
                         <p>
                             <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeDoc()"><i class="fa fa-save fa-fw"></i> Add</button>
                             <button type="button" class="btn btn-default btn-xs" ng-click="employeeDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
@@ -52,8 +52,8 @@
                 Employee identity documents
                 <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeIdentityDocForm = !employeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i> Add new</button>
                 <ul>
-                    <li  ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
-                        <img class="thumb" />
+                    <li ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
+                        <img ng-if="employee_identity_doc_unit.image_name != null"  ng-src="http://dev.sentinelb.com/images/employee_identity_docs/{{employee_identity_doc_unit.image_name}}" />
                         {{(employeeStaticLabels['identity_doc_type'] | filter:employee_identity_doc_unit.identity_doc_type_id)[0].label}}:
                         {{employee_identity_doc_unit.identity_doc_number}}
                         ({{employee_identity_doc_unit.identity_doc_validity_start}} - {{employee_identity_doc_unit.identity_doc_validity_end}})
@@ -61,7 +61,7 @@
                     </li>
                     <li ng-show="employeeIdentityDocForm" >
                         <p><edit-input-select uniq-id-value="" model-ref-type="identity_doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeIdentityDoc.identity_doc_type"></edit-input-select></p>
-                        <p><input type="file" /></p>
+                        <p><input type="file" image-drop accept="image/*" image="newEmployeeIdentityDoc.doc_image" /></p>
                         <p><input type="text" ng-model="newEmployeeIdentityDoc.identity_doc_number" placeholder="identity doc number" /></p>
                         <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_start" /></p>
                         <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_end" /></p>
