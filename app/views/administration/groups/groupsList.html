@@ -1,5 +1,35 @@
 <div ng-controller="GroupsCtrl">
-	<button class="btn btn-primary pull-right btn-xs" ng-click="addGroup()">Add Group</button>
+	<button class="btn btn-primary btn-sm" ng-click="newGroup()"><i class="fa fa-plus fa-fw"></i> New</button>
+	<div class="panel panel-info collapse" id="collapseNewGroup">
+		<div class="panel-heading">
+			New Group
+		</div>
+		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<th>Group</th>
+					<th>Permissions</th>
+					<th>Actions</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="newGroup in newGroups">
+						<td><edit-input-text value="newGroup.name" edit-form="true"></edit-input-text></td>
+						<td>
+							<div ng-repeat="permission in newGroup.permissions">
+								<edit-input-check value="permission.isPermitted" edit-form="true" label="permission.name"></edit-input-check>
+							</div>
+						</td>
+						<td>
+		                    <div class="btn-group">
+		                        <button type="button" class="btn btn-success btn-xs" ng-click="saveNewGroup()"><i class="fa fa-save fa-fw"></i> Save</button>
+		                        <button type="button" class="btn btn-default btn-xs" ng-click="cancelNewGroup()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+		                    </div>            
+		                </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 	<table class="table">
 		<thead>
 			<th>Group</th>
@@ -7,19 +37,31 @@
 			<th>Actions</th>
 		</thead>
 		<tbody>
-			<tr ng-repeat="group in groups" class="repeat-animation">
-				<td ng-dblclick="editName(group)">
-					<input type="text" ng-model="group.name" ng-readonly="group.readonly" class="form-control input-sm"/>
+			<tr ng-repeat="group in groups" class="repeat-animation" ng-controller="GroupCtrl">
+				<td>
+					<edit-input-text value="group.name" edit-form="editForm"></edit-input-text>
 				</td>
 				<td>
-					<label ng-repeat="permission in group.permissions" class="checkbox-inline">
-						<input type="checkbox" name="group.permissions[]" value="permission.name" ng-checked="permission.isPermitted" ng-model="permission.isPermitted" />{{permission.name}}
-					</label>
+					<div ng-repeat="permission in group.permissions">
+						<edit-input-check value="permission.isPermitted" edit-form="editForm" label="permission.name"></edit-input-check>
+					</div>
 				</td>
-				<td class="btn-group">
-					<button class="btn btn-success btn-xs" ng-click="editGroup(group)"><i class="fa fa-save fa-fw"></i> Save</button>
-					<button class="btn btn-warning btn-xs" ng-click="deleteGroup(group)"><i class="fa fa-ban fa-fw"></i> Delete</button>
-				</td>
+				<td>
+                    <div ng-hide="editForm" class="btn-group">
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="editGroup()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+                        <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-click="deleteGroup()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+                        </ul>
+                    </div>
+                    <div ng-show="editForm" class="btn-group">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="saveGroup()"><i class="fa fa-save fa-fw"></i> Save</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditGroup()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                    </div>            
+                </td>
 			</tr>
 		</tbody>
 	</table>

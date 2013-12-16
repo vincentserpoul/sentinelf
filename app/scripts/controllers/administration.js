@@ -35,6 +35,13 @@ sentinelfApp.controller('AdministrationCtrl', ['$scope', 'usersFactory', 'groups
 				// get permissions
 				permissionsFactory.get(function(data){
 					$scope.permissions = data['permissions'];
+					$scope.groupPermissions = {};
+					for(var i = 0; i < $scope.permissions.length; i++){
+			            $scope.groupPermissions[$scope.permissions[i]] = {
+			                'name': $scope.permissions[i],
+			                'isPermitted': false
+			            }
+			        }
 				});
 			});
 		});

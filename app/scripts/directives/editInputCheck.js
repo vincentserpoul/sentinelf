@@ -6,15 +6,17 @@ sentinelfApp
 
         var editTemplate =
                 '<div ng-hide="editForm" class="show-hide-animation">' +
-                    '{{value | checkmark}} ' +
+                    '{{value | checkmark}} {{label}} ' +
                 '</div>' +
                 '<div ng-show="editForm" class="show-hide-animation">' +
-                    '<input type="checkbox" class="input-sm" ng-model="value" ng-true-value="{{1}}" ng-false-value="{{0}}">' +
+                    '<input type="checkbox" class="input-sm" ng-model="value" /> {{label}}' +
                 '</div>';
 
         return {
+            restrict: 'EA',
             template: editTemplate,
             scope: {
+                label: '=',
                 value: '=',
                 editForm: '='
             }
@@ -27,6 +29,6 @@ sentinelfApp
 */
 sentinelfApp.filter('checkmark', function(){
     return function(input){
-        return (input == 1) ? '\u2713' : '';
+        return input ? '\u2713' : '\u2717';
     }
 });

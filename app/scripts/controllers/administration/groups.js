@@ -1,131 +1,91 @@
 'use strict';
 
-sentinelfApp.controller('GroupsCtrl', ['$scope', 'formService', 'groupsFactory', 'UsersGroupsService', function($scope, formService, groupsFactory, UsersGroupsService){
-	
-	$scope.addGroup = function(){
-		var opts = {
-            backdrop: false,
-            keyboard: true,
-            backdropClick: false,
-            templateUrl:  'views/administration/groups/groupForm.html', // OR: templateUrl: 'path/to/view.html',
-            controller: 'GroupAddCtrl',
-            resolve: {
-            	permissions: function(){
-            		return {
-            			'permissions': $scope.permissions
-            		};
-            	}
-            }
-        };
+sentinelfApp.controller('GroupsCtrl', ['$scope', 'groupsFactory', 'UsersGroupsService', 'AlertService', function ($scope, groupsFactory, UsersGroupsService, AlertService) {
 
-        var modalInstance = $modal.open(opts);
+    $scope.newGroup = function () {
+        var newGroupPermissions = angular.copy($scope.groupPermissions);
 
-        modalInstance.result.then(
-            function(data){
-            	if(data && data['error'] == false){
-            		$scope.$parent.$parent.groups = data['groups'];
-            		UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
-            	}
+        $scope.newGroups = [{
+            'name': 'new group name',
+            'permissions': newGroupPermissions
+        }];
+
+        $('#collapseNewGroup').collapse('show');
+    }
+
+    $scope.saveNewGroup = function () {
+        /* Call the factory to update the new group in db */
+        groupsFactory.save($scope.newGroups[0],
+            function (data) {
+                if (data) {
+                    $scope.groups = data['groups'];
+                    // merge users and groups permissions
+                    UsersGroupsService.merge($scope.users, $scope.groups);
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
         );
-	}
 
-	$scope.editGroup = function(group){
-		groupsFactory.update(group, function(data){
-			if(data && data['error'] == false){
-				$scope.$parent.$parent.groups = data['groups'];
-				UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
-			}
-		})
-	}
-
-	/* Delete group button for each group */
-    $scope.deleteGroup = function (group) {
-
-        var modalInstance = formService.popup('group', group.name);
-
-        // when confirmed
-        modalInstance.result.then(function () {
-            groupsFactory.delete({groupId:group.id},
-                function(data){
-                    if(data && data['error'] == false){
-                        $scope.$parent.$parent.groups = data['groups'];
-                        UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
-                    } else {
-                        console.log(data['error']);
-                    }
-                }
-            );
-        })
+        $('#collapseNewGroup').collapse('hide');
     }
 
-
-    //edit name of group
-    $scope.editName = function(group){
-        group.readonly = !group.readonly;
+    $scope.cancelNewGroup = function () {
+        $('#collapseNewGroup').collapse('hide');
     }
-}]);
 
-sentinelfApp.controller('GroupAddCtrl', ['$scope', '$modalInstance', 'groupsFactory', 'permissions', function($scope, modalInstance, groupsFactory, permissions){
-	var groupPermissions = {};
-
-	for(var i = 0; i < permissions.permissions.length; i++){
-		groupPermissions[permissions.permissions[i]] = {
-			'name': permissions.permissions[i],
-			'isPermitted': false
-		}
-	}
-
-	$scope.formGroup = {
-		'name': 'New Group\'s Name',
-		'permissions': groupPermissions
-	}
-
-	$scope.saveDialog = function(group){
-		groupsFactory.save($scope.formGroup, function(data){
-			modalInstance.close(data);
-		})
-	}
-
-	$scope.closeDialog = function(){
-		modalInstance.close();
-	}
 }])
 
-sentinelfApp.controller('GroupCtrl', ['$scope', 'formService', 'groupsFactory', 'UsersGroupsService', function($scope, formService, groupsFactory, UsersGroupsService){
+sentinelfApp.controller('GroupCtrl', ['$scope', 'formService', 'AlertService', 'groupsFactory', 'UsersGroupsService', function ($scope, formService, AlertService, groupsFactory, UsersGroupsService) {
 
-    $scope.editGroup = function(group){
-        groupsFactory.update(group, function(data){
-            if(data && data['error'] == false){
-                $scope.$parent.$parent.groups = data['groups'];
-                UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
+    $scope.editGroup = function () {
+        // Save employer in case of cancel, to rollback to previous values
+        $scope.savGroup = angular.copy($scope.group);
+        $scope.editForm = true;
+    }
+
+    $scope.saveGroup = function () {
+        /* Call the factory to update the new employer in db */
+        groupsFactory.update($scope.group,
+            function (data) {
+                if (data) {
+                    // when success, reset the savEmployer
+                    $scope.savGroup = null;
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
-        })
+        );
+        $scope.editForm = false;
+    }
+
+    $scope.cancelEditGroup = function () {
+        // Reset the data to what it was before the edit
+        $scope.employer = $scope.savEmployer;
+        // Deactivate the edit
+        $scope.editForm = false;
     }
 
     /* Delete group button for each group */
-    $scope.deleteGroup = function (group) {
+    $scope.deleteGroup = function () {
 
-        var modalInstance = formService.popup('group', group.name);
+        var modalInstance = formService.popup('group', $scope.group.name);
 
-        // when confirmed
-        modalInstance.result.then(function () {
-            groupsFactory.delete({groupId:group.id},
-                function(data){
-                    if(data && data['error'] == false){
-                        $scope.$parent.$parent.groups = data['groups'];
-                        UsersGroupsService.merge($scope.$parent.$parent.users, $scope.$parent.$parent.groups);
-                    } else {
-                        console.log(data['error']);
-                    }
+        modalInstance.result.then(function(){
+            groupsFactory.delete({groupId:$scope.group.id},
+                function (data) {
+                    $scope.groups.splice(formService.findInArray($scope.groups, $scope.group.id), 1);
+                    if (data)
+                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }, function (error) {
+                    if (error['data'])
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
                 }
             );
-        })
-    }
-
-
-    //edit name of group
-    $scope.editName = function(group){
-        group.readonly = !group.readonly;
+        });
     }
 }]);
