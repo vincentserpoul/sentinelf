@@ -87,7 +87,7 @@ var sentinelfApp = angular.module('sentinelfApp', [
         $routeProvider.otherwise({redirectTo:'/404', access: []});
 
         /* To enable clean routing without # */
-        $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
 
         var interceptor = ['$location', '$q', function($location, $q) {
             function success(response) {

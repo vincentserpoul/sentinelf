@@ -2,26 +2,46 @@
     <table class="table-striped table-bordered table-condensed">
         <thead>
             <tr>
-                <th ng-show="unassignForm"></th>
-                <th>Employee Name</th>
+                <th ng-show="unassignForm" class="show-hide-animation"></th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Sex</th>
+                <th>Country</th>
+                <th>D.O.B</th>
+                <th>Mobile</th>
+                <th>school</th>
+                <th>Joined</th>
+                <th>Race</th>
+                <th>Status</th>
+                <th>Work pass</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-show="unassignForm">
+            <tr ng-show="unassignForm" class="show-hide-animation">
                 <td><input type="checkbox" ng-model="areAllSelected" ng-change="onAllSelected()"/></td>
                 <td>Select all</td>
             </tr>
             <tr ng-repeat="employee in employees">
-                <td ng-show="unassignForm"><input type="checkbox" value="employee.id" ng-model="employee.isSelected" ng-checked="employee.isSelected"></td>
-                <td>{{employee.first_name}} {{employee.last_name}}</td>
+                <td ng-show="unassignForm" class="show-hide-animation"><input type="checkbox" value="employee.id" ng-model="employee.isSelected" ng-checked="employee.isSelected"></td>
+                <td>{{employee.id}}</td>
+                <td class="dropdown">{{employee.first_name}} {{employee.last_name}}</td>
+                <td><edit-input-select uniq-id-value="employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="employee.sex" edit-form="false"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="employee.country_code" model-ref-resource="countryListResource" model-ref-type="country" ng-model="employee.country" edit-form="false"></edit-input-select></td>
+                <td><edit-input-date date="employee.date_of_birth" edit-form="false"></edit-input-date></td>
+                <td><edit-input-text value="employee.mobile_phone_number" edit-form="false"></edit-input-text></td>
+                <td><edit-input-text value="employee.school" edit-form="false"></edit-input-text></td>
+                <td><edit-input-date date="employee.join_date" edit-form="false"></edit-input-date></td>
+                <td><edit-input-select uniq-id-value="employee.race_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="race" ng-model="employee.race" edit-form="false"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="employee.status_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="status" ng-model="employee.status" edit-form="false"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="employee.work_pass_type" edit-form="false"></edit-input-select></td>
             </tr>
         </tbody>
     </table>
     <br/>
-    <div ng-hide="unassignForm" class="btn-group">
+    <div ng-hide="unassignForm" class="btn-group" class="show-hide-animation">
         <button type="button" class="btn btn-primary btn-xs" ng-click="unassign()"><i class="fa fa-edit fa-fw"></i> Unassign</button>
     </div>
-    <div ng-show="unassignForm" class="btn-group">
+    <div ng-show="unassignForm" class="btn-group" class="show-hide-animation">
         <button type="button" class="btn btn-success btn-xs" ng-click="save()"><i class="fa fa-save fa-fw"></i> Save</button>
         <button type="button" class="btn btn-default btn-xs" ng-click="cancel()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
     </div>
