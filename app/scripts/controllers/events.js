@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function ($scope, formService, eventsFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, formService, eventsFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
 
    init();
 
@@ -12,13 +12,14 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory',
                 $scope.eventsPeriods = data['GlobaleventPeriods'];
                 for(var i = 0; i < $scope.events.length; i++){
                     $scope.events[i]['event_periods'] = $scope.eventsPeriods.filter(function(value, index){return value.globalevent_id == $scope.events[i]['id']})
+
                 } 
             });
         });
 
         //Fetch all assignments
-        employeesFactory.get(function (data) {
-            $scope.employees = data['employees'];
+        employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
+            $scope.employees = data['Employees'];
             eventPeriodEmployeeFactory.get(function (data) {
                 $scope.eventPeriodEmployees = data['GlobaleventPeriodEmployees'];
                 /*

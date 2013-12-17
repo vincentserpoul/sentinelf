@@ -1,4 +1,4 @@
-<div ng-init="initEmployees();">
+<div ng-controller="EventPeriodsAssignmentsCtrl">
     <table class="table-striped table-bordered table-condensed">
         <thead>
             <tr>
@@ -18,22 +18,22 @@
         </thead>
         <tbody>
             <tr ng-show="unassignForm" class="show-hide-animation">
-                <td><input type="checkbox" ng-model="areAllSelected" ng-change="onAllSelected()"/></td>
+                <td><input type="checkbox" ng-model="allSelected" ng-change="onAllSelected()"/></td>
                 <td>Select all</td>
             </tr>
-            <tr ng-repeat="employee in employees">
-                <td ng-show="unassignForm" class="show-hide-animation"><input type="checkbox" value="employee.id" ng-model="employee.isSelected" ng-checked="employee.isSelected"></td>
-                <td>{{employee.id}}</td>
-                <td class="dropdown">{{employee.first_name}} {{employee.last_name}}</td>
-                <td><edit-input-select uniq-id-value="employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="employee.sex" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="employee.country_code" model-ref-resource="countryListResource" model-ref-type="country" ng-model="employee.country" edit-form="false"></edit-input-select></td>
-                <td><edit-input-date date="employee.date_of_birth" edit-form="false"></edit-input-date></td>
-                <td><edit-input-text value="employee.mobile_phone_number" edit-form="false"></edit-input-text></td>
-                <td><edit-input-text value="employee.school" edit-form="false"></edit-input-text></td>
-                <td><edit-input-date date="employee.join_date" edit-form="false"></edit-input-date></td>
-                <td><edit-input-select uniq-id-value="employee.race_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="race" ng-model="employee.race" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="employee.status_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="status" ng-model="employee.status" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="employee.work_pass_type" edit-form="false"></edit-input-select></td>
+            <tr ng-repeat="assigned_employee in eventPeriod.assigned_employees" class="repeat-animation">
+                <td ng-show="unassignForm" class="show-hide-animation"><input type="checkbox" value="assigned_employee.id" ng-model="assigned_employee.isUnassigned"></td>
+                <td>{{assigned_employee.id}}</td>
+                <td class="dropdown">{{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
+                <td><edit-input-select uniq-id-value="assigned_employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="assigned_employee.sex" edit-form="false"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="assigned_employee.country_code" model-ref-resource="countryListResource" model-ref-type="country" ng-model="assigned_employee.country" edit-form="false"></edit-input-select></td>
+                <td><edit-input-date date="assigned_employee.date_of_birth" edit-form="false"></edit-input-date></td>
+                <td><edit-input-text value="assigned_employee.mobile_phone_number" edit-form="false"></edit-input-text></td>
+                <td><edit-input-text value="assigned_employee.school" edit-form="false"></edit-input-text></td>
+                <td><edit-input-date date="assigned_employee.join_date" edit-form="false"></edit-input-date></td>
+                <td><edit-input-select uniq-id-value="assigned_employee.race_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="race" ng-model="assigned_employee.race" edit-form="false"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="assigned_employee.status_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="status" ng-model="assigned_employee.status" edit-form="false"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="assigned_employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="assigned_employee.work_pass_type" edit-form="false"></edit-input-select></td>
             </tr>
         </tbody>
     </table>

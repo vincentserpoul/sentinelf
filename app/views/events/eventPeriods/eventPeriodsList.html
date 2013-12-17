@@ -33,7 +33,7 @@
                         <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}"><i class="fa fa-calendar"></i> Assigned Employees</button> 
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click="loadAssignedEmployees()"><i class="fa fa-calendar"></i> Assigned Employees</button> 
                     </div>
                 </td>
             </tr>

@@ -34,7 +34,7 @@
                 <td><edit-input-select uniq-id-value="employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="employee.work_pass_type" edit-form="false"></edit-input-select></td>        
                 <td>
                     <ul class="list-unstyled">
-                        <li ng-repeat="eventPeriod in event.event_periods">
+                        <li ng-repeat="eventPeriod in employee.possible_globalevent_periods | filter: {globalevent_id:event.id}">
                             <a class="btn" ng-click="assign(eventPeriod.id, employee.id)">{{eventPeriod.id}} : {{eventPeriod.start_datetime}} -> {{eventPeriod.end_datetime}}</a>
                         </li>
                         <li><a class="btn btn-warning btn-xs" ng-click="assign(0,employee.id)">whole event</a></li>

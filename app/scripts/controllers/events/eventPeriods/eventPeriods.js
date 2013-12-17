@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory) {
+sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', 'assignedEmployeesFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory, assignedEmployeesFactory) {
 
     $scope.editEventPeriod = function () {
         // Save eventPeriod in case of cancel, to rollback to previous values
@@ -50,6 +50,16 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
                 }
             );
         });
+    }
+
+    $scope.loadAssignedEmployees = function () {
+
+        if (!$scope.eventPeriod['assigned_employees']) {
+            assignedEmployeesFactory.get({'globalevent_period_id': $scope.eventPeriod.id}, function (data) {
+                $scope.eventPeriod['assigned_employees'] = data['Employees'];
+            })
+        }
+
     }
 
 }]);
