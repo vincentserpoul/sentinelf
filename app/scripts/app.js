@@ -88,6 +88,7 @@ var sentinelfApp = angular.module('sentinelfApp', [
 
         /* To enable clean routing without # */
         //$locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(false);
 
         var interceptor = ['$location', '$q', function($location, $q) {
             function success(response) {
