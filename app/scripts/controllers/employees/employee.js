@@ -2,8 +2,8 @@
 
 sentinelfApp.controller(
     'EmployeeCtrl', [
-    '$scope', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function($scope, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
+    '$scope','formService', 'formServiceForUpdate', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
+    function($scope, formService, formServiceForUpdate,  AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
 
         init();
 
@@ -91,13 +91,13 @@ sentinelfApp.controller(
         /* Delete employee button for each employee */
         $scope.deleteEmployee= function(){
 
-            var modalInstance = formService.popup('employer', $scope.employer.name);
+            var modalInstance = formService.popup('employee', $scope.employee.first_name + $scope.employee.last_name);
 
             modalInstance.result.then(function(){
-                employersFactory.delete({employerId:$scope.employer.id},
+                employeesFactory.delete({employeeId:$scope.employee.id},
                     function(data){
                         if(data && data['error'] == false){
-                            $scope.employer.delete();
+                            $scope.employee.delete();
                         } else {
                             console.log(data['error']);
                         }
@@ -109,9 +109,12 @@ sentinelfApp.controller(
 
         /* EmployeeDoc related functions */
         /* Delete employee doc */
-        $scope.deleteEmployeeDoc = function(employeeDoc){
+        $scope.deleteEmployeeDoc = function(employeeDoc){            
             var index = $scope.employee.employee_doc.indexOf(employeeDoc);
-            $scope.employee.employee_doc.splice(index, 1);
+            var modalInstance = formService.popup('Employee documents', "");
+            modalInstance.result.then(function(){
+                $scope.employee.employee_doc.splice(index, 1);
+             });
         }
         /* Add employee doc */
         $scope.addEmployeeDoc = function(){
@@ -126,7 +129,10 @@ sentinelfApp.controller(
         /* Delete employee identity doc */
         $scope.deleteEmployeeIdentityDoc = function(employeeIdentityDoc){
             var index = $scope.employee.employee_identity_doc.indexOf(employeeIdentityDoc);
-            $scope.employee.employee_identity_doc.splice(index, 1);
+            var modalInstance = formService.popup('Employee identity documents', "");
+            modalInstance.result.then(function(){
+                $scope.employee.employee_identity_doc.splice(index, 1);
+            });
         }
 
         /* Add employee identity doc */
@@ -137,4 +143,12 @@ sentinelfApp.controller(
             /* We need to copy to make sure a new element is created each time */
             $scope.employee.employee_identity_doc.unshift(angular.copy($scope.newEmployeeIdentityDoc));
         }
+        /* Add employee identity doc */
+        $scope.payEmployee = function(){
+            var modalInstance = formServiceForUpdate.popup('Pay employee', "Confirm you want to pay employee ?");
+            modalInstance.result.then(function(){
+                
+             });
+            
+        }        
 }])
