@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', 'assignedEmployeesFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory, assignedEmployeesFactory) {
+sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', 'assignedEmployeesFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory, assignedEmployeesFactory, employeesEventPeriodsFactory) {
 
     $scope.editEventPeriod = function () {
         // Save eventPeriod in case of cancel, to rollback to previous values
@@ -16,6 +16,11 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
                 if (data) {
                     // when success, reset the savEventPeriod
                     $scope.savEventPeriod = null;
+                    // update employees with possible event periods
+                    employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
+                        $scope.employees = data['Employees'];
+                        //console.log($scope.employees);
+                    });
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
