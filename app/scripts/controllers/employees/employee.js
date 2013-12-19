@@ -2,8 +2,8 @@
 
 sentinelfApp.controller(
     'EmployeeCtrl', [
-    '$scope','formService', 'formServiceForUpdate', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function($scope, formService, formServiceForUpdate,  AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
+    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
+    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
 
         init();
 
@@ -145,7 +145,7 @@ sentinelfApp.controller(
         }
         /* Add employee identity doc */
         $scope.payEmployee = function(){
-            var modalInstance = formServiceForUpdate.popup('Pay employee', "Confirm you want to pay employee ?");
+            var modalInstance = formService.popup('Pay employee', "Confirm you want to pay employee ?", 'update.html');
             modalInstance.result.then(function(){
                 
              });
