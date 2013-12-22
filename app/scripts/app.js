@@ -16,7 +16,7 @@ var sentinelfApp = angular.module('sentinelfApp', [
         $httpProvider.defaults.useXDomain = true;
         $httpProvider.defaults.withCredentials = true;
         $httpProvider.defaults.xsrfCookieName = 'laravel_session';
-/*        delete $httpProvider.defaults.headers.common['X-Requested-With'];*/
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
         $routeProvider.when('/',
             {

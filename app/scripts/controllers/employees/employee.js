@@ -48,6 +48,37 @@ sentinelfApp.controller(
             $scope.displayUnpaidAssignments=false;
         }
 
+
+        $scope.newEmployee = function(){
+            // Create a defulat empty employee
+            var defaultEmployee = {
+                 "title_id":1
+                ,"first_name":"First name"
+                ,"last_name":"Last name"
+                ,"sex_id":1
+                ,"country_code":"SGP"
+                ,"date_of_birth":"1980-01-01"
+                ,"mobile_phone_number":"+65"
+                ,"school":"School"
+                ,"join_date":"2012-02-03 00:00:00"
+                ,"race_id":1
+                ,"status_id":1
+                ,"work_pass_type_id":1
+                ,"employee_identity_doc":[]
+                ,"employee_doc":[]
+            };
+            // Add it to the list!
+            $scope.displayProfile = true;
+            $scope.employees.unshift(defaultEmployee);
+            $scope.showProfile();
+            $scope.editForm = true;
+        }
+
+        $scope.cancelAddEmployee = function(){
+            /* remove the first element of the employees array */
+            $scope.employees.splice(0,1);
+        }
+
         $scope.editEmployee = function(){
 
             // Save employer in case of cancel, to rollback to previous values
@@ -71,14 +102,25 @@ sentinelfApp.controller(
             $scope.employeeDocForm = false;
             $scope.employeeIdentityDocForm = false;
 
-            /* Call the factory to update the employee in db */
-            employeesFactory.update($scope.employee,
-                function(data){
-                    // when success, reset the savEmployer
-                    $scope.savEmployee = null;
-                    $scope.editForm = false;
-                }
-            );
+            /* Call the factory to update/create the employee in db */
+            if(angular.isDefined($scope.employee.id)){
+                employeesFactory.update($scope.employee,
+                    function(data){
+                        // when success, reset the savEmployer
+                        $scope.savEmployee = null;
+                        $scope.editForm = false;
+                    }
+                );
+            } else {
+                employeesFactory.create($scope.employee,
+                    function(data){
+                        // when success, reset the savEmployer
+                        $scope.savEmployee = null;
+                        $scope.editForm = false;
+                    }
+                );
+            }
+
         };
 
         $scope.cancelEditEmployee = function(){
@@ -137,4 +179,5 @@ sentinelfApp.controller(
             /* We need to copy to make sure a new element is created each time */
             $scope.employee.employee_identity_doc.unshift(angular.copy($scope.newEmployeeIdentityDoc));
         }
+
 }])
