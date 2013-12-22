@@ -2,13 +2,43 @@
     <div class="page-header">
         <h2>
             Events
-            <button type="button" class="btn btn-primary btn-sm" ng-click="editEvent()"><i class="fa fa-plus fa-fw"></i> New</button>
+            <button type="button" class="btn btn-primary btn-sm" ng-click="newEvent()"><i class="fa fa-plus fa-fw"></i> New</button>
         </h2>
     </div>
     <div>
         <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable repeat-animation">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             {{alert.message}}
+        </div>
+    </div>
+    <div class="panel panel-info collapse" id="collapseNewEvent">
+        <div class="panel-heading">New Employer</div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Employer</th>
+                        <th>Department</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="createdEvent in createdEvents" class="repeat-animation">
+                    <tr ng-controller='EventCtrl'>
+                        <td><edit-input-text value="createdEvent.label" edit-form="true"></edit-input-text></td>
+                        <td><edit-input-select uniq-id-value="createdEvent.employer_id" model-ref-resource="employersResource" model-ref-type="employers" edit-form="true" ng-model="createdEvent.employer" alt-label="name" alt-ref="none"></edit-input-select></td>
+                        <td><edit-input-select uniq-id-value="createdEvent.employer_department_id" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="true" ng-model="createdEvent.employer_department" alt-ref="none"></edit-input-select></td>
+                        <td><edit-input-date date="createdEvent.date" edit-form="true"></edit-input-datetime></td>
+                        <td class="btn-toolbar">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success btn-xs" ng-click="saveEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <table class="table table-hover">

@@ -9,8 +9,7 @@ sentinelfApp
                 '{{datetime | date:\'yyyy-MM-dd HH:mm:ss\'}} ' +
             '</div>' +
             '<div ng-show="editForm" class="show-hide-animation">' +
-                '<datepicker ng-model="datetime" starting-day="1" show-weeks="0"></datepicker>' +
-                '<timepicker ng-model="datetime" hour-step="1" minute-step="15" show-meridian="false"></timepicker>'
+                '<input type="datetime" ng-model="datetime" class="form-control input-sm"/>'
             '</div>';
 
         return {

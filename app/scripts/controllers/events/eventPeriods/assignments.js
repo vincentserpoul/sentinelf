@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', 'formService', 'eventPeriodEmployeeFactory', 'assignedEmployeesFactory', function($scope, formService, eventPeriodEmployeeFactory, assignedEmployeesFactory){
+sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', 'formService', 'AlertService', 'eventPeriodEmployeeFactory', 'assignedEmployeesFactory', function($scope, formService, AlertService, eventPeriodEmployeeFactory, assignedEmployeesFactory){
 
 	$scope.unassign = function () {
         // Save event in case of cancel, to rollback to previous values
@@ -15,6 +15,10 @@ sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', 'formService',
             if ($scope.eventPeriod.assigned_employees[i].isUnassigned) {
                 eventPeriodEmployeeFactory.delete({'eventPeriodEmployeeId': $scope.eventPeriod.assigned_employees[i].globalevent_period_employee_id}, function (data) {
                     formService.findObjectById($scope.employees, data['employee_id'])['possible_globalevent_periods'] = data['possible_globalevent_period'];
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }, function (error) {
+                    if (error['data'])
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
                 }).$promise.then(function () {
                     assignedEmployeesFactory.get({'globalevent_period_id': $scope.eventPeriod.id}, function (data) {
                         $scope.eventPeriod['assigned_employees'] = data['Employees'];

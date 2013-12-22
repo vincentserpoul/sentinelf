@@ -47,6 +47,16 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory',
         //Fetch all departments
         $scope.departmentsResource = departmentsFactory.get();
     };
+
+    $scope.newEvent = function () {
+        // preselected values for new employer
+        $scope.createdEvents = [{
+            "label":"Event's name",
+            "employer_id": 1,
+            "employer_department_id": 1,
+            "date" : "2013-01-01"}];
+        $('#collapseNewEvent').collapse('show');
+    }
 }]);
 
 

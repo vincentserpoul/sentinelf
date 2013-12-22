@@ -8,6 +8,7 @@
             <th>ID</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Number of Employees assigned</th>
             <th>Number of Employees needed</th>
             <th>Actions</th>
         </tr>
@@ -16,6 +17,7 @@
                 <td>{{ eventPeriod.id }}</td>
                 <td><edit-input-datetime datetime="eventPeriod.start_datetime" edit-form="editForm"></edit-input-datetime></td>
                 <td><edit-input-datetime datetime="eventPeriod.end_datetime" edit-form="editForm"></edit-input-datetime></td>
+                <td>{{eventPeriod.assigned_employees.length}}</td>
                 <td><edit-input-text value="eventPeriod.number_of_employee_needed" edit-form="editForm"></edit-input-text></td>
                 <td class="btn-toolbar">
                     <div ng-hide="editForm" class="btn-group">
@@ -38,7 +40,7 @@
                 </td>
             </tr>
             <tr style="border: none;">
-                <td colspan="5" style="border: none; padding: 0px;">
+                <td colspan="6" style="border: none; padding: 0px;">
                     <div class="collapse" id="collapseAssignmentEventPerdiod{{eventPeriod.id}}">
                         <div class="well well-sm" ng-include src="'views/events/eventPeriods/assignmentsList.html'" ng-controller="EventPeriodsAssignmentsCtrl"></div>
                     </div>
