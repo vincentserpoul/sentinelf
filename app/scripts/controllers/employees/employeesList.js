@@ -27,5 +27,6 @@ sentinelfApp.controller(
             $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
 
         }
+
     }
 ]);

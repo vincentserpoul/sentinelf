@@ -5,8 +5,9 @@ sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
     return $resource('http://dev.sentinelb.com/api/v1/employee/:employeeId',
                     {employeeId: "@id"},
                     {
-                    	"update": {method:"PUT", params:{employeeId: "@id"}},
-        				"delete": {method:"DELETE", params:{employeeId: "@id"}}
+                        "create": {method:"POST"},
+                    	"update": {method:"PUT"},
+        				"delete": {method:"DELETE"}
                 	});
 }]);
 

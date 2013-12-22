@@ -1,6 +1,6 @@
 <h2>
     Employees
-    <button type="button" class="btn btn-primary btn-sm" ng-click="newEmployee()"><i class="fa fa-plus fa-fw"></i> Add new</button>
+    <button type="button" class="btn btn-primary btn-sm" ng-click="newEmployee()" ng-controller="EmployeeCtrl"><i class="fa fa-plus fa-fw"></i> Add new</button>
 </h2>
 <div>
     <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable">
@@ -8,6 +8,7 @@
         {{alert.message}}
     </div>
 </div>
+    <div ng-include src="'views/employees/employeeSearch.html'"></div>
 <ul>
     <li ng-repeat="employee in employees" ng-controller="EmployeeCtrl">
         {{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}
@@ -19,10 +20,14 @@
             </ng-switch>
              Profile
         </button>
-        <button class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
-        <button class="btn btn-primary btn-xs" ng-click="showUnpaidAssignments()"><i class="fa fa-calendar"></i> Unpaid assignments</button>
-        <button class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
+        <button ng-show="employee.id" class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
+        <button ng-show="employee.id"class="btn btn-primary btn-xs" ng-click="showUnpaidAssignments()"><i class="fa fa-calendar"></i> Unpaid assignments</button>
+        <button ng-show="employee.id" class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
+        <button ng-show="!employee.id" class="btn btn-default btn-xs" ng-click="cancelAddEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
         <div ng-show="displayProfile" class="form-inline">
+            <p><edit-input-select uniq-id-value="employee.title_id" ng-model="employee.title" model-ref-type="title" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></p>
+            <p><edit-input-text value="employee.first_name" edit-form="editForm"></edit-input-text></p>
+            <p><edit-input-text value="employee.last_name" edit-form="editForm"></edit-input-text></p>
             <p><edit-input-select uniq-id-value="employee.country_code" model-ref-type="country" model-ref-resource="countryListResource" ng-model="employee.country" edit-form="editForm"></edit-input-select></p>
             <p><edit-input-text value="employee.date_of_birth" edit-form="editForm"></edit-input-text></p>
             <p><edit-input-text value="employee.mobile_phone_number" edit-form="editForm"></edit-input-text></p>
