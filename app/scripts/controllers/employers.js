@@ -31,7 +31,7 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
         $('#collapseNewEmployer').collapse('show');
     }
 
-    $scope.saveEmployer = function () {
+    $scope.saveNewEmployer = function () {
         // get code from model
         $scope.createdEmployer.country_code = $scope.createdEmployer.country['code'];
         /* Call the factory to update the new employer in db */
@@ -41,16 +41,14 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
                     $scope.employers.push(data['employer']);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
-                $('#collapseNewEmployer').collapse('hide');
             }, function (error) {
-                if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-                $('#collapseNewEmployer').collapse('hide');
+                if (error['data']) AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
         );
+        $('#collapseNewEmployer').collapse('hide');
     }
 
-    $scope.closeNewEmployer = function () {
+    $scope.cancelNewEmployer = function () {
         $('#collapseNewEmployer').collapse('hide');
     }
 }]);

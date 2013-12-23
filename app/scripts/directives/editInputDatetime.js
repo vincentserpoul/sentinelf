@@ -5,10 +5,10 @@ sentinelfApp
     , function() {
 
         var editInputDatetimeTemplate =
-            '<div ng-hide="editForm" class="show-hide-animation">' +
+            '<div ng-hide="editForm">' +
                 '{{datetime | date:\'yyyy-MM-dd HH:mm:ss\'}} ' +
             '</div>' +
-            '<div ng-show="editForm" class="show-hide-animation">' +
+            '<div ng-show="editForm">' +
                 '<input type="datetime" ng-model="datetime" class="form-control input-sm"/>'
             '</div>';
 

@@ -5,10 +5,10 @@ sentinelfApp
     , function() {
 
         var editInputDateTemplate =
-            '<div ng-hide="editForm" class="show-hide-animation">' +
+            '<div ng-hide="editForm">' +
                 '{{date | date:\'fullDate\'}} ' +
             '</div>' +
-            '<div ng-show="editForm" class="show-hide-animation">' +
+            '<div ng-show="editForm">' +
                 '<datepicker ng-model="date" starting-day="1" show-weeks="0"></datepicker>' +
             '</div>';
 

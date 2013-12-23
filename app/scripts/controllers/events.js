@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, formService, eventsFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
 
    init();
 
@@ -22,17 +22,6 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory',
             $scope.employees = data['Employees'];
             eventPeriodEmployeeFactory.get(function (data) {
                 $scope.eventPeriodEmployees = data['GlobaleventPeriodEmployees'];
-                /*
-                for (var i = 0; i < $scope.eventPeriodEmployees.length; i++) {
-                    //assign event periods to employees
-                    var employee = formService.findObjectById($scope.employees, $scope.eventPeriodEmployees[i]['employee_id']);
-                    if (!employee.assignments) {
-                        employee.assignments = [$scope.eventPeriodEmployees[i]['globalevent_period_id']];
-                    } else {
-                        employee.assignments.push($scope.eventPeriodEmployees[i]['globalevent_period_id']);
-                    }
-                }
-                */
             })
         })
 
@@ -56,6 +45,28 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'eventsFactory',
             "employer_department_id": 1,
             "date" : "2013-01-01"}];
         $('#collapseNewEvent').collapse('show');
+    }
+
+    $scope.saveNewEvent = function () {
+        // get code from model
+        $scope.createdEvents[0].employer_id = $scope.createdEvents[0].employer['id'];
+        $scope.createdEvents[0].employer_department_id = $scope.createdEvents[0].employer_department['id'];
+        /* Call the factory to update the new event in db */
+        eventsFactory.save($scope.createdEvents[0],
+            function (data) {
+                if (data) {
+                    $scope.events.push(data['Globalevent']);
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }
+            }, function (error) {
+                if (error['data']) AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
+            }
+        );
+        $('#collapseNewEvent').collapse('hide');
+    }
+
+    $scope.cancelNewEvent = function () {
+        $('#collapseNewEvent').collapse('hide');
     }
 }]);
 
