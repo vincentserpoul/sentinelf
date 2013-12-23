@@ -111,10 +111,7 @@ sentinelfApp.controller(
         /* Delete employee doc */
         $scope.deleteEmployeeDoc = function(employeeDoc){            
             var index = $scope.employee.employee_doc.indexOf(employeeDoc);
-            var modalInstance = formService.popup('Employee documents', "");
-            modalInstance.result.then(function(){
-                $scope.employee.employee_doc.splice(index, 1);
-             });
+            $scope.employee.employee_doc.splice(index, 1);
         }
         /* Add employee doc */
         $scope.addEmployeeDoc = function(){
@@ -129,10 +126,7 @@ sentinelfApp.controller(
         /* Delete employee identity doc */
         $scope.deleteEmployeeIdentityDoc = function(employeeIdentityDoc){
             var index = $scope.employee.employee_identity_doc.indexOf(employeeIdentityDoc);
-            var modalInstance = formService.popup('Employee identity documents', "");
-            modalInstance.result.then(function(){
-                $scope.employee.employee_identity_doc.splice(index, 1);
-            });
+            $scope.employee.employee_identity_doc.splice(index, 1);
         }
 
         /* Add employee identity doc */
