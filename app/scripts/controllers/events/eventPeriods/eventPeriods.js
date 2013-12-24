@@ -1,5 +1,41 @@
 'use strict';
 
+sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'AlertService', 'eventPeriodFactory', 'employeesEventPeriodsFactory',  function ($scope, AlertService, eventPeriodFactory, employeesEventPeriodsFactory) {
+    $scope.newEventPeriod = function () {
+        // preselected values for new employer
+        $scope.createdEventPeriods = [{
+            "event_id": $scope.event.id,
+            "start_datetime": "2013-01-01 00:00:00",
+            "end_datetime": "2013-01-01 00:00:10",
+            "number_of_employee_needed": 1}];
+        $('#collapseNewEventPeriod' + $scope.event.id).collapse('show');
+    }
+
+    $scope.saveNewEventPeriod = function () {
+        eventPeriodFactory.save($scope.createdEventPeriods[0],
+            function (data) {
+                if (data) {
+                    $scope.event.event_periods.push(data['GlobaleventPeriod']);
+                    // update employees with possible event periods
+                    employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
+                        $scope.employees = data['Employees'];
+                        //console.log($scope.employees);
+                    });
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
+                }
+            }, function (error) {
+                if (error['data'])
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
+            }
+        );
+        $('#collapseNewEventPeriod' + $scope.event.id).collapse('hide');
+    }
+
+    $scope.cancelNewEventPeriod = function () {
+        $('#collapseNewEventPeriod' + $scope.event.id).collapse('hide');   
+    }
+}])
+
 sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', 'assignedEmployeesFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory, assignedEmployeesFactory, employeesEventPeriodsFactory) {
 
     init();
