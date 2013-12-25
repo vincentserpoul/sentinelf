@@ -28,5 +28,12 @@ sentinelfApp.controller(
 
         }
 
+        $scope.searchEmployees = function (){
+            /* Get the employee list */
+            employeesFactory.get(function(data){
+                $scope.employees = data['employees'];
+            });
+        }
+
     }
 ]);
