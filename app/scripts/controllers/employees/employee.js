@@ -2,8 +2,8 @@
 
 sentinelfApp.controller(
     'EmployeeCtrl', [
-    '$scope', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function($scope, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
+    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
+    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
 
         init();
 
@@ -133,13 +133,13 @@ sentinelfApp.controller(
         /* Delete employee button for each employee */
         $scope.deleteEmployee= function(){
 
-            var modalInstance = formService.popup('employer', $scope.employer.name);
+            var modalInstance = formService.popup('employee', $scope.employee.first_name + $scope.employee.last_name);
 
             modalInstance.result.then(function(){
-                employersFactory.delete({employerId:$scope.employer.id},
+                employeesFactory.delete({employeeId:$scope.employee.id},
                     function(data){
                         if(data && data['error'] == false){
-                            $scope.employer.delete();
+                            $scope.employee.delete();
                         } else {
                             console.log(data['error']);
                         }
@@ -178,6 +178,15 @@ sentinelfApp.controller(
             $scope.newEmployeeIdentityDoc.identity_doc_type_id = $scope.newEmployeeIdentityDoc.identity_doc_type.id;
             /* We need to copy to make sure a new element is created each time */
             $scope.employee.employee_identity_doc.unshift(angular.copy($scope.newEmployeeIdentityDoc));
+        }
+
+        /* Add employee identity doc */
+        $scope.payEmployee = function(){
+            var modalInstance = formService.popup('Pay employee', "Confirm you want to pay employee ?", 'update.html');
+            modalInstance.result.then(function(){
+
+             });
+
         }
 
 }])

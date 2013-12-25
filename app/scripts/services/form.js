@@ -22,9 +22,12 @@ sentinelfApp.factory('formService', function($resource, $modal) {
             }
             return listObject[0];
         },
-        popup: function (name, identity){
+        popup: function (name, identity,url){
+            if( typeof(url) == 'undefined' ){
+                url = 'popup.html'
+            }
             var modalInstance = $modal.open({
-                templateUrl: 'views/popup.html',
+                templateUrl: 'views/'+ url,
                 controller: 'popupCtrl',
                 resolve: {
                     name: function () {
