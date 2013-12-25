@@ -8,19 +8,28 @@ sentinelfApp.factory('formService', function($resource, $modal) {
             for(var i in listObject){
                 if(listObject[i].id == idObject) {return listObject[i]};
             }
-            return listObject[0];
+            return null;
         },
         findObjectByIdWithIdRef : function (listObject, idObject, idRef){
             for(var i in listObject){
                 if(listObject[i][idRef] == idObject) {return listObject[i]};
             }
-            return listObject[0];
+            return null;
+        },
+        findObjectByIdWithIdRefs : function (listObject, parameters) {
+            for (var i in listObject) {
+                var match = true;
+                for (var item in parameters) 
+                    if (listObject[i][item] != parameters[item]) match = false;
+                if (match) return listObject[i];
+            }
+            return null;
         },
         findObjectByCode : function (listObject, codeObject){
             for(var i in listObject){
                 if(listObject[i].code == codeObject) {return listObject[i]};
             }
-            return listObject[0];
+            return null;
         },
         popup: function (name, identity){
             var modalInstance = $modal.open({
@@ -43,6 +52,11 @@ sentinelfApp.factory('formService', function($resource, $modal) {
                     return i; 
             }
             return -1;
+        },
+        copyProps: function (element1, element2) {
+            for (var item in element1) {
+                element2[item] = element1[item];
+            }
         }
  	}   
 });

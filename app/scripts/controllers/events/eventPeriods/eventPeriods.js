@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'AlertService', 'eventPeriodFactory', 'employeesEventPeriodsFactory',  function ($scope, AlertService, eventPeriodFactory, employeesEventPeriodsFactory) {
+sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'formService', 'AlertService', 'eventPeriodFactory', 'employeesEventPeriodsFactory',  function ($scope, formService, AlertService, eventPeriodFactory, employeesEventPeriodsFactory) {
     $scope.newEventPeriod = function () {
         // preselected values for new employer
         $scope.createdEventPeriods = [{
@@ -15,12 +15,13 @@ sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'AlertService', 'eventPer
         eventPeriodFactory.save($scope.createdEventPeriods[0],
             function (data) {
                 if (data) {
-                    $scope.event.event_periods.push(data['GlobaleventPeriod']);
+                    $scope.eventsPeriods.push(data['GlobaleventPeriod']);
                     // update employees with possible event periods
                     employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
                         $scope.employees = data['Employees'];
                         //console.log($scope.employees);
                     });
+                    $scope.$apply();
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
@@ -37,7 +38,7 @@ sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'AlertService', 'eventPer
 }])
 
 sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', 'assignedEmployeesFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory, assignedEmployeesFactory, employeesEventPeriodsFactory) {
-
+    /*
     init();
 
     function init() {
@@ -45,6 +46,7 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
             $scope.eventPeriod['assigned_employees'] = data['Employees'];
         })
     }
+    */
 
     $scope.editEventPeriod = function () {
         // Save eventPeriod in case of cancel, to rollback to previous values
@@ -63,8 +65,8 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
                     // update employees with possible event periods
                     employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
                         $scope.employees = data['Employees'];
-                        //console.log($scope.employees);
                     });
+                    $scope.$apply();
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
@@ -77,7 +79,7 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
 
     $scope.cancelEditEventPeriod = function () {
         // Reset the data to what it was before the edit
-        $scope.eventPeriod = $scope.savEventPeriod;
+        formService.copyProps($scope.savEventPeriod, $scope.eventPeriod);
         // Deactivate the edit
         $scope.editForm = false;
     };
@@ -100,15 +102,4 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
             );
         });
     }
-
-    $scope.loadAssignedEmployees = function () {
-        /*
-        if (!$scope.eventPeriod['assigned_employees']) {
-            assignedEmployeesFactory.get({'globalevent_period_id': $scope.eventPeriod.id}, function (data) {
-                $scope.eventPeriod['assigned_employees'] = data['Employees'];
-            })
-        }
-        */
-    }
-
 }]);

@@ -1,4 +1,4 @@
-<div class="panel panel-default" ng-controller="EventsAssignmentsCtrl">
+<div class="panel panel-default">
     <div class="panel-heading">
         Assignments
     </div>
@@ -32,12 +32,12 @@
                 <td><edit-input-select uniq-id-value="employee.race_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="race" ng-model="employee.race" edit-form="false"></edit-input-select></td>
                 <td><edit-input-select uniq-id-value="employee.status_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="status" ng-model="employee.status" edit-form="false"></edit-input-select></td>
                 <td><edit-input-select uniq-id-value="employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="employee.work_pass_type" edit-form="false"></edit-input-select></td>        
-                <td>
+                <td ng-controller="EmployeeEventAssignmentCtrl">
                     <ul class="list-unstyled">
-                        <li ng-repeat="eventPeriod in employee.possible_globalevent_periods | filter: {globalevent_id:event.id}"><a class="btn btn-link btn-sm" ng-click="assign(eventPeriod.id, employee.id)">{{eventPeriod.id}} : {{eventPeriod.start_datetime}} -> {{eventPeriod.end_datetime}}</a>
+                        <li ng-repeat="possible_globalevent_period in eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}" ng-class="repeat-animation"><a class="btn btn-link btn-sm" ng-click="assign(possible_globalevent_period.id)">{{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}</a>
                         </li>
-                        <li><a ng-show="(employee.possible_globalevent_periods | filter: {globalevent_id:event.id}).length" class="btn btn-warning btn-xs" ng-click="assign(0,employee.id)">Whole event</a></li>
-                        <li class="text-muted" ng-hide="(employee.possible_globalevent_periods | filter: {globalevent_id:event.id}).length">No more event period(s) to assign</li>
+                        <li><a ng-show="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length" class="btn btn-warning btn-xs" ng-click="assign_whole_event()">Whole event</a></li>
+                        <li class="text-muted" ng-hide="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length">No more event period(s) to assign</li>
                     </ul>
                 </td>    
             </tr>

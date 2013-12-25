@@ -8,34 +8,44 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         //Fetch all events and events' periods
         eventsFactory.get(function (data) {
             $scope.events = data['Globalevents'];  
-            $scope.eventPeriodResource = eventPeriodFactory.get(function (data) {
-                $scope.eventsPeriods = data['GlobaleventPeriods'];
-                for(var i = 0; i < $scope.events.length; i++){
-                    $scope.events[i]['event_periods'] = $scope.eventsPeriods.filter(function(value, index){return value.globalevent_id == $scope.events[i]['id']})
-
-                } 
-            });
         });
-
-        //Fetch all assignments
-        employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
-            $scope.employees = data['Employees'];
-            eventPeriodEmployeeFactory.get(function (data) {
-                $scope.eventPeriodEmployees = data['GlobaleventPeriodEmployees'];
-            })
-        })
-
-        $scope.employeeStaticLabelsResource = modelStaticLabelsFactory.get({model: 'employee'});
-
-        /* Get the labels necessary for the list of countries not to be only codes */
-        $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
 
         //Fetch all events
         $scope.employersResource = employersFactory.get();
 
         //Fetch all departments
         $scope.departmentsResource = departmentsFactory.get();
+
+        $scope.eventPeriodResource = eventPeriodFactory.get(function (data) {
+            $scope.eventsPeriods = data['GlobaleventPeriods'];
+        });
+
+        //Fetch all assignments
+        employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
+            $scope.all_possible_globalevent_periods = data['possible_globalevent_periods'];
+        })
+
+        employeesFactory.get(function (data) {
+            $scope.employees = data['employees'];
+        })
+
+        eventPeriodEmployeeFactory.get(function (data) {
+            $scope.eventPeriodEmployees = data['GlobaleventPeriodEmployees'];
+        })
+
+        $scope.employeeStaticLabelsResource = modelStaticLabelsFactory.get({model: 'employee'});
+
+        /* Get the labels necessary for the list of countries not to be only codes */
+        $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
     };
+
+    $scope.setEventPeriodEmployees = function (eventPeriodEmployees) {
+        $scope.eventPeriodEmployees = eventPeriodEmployees;
+    }
+
+    $scope.setAllPossibleGlobaleventPeriods = function (all_possible_globalevent_periods) {
+        $scope.all_possible_globalevent_periods = all_possible_globalevent_periods;
+    }
 
     $scope.newEvent = function () {
         // preselected values for new employer

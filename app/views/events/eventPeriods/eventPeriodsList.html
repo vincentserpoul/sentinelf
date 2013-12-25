@@ -40,12 +40,12 @@
             <th>Number of Employees needed</th>
             <th>Actions</th>
         </tr>
-        <tbody ng-repeat="eventPeriod in event.event_periods">
+        <tbody ng-repeat="eventPeriod in eventsPeriods | filter:{globalevent_id: event.id}">
             <tr ng-controller='EventPeriodCtrl'>
                 <td>{{ eventPeriod.id }}</td>
                 <td><edit-input-datetime datetime="eventPeriod.start_datetime" edit-form="editForm"></edit-input-datetime></td>
                 <td><edit-input-datetime datetime="eventPeriod.end_datetime" edit-form="editForm"></edit-input-datetime></td>
-                <td>{{eventPeriod.assigned_employees.length}}</td>
+                <td>{{(eventPeriodEmployees | filter: {globalevent_period_id: eventPeriod.id}).length}}</td>
                 <td><edit-input-text value="eventPeriod.number_of_employee_needed" edit-form="editForm"></edit-input-text></td>
                 <td class="btn-toolbar">
                     <div ng-hide="editForm" class="btn-group">
@@ -63,7 +63,7 @@
                         <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click="loadAssignedEmployees()"><i class="fa fa-calendar"></i> Assigned Employees</button> 
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}"><i class="fa fa-calendar"></i> Assigned Employees</button> 
                     </div>
                 </td>
             </tr>

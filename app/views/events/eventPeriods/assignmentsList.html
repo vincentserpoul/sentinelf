@@ -21,8 +21,8 @@
                 <td><input type="checkbox" ng-model="allSelected" ng-change="onAllSelected()"/></td>
                 <td>Select all</td>
             </tr>
-            <tr ng-repeat="assigned_employee in eventPeriod.assigned_employees" class="repeat-animation">
-                <td ng-show="unassignForm" class="show-hide-animation"><input type="checkbox" value="assigned_employee.id" ng-model="assigned_employee.isUnassigned"></td>
+            <tr ng-repeat="assigned_employee in employees | filter_assigned_employees: {globalevent_period_id: eventPeriod.id, globalevent_period_employees: eventPeriodEmployees}" class="repeat-animation">
+                <td ng-show="unassignForm" class="show-hide-animation"><input type="checkbox" ng-model="(eventPeriodEmployees | filter_event_period_employee: {globalevent_period_id: eventPeriod.id, employee_id: assigned_employee.id}).isUnassigned"></td>
                 <td>{{assigned_employee.id}}</td>
                 <td class="dropdown">{{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
                 <td><edit-input-select uniq-id-value="assigned_employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="assigned_employee.sex" edit-form="false"></edit-input-select></td>
