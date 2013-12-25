@@ -8,7 +8,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="last_name">Last name</label>
   <div class="col-md-4">
-    <input id="last_name" name="last_name" type="search" placeholder="Last name" class="form-control input-md">
+    <input ng-model="searchCriterias.last_name" id="last_name" name="last_name" type="search" placeholder="Last name" class="form-control input-md">
     <p class="help-block">Last name</p>
   </div>
 </div>
@@ -17,7 +17,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="identity_doc_number">Identity doc number</label>
   <div class="col-md-4">
-    <input id="identity_doc_number" name="identity_doc_number" type="search" placeholder="Identity doc number" class="form-control input-md">
+    <input ng-model="searchCriterias.identity_doc_number" id="identity_doc_number" name="identity_doc_number" type="search" placeholder="Identity doc number" class="form-control input-md">
     <p class="help-block">example: nric or passport</p>
   </div>
 </div>
@@ -26,9 +26,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="work_pass_type_id">Work pass type</label>
   <div class="col-md-4">
-    <select id="work_pass_type_id" name="work_pass_type_id" class="form-control" multiple="multiple">
-      <option value="1">Option one</option>
-      <option value="2">Option two</option>
+    <select id="work_pass_type_id" name="work_pass_type_id" class="form-control" ng-model="searchCriterias.work_pass_type" ng-options="work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']" multiple="multiple"></select>
     </select>
   </div>
 </div>
@@ -37,10 +35,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="race_id">race</label>
   <div class="col-md-4">
-    <select id="race_id" name="race_id" class="form-control" multiple="multiple">
-      <option value="1">Option one</option>
-      <option value="2">Option two</option>
-    </select>
+    <select id="race_id" name="race_id" class="form-control" ng-model="searchCriterias.race" ng-options="race.label for race in employeeStaticLabels['race']" multiple="multiple"></select>
   </div>
 </div>
 
@@ -48,10 +43,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="sex_id">Sex</label>
   <div class="col-md-4">
-    <select id="sex_id" name="sex_id" class="form-control">
-      <option value="1">Option one</option>
-      <option value="2">Option two</option>
-    </select>
+    <select id="sex_id" name="sex_id" class="form-control" ng-model="searchCriterias.sex" ng-options="sex.label for sex in employeeStaticLabels['sex']" multiple="multiple" size="2"></select>
   </div>
 </div>
 
@@ -59,10 +51,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="age_min">Age min</label>
   <div class="col-md-4">
-    <select id="age_min" name="age_min" class="form-control">
-      <option value="1">Option one</option>
-      <option value="2">Option two</option>
-    </select>
+    <input ng-model="searchCriterias.age_min" id="age_min" name="age_min" type="number" placeholder="Age min" class="form-control input-md" min="0" max="100" integer />
   </div>
 </div>
 
@@ -70,12 +59,16 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="age_max">Age max</label>
   <div class="col-md-4">
-    <select id="age_max" name="age_max" class="form-control">
-      <option value="1">Option one</option>
-      <option value="2">Option two</option>
-    </select>
+    <input ng-model="searchCriterias.age_max" id="age_max" name="age_max" type="number" placeholder="Age max" class="form-control input-md" min="0" max="100" integer />
   </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"><button type="button" class="btn btn-primary btn-sm" ng-click="searchEmployees()"><i class="fa fa-search"></i> Search</button></div>
+    <div class="col-md-4">
 </div>
 
 </fieldset>
 </form>
+
