@@ -2,7 +2,14 @@
 
 sentinelfApp.controller('UserCtrl', ['$scope', 'formService', 'AlertService', 'usersFactory', 'UsersGroupsService', function($scope, formService, AlertService, usersFactory, UsersGroupsService){
     
-    $scope.editUser = function(){
+    $scope.editUser = function () {
+        $scope.savUser = angular.copy($scope.user);
+        // copy group to saved user
+        $scope.savUser.group = $scope.user.group;
+        $scope.editForm = true;
+    }
+
+    $scope.saveEditUser = function () {
         usersFactory.update($scope.user,
             function (data) {
                 if (data) {
@@ -15,7 +22,13 @@ sentinelfApp.controller('UserCtrl', ['$scope', 'formService', 'AlertService', 'u
                     AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
         );
+        $scope.editForm = false;
     };
+
+    $scope.cancelEditUser = function () {
+        formService.copyProps($scope.savUser, $scope.user);
+        $scope.editForm = false;
+    }
 
     /* Delete user button for each user */
     $scope.deleteUser = function(){
