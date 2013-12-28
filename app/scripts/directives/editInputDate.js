@@ -9,7 +9,7 @@ sentinelfApp
                 '{{date | date:\'fullDate\'}} ' +
             '</div>' +
             '<div ng-show="editForm">' +
-                '<datepicker ng-model="date" starting-day="1" show-weeks="0"></datepicker>' +
+                '<input type="date" ng-model="date" class="form-control input-sm"></datepicker>' +
             '</div>';
 
         return {

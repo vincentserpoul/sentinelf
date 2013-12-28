@@ -9,7 +9,7 @@ sentinelfApp
                 '{{ ngModel[label] }} ' +
             '</div>' +
             '<div ng-show="editForm">' +
-                '<select class="form-control input-sm" ng-model="ngModel" ng-options="item[label] for item in modelRefList" required></select>' +
+                '<select class="form-control input-sm" ng-model="ngModel" ng-options="item[label] for item in modelRefList | filter: filterParams" required></select>' +
             '</div>';
 
         return {
@@ -22,12 +22,16 @@ sentinelfApp
                 modelRefResource: '=',
                 modelRefType: '@',
                 editForm: '=',
-                ngModel: '='
+                ngModel: '=',
+                filterKey: '@',
+                filterVarId: '=',
+                filterVar: '='
             },
-            link: function(scope){
+            link: function (scope) {
                 scope.label = 'label';
 
-                function init(){
+                function init () {
+                    if (scope.filterKey) {scope.filterParams = {}; scope.filterParams[scope.filterKey] = scope.filterVarId}
 
                     /* We have to wait for the resource to come back so we get its promise and move when it is there */
                     scope.modelRefResource.$promise.then(function(modelRefResult){
@@ -76,6 +80,12 @@ sentinelfApp
                     }
 
                 }
+
+                scope.$watch('filterVar', function (oldValue, newValue) {
+                    if (scope.filterVar) {
+                        scope.filterParams[scope.filterKey] = scope.filterVar;
+                    }
+                })
 
                 init();
             }

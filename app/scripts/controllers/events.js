@@ -65,7 +65,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         eventsFactory.save($scope.createdEvents[0],
             function (data) {
                 if (data) {
-                    $scope.events.push(data['Globalevent']);
+                    $scope.events.unshift(data['Globalevent']);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {

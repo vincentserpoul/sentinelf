@@ -52,12 +52,12 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody ng-repeat="event in events" class="repeat-animation">
+        <tbody ng-repeat="event in events | orderBy:'-id'" class="repeat-animation">
             <tr ng-controller='EventCtrl'>
                 <td>{{event.id}}</td>
                 <td><edit-input-text value="event.label" edit-form="editForm"></edit-input-text></td>
                 <td><edit-input-select uniq-id-value="event.employer_id" model-ref-resource="employersResource" model-ref-type="employers" edit-form="editForm" ng-model="event.employer" alt-label="name" alt-ref="none"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="event.employer_department_id" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="editForm" ng-model="event.employer_department" alt-ref="none"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="event.employer_department_id" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="editForm" ng-model="event.employer_department" alt-ref="none" filter-key="employer_id" filter-var-id="event.employer_id" filter-var="event.employer.id"></edit-input-select></td>
                 <td><edit-input-date date="event.date" edit-form="editForm"></edit-input-datetime></td>
                 <td class="btn-toolbar">
                     <div ng-hide="editForm" class="btn-group">

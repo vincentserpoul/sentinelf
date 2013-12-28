@@ -15,13 +15,12 @@ sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'formService', 'AlertServ
         eventPeriodFactory.save($scope.createdEventPeriods[0],
             function (data) {
                 if (data) {
-                    $scope.eventsPeriods.push(data['GlobaleventPeriod']);
+                    $scope.eventsPeriods.unshift(data['GlobaleventPeriod']);
                     // update employees with possible event periods
                     employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
                         $scope.employees = data['Employees'];
                         //console.log($scope.employees);
                     });
-                    $scope.$apply();
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
