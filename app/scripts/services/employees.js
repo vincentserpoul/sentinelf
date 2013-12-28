@@ -2,13 +2,11 @@
 
 sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/:listController:employeeId/:subResource/:subResourceListController:subResourceId',
+    return $resource('http://dev.sentinelb.com/api/v1/employee/:listFilter:employeeId/:listFilterParams/',
                     {
                         employeeId: "@employeeId",
-                        listController: "@listController",
-                        subResource: "@subResource",
-                        subResourceId: "@subResourceId",
-                        subResourceListController: "@subResourceListController"
+                        listFilter: "@listFilter",
+                        listFilterParams: "@listFilterParams",
                     },
                     {
                         "get": {method:"GET", cache: true},
@@ -18,7 +16,8 @@ sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
                         "search": {
                             method:"GET",
                             params: {
-                                listController: "search"
+                                listFilter: "search",
+                                listFilterParams: "@listFilterParams"
                             }
                         }
                 	});
