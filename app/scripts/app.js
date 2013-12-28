@@ -42,18 +42,6 @@ var sentinelfApp = angular.module('sentinelfApp', [
                 controller:     'EmployeesListCtrl',
                 access:         ['user']
             })
-        .when('/employeeview/:employeeId',
-            {
-                templateUrl:    '/views/employees/employeeView.html',
-                controller:     'EmployeeViewCtrl',
-                access:         ['user']
-            })
-        .when('/employeeview',
-            {
-                templateUrl:    '/views/employees/employeeView.html',
-                controller:     'EmployeeViewCtrl',
-                access:         ['user']
-            })
         .when('/employers',
             {
                 templateUrl:    '/views/employers/employersList.html',

@@ -11,12 +11,7 @@ sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
                         subResourceListController: "@subResourceListController"
                     },
                     {
-                        "get": {
-                            method:"GET",
-                            params: {
-                                employeeId: "employeeId"
-                            }
-                        },
+                        "get": {method:"GET", cache: true},
                         "create": {method:"POST"},
                     	"update": {method:"PUT"},
         				"delete": {method:"DELETE"},

@@ -2,7 +2,16 @@
 
 sentinelfApp.factory('modelStaticLabelsFactory', ['$resource', function($resource) {
 
-    var modelStaticLabelsResource = $resource('http://dev.sentinelb.com/api/v1/modelstaticlabels/:model');
+    var modelStaticLabelsResource = $resource('http://dev.sentinelb.com/api/v1/modelstaticlabels/:model',
+                    {
+                        model: "@model"
+                    },
+                    {
+                        "get": {
+                            method:"GET",
+                            cache: true
+                        }
+                    });
 
     return modelStaticLabelsResource;
 
