@@ -2,12 +2,30 @@
 
 sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/:employeeId',
-                    {employeeId: "@id"},
+    return $resource('http://dev.sentinelb.com/api/v1/employee/:listController:employeeId/:subResource/:subResourceListController:subResourceId',
                     {
+                        employeeId: "@employeeId",
+                        listController: "@listController",
+                        subResource: "@subResource",
+                        subResourceId: "@subResourceId",
+                        subResourceListController: "@subResourceListController"
+                    },
+                    {
+                        "get": {
+                            method:"GET",
+                            params: {
+                                employeeId: "employeeId"
+                            }
+                        },
                         "create": {method:"POST"},
                     	"update": {method:"PUT"},
-        				"delete": {method:"DELETE"}
+        				"delete": {method:"DELETE"},
+                        "search": {
+                            method:"GET",
+                            params: {
+                                listController: "search"
+                            }
+                        }
                 	});
 }]);
 
