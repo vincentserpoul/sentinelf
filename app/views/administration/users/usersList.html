@@ -9,11 +9,13 @@
 			<tr ng-repeat="user in users" class="repeat-animation" ng-controller="UserCtrl">
 				<td>{{user.email}}</td>
 				<td>
-					<div ng-hide="editForm">{{user.group.name}}</div>
+					<div ng-hide="editForm">
+					</div>
 					<div ng-show="editForm">
-						<select ng-model="user.group" ng-options="group.name for group in groups" class="form-control input-sm">
-							<option value="">--- choose a group ---</option>
-						</select>
+						<div ng-repeat="group in user.groups">group</div>
+					</div>
+					<div ng-repeat="group in groups">
+						<edit-input-check 
 					</div>
 				</td>
 				<td class="btn-group">

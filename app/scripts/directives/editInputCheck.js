@@ -8,8 +8,8 @@ sentinelfApp
                 '<div ng-hide="editForm">' +
                     '{{value | checkmark}} {{label}} ' +
                 '</div>' +
-                '<div ng-show="editForm">' +
-                    '<input type="checkbox" class="input-sm" ng-model="value" /> {{label}}' +
+                '<div ng-show="editForm" class="checkbox">' +
+                    '<label><input type="checkbox" ng-model="value" /> {{label}}</label>' +
                 '</div>';
 
         return {
