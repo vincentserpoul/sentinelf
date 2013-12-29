@@ -107,6 +107,7 @@ sentinelfApp.controller(
                 employeesFactory.update($scope.employee,
                     function(data){
                         // when success, reset the savEmployer
+                        $scope.employee = data['employee'];
                         $scope.savEmployee = null;
                         $scope.editForm = false;
                     }
@@ -116,6 +117,7 @@ sentinelfApp.controller(
                     function(data){
                         // when success, reset the savEmployer
                         $scope.savEmployee = null;
+                        $scope.employee = data['employee'];
                         $scope.editForm = false;
                     }
                 );

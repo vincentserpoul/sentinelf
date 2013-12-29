@@ -30,7 +30,7 @@ sentinelfApp.controller(
 
         $scope.searchEmployees = function (){
             /* Get the employee list */
-            employeesFactory.get(function(data){
+            employeesFactory.search({listFilterParams: angular.toJson(this.searchCriterias)}, function(data){
                 $scope.employees = data['employees'];
             });
         }
