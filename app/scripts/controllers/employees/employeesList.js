@@ -2,18 +2,15 @@
 
 sentinelfApp.controller(
     'EmployeesListCtrl', [
-    '$scope', 'employeesFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function($scope, employeesFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+    '$scope', 'employeesListProgressiveFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
+    function($scope, employeesListProgressiveFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
         init();
 
         /* Regroup init of the page in one single function */
         function init() {
-
-            /* Get the employee list */
-            employeesFactory.get(function(data){
-                $scope.employees = data['employees'];
-            });
+            /* Load the progressive service to load list of employees */
+            $scope.employeesListProgressiveFactory = new employeesListProgressiveFactory();
 
             /* Get the labels necessary for the list not to be only numbers */
             $scope.staticLabelListResource = modelStaticLabelsFactory.get({model:'employee'});

@@ -9,8 +9,8 @@
     </div>
 </div>
     <div ng-include src="'views/employees/employeeSearch.html'"></div>
-<ul>
-    <li ng-repeat="employee in employees" ng-controller="EmployeeCtrl">
+<ul infinite-scroll='employeesListProgressiveFactory.loadMore()' infinite-scroll-disabled='employeesListProgressiveFactory.busyLoadingEmployees' infinite-scroll-distance='1'>
+    <li ng-repeat="employee in employeesListProgressiveFactory.employees" ng-controller="EmployeeCtrl">
         {{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}
         <p>
         <button class="btn btn-primary btn-xs" ng-click="showProfile()">
