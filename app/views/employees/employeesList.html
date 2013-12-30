@@ -9,106 +9,112 @@
     </div>
 </div>
     <div ng-include src="'views/employees/employeeSearch.html'"></div>
-<ul infinite-scroll='employeesListProgressiveFactory.loadMore()' infinite-scroll-disabled='employeesListProgressiveFactory.busyLoadingEmployees' infinite-scroll-distance='1'>
-    <li ng-repeat="employee in employeesListProgressiveFactory.employees" ng-controller="EmployeeCtrl">
-        {{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}
-        <p>
-        <button class="btn btn-primary btn-xs" ng-click="showProfile()">
-            <ng-switch on="employee.sex_id">
-                <i ng-switch-when="1" class="fa fa-male"></i>
-                <i ng-switch-when="0" class="fa fa-female"></i>
-            </ng-switch>
-             Profile
-        </button>
-        <button ng-show="employee.id" class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
-        <button ng-show="employee.id"class="btn btn-primary btn-xs" ng-click="showUnpaidAssignments()"><i class="fa fa-calendar"></i> Unpaid assignments</button>
-        <button ng-show="employee.id" class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
-        <button ng-show="!employee.id" class="btn btn-default btn-xs" ng-click="cancelAddEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
-        <div ng-show="displayProfile" class="form-inline">
-            <p><edit-input-select uniq-id-value="employee.title_id" ng-model="employee.title" model-ref-type="title" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></p>
-            <p><edit-input-text value="employee.first_name" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-text value="employee.last_name" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-select uniq-id-value="employee.country_code" model-ref-type="country" model-ref-resource="countryListResource" ng-model="employee.country" edit-form="editForm"></edit-input-select></p>
-            <p><edit-input-text value="employee.date_of_birth" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-text value="employee.mobile_phone_number" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-text value="employee.school" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-text value="employee.join_date" edit-form="editForm"></edit-input-text></p>
-            <p><edit-input-select uniq-id-value="employee.race_id" ng-model="employee.race"  model-ref-type="race" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></p>
-            <p><edit-input-select uniq-id-value="employee.status_id" ng-model="employee.status" model-ref-type="status" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></edit-input-text></p>
-            <p><edit-input-select uniq-id-value="employee.work_pass_type_id" ng-model="employee.work_pass_type" model-ref-type="work_pass_type" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></edit-input-text></p>
-            <p>
-                <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-plus fa-fw"></i></button>
-                Employee documents
-                <ul>
-                    <li ng-repeat="employee_doc_unit in employee.employee_doc">
+    <div ng-show="displayList" class="panel panel-default">
+        <div class="panel-heading" ng-show="employeesSearchLazyloadFactory.total+1">{{employeesSearchLazyloadFactory.total}} employee(s) found</div>
+        <div class="panel-body">
+            <ul infinite-scroll='employeesSearchLazyloadFactory.loadMore()' infinite-scroll-disabled='employeesSearchLazyloadFactory.busyLoadingEmployees' infinite-scroll-distance='1'>
+                <li ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeCtrl">
+                    {{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}
+                    <p>
+                    <button class="btn btn-primary btn-xs" ng-click="showProfile()">
+                        <ng-switch on="employee.sex_id">
+                            <i ng-switch-when="1" class="fa fa-male"></i>
+                            <i ng-switch-when="0" class="fa fa-female"></i>
+                        </ng-switch>
+                         Profile
+                    </button>
+                    <button ng-show="employee.id" class="btn btn-primary btn-xs" ng-click="showAssignments()"><i class="fa fa-calendar"></i> Assignments</button>
+                    <button ng-show="employee.id"class="btn btn-primary btn-xs" ng-click="showUnpaidAssignments()"><i class="fa fa-calendar"></i> Unpaid assignments</button>
+                    <button ng-show="employee.id" class="btn btn-danger btn-xs" ng-click="click(employee.id)"><i class="fa fa-ban"></i> Ban</button>
+                    <button ng-show="!employee.id" class="btn btn-default btn-xs" ng-click="cancelAddEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                    <div ng-show="displayProfile" class="form-inline">
+                        <p><edit-input-select uniq-id-value="employee.title_id" ng-model="employee.title" model-ref-type="title" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></p>
+                        <p><edit-input-text value="employee.first_name" edit-form="editForm"></edit-input-text></p>
+                        <p><edit-input-text value="employee.last_name" edit-form="editForm"></edit-input-text></p>
+                        <p><edit-input-select uniq-id-value="employee.country_code" model-ref-type="country" model-ref-resource="countryListResource" ng-model="employee.country" edit-form="editForm"></edit-input-select></p>
+                        <p><edit-input-text value="employee.date_of_birth" edit-form="editForm"></edit-input-text></p>
+                        <p><edit-input-text value="employee.mobile_phone_number" edit-form="editForm"></edit-input-text></p>
+                        <p><edit-input-text value="employee.school" edit-form="editForm"></edit-input-text></p>
+                        <p><edit-input-text value="employee.join_date" edit-form="editForm"></edit-input-text></p>
+                        <p><edit-input-select uniq-id-value="employee.race_id" ng-model="employee.race"  model-ref-type="race" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></p>
+                        <p><edit-input-select uniq-id-value="employee.status_id" ng-model="employee.status" model-ref-type="status" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></edit-input-text></p>
+                        <p><edit-input-select uniq-id-value="employee.work_pass_type_id" ng-model="employee.work_pass_type" model-ref-type="work_pass_type" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></edit-input-text></p>
                         <p>
-                        <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeDoc(employee_doc_unit)"><i class="fa fa-trash-o fa-fw"></i></button>
-                        <img ng-if="employee_doc_unit.image_name != null" ng-src="http://dev.sentinelb.com/images/employee_docs/{{employee_doc_unit.image_name}}" /> {{(employeeStaticLabels['doc_type'] | filter:employee_doc_unit.doc_type_id)[0].label}}
+                            <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-plus fa-fw"></i></button>
+                            Employee documents
+                            <ul>
+                                <li ng-repeat="employee_doc_unit in employee.employee_doc">
+                                    <p>
+                                    <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeDoc(employee_doc_unit)"><i class="fa fa-trash-o fa-fw"></i></button>
+                                    <img ng-if="employee_doc_unit.image_name != null" ng-src="http://dev.sentinelb.com/images/employee_docs/{{employee_doc_unit.image_name}}" /> {{(employeeStaticLabels['doc_type'] | filter:employee_doc_unit.doc_type_id)[0].label}}
+                                    </p>
+                                </li>
+                                <li ng-show="employeeDocForm">
+                                    <p><edit-input-select uniq-id-value="" model-ref-type="doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeDoc.doc_type"></edit-input-select></p>
+                                    <p><input type="file" image-drop accept="image/*" image="newEmployeeDoc.doc_image" /></p>
+                                    <p>
+                                        <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="employeeDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                                    </p>
+                                </li>
+                            </ul>
                         </p>
-                    </li>
-                    <li ng-show="employeeDocForm">
-                        <p><edit-input-select uniq-id-value="" model-ref-type="doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeDoc.doc_type"></edit-input-select></p>
-                        <p><input type="file" image-drop accept="image/*" image="newEmployeeDoc.doc_image" /></p>
                         <p>
-                            <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="employeeDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                            <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeIdentityDocForm = !employeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i></button>
+                            Employee identity documents
+                            <ul>
+                                <li ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
+                                    <p>
+                                    <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeIdentityDoc(employee_identity_doc_unit)"><i class="fa fa-trash-o fa-fw"></i></button>
+                                    <img ng-if="employee_identity_doc_unit.image_name != null"  ng-src="http://dev.sentinelb.com/images/employee_identity_docs/{{employee_identity_doc_unit.image_name}}" />
+                                    {{(employeeStaticLabels['identity_doc_type'] | filter:employee_identity_doc_unit.identity_doc_type_id)[0].label}}:
+                                    {{employee_identity_doc_unit.identity_doc_number}}
+                                    ({{employee_identity_doc_unit.identity_doc_validity_start}} - {{employee_identity_doc_unit.identity_doc_validity_end}})
+                                    </p>
+                                </li>
+                                <li ng-show="employeeIdentityDocForm" >
+                                    <p><edit-input-select uniq-id-value="" model-ref-type="identity_doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeIdentityDoc.identity_doc_type"></edit-input-select></p>
+                                    <p><input type="file" image-drop accept="image/*" image="newEmployeeIdentityDoc.doc_image" /></p>
+                                    <p><input type="text" ng-model="newEmployeeIdentityDoc.identity_doc_number" placeholder="identity doc number" /></p>
+                                    <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_start" /></p>
+                                    <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_end" /></p>
+                                    <p>
+                                        <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeIdentityDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                        <button type="button" class="btn btn-default btn-xs" ng-click="employeeIdentityDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                                    </p>
+                                </li>
+                            </ul>
                         </p>
-                    </li>
-                </ul>
-            </p>
-            <p>
-                <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="employeeIdentityDocForm = !employeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i></button>
-                Employee identity documents
-                <ul>
-                    <li ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
                         <p>
-                        <button ng-show="editForm" type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeIdentityDoc(employee_identity_doc_unit)"><i class="fa fa-trash-o fa-fw"></i></button>
-                        <img ng-if="employee_identity_doc_unit.image_name != null"  ng-src="http://dev.sentinelb.com/images/employee_identity_docs/{{employee_identity_doc_unit.image_name}}" />
-                        {{(employeeStaticLabels['identity_doc_type'] | filter:employee_identity_doc_unit.identity_doc_type_id)[0].label}}:
-                        {{employee_identity_doc_unit.identity_doc_number}}
-                        ({{employee_identity_doc_unit.identity_doc_validity_start}} - {{employee_identity_doc_unit.identity_doc_validity_end}})
+                            <div ng-hide="editForm" class="btn-group button-edit">
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployee()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployee()"><i class="fa fa-trash-o fa-fw"></i></button>
+                            </div>
+                            <div ng-show="editForm" class="btn-group button-edit">
+                                <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployee()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                            </div>
                         </p>
-                    </li>
-                    <li ng-show="employeeIdentityDocForm" >
-                        <p><edit-input-select uniq-id-value="" model-ref-type="identity_doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeIdentityDoc.identity_doc_type"></edit-input-select></p>
-                        <p><input type="file" image-drop accept="image/*" image="newEmployeeIdentityDoc.doc_image" /></p>
-                        <p><input type="text" ng-model="newEmployeeIdentityDoc.identity_doc_number" placeholder="identity doc number" /></p>
-                        <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_start" /></p>
-                        <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_end" /></p>
-                        <p>
-                            <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeIdentityDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="employeeIdentityDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
-                        </p>
-                    </li>
-                </ul>
-            </p>
-            <p>
-                <div ng-hide="editForm" class="btn-group button-edit">
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployee()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                    <button type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployee()"><i class="fa fa-trash-o fa-fw"></i></button>
-                </div>
-                <div ng-show="editForm" class="btn-group button-edit">
-                    <button type="button" class="btn btn-success btn-xs" ng-click="saveEmployee()"><i class="fa fa-save fa-fw"></i> Save</button>
-                    <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
-                </div>
-            </p>
-        </div>
-        <div ng-show="displayAssignments">
-            <p ng-repeat="globaleventPeriod in globaleventPeriods">
+                    </div>
+                    <div ng-show="displayAssignments">
+                        <p ng-repeat="globaleventPeriod in globaleventPeriods">
 
-                <ng-switch on="globaleventPeriod.payment_id">
-                    <button ng-switch-default class="btn btn-xs btn-info"><i class="fa fa-money"></i> Payed</button>
-                    <button ng-click="payEmployee()" ng-switch-when="null" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Pay!</button>
-                </ng-switch>
-                {{globaleventPeriod.label}} ({{globaleventPeriod.number_of_employee_needed}}) : from {{globaleventPeriod.start_datetime}} to {{globaleventPeriod.end_datetime}}
-            </p>
+                            <ng-switch on="globaleventPeriod.payment_id">
+                                <button ng-switch-default class="btn btn-xs btn-info"><i class="fa fa-money"></i> Payed</button>
+                                <button ng-click="payEmployee()" ng-switch-when="null" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Pay!</button>
+                            </ng-switch>
+                            {{globaleventPeriod.label}} ({{globaleventPeriod.number_of_employee_needed}}) : from {{globaleventPeriod.start_datetime}} to {{globaleventPeriod.end_datetime}}
+                        </p>
+                    </div>
+                    <div ng-show="displayUnpaidAssignments">
+                        <p ng-repeat="unpaidGlobaleventPeriod in unpaidGlobaleventPeriods">
+                            <button ng-click="payEmployee()" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Unpaid</button>
+                            {{unpaidGlobaleventPeriod.label}} ({{unpaidGlobaleventPeriod.number_of_employee_needed}}) : from {{unpaidGlobaleventPeriod.start_datetime}} to {{unpaidGlobaleventPeriod.end_datetime}}
+                        </p>
+                    </div>
+                    </p>
+                </li>
+            </ul>
+            <div ng-show="employeesSearchLazyloadFactory.busyLoadingEmployees" class="smallsize spinnerprogress centered"><div>Loading…</div></div>
         </div>
-        <div ng-show="displayUnpaidAssignments">
-            <p ng-repeat="unpaidGlobaleventPeriod in unpaidGlobaleventPeriods">
-                <button ng-click="payEmployee()" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Unpaid</button>
-                {{unpaidGlobaleventPeriod.label}} ({{unpaidGlobaleventPeriod.number_of_employee_needed}}) : from {{unpaidGlobaleventPeriod.start_datetime}} to {{unpaidGlobaleventPeriod.end_datetime}}
-            </p>
-        </div>
-        </p>
-    </li>
-</ul>
+    </div>
