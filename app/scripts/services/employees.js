@@ -55,3 +55,6 @@ sentinelfApp.factory('assignedEmployeesFactory', ['$resource', function ($resour
                     {globalevent_period_id: "@id"});
 
 }]);
+
+
+

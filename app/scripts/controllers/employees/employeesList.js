@@ -2,18 +2,13 @@
 
 sentinelfApp.controller(
     'EmployeesListCtrl', [
-    '$scope', 'employeesFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function($scope, employeesFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+    '$scope', 'employeesSearchLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
+    function($scope, employeesSearchLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
         init();
 
         /* Regroup init of the page in one single function */
         function init() {
-
-            /* Get the employee list */
-            employeesFactory.get(function(data){
-                $scope.employees = data['employees'];
-            });
 
             /* Get the labels necessary for the list not to be only numbers */
             $scope.staticLabelListResource = modelStaticLabelsFactory.get({model:'employee'});
@@ -29,10 +24,12 @@ sentinelfApp.controller(
         }
 
         $scope.searchEmployees = function (){
-            /* Get the employee list */
-            employeesFactory.search({listFilterParams: angular.toJson(this.searchCriterias)}, function(data){
-                $scope.employees = data['employees'];
-            });
+            /* Load the progressive service to load list of employees */
+            $scope.employeesSearchLazyloadFactory = new employeesSearchLazyloadFactory(this.searchCriterias);
+            /* First launch */
+            $scope.employeesSearchLazyloadFactory.loadMore();
+            /* display the search results */
+            $scope.displayList = true;
         }
 
     }
