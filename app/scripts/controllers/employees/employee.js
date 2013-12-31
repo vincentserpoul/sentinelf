@@ -10,6 +10,7 @@ sentinelfApp.controller(
         /* Regroup init of the page in one single function */
         function init() {
             $scope.editForm = false;
+            $scope.init = false;
         }
 
         /* Display profile tab and hide the two others */
@@ -42,6 +43,12 @@ sentinelfApp.controller(
 
         /* Display profile tab and hide the two others */
         $scope.showProfile = function(){
+            if (!$scope.init) {
+                for (var item in $scope.employee)
+                    if ($scope.employee[item]['toinit'])
+                        $scope.employee[item].init();
+                $scope.init = true;
+            }
             $scope.displayProfile = !$scope.displayProfile;
             $scope.displayPayments=false;
             $scope.displayAssignments=false;
@@ -80,7 +87,6 @@ sentinelfApp.controller(
         }
 
         $scope.editEmployee = function(){
-
             // Save employer in case of cancel, to rollback to previous values
             $scope.savEmployee = angular.copy($scope.employee);
             // Activate the edit

@@ -7,7 +7,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
     function init(){
         //Fetch all events and events' periods
         eventsFactory.get(function (data) {
-            $scope.events = data['Globalevents'];  
+            $scope.events = data['Globalevents']['data'];  
         });
 
         //Fetch all events
@@ -16,6 +16,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         //Fetch all departments
         $scope.departmentsResource = departmentsFactory.get();
 
+        /*
         $scope.eventPeriodResource = eventPeriodFactory.get(function (data) {
             $scope.eventsPeriods = data['GlobaleventPeriods'];
         });
@@ -32,6 +33,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         eventPeriodEmployeeFactory.get(function (data) {
             $scope.eventPeriodEmployees = data['GlobaleventPeriodEmployees'];
         })
+        */
 
         $scope.employeeStaticLabelsResource = modelStaticLabelsFactory.get({model: 'employee'});
 
@@ -83,7 +85,15 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
 
 sentinelfApp.controller("EventCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', function ($scope, formService, AlertService, eventsFactory) {
     
+    $scope.init = false;
+
     $scope.editEvent = function () {
+        if (!$scope.init) {
+            for (var item in $scope.event)
+                if ($scope.event[item]['toinit'])
+                    $scope.event[item].init();
+            $scope.init = true;
+        }
         // Save event in case of cancel, to rollback to previous values
         $scope.savEvent = angular.copy($scope.event);
         // shallow copy code
