@@ -24,7 +24,7 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody ng-repeat="createdEvent in createdEvents" class="repeat-animation">
+                <tbody ng-repeat="createdEvent in createdEvents">
                     <tr ng-controller='EventCtrl'>
                         <td><edit-input-text value="createdEvent.label" edit-form="true"></edit-input-text></td>
                         <td><edit-input-select uniq-id-value="createdEvent.employer_id" model-ref-resource="employersResource" model-ref-type="employers" edit-form="true" ng-model="createdEvent.employer" alt-label="name" alt-ref="none"></edit-input-select></td>

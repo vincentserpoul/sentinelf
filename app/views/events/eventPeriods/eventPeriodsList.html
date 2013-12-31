@@ -15,7 +15,7 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody ng-repeat="createdEventPeriod in createdEventPeriods" class="repeat-animation">
+                <tbody ng-repeat="createdEventPeriod in createdEventPeriods">
                     <tr ng-controller='EventCtrl'>
                         <td><edit-input-datetime datetime="createdEventPeriod.start_datetime" edit-form="true"></edit-input-datetime></td>
                         <td><edit-input-datetime datetime="createdEventPeriod.end_datetime" edit-form="true"></edit-input-datetime></td>
