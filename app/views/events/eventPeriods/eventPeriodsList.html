@@ -1,9 +1,9 @@
-<div class="panel panel-default" ng-controller="EventPeriodsCtrl">
+<div class="panel panel-info" ng-controller="EventPeriodsCtrl">
     <div class="panel-heading">
-        Event Period
+        {{event.label}}'s Event Periods
         <button type="button" class="btn btn-primary btn-xs" ng-click="newEventPeriod()"><i class="fa fa-plus fa-fw"></i> New</button>
     </div>
-    <div class="panel panel-info collapse" id="collapseNewEventPeriod{{event.id}}">
+    <div class="panel panel-primary collapse" id="collapseNewEventPeriod{{event.id}}">
         <div class="panel-heading">New Event Period</div>
         <div class="panel-body">
             <table class="table">
@@ -15,8 +15,8 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody ng-repeat="createdEventPeriod in createdEventPeriods">
-                    <tr ng-controller='EventCtrl'>
+                <tbody>
+                    <tr>
                         <td><edit-input-datetime datetime="createdEventPeriod.start_datetime" edit-form="true"></edit-input-datetime></td>
                         <td><edit-input-datetime datetime="createdEventPeriod.end_datetime" edit-form="true"></edit-input-datetime></td>
                         <td><edit-input-text value="createdEventPeriod.number_of_employee_needed" edit-form="true"></edit-input-text></td>
@@ -31,7 +31,7 @@
             </table>
         </div>
     </div>
-    <table class="table">
+    <table class="table" ng-show="eventPeriodsLazyloadFactory.eventPeriods.length">
         <tr>
             <th>ID</th>
             <th>Start Date</th>
@@ -40,12 +40,12 @@
             <th>Number of Employees needed</th>
             <th>Actions</th>
         </tr>
-        <tbody ng-repeat="eventPeriod in eventsPeriods | filter:{globalevent_id: event.id} | orderBy:'-id'">
-            <tr ng-controller='EventPeriodCtrl'>
+        <tbody ng-repeat="eventPeriod in eventPeriodsLazyloadFactory.eventPeriods" ng-controller='EventPeriodCtrl' class="repeat-animation">
+            <tr>
                 <td>{{ eventPeriod.id }}</td>
                 <td><edit-input-datetime datetime="eventPeriod.start_datetime" edit-form="editForm"></edit-input-datetime></td>
                 <td><edit-input-datetime datetime="eventPeriod.end_datetime" edit-form="editForm"></edit-input-datetime></td>
-                <td>{{(eventPeriodEmployees | filter: {globalevent_period_id: eventPeriod.id}).length}}</td>
+                <td>{{ eventPeriod.number_of_employees_assigned }}</td>
                 <td><edit-input-text value="eventPeriod.number_of_employee_needed" edit-form="editForm"></edit-input-text></td>
                 <td class="btn-toolbar">
                     <div ng-hide="editForm" class="btn-group">
@@ -63,7 +63,7 @@
                         <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditEventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}"><i class="fa fa-calendar"></i> Assigned Employees</button> 
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click='loadAssignments()'><i class="fa fa-calendar"></i> Assigned Employees</button> 
                     </div>
                 </td>
             </tr>
@@ -76,4 +76,9 @@
             </tr>
         </tbody>
     </table>
+    <div ng-hide="eventPeriodsLazyloadFactory.completelyLoaded || eventPeriodsLazyloadFactory.busyLoadingEventPeriods">
+        <button type="button" class="btn btn-link" ng-click="eventPeriodsLazyloadFactory.loadMore()">More...</button>
+    </div>
+    <p class="text-muted" ng-hide="eventPeriodsLazyloadFactory.eventPeriods.length || eventPeriodsLazyloadFactory.busyLoadingEventPeriods">Empty</p>
+    <div class="panel-footer" ng-show="eventPeriodsLazyloadFactory.busyLoadingEventPeriods"><i class="fa fa-refresh fa-spin"></i> Loading...</div>
 </div>

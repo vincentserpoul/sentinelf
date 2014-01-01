@@ -60,6 +60,16 @@ sentinelfApp.factory('formService', function($resource, $modal) {
             for (var item in element1) {
                 element2[item] = element1[item];
             }
+        },
+        initValues: function (obj) {
+            var savObj = angular.copy(obj);
+            for (var item in obj) {
+                if (obj[item].toinit) {
+                    savObj.item = {};
+                    obj[item].init(savObj, item);
+                }
+            }
+            return savObj;
         }
  	}   
 });

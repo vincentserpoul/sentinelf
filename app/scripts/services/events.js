@@ -36,3 +36,8 @@ sentinelfApp.factory('wholeEventFactory', ['$resource', function ($resource) {
     return $resource('http://dev.sentinelb.com/api/v1/globalevent_period_employee/assign_whole_event');
 
 }])
+
+sentinelfApp.factory('eventPeriodsFactory', ['$resource', function ($resource) {
+    return $resource('http://dev.sentinelb.com/api/v1/globalevent/globalevent_periods/:globalevent_id', 
+                    {globalevent_id: '@id'},{"get": {method:"GET", cache: true}});
+}])

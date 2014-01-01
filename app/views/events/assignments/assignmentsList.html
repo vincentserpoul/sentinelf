@@ -1,7 +1,31 @@
-<div class="panel panel-default">
+<div class="panel panel-info" ng-controller="EmployeesListCtrl">
     <div class="panel-heading">
-        Assignments
+        {{event.label}}'s Assignments
     </div>
+    <div class="panel-body" ng-include src="'views/employees/employeeSearch.html'"></div>
+    <div ng-show="displayList" class="panel">
+        <div class="panel-heading">
+            <p class="text-muted" ng-show="employeesSearchLazyloadFactory.total+1">{{employeesSearchLazyloadFactory.total}} employee(s) found</p>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in employeesSearchLazyloadFactory.employees">
+                    <td>{{employee.id}}</td>
+                    <td>{{employee.first_name}} {{employee.last_name}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-hide="employeesSearchLazyloadFactory.completelyLoaded || employeesSearchLazyloadFactory.busyLoadingEmployees">
+            <button type="button" class="btn btn-link" ng-click="employeesSearchLazyloadFactory.loadMore()">More...</button>
+        </div>
+    </div>
+    <!--
     <table class="table">
         <thead>
             <tr>
@@ -43,4 +67,5 @@
             </tr>
         </tbody>
     </table>
+    -->
 </div>

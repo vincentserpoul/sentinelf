@@ -1,8 +1,8 @@
-<div ng-controller="EventPeriodsAssignmentsCtrl">
+<div ng-controller="EventPeriodsAssignmentsCtrl" ng-show="assignedEmployeesLazyloadFactory.assigned_employees.length">
     <table class="table-striped table-bordered table-condensed">
         <thead>
             <tr>
-                <th ng-show="unassignForm" class="show-hide-animation"></th>
+                <th ng-show="unassignForm"></th>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Sex</th>
@@ -17,12 +17,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-show="unassignForm" class="show-hide-animation">
+            <tr ng-show="unassignForm">
                 <td><input type="checkbox" ng-model="allSelected" ng-change="onAllSelected()"/></td>
-                <td>Select all</td>
+                <td><strong>Select all</strong></td>
             </tr>
-            <tr ng-repeat="assigned_employee in employees | filter_assigned_employees: {globalevent_period_id: eventPeriod.id, globalevent_period_employees: eventPeriodEmployees}" class="repeat-animation">
-                <td ng-show="unassignForm" class="show-hide-animation"><input type="checkbox" ng-model="(eventPeriodEmployees | filter_event_period_employee: {globalevent_period_id: eventPeriod.id, employee_id: assigned_employee.id}).isUnassigned"></td>
+            <tr ng-repeat="assigned_employee in assignedEmployeesLazyloadFactory.assigned_employees" class="repeat-animation">
+                <td ng-show="unassignForm"><input type="checkbox" ng-model="assigned_employee.isUnassigned"></td>
                 <td>{{assigned_employee.id}}</td>
                 <td class="dropdown">{{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
                 <td><edit-input-select uniq-id-value="assigned_employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="assigned_employee.sex" edit-form="false"></edit-input-select></td>
@@ -37,6 +37,9 @@
             </tr>
         </tbody>
     </table>
+    <div ng-hide="assignedEmployeesLazyloadFactory.completelyLoaded || assignedEmployeesLazyloadFactory.busyLoadingAssignedEmployees">
+        <button type="button" class="btn btn-link" ng-click="assignedEmployeesLazyloadFactory.loadMore()">More...</button>
+    </div>
     <br/>
     <div ng-hide="unassignForm" class="btn-group" class="show-hide-animation">
         <button type="button" class="btn btn-primary btn-xs" ng-click="unassign()"><i class="fa fa-edit fa-fw"></i> Unassign</button>
@@ -46,3 +49,5 @@
         <button type="button" class="btn btn-default btn-xs" ng-click="cancel()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
     </div>
 </div>
+<p ng-hide="assignedEmployeesLazyloadFactory.assigned_employees.length || assignedEmployeesLazyloadFactory.busyLoadingAssignedEmployees" class="text-muted">Empty</p>
+<div ng-show="assignedEmployeesLazyloadFactory.busyLoadingAssignedEmployees"><i class="fa fa-refresh fa-spin"></i> Loading...</div>
