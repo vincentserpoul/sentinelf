@@ -14,7 +14,7 @@
         <div class="panel-body">
             <ul infinite-scroll='employeesSearchLazyloadFactory.loadMore()' infinite-scroll-disabled='employeesSearchLazyloadFactory.busyLoadingEmployees' infinite-scroll-distance='1'>
                 <li ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeCtrl">
-                    {{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}}
+                    {{(employeeStaticLabels['title'] | filter:employee.title_id)[0].label}} {{employee.first_name}} {{employee.last_name}} ({{employee.age}}yo)
                     <p>
                     <button class="btn btn-primary btn-xs" ng-click="showProfile()">
                         <ng-switch on="employee.sex_id">
