@@ -3,7 +3,7 @@
 sentinelfApp.controller(
     'EmployeesListCtrl', [
     '$scope', 'employeesSearchLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function($scope, employeesSearchLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+    function ($scope, employeesSearchLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
         init();
 

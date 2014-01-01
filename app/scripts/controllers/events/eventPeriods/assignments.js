@@ -11,25 +11,21 @@ sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$filter', 'fo
 
     $scope.save = function () {
         // unassign selected employees
+        var unassigned_employee_ids = new Array();
         for (var i in $scope.assignedEmployeesLazyloadFactory.assigned_employees) {
             if ($scope.assignedEmployeesLazyloadFactory.assigned_employees[i].isUnassigned) {
                 var index = i;
                 eventPeriodEmployeeFactory.delete({eventPeriodEmployeeId: $scope.assignedEmployeesLazyloadFactory.assigned_employees[i].globalevent_period_employee_id}, function (data) {
-                    $scope.assignedEmployeesLazyloadFactory.assigned_employees.splice(index, 1);
+                    unassigned_employee_ids.push(index);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }, function (error) {
                     if (error['data'])
                         AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
                 }).$promise.then(function () {
-                    /*
-                    eventPeriodEmployeeFactory.get(function (data) {
-                        $scope.setEventPeriodEmployees(data['GlobaleventPeriodEmployees']);
-                    })
-                    // update possible event periods
-                    employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
-                        $scope.setAllPossibleGlobaleventPeriods(data['possible_globalevent_periods']);
-                    })
-                    */
+                    for (var j in unassigned_employee_ids) {
+                        $scope.assignedEmployeesLazyloadFactory.assigned_employees.splice(unassigned_employee_ids[j] - j, 1);
+                        $scope.assignedEmployeesLazyloadFactory.total--;
+                    }
                 }); 
             }
         }

@@ -68,7 +68,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
 }]);
 
 
-sentinelfApp.controller("EventCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodsLazyloadFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodsLazyloadFactory) {
+sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodsLazyloadFactory', function ($scope, $modal, formService, AlertService, eventsFactory, eventPeriodsLazyloadFactory) {
     
     $scope.init = false;
 
@@ -135,4 +135,19 @@ sentinelfApp.controller("EventCtrl", ['$scope', 'formService', 'AlertService', '
         }
     }
     
+    $scope.openAssignments = function () {
+        var assignmentsModalInstance = $modal.open({
+                templateUrl: 'views/events/assignments/assignmentsList.html',
+                controller: 'EmployeeEventAssignmentsCtrl',
+                resolve: {
+                    globalevent_id: function () {
+                        return $scope.event.id;
+                    },
+                    label: function () {
+                        return $scope.event.label;
+                    }
+                }
+            });
+    }
+
 }]);

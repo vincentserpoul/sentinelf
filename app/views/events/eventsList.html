@@ -65,7 +65,7 @@
                     <button ng-show="editForm" type="button" class="btn btn-success" ng-click="saveEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
                     <button ng-show="editForm" type="button" class="btn btn-default" ng-click="cancelEditEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                     <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseEventPeriod{{event.id}}" ng-click="loadEventPeriods()">Event periods</button>
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseAssignment{{event.id}}">Assignments</button> 
+                    <button type="button" class="btn btn-primary" ng-click="openAssignments()">Assignments</button> 
                     <button ng-hide="editForm" type="button" class="btn btn-warning" ng-click="deleteEvent()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
                 </td>
             </tr>
@@ -74,11 +74,6 @@
                     <div class="collapse" id="collapseEventPeriod{{event.id}}" ng-include src="'views/events/eventPeriods/eventPeriodsList.html'"></div>
                  </td>
             </tr>        
-            <tr style="border: none;">
-                <td colspan="6" style="border: none; padding: 0px;">
-                    <div class="collapse" id="collapseAssignment{{event.id}}" ng-include src="'views/events/assignments/assignmentsList.html'"></div>
-                </td>
-            </tr>
         </tbody>
     </table>
     <div ng-show="eventsLazyloadFactory.busyLoadingEvents"><i class="fa fa-refresh fa-spin fa-2x"></i> Loading...</div>

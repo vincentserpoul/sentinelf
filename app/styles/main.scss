@@ -79,9 +79,8 @@ body {
     margin-top: 28px;
 }
 
-/* Fix modal for bootstrap 3 */
-.modal {
-    display: block;
+.modal-dialog {
+    width: 970px;
 }
 
 /* Responsive: Portrait tablets and up */

@@ -1,71 +1,46 @@
-<div class="panel panel-info" ng-controller="EmployeesListCtrl">
-    <div class="panel-heading">
-        {{event.label}}'s Assignments
+<div>
+    <div class="modal-header">
+        {{label}}'s Assignments
     </div>
-    <div class="panel-body" ng-include src="'views/employees/employeeSearch.html'"></div>
-    <div ng-show="displayList" class="panel">
-        <div class="panel-heading">
-            <p class="text-muted" ng-show="employeesSearchLazyloadFactory.total+1">{{employeesSearchLazyloadFactory.total}} employee(s) found</p>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="employee in employeesSearchLazyloadFactory.employees">
-                    <td>{{employee.id}}</td>
-                    <td>{{employee.first_name}} {{employee.last_name}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div ng-hide="employeesSearchLazyloadFactory.completelyLoaded || employeesSearchLazyloadFactory.busyLoadingEmployees">
-            <button type="button" class="btn btn-link" ng-click="employeesSearchLazyloadFactory.loadMore()">More...</button>
+    <div class="modal-body">
+        <div ng-include src="'views/employees/employeeSearch.html'"></div>
+        <div ng-show="displayList" class="panel">
+            <div class="panel-heading">
+                <p class="text-muted" ng-show="(employeesSearchLazyloadFactory.total+1) && !employeesSearchLazyloadFactory.busyLoadingEmployees">{{employeesSearchLazyloadFactory.total}} employee(s) found</p>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Assign to</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="employee in employeesSearchLazyloadFactory.employees">
+                        <td>{{employee.id}}</td>
+                        <td>{{employee.first_name}} {{employee.last_name}}</td>
+                        <td ng-controller="EmployeeEventAssignmentCtrl">
+                            <ul class="list-unstyled">
+                                <li ng-repeat="possible_globalevent_period in employee.possible_globalevent_periods" class="repeat-animation"><a class="btn btn-link btn-sm" ng-click="assign(possible_globalevent_period.id)">{{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}</a>
+                                </li>
+                                <li class="btn btn-link disabled" style="opacity: 100" ng-hide="employee.possible_globalevent_periods.length"><p class="text-muted">No more event period(s) to assign</p></li>
+                                <!--
+                                <li><a ng-show="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length" class="btn btn-warning btn-xs" ng-click="assign_whole_event()">Whole event</a></li>
+                                <li class="text-muted" ng-hide="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length">No more event period(s) to assign</li>
+                                -->
+                            </ul>
+                        </td>  
+                    </tr>
+                </tbody>
+            </table>
+            <div ng-hide="employeesSearchLazyloadFactory.completelyLoaded || employeesSearchLazyloadFactory.busyLoadingEmployees">
+                <button type="button" class="btn btn-link" ng-click="employeesSearchLazyloadFactory.loadMore()">More...</button>
+            </div>
+            <div ng-show="employeesSearchLazyloadFactory.busyLoadingEmployees"><i class="fa fa-refresh fa-spin"></i> Loading...</div>
         </div>
     </div>
-    <!--
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Sex</th>
-                <th>Country</th>
-                <th>D.O.B</th>
-                <th>Mobile</th>
-                <th>school</th>
-                <th>Joined</th>
-                <th>Race</th>
-                <th>Status</th>
-                <th>Work pass</th>
-                <th>Assign to</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="employee in employees" class="repeat-animation">
-                <td>{{employee.id}}</td>
-                <td class="dropdown">{{employee.first_name}} {{employee.last_name}}</td>
-                <td><edit-input-select uniq-id-value="employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="employee.sex" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="employee.country_code" model-ref-resource="countryListResource" model-ref-type="country" ng-model="employee.country" edit-form="false"></edit-input-select></td>
-                <td><edit-input-date date="employee.date_of_birth" edit-form="false"></edit-input-date></td>
-                <td><edit-input-text value="employee.mobile_phone_number" edit-form="false"></edit-input-text></td>
-                <td><edit-input-text value="employee.school" edit-form="false"></edit-input-text></td>
-                <td><edit-input-date date="employee.join_date" edit-form="false"></edit-input-date></td>
-                <td><edit-input-select uniq-id-value="employee.race_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="race" ng-model="employee.race" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="employee.status_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="status" ng-model="employee.status" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="employee.work_pass_type" edit-form="false"></edit-input-select></td>        
-                <td ng-controller="EmployeeEventAssignmentCtrl">
-                    <ul class="list-unstyled">
-                        <li ng-repeat="possible_globalevent_period in eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}" ng-class="repeat-animation"><a class="btn btn-link btn-sm" ng-click="assign(possible_globalevent_period.id)">{{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}</a>
-                        </li>
-                        <li><a ng-show="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length" class="btn btn-warning btn-xs" ng-click="assign_whole_event()">Whole event</a></li>
-                        <li class="text-muted" ng-hide="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length">No more event period(s) to assign</li>
-                    </ul>
-                </td>    
-            </tr>
-        </tbody>
-    </table>
-    -->
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+    </div>
 </div>

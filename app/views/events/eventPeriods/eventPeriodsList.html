@@ -45,7 +45,10 @@
                 <td>{{ eventPeriod.id }}</td>
                 <td><edit-input-datetime datetime="eventPeriod.start_datetime" edit-form="editForm"></edit-input-datetime></td>
                 <td><edit-input-datetime datetime="eventPeriod.end_datetime" edit-form="editForm"></edit-input-datetime></td>
-                <td>{{ eventPeriod.number_of_employees_assigned }}</td>
+                <td>
+                    <div ng-hide="assignedEmployeesLazyloadFactory">{{ eventPeriod.number_of_employees_assigned }}</div>
+                    <div ng-show="assignedEmployeesLazyloadFactory">{{assignedEmployeesLazyloadFactory.total}}</div>
+                </td>
                 <td><edit-input-text value="eventPeriod.number_of_employee_needed" edit-form="editForm"></edit-input-text></td>
                 <td class="btn-toolbar">
                     <div ng-hide="editForm" class="btn-group">

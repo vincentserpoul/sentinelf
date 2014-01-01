@@ -92,4 +92,12 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertServi
             $scope.assignedEmployeesLazyloadFactory.loadMore();    
         }
     }
+
+    $scope.$on('updateAssignments', function (event, newEmployee) {
+        if ($scope.assignedEmployeesLazyloadFactory) {
+            //push new employee
+            $scope.assignedEmployeesLazyloadFactory.assigned_employees.unshift(newEmployee);
+            $scope.assignedEmployeesLazyloadFactory.total++;
+        }
+    })
 }]);
