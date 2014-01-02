@@ -23,7 +23,7 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-        <p class="navbar-text" id="userInfo" data-access-level="['user']">Welcome {{user.email}} ({{user.userRole.title}})</a></p>
+        <li><p class="navbar-text" id="userInfo" data-access-level="['user']">Welcome {{user.email}} ({{user.userRole.title}})</p></li>
         <li data-access-level="['user']" ng-controller="LoginCtrl"><a href="" data-ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->

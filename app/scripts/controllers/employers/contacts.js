@@ -6,14 +6,6 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService'
 
     /* Regroup init of the page in one single function */
     function init() {
-        /* Initialize the list of contacts */
-        contactsFactory.get({employer_id : $scope.employer.id}, function(data){
-            $scope.contacts = data['EmployerContacts'];
-            /* Get the labels necessary for the list not to be only numbers */
-        });
-
-        $scope.contactStaticLabelsResource = modelStaticLabelsFactory.get({model:'contact'});
-
         $scope.newForm = true;
     };
 

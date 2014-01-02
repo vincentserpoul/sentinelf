@@ -1,19 +1,12 @@
 'use strict';
 
-sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentsLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
     function init() {
         $scope.detailReady = 'disabled';
-        departmentsFactory.get({employer_id : $scope.employer.id}, function (data) {
-            $scope.departments = data['EmployerDepartments'];
-        });
-
-        $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
-        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
-
         $scope.selectedDepartments = [{'label': 'None'}];
     };
 

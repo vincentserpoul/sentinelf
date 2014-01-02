@@ -41,12 +41,14 @@
         <button type="button" class="btn btn-link" ng-click="assignedEmployeesLazyloadFactory.loadMore()"   >More...</button>
     </div>
     <br/>
-    <div ng-hide="unassignForm" class="btn-group" class="show-hide-animation">
-        <button type="button" class="btn btn-primary btn-xs" ng-click="unassign()"><i class="fa fa-edit fa-fw"></i> Unassign</button>
-    </div>
-    <div ng-show="unassignForm" class="btn-group" class="show-hide-animation">
-        <button type="button" class="btn btn-success btn-xs" ng-click="save()"><i class="fa fa-save fa-fw"></i> Save</button>
-        <button type="button" class="btn btn-default btn-xs" ng-click="cancel()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+    <div ng-hide="assignedEmployeesLazyloadFactory.busyLoadingAssignedEmployees">
+        <div ng-hide="unassignForm" class="btn-group" class="show-hide-animation">
+            <button type="button" class="btn btn-primary btn-xs" ng-click="unassign()"><i class="fa fa-edit fa-fw"></i> Unassign</button>
+        </div>
+        <div ng-show="unassignForm" class="btn-group" class="show-hide-animation">
+            <button type="button" class="btn btn-success btn-xs" ng-click="save()"><i class="fa fa-save fa-fw"></i> Save</button>
+            <button type="button" class="btn btn-default btn-xs" ng-click="cancel()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+        </div>
     </div>
 </div>
 <p ng-hide="assignedEmployeesLazyloadFactory.assigned_employees.length || assignedEmployeesLazyloadFactory.busyLoadingAssignedEmployees" class="text-muted">Empty</p>

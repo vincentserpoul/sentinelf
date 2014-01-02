@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService', 'employersFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, employersFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService', 'employersLazyloadFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, employersLazyloadFactory, modelIsoLabelsFactory) {
 
     init();
 
@@ -8,9 +8,10 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
 	function init() {
 
         /* Initialize the list of employers */
-        employersFactory.get(function(data){
-            $scope.employers = data['employers'];
-        });
+        /* Load the progressive service to load list of employees */
+        $scope.employersLazyloadFactory = new employersLazyloadFactory();
+        /* First launch */
+        $scope.employersLazyloadFactory.loadMore();
 
         /* Get the labels necessary for the list of countries not to be only codes */
         $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
@@ -53,7 +54,7 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
     }
 }]);
 
-sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', 'AlertService', function($scope, formService, employersFactory, AlertService){
+sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', 'departmentsLazyloadFactory', 'contactsLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'AlertService', function($scope, formService, employersFactory, departmentsLazyloadFactory, contactsLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, AlertService){
 
     $scope.editEmployer = function () {
         // Save employer in case of cancel, to rollback to previous values
@@ -109,4 +110,31 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
         });
     }
 
+    $scope.loadDepartments = function () {
+        if (!$scope.departmentsLazyloadFactory) {
+            /* Initialize the list of departments */
+            /* Load the progressive service to load list of departments */
+            $scope.departmentsLazyloadFactory = new departmentsLazyloadFactory($scope.employer.id);
+            /* First launch */
+            $scope.departmentsLazyloadFactory.loadMore();
+        }
+
+        if (!$scope.departmentsStaticLabelsResource) 
+            $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
+        if (!$scope.currencyIsoLabelsResource)
+            $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
+    }
+
+    $scope.loadContacts = function () {
+        if (!$scope.contactsLazyloadFactory) {
+            /* Initialize the list of departments */
+            /* Load the progressive service to load list of departments */
+            $scope.contactsLazyloadFactory = new contactsLazyloadFactory($scope.employer.id);
+            /* First launch */
+            $scope.contactsLazyloadFactory.loadMore();
+        }
+
+        if (!$scope.contactStaticLabelsResource)
+            $scope.contactStaticLabelsResource = modelStaticLabelsFactory.get({model:'contact'});
+    }
 }])

@@ -106,10 +106,17 @@
 		<div
 		    data-angular-treeview="true"
 		    data-tree-id="departmentTree"
-		    data-tree-model="departments"
+		    data-tree-model="departmentsLazyloadFactory.departments"
 		    data-node-id="id"
 		    data-node-label="label"
-		    data-node-children="children" >
+		    data-node-children="children" 
+		    ng-show="departmentsLazyloadFactory.total">
 		</div>
+	</div>
+	<div ng-hide="departmentsLazyloadFactory.completelyLoaded || departmentsLazyloadFactory.busyLoadingDepartments">
+        <button type="button" class="btn btn-link" ng-click="departmentsLazyloadFactory.loadMore()">More...</button>
+    </div>
+	<div class="panel-footer" ng-show="departmentsLazyloadFactory.busyLoadingDepartments">
+		<i class="fa fa-refresh fa-spin"></i> Loading...
 	</div>
 </div>

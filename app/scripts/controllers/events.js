@@ -9,18 +9,17 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         $scope.eventsLazyloadFactory = new eventsLazyloadFactory();
         /* First launch */
         $scope.eventsLazyloadFactory.loadMore();
+    };
 
+    $scope.loadEmployersResource = function () {
         //Fetch all events
         $scope.employersResource = employersFactory.get();
 
         //Fetch all departments
         $scope.departmentsResource = departmentsFactory.get();
 
-        $scope.employeeStaticLabelsResource = modelStaticLabelsFactory.get({model: 'employee'});
-
-        /* Get the labels necessary for the list of countries not to be only codes */
-        $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
-    };
+        return $scope.departmentsResource;
+    }
 
     $scope.setEventPeriodEmployees = function (eventPeriodEmployees) {
         $scope.eventPeriodEmployees = eventPeriodEmployees;
@@ -38,12 +37,22 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         "date" : "2013-01-01"};
     var setNewValues = false;
 
-    $scope.newEvent = function () {
+    function initEventValues () {
         if (!setNewValues) {
             formService.initValues($scope.createdEvent);
             setNewValues = true;
         }
         $('#collapseNewEvent').collapse('show');
+    }
+
+    $scope.newEvent = function () {
+        if (!($scope.employersResource && $scope.departmentsResource)) {
+            $scope.loadEmployersResource().$promise.then(function () {
+                initEventValues();
+            });
+        }
+        else 
+            initEventValues();
     }
 
     $scope.saveNewEvent = function () {
@@ -73,6 +82,9 @@ sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertS
     $scope.init = false;
 
     $scope.editEvent = function () {
+        if (!($scope.employersResource && $scope.departmentsResource))
+            $scope.loadEmployersResource();
+
         if (!$scope.init) {
             $scope.savEvent = formService.initValues($scope.event);
             $scope.init = true;
