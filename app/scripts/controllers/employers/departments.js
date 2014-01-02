@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentsLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsFactory', 'departmentsLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentsFactory, departmentsLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
     init();
 
@@ -71,8 +71,12 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
 
     }
 
-    $scope.newDepartment = function (parent_id) {
+    function initNewDepartmentValues () {
+        formService.initValues($scope.selectedDepartments[0]);
         $scope.newForm = true;
+    }
+
+    $scope.newDepartment = function (parent_id) {
         parent_id = (parent_id) ? parent_id : null;
         $scope.selectedDepartments = 
             [{'parent_id': parent_id,
@@ -84,6 +88,11 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
             'employer_hourly_rate_currency_code': 'SGD', 
             'employee_hourly_rate': 9, 
             'employee_hourly_rate_currency_code': 'SGD'}];
+        if(!($scope.departmentsStaticLabelsResource && $scope.currencyIsoLabelsResource)) { 
+            $scope.loadDepartmentsResource().$promise.then(function () {
+                initNewDepartmentValues();
+            })
+        } else initNewDepartmentValues();
     }
 
     $scope.saveNewDepartment = function () {

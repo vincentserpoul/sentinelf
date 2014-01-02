@@ -51,8 +51,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
                 initEventValues();
             });
         }
-        else 
-            initEventValues();
+        else initEventValues();
     }
 
     $scope.saveNewEvent = function () {
@@ -81,16 +80,21 @@ sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertS
     
     $scope.init = false;
 
-    $scope.editEvent = function () {
-        if (!($scope.employersResource && $scope.departmentsResource))
-            $scope.loadEmployersResource();
-
+    function initEditEventValues () {
         if (!$scope.init) {
             $scope.savEvent = formService.initValues($scope.event);
             $scope.init = true;
         }
         // Activate the edit
         $scope.editForm = true;
+    }
+
+    $scope.editEvent = function () {
+        if (!($scope.employersResource && $scope.departmentsResource))
+            $scope.loadEmployersResource().$promise.then(function () {
+                initEditEventValues();
+            });
+        else initEditEventValues();
     }
 
     $scope.saveEvent = function () {

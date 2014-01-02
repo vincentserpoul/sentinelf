@@ -1,4 +1,4 @@
-<div class="panel panel-default accordion" ng-controller="DepartmentsCtrl" id="accordion">
+<div class="panel panel-info accordion" ng-controller="DepartmentsCtrl" id="accordion">
 	<div class="panel-heading">
 		{{employer.name}}'s Departments
 		<button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" data-target="#collapseNewDepartment{{employer.id}}" ng-click="newDepartment()"><i class="fa fa-plus fa-fw"></i> New Root</button>
@@ -18,7 +18,7 @@
 	</div>
 	<div class="panel-body">
 		<div class="panel-group">
-			<div class="panel panel-info collapse" id="collapseNewDepartment{{employer.id}}">
+			<div class="panel panel-primary collapse" id="collapseNewDepartment{{employer.id}}">
 				<div class="panel-heading">{{departmentTree.currentNode.label}}'s New Subdepartment</div>
 				<div class="panel-body">
 					<table class="table">
@@ -55,7 +55,7 @@
 			        </table>
 				</div>
 			</div>
-			<div class="panel panel-info collapse" id="collapseDepartment{{employer.id}}">
+			<div class="panel panel-primary collapse" id="collapseDepartment{{employer.id}}">
 				<div class="panel-heading">{{departmentTree.currentNode.label}}'s Detail</div>
 				<div class="panel-body">
 					<table class="table">
@@ -110,7 +110,7 @@
 		    data-node-id="id"
 		    data-node-label="label"
 		    data-node-children="children" 
-		    ng-show="departmentsLazyloadFactory.total">
+		    ng-show="departmentsLazyloadFactory.departments.length">
 		</div>
 	</div>
 	<div ng-hide="departmentsLazyloadFactory.completelyLoaded || departmentsLazyloadFactory.busyLoadingDepartments">

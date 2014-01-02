@@ -36,7 +36,6 @@ sentinelfApp
                     scope.ngModel[scope.label] = scope.initLabel;
 
                     scope.ngModel.init = function (savObj, item) {
-
                         if (scope.filterKey) {scope.filterParams = {}; scope.filterParams[scope.filterKey] = scope.filterVarId}
 
                         /* We have to wait for the resource to come back so we get its promise and move when it is there */
@@ -69,8 +68,9 @@ sentinelfApp
 
                     /* We only search for the preselected item if there is an actual preselected uniqIdValue */
                     if(uniqIdValue != '' && modelRefList != ''){
+
                         /* default selectedItem is the first one */
-                        var selectedItem = modelRefList[0];
+                        var selectedItem = null;
                         /* loop through the modelfRefList to find the item with the uniqIdValue */
                         angular.forEach(modelRefList, function(listItem){
                             /* if we find the uniqIdValue in the list, we put it inside selectedItem */
@@ -80,7 +80,6 @@ sentinelfApp
                                 selectedItem = listItem;
                             }
                         });
-
                         return selectedItem;
                     }
 

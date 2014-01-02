@@ -46,7 +46,7 @@
                 <td><edit-input-datetime datetime="eventPeriod.start_datetime" edit-form="editForm"></edit-input-datetime></td>
                 <td><edit-input-datetime datetime="eventPeriod.end_datetime" edit-form="editForm"></edit-input-datetime></td>
                 <td>
-                    <div ng-hide="assignedEmployeesLazyloadFactory">{{ eventPeriod.number_of_employees_assigned }}</div>
+                    <div ng-hide="assignedEmployeesLazyloadFactory">{{eventPeriod.number_of_employees_assigned}}</div>
                     <div ng-show="assignedEmployeesLazyloadFactory">{{assignedEmployeesLazyloadFactory.total}}</div>
                 </td>
                 <td><edit-input-text value="eventPeriod.number_of_employee_needed" edit-form="editForm"></edit-input-text></td>
@@ -82,6 +82,8 @@
     <div ng-hide="eventPeriodsLazyloadFactory.completelyLoaded || eventPeriodsLazyloadFactory.busyLoadingEventPeriods">
         <button type="button" class="btn btn-link" ng-click="eventPeriodsLazyloadFactory.loadMore()">More...</button>
     </div>
-    <p class="text-muted" ng-hide="eventPeriodsLazyloadFactory.eventPeriods.length || eventPeriodsLazyloadFactory.busyLoadingEventPeriods">Empty</p>
+    <div class="panel-body" ng-hide="eventPeriodsLazyloadFactory.eventPeriods.length || eventPeriodsLazyloadFactory.busyLoadingEventPeriods">
+        <p class="text-muted">Empty</p>
+    </div>
     <div class="panel-footer" ng-show="eventPeriodsLazyloadFactory.busyLoadingEventPeriods"><i class="fa fa-refresh fa-spin"></i> Loading...</div>
 </div>

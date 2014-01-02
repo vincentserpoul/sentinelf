@@ -64,7 +64,7 @@ sentinelfApp.factory('formService', function($resource, $modal) {
         initValues: function (obj) {
             var savObj = angular.copy(obj);
             for (var item in obj) {
-                if (obj[item].toinit) {
+                if (obj[item] && obj[item].toinit) {
                     savObj.item = {};
                     obj[item].init(savObj, item);
                 }

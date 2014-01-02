@@ -67,6 +67,12 @@ var sentinelfApp = angular.module('sentinelfApp', [
                 controller:     'AdministrationCtrl',
                 access:         ['admin']
             })
+        .when('/test', 
+            {
+                templateUrl:    'views/test.html',
+                controller:     'EmployersCtrl',
+                access:         ['admin']
+            })
         .when('/404',
             {
                 templateUrl:    '/views/404.html',
