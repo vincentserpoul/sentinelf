@@ -149,6 +149,9 @@ sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertS
             /* First launch */
             $scope.eventPeriodsLazyloadFactory.loadMore();
         }
+        if (!$scope.eventPeriodsTemplate)
+            $scope.eventPeriodsTemplate = 'views/events/eventPeriods/eventPeriodsList.html';
+        $scope.openEventPeriods = !$scope.openEventPeriods;
     }
     
     $scope.openAssignments = function () {

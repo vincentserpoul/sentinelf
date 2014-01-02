@@ -7,14 +7,25 @@
         <div class="panel-heading">New Contact</div>
         <div class="panel-body">
             <table class="table">
-                <tbody ng-repeat="createdContact in createdContacts">
+                <thead>
+                    <tr>            
+                        <th>Title</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Sex</th>
+                        <th>Mobile Phone</th>
+                        <th>Primary Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <tr>
-                        <td><edit-input-select uniq-id-value="createdContact.title_id" ng-model="createdContact.title"  model-ref-type="title" model-ref-resource="contactStaticLabelsResource" edit-form="newForm"></edit-input-select></td>
-                        <td><div edit-input-text value="createdContact.first_name" edit-form="newForm"></div></td>
-                        <td><div edit-input-text value="createdContact.last_name" edit-form="newForm"></div></td>
-                        <td><edit-input-select uniq-id-value="createdContact.sex_id" ng-model="createdContact.sex"  model-ref-type="sex" model-ref-resource="contactStaticLabelsResource" edit-form="newForm"></edit-input-select></td>
-                        <td><div edit-input-text value="createdContact.mobile_phone_number" edit-form="newForm"></div></td>
-                        <td><div edit-input-check value="createdContact.primary_contact" edit-form="newForm"></div></td>
+                        <td><edit-input-select uniq-id-value="createdContact.title_id" ng-model="createdContact.title"  model-ref-type="title" model-ref-resource="contactStaticLabelsResource" edit-form="true"></edit-input-select></td>
+                        <td><div edit-input-text value="createdContact.first_name" edit-form="true"></div></td>
+                        <td><div edit-input-text value="createdContact.last_name" edit-form="true"></div></td>
+                        <td><edit-input-select uniq-id-value="createdContact.sex_id" ng-model="createdContact.sex"  model-ref-type="sex" model-ref-resource="contactStaticLabelsResource" edit-form="true"></edit-input-select></td>
+                        <td><div edit-input-text value="createdContact.mobile_phone_number" edit-form="true"></div></td>
+                        <td><div edit-input-check value="createdContact.primary_contact" edit-form="true"></div></td>
                         <td class="btn-group">
                             <button type="button" class="btn btn-success btn-xs" ng-click="saveContact()"><i class="fa fa-save fa-fw"></i> Save</button>
                             <button type="button" class="btn btn-default btn-xs" ng-click="closeNewContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
@@ -26,18 +37,18 @@
     </div>
     <table class="table" ng-show="contactsLazyloadFactory.contacts.length">
         <thead>
-        <tr>            
-            <th>Title</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Sex</th>
-            <th>Mobile Phone</th>
-            <th>Primary Contact</th>
-            <th>Actions</th>
-        </tr>
+            <tr>            
+                <th>Title</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Sex</th>
+                <th>Mobile Phone</th>
+                <th>Primary Contact</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="contact in contactsLazyloadFactory.contacts" ng-controller="ContactCtrl">
+            <tr ng-repeat="contact in contactsLazyloadFactory.contacts" ng-controller="ContactCtrl" class="repeat-animation">
                 <td><edit-input-select uniq-id-value="contact.title_id" ng-model="contact.title"  model-ref-type="title" model-ref-resource="contactStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
                 <td><edit-input-text value="contact.first_name" edit-form="editForm"></edit-input-text></td>
                 <td><edit-input-text value="contact.last_name" edit-form="editForm"></edit-input-text></td>

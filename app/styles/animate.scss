@@ -14,8 +14,8 @@
 }
 
 .show-hide-animation {
-  -webkit-transition:all linear 0.5s;
-  transition:all linear 0.5s;
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
 }
 
 .show-hide-animation.ng-hide-add,
@@ -24,9 +24,7 @@
 }
 
 .show-hide-animation.ng-hide {
-  line-height:0;
   opacity:0;
-  padding:0 10px;
 }
 
 .view-animation {

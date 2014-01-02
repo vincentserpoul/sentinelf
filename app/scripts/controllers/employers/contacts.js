@@ -9,30 +9,43 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService'
         $scope.newForm = true;
     };
 
-    $scope.newContact = function () {
-        // preselected values for new contact
-        $scope.createdContacts = [{
-            "employer_id": $scope.employer.id,
-            "first_name": "contact's first name",
-            "last_name": "contact's last name",
-            "title_id": 1,
-            "sex_id": 1,
-            "mobile_phone_number": "+6599999999",
-            "primary_contact": 0}];
+    $scope.createdContact = {
+        "employer_id": $scope.employer.id,
+        "first_name": "contact's first name",
+        "last_name": "contact's last name",
+        "title_id": 1,
+        "sex_id": 1,
+        "mobile_phone_number": "+6599999999",
+        "primary_contact": 0};
+    var setNewValues = false;
+
+    function initContactValues () {
+        if (!setNewValues) {
+            formService.initValues($scope.createdContact);
+            setNewValues = true;
+        }
         $('#collapseNewContact' + $scope.employer.id).collapse('show');
+    }
+
+    $scope.newContact = function () {
+        if (!$scope.contactStaticLabelsResource) {
+            $scope.loadContactsResource().$promise.then(function(){
+                initContactValues();
+            })
+        } else initContactValues();
     }
 
     $scope.saveContact = function () {
         /* Call the factory to update the new contact in db */
         //update codes
         //update title ids and sex ids
-        $scope.createdContacts[0].title_id = $scope.createdContacts[0].title['id'];
-        $scope.createdContacts[0].sex_id = $scope.createdContacts[0].sex['id'];
+        $scope.createdContact.title_id = $scope.createdContact.title['id'];
+        $scope.createdContact.sex_id = $scope.createdContact.sex['id'];
 
-        contactsFactory.save($scope.createdContacts[0],
+        contactsFactory.save($scope.createdContact,
             function (data) {
                 if (data) {
-                    $scope.contacts.push(data['EmployerContact']);
+                    $scope.contactsLazyloadFactory.contacts.unshift(data['EmployerContact']);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }
                 $('#collapseNewContact' + $scope.employer.id).collapse('hide');
@@ -53,14 +66,23 @@ sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService',
     /**
     /* the function is called when users want to add a new contact or edit an contact
     */
-    $scope.editContact = function(){
-        // Save contact in case of cancel, to rollback to previous values, deep copy
-        $scope.savContact = angular.copy($scope.contact);
-        // shallow copy code
-        $scope.savContact.title = $scope.contact.title;
-        $scope.savContact.sex = $scope.contact.sex;
+    $scope.init = false;
+
+    function initEditContactValues () {
+        if (!$scope.init) { 
+            $scope.savContact = formService.initValues($scope.contact);
+            $scope.init = true;
+        }
         // Activate the edit
         $scope.editForm = true;
+    }
+
+    $scope.editContact = function () {
+        if (!$scope.contactStaticLabelsResource) {
+            $scope.loadContactsResource().$promise.then(function(){
+                initEditContactValues();
+            })
+        } else initEditContactValues();
     }
 
     $scope.saveContact = function(){
@@ -72,8 +94,6 @@ sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService',
         contactsFactory.update($scope.contact,
             function (data) {
                 if (data) {
-                    // when success, reset the savEmployer
-                    $scope.savContact = null;
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }
             }, function (error) {
@@ -86,7 +106,7 @@ sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService',
 
     $scope.cancelEditContact = function(){
         // Reset the data to what it was before the edit
-        $scope.contact = $scope.savContact;
+        formService.copyProps($scope.savEmployer, $scope.employer);
         // Deactivate the edit
         $scope.editForm = false;
     };
@@ -99,7 +119,7 @@ sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService',
         modalInstance.result.then(function(){
             contactsFactory.delete({contactId:$scope.contact.id},
                 function (data) {
-                    $scope.contacts.splice(formService.findInArray($scope.contacts, $scope.contact.id), 1);
+                    $scope.contactsLazyloadFactory.contacts.splice(formService.findInArray($scope.contactsLazyloadFactory.contacts, $scope.contact.id), 1);
                     if (data)
                         AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }, function (error) { 

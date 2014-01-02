@@ -30,6 +30,7 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
 
     $scope.loadContactsResource = function () {
         $scope.contactStaticLabelsResource = modelStaticLabelsFactory.get({model:'contact'});
+        return $scope.contactStaticLabelsResource;
     }
 
     // preselected values for new employer
@@ -153,6 +154,9 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
             /* First launch */
             $scope.departmentsLazyloadFactory.loadMore();
         }
+        if (!$scope.departmentsTemplate)
+            $scope.departmentsTemplate = 'views/employers/departments/departmentsList.html';
+        $scope.openDepartments = !$scope.openDepartments;
     }
 
     $scope.loadContacts = function () {
@@ -163,5 +167,8 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
             /* First launch */
             $scope.contactsLazyloadFactory.loadMore();
         }
+        if (!$scope.contactsTemplate)
+            $scope.contactsTemplate = 'views/employers/contacts/contactsList.html';
+        $scope.openContacts = !$scope.openContacts;
     }
 }])

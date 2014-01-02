@@ -71,7 +71,7 @@
             </tr>
             <tr style="border: none;">
                 <td colspan="6" style="border: none; padding: 0px;">
-                    <div class="collapse" id="collapseEventPeriod{{event.id}}" ng-include src="'views/events/eventPeriods/eventPeriodsList.html'"></div>
+                    <div ng-show="openEventPeriods" class="show-hide-animation" ng-include src="eventPeriodsTemplate"></div>
                  </td>
             </tr>        
         </tbody>
