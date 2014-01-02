@@ -1,0 +1,47 @@
+<form class="form-horizontal">
+  <fieldset>
+
+  <!-- Form Name -->
+  <legend>Search</legend>
+
+  <!-- Search input-->
+  <div class="form-group">
+    <div class="col-md-3">
+      <label for="last_name" class="sr-only">Last name</label>
+      <input ng-model="searchCriterias.last_name" id="last_name" type="search" placeholder="Last name" class="form-control input-md">
+    </div>
+    <div class="col-md-3">
+      <label for="identity_doc_number" class="sr-only">Id number</label>
+      <input ng-model="searchCriterias.identity_doc_number" id="identity_doc_number" type="search" placeholder="nric or passport number" class="form-control input-md">
+    </div>
+    <div class="col-md-3">
+      <label for="age_min" class="sr-only">Min age</label>
+      <input ng-model="searchCriterias.age_min" id="age_min" type="number" placeholder="Min age" class="form-control input-md" min="0" max="100" integer />
+    </div>
+    <div class="col-md-3">
+      <label for="age_max" class="sr-only">Max age</label>
+      <input ng-model="searchCriterias.age_max" id="age_max" type="number" placeholder="Max age" class="form-control input-md" min="0" max="100" integer />
+    </div>
+  </div>
+
+  <!-- Select Multiple -->
+  <div class="form-group">
+    <div class="col-md-3">
+      <label for="sex_id" class="sr-only">Sex</label>
+      <select id="sex_id" name="sex_id" class="form-control" ng-model="searchCriterias.sex" multiple="multiple" ng-options="sex.label for sex in employeeStaticLabels['sex']"></select>
+    </div>
+    <div class="col-md-3">
+      <label for="work_pass_type_id" class="sr-only">Type of work pass</label>
+      <select id="work_pass_type_id" name="work_pass_type_id" class="form-control" ng-model="searchCriterias.work_pass_type" ng-options="work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']" multiple="multiple"></select>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="race_id" class="sr-only">Race</label>
+      <select id="race_id" name="race_id" class="form-control" ng-model="searchCriterias.race" ng-options="race.label for race in employeeStaticLabels['race']" multiple="multiple"></select>
+    </div>
+    <div class="col-md-3"><button type="submit" class="btn btn-primary btn-sm" ng-click="searchEmployees()"><i class="fa fa-search"></i> Search</button>
+  </div>
+
+  </fieldset>
+</form>
+
