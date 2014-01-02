@@ -76,14 +76,14 @@ sentinelfApp.controller(
             };
             // Add it to the list!
             $scope.displayProfile = true;
-            $scope.employees.unshift(defaultEmployee);
+            $scope.employeesSearchLazyloadFactory.employees.unshift(defaultEmployee);
             $scope.showProfile();
             $scope.editForm = true;
         }
 
         $scope.cancelAddEmployee = function(){
             /* remove the first element of the employees array */
-            $scope.employees.splice(0,1);
+            $scope.employeesSearchLazyloadFactory.employees.splice(0,1);
         }
 
         $scope.editEmployee = function(){
