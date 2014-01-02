@@ -3,7 +3,7 @@
         {{label}}'s Assignments
     </div>
     <div class="modal-body">
-        <div ng-include src="'views/employees/employeeSearch.html'"></div>
+        <div ng-include src="'views/employees/employeesSearch.html'"></div>
         <div ng-show="displayList" class="panel">
             <div class="panel-heading">
                 <p class="text-muted" ng-show="(employeesSearchLazyloadFactory.total+1) && !employeesSearchLazyloadFactory.busyLoadingEmployees">{{employeesSearchLazyloadFactory.total}} employee(s) found</p>
@@ -30,7 +30,7 @@
                                 <li class="text-muted" ng-hide="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length">No more event period(s) to assign</li>
                                 -->
                             </ul>
-                        </td>  
+                        </td>
                     </tr>
                 </tbody>
             </table>
