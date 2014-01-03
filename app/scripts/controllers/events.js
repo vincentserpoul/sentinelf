@@ -9,17 +9,13 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         $scope.eventsLazyloadFactory = new eventsLazyloadFactory();
         /* First launch */
         $scope.eventsLazyloadFactory.loadMore();
-    };
 
-    $scope.loadEmployersResource = function () {
         //Fetch all events
         $scope.employersResource = employersFactory.get();
 
         //Fetch all departments
         $scope.departmentsResource = departmentsFactory.get();
-
-        return $scope.departmentsResource;
-    }
+    };
 
     $scope.setEventPeriodEmployees = function (eventPeriodEmployees) {
         $scope.eventPeriodEmployees = eventPeriodEmployees;
@@ -29,29 +25,13 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         $scope.all_possible_globalevent_periods = all_possible_globalevent_periods;
     }
 
-    // preselected values for new event
-    $scope.createdEvent = {
-        "label":"Event's name",
-        "employer_id": 1,
-        "employer_department_id": 1,
-        "date" : "2013-01-01"};
-    var setNewValues = false;
-
-    function initEventValues () {
-        if (!setNewValues) {
-            formService.initValues($scope.createdEvent);
-            setNewValues = true;
-        }
+    $scope.newEvent = function () {// preselected values for new event
+        $scope.createdEvent = {
+            "label":"Event's name",
+            "employer_id": 1,
+            "employer_department_id": 1,
+            "date" : "2013-01-01"};
         $('#collapseNewEvent').collapse('show');
-    }
-
-    $scope.newEvent = function () {
-        if (!($scope.employersResource && $scope.departmentsResource)) {
-            $scope.loadEmployersResource().$promise.then(function () {
-                initEventValues();
-            });
-        }
-        else initEventValues();
     }
 
     $scope.saveNewEvent = function () {
@@ -81,21 +61,11 @@ sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertS
     $scope.init = false;
     $scope.editForm = false;
 
-    function initEditEventValues () {
-        if (!$scope.init) {
-            $scope.savEvent = formService.initValues($scope.event);
-            $scope.init = true;
-        }
+    $scope.editEvent = function () {
+        $scope.savEvent = {};
+        formService.copyProps($scope.event, $scope.savEvent);
         // Activate the edit
         $scope.editForm = true;
-    }
-
-    $scope.editEvent = function () {
-        if (!($scope.employersResource && $scope.departmentsResource))
-            $scope.loadEmployersResource().$promise.then(function () {
-                initEditEventValues();
-            });
-        else initEditEventValues();
     }
 
     $scope.saveEvent = function () {

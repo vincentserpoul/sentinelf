@@ -1,15 +1,20 @@
 'use strict';
 
-sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsFactory', 'departmentsLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentsFactory, departmentsLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
     function init() {
         $scope.detailReady = 'disabled';
+        departmentsFactory.get({employer_id : $scope.employer.id}, function (data) {
+            $scope.departments = data['EmployerDepartments'];
+        });
+
+        $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
+        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
+
         $scope.selectedDepartments = [{'label': 'None'}];
-        $scope.newForm = false;
-        $scope.editForm = false;
     };
 
     $scope.showDetail = function () {
@@ -26,8 +31,8 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
         /* Call the factory to update the new employer in db */
         //update codes
         $scope.selectedDepartments[0].work_type_id = $scope.selectedDepartments[0].work_type['id'];
-        $scope.selectedDepartments[0].employee_hourly_rate_currency_code = $scope.selectedDepartments[0].employee_hourly_rate_currency['code'];
-        $scope.selectedDepartments[0].employer_hourly_rate_currency_code = $scope.selectedDepartments[0].employer_hourly_rate_currency['code'];
+        $scope.selectedDepartments[0].employee_h_rate_currency_code = $scope.selectedDepartments[0].employee_h_rate_currency['code'];
+        $scope.selectedDepartments[0].employer_h_rate_currency_code = $scope.selectedDepartments[0].employer_h_rate_currency['code'];
         departmentsFactory.update($scope.selectedDepartments[0],
             function (data) {
                 if (data) {
@@ -73,12 +78,8 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
 
     }
 
-    function initNewDepartmentValues () {
-        formService.initValues($scope.selectedDepartments[0]);
-        $scope.newForm = true;
-    }
-
     $scope.newDepartment = function (parent_id) {
+        $scope.newForm = true;
         parent_id = (parent_id) ? parent_id : null;
         $scope.selectedDepartments = 
             [{'parent_id': parent_id,
@@ -86,15 +87,10 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
             'label': 'New department', 
             'description': 'description',
             'work_type_id': 1,
-            'employer_hourly_rate': 9,
-            'employer_hourly_rate_currency_code': 'SGD', 
-            'employee_hourly_rate': 9, 
-            'employee_hourly_rate_currency_code': 'SGD'}];
-        if(!($scope.departmentsStaticLabelsResource && $scope.currencyIsoLabelsResource)) { 
-            $scope.loadDepartmentsResource().$promise.then(function () {
-                initNewDepartmentValues();
-            })
-        } else initNewDepartmentValues();
+            'employer_h_rate': 9,
+            'employer_h_rate_currency_code': 'SGD', 
+            'employee_h_rate': 9, 
+            'employee_h_rate_currency_code': 'SGD'}];
     }
 
     $scope.saveNewDepartment = function () {

@@ -9,30 +9,16 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService'
         $scope.newForm = true;
     };
 
-    $scope.createdContact = {
-        "employer_id": $scope.employer.id,
-        "first_name": "contact's first name",
-        "last_name": "contact's last name",
-        "title_id": 1,
-        "sex_id": 1,
-        "mobile_phone_number": "+6599999999",
-        "primary_contact": 0};
-    var setNewValues = false;
-
-    function initContactValues () {
-        if (!setNewValues) {
-            formService.initValues($scope.createdContact);
-            setNewValues = true;
-        }
-        $('#collapseNewContact' + $scope.employer.id).collapse('show');
-    }
-
     $scope.newContact = function () {
-        if (!$scope.contactStaticLabelsResource) {
-            $scope.loadContactsResource().$promise.then(function(){
-                initContactValues();
-            })
-        } else initContactValues();
+        $scope.createdContact = {
+            "employer_id": $scope.employer.id,
+            "first_name": "contact's first name",
+            "last_name": "contact's last name",
+            "title_id": 1,
+            "sex_id": 1,
+            "mobile_phone_number": "+6599999999",
+            "primary_contact": 0};
+        $('#collapseNewContact' + $scope.employer.id).collapse('show');
     }
 
     $scope.saveContact = function () {
@@ -69,21 +55,11 @@ sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService',
     $scope.init = false;
     $scope.editForm = false;
 
-    function initEditContactValues () {
-        if (!$scope.init) { 
-            $scope.savContact = formService.initValues($scope.contact);
-            $scope.init = true;
-        }
+    $scope.editContact = function () {
+        $scope.savContact = {};
+        formService.copyProps($scope.contact, $scope.savContact);
         // Activate the edit
         $scope.editForm = true;
-    }
-
-    $scope.editContact = function () {
-        if (!$scope.contactStaticLabelsResource) {
-            $scope.loadContactsResource().$promise.then(function(){
-                initEditContactValues();
-            })
-        } else initEditContactValues();
     }
 
     $scope.saveContact = function(){

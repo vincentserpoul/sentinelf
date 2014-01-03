@@ -39,10 +39,10 @@
 			                    <td><edit-input-text value="selectedDepartment.label" edit-form="true"></edit-input-text></td>
 			                    <td><edit-input-text value="selectedDepartment.description" edit-form="true"></edit-input-text></td>
 			                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="true"></edit-input-select></td>
-			                    <td><edit-input-text value="selectedDepartment.employee_hourly_rate" edit-form="true"></edit-input-text></td>
-			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_hourly_rate_currency_code" ng-model="selectedDepartment.employee_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="true"></edit-input-select></td>
-			                    <td><edit-input-text value="selectedDepartment.employer_hourly_rate" edit-form="true"></edit-input-text></td>
-			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_hourly_rate_currency_code" ng-model="selectedDepartment.employer_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="true"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employee_h_rate" edit-form="true"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_h_rate_currency_code" ng-model="selectedDepartment.employee_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="true"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employer_h_rate" edit-form="true"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_h_rate_currency_code" ng-model="selectedDepartment.employer_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="true"></edit-input-select></td>
 			                    <!-- action buttons -->
 			                    <td class="btn-toolbar">
 			                        <div class="btn-group">
@@ -76,10 +76,10 @@
 			                    <td><edit-input-text value="selectedDepartment.label" edit-form="editForm"></edit-input-text></td>
 			                    <td><edit-input-text value="selectedDepartment.description" edit-form="editForm"></edit-input-text></td>
 			                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
-			                    <td><edit-input-text value="selectedDepartment.employee_hourly_rate" edit-form="editForm"></edit-input-text></td>
-			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_hourly_rate_currency_code" ng-model="selectedDepartment.employee_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
-			                    <td><edit-input-text value="selectedDepartment.employer_hourly_rate" edit-form="editForm"></edit-input-text></td>
-			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_hourly_rate_currency_code" ng-model="selectedDepartment.employer_hourly_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employee_h_rate" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_h_rate_currency_code" ng-model="selectedDepartment.employee_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.employer_h_rate" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_h_rate_currency_code" ng-model="selectedDepartment.employer_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
 			                    <!-- action buttons -->
 			                    <td class="btn-toolbar">
 			                        <div ng-hide="editForm" class="btn-group">
@@ -106,17 +106,16 @@
 		<div
 		    data-angular-treeview="true"
 		    data-tree-id="departmentTree"
-		    data-tree-model="departmentsLazyloadFactory.departments"
+		    data-tree-model="departments"
 		    data-node-id="id"
 		    data-node-label="label"
-		    data-node-children="children" 
-		    ng-show="departmentsLazyloadFactory.departments.length">
+		    data-node-children="children">
 		</div>
 	</div>
 	<div ng-hide="departmentsLazyloadFactory.completelyLoaded || departmentsLazyloadFactory.busyLoadingDepartments">
         <button type="button" class="btn btn-link" ng-click="departmentsLazyloadFactory.loadMore()">More...</button>
     </div>
 	<div class="panel-footer" ng-show="departmentsLazyloadFactory.busyLoadingDepartments">
-		<i class="fa fa-refresh fa-spin"></i> Loading...
+		<i class="fa fa-spinner fa-spin"></i> Loading...
 	</div>
 </div>

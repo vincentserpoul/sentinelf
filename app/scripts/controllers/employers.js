@@ -12,52 +12,25 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
         $scope.employersLazyloadFactory = new employersLazyloadFactory();
         /* First launch */
         $scope.employersLazyloadFactory.loadMore();
+        /* Get the labels necessary for the list of countries not to be only codes */
+        $scope.countryIsoLabelsResource = modelIsoLabelsFactory.get({model:'country'});
+        $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
+        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
+        $scope.contactStaticLabelsResource = modelStaticLabelsFactory.get({model:'contact'});
 
         $scope.newForm = true;
     };
 
-    $scope.loadEmployersResource = function () {
-        /* Get the labels necessary for the list of countries not to be only codes */
-        $scope.countryIsoLabelsResource = modelIsoLabelsFactory.get({model:'country'});
-        return $scope.countryIsoLabelsResource;
-    }
-
-    $scope.loadDepartmentsResource = function () {
-        $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
-        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
-        return $scope.currencyIsoLabelsResource;
-    }
-
-    $scope.loadContactsResource = function () {
-        $scope.contactStaticLabelsResource = modelStaticLabelsFactory.get({model:'contact'});
-        return $scope.contactStaticLabelsResource;
-    }
-
-    // preselected values for new employer
-    $scope.createdEmployer = {
-        "name":"Employer's Name",
-        "address":"5 jalan bukit merah",
-        "city": "Singapore",
-        "postcode" : "159960",
-        "country_code":"SGP",
-        "phone_number":"+6599999999",
-        "fax_number":"+6599999999"};
-    var setNewValues = false;
-
-    function initEmployerValues () {
-        if (!setNewValues) {
-            formService.initValues($scope.createdEmployer);
-            setNewValues = true;
-        }
+    $scope.newEmployer = function () {// preselected values for new employer
+        $scope.createdEmployer = {
+            "name":"Employer's Name",
+            "address":"5 jalan bukit merah",
+            "city": "Singapore",
+            "postcode" : "159960",
+            "country_code":"SGP",
+            "phone_number":"+6599999999",
+            "fax_number":"+6599999999"};
         $('#collapseNewEmployer').collapse('show');
-    }
-
-    $scope.newEmployer = function () {
-        if (!$scope.countryIsoLabelsResource) {
-            $scope.loadEmployersResource().$promise.then(function(){
-                initEmployerValues();
-            })
-        } else initEmployerValues();
     }
 
     $scope.saveNewEmployer = function () {
@@ -87,21 +60,11 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
     $scope.init = false;
     $scope.editForm = false;
 
-    function initEditEmployerValues () {
-        if (!$scope.init) { 
-            $scope.savEmployer = formService.initValues($scope.employer);
-            $scope.init = true;
-        }
+    $scope.editEmployer = function () {
+        $scope.savEmployer = {};
+        formService.copyProps($scope.employer, $scope.savEmployer);
         // Activate the edit
         $scope.editForm = true;
-    }
-
-    $scope.editEmployer = function () {
-        if (!$scope.countryIsoLabelsResource) {
-            $scope.loadEmployersResource().$promise.then(function () {
-                initEditEmployerValues();
-            })
-        } else initEditEmployerValues();
     }
 
     $scope.saveEmployer = function () {
