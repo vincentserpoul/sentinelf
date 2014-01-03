@@ -42,7 +42,6 @@ sentinelfApp.controller(
             if(!$scope.employee.sex_id){
                 employeesFactory.get({employeeId: $scope.employee.id}, function(data){
                     $scope.employee = data['employees'][0];
-                    $scope.profileTemplate = 'views/employees/employeeProfile.html';
                 });
             }
         }
@@ -157,6 +156,7 @@ sentinelfApp.controller(
         }
         /* Add employee doc */
         $scope.addEmployeeDoc = function(){
+            console.log($scope.newEmployeeDoc);
             /* hide back the form */
             $scope.employeeDocForm = false;
             $scope.newEmployeeDoc.doc_type_id = $scope.newEmployeeDoc.doc_type.id;
