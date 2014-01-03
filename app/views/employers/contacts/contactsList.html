@@ -56,20 +56,14 @@
                 <td><div edit-input-text value="contact.mobile_phone_number" edit-form="editForm"></div></td>
                 <td><div edit-input-check value="contact.primary_contact" edit-form="editForm"></div></td>
                 <td>
-                    <div ng-hide="editForm" class="btn-group">
+                    <div ng-hide="editForm" class="btn-group-vertical btn-group-xs">
                         <button type="button" class="btn btn-primary btn-xs" ng-click="editContact()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                        <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-click="deleteContact()"><a><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
-                        </ul>
-                    </div>
-                    <div ng-show="editForm" class="btn-group">
+                        <button type="button" class="btn btn-warning btn-xs" ng-click="editContact()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+                    </div>      
+                    <div ng-show="editForm" class="btn-group-vertical btn-group-xs">
                         <button type="button" class="btn btn-success btn-xs" ng-click="saveContact()"><i class="fa fa-save fa-fw"></i> Save</button>
                         <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                    </div>            
+                    </div>
                 </td>
             </tr>
         </tbody>

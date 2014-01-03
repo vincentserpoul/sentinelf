@@ -85,6 +85,7 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
 sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFactory', 'departmentsLazyloadFactory', 'contactsLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'AlertService', function($scope, formService, employersFactory, departmentsLazyloadFactory, contactsLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, AlertService){
 
     $scope.init = false;
+    $scope.editForm = false;
 
     function initEditEmployerValues () {
         if (!$scope.init) { 

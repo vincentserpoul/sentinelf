@@ -79,6 +79,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
 sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodsLazyloadFactory', function ($scope, $modal, formService, AlertService, eventsFactory, eventPeriodsLazyloadFactory) {
     
     $scope.init = false;
+    $scope.editForm = false;
 
     function initEditEventValues () {
         if (!$scope.init) {

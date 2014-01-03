@@ -67,6 +67,7 @@ sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService',
     /* the function is called when users want to add a new contact or edit an contact
     */
     $scope.init = false;
+    $scope.editForm = false;
 
     function initEditContactValues () {
         if (!$scope.init) { 

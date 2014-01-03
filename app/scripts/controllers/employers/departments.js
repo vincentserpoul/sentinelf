@@ -8,6 +8,8 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
     function init() {
         $scope.detailReady = 'disabled';
         $scope.selectedDepartments = [{'label': 'None'}];
+        $scope.newForm = false;
+        $scope.editForm = false;
     };
 
     $scope.showDetail = function () {
