@@ -40,6 +40,8 @@ sentinelfApp.controller('GroupsCtrl', ['$scope', 'groupsFactory', 'UsersGroupsSe
 
 sentinelfApp.controller('GroupCtrl', ['$scope', 'formService', 'AlertService', 'groupsFactory', 'UsersGroupsService', function ($scope, formService, AlertService, groupsFactory, UsersGroupsService) {
 
+    $scope.editForm = false;
+
     $scope.editGroup = function () {
         // Save employer in case of cancel, to rollback to previous values
         $scope.savGroup = angular.copy($scope.group);
@@ -65,7 +67,7 @@ sentinelfApp.controller('GroupCtrl', ['$scope', 'formService', 'AlertService', '
 
     $scope.cancelEditGroup = function () {
         // Reset the data to what it was before the edit
-        $scope.employer = $scope.savEmployer;
+        $scope.group = $scope.savGroup;
         // Deactivate the edit
         $scope.editForm = false;
     }

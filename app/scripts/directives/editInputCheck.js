@@ -21,11 +21,13 @@ sentinelfApp
                 editForm: '='
             },
             link: function (scope) {
-                scope.check = (scope.value) ? true : false;
-
                 scope.change = function () {
                     scope.value = (scope.check) ? 1 : 0;
                 }
+
+                scope.$watch('value', function (oldValue, newValue) {
+                    scope.check = (scope.value) ? true : false;
+                })
             }
         };
     }
