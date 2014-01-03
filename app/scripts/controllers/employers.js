@@ -16,10 +16,10 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
         $scope.newForm = true;
     };
 
-    $scope.loadEmployerResource = function () {
+    $scope.loadEmployersResource = function () {
         /* Get the labels necessary for the list of countries not to be only codes */
-        $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
-        return $scope.countryListResource;
+        $scope.countryIsoLabelsResource = modelIsoLabelsFactory.get({model:'country'});
+        return $scope.countryIsoLabelsResource;
     }
 
     $scope.loadDepartmentsResource = function () {
@@ -53,8 +53,8 @@ sentinelfApp.controller('EmployersCtrl', ['$scope', 'formService', 'AlertService
     }
 
     $scope.newEmployer = function () {
-        if (!$scope.countryListResource) {
-            $scope.loadEmployerResource().$promise.then(function(){
+        if (!$scope.countryIsoLabelsResource) {
+            $scope.loadEmployersResource().$promise.then(function(){
                 initEmployerValues();
             })
         } else initEmployerValues();
@@ -97,8 +97,8 @@ sentinelfApp.controller('EmployerCtrl', ['$scope', 'formService', 'employersFact
     }
 
     $scope.editEmployer = function () {
-        if (!$scope.countryListResource) {
-            $scope.loadEmployerResource().$promise.then(function(){
+        if (!$scope.countryIsoLabelsResource) {
+            $scope.loadEmployersResource().$promise.then(function () {
                 initEditEmployerValues();
             })
         } else initEditEmployerValues();

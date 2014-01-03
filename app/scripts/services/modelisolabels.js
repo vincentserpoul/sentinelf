@@ -8,8 +8,7 @@ sentinelfApp.factory('modelIsoLabelsFactory', ['$resource', function($resource) 
                     },
                     {
                         "get": {
-                            method:"GET",
-                            cache: true
+                            method:"GET"
                         }
                     });
 

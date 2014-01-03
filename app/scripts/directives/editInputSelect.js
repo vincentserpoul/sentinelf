@@ -68,19 +68,15 @@ sentinelfApp
 
                     /* We only search for the preselected item if there is an actual preselected uniqIdValue */
                     if(uniqIdValue != '' && modelRefList != ''){
-
-                        /* default selectedItem is the first one */
-                        var selectedItem = null;
                         /* loop through the modelfRefList to find the item with the uniqIdValue */
-                        angular.forEach(modelRefList, function(listItem){
-                            /* if we find the uniqIdValue in the list, we put it inside selectedItem */
-                            if(listItem['code'] == uniqIdValue){
-                                selectedItem = listItem;
-                            } else if(listItem['id'] == uniqIdValue){
-                                selectedItem = listItem;
-                            }
-                        });
-                        return selectedItem;
+                        for (var i in modelRefList) {
+                            if (modelRefList[i]['code'] == uniqIdValue)
+                                return modelRefList[i];
+                            else if (modelRefList[i]['id'] == uniqIdValue)
+                                return modelRefList[i];
+
+                        }
+                        return null;
                     }
 
                 }

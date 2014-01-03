@@ -31,8 +31,8 @@
                         <td><edit-input-select uniq-id-value="createdEvent.employer_id" model-ref-resource="employersResource" model-ref-type="employers" edit-form="true" ng-model="createdEvent.employer" alt-label="name" alt-ref="none"></edit-input-select></td>
                         <td><edit-input-select uniq-id-value="createdEvent.employer_department_id" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="true" ng-model="createdEvent.employer_department" alt-ref="none" filter-key="employer_id" filter-var-id="createdEvent.employer_id" filter-var="createdEvent.employer.id"></edit-input-select></td>
                         <td><edit-input-date date="createdEvent.date" edit-form="true"></edit-input-datetime></td>
-                        <td class="btn-toolbar">
-                            <div class="btn-group">
+                        <td>
+                            <div class="btn-group-vertical">
                                 <button type="button" class="btn btn-success btn-xs" ng-click="saveNewEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
                                 <button type="button" class="btn btn-default btn-xs" ng-click="cancelNewEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                             </div>

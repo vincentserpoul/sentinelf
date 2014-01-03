@@ -6,10 +6,10 @@ sentinelfApp
 
         var editTemplate =
                 '<div ng-hide="editForm">' +
-                    '{{value | checkmark}} {{label}} ' +
+                    '{{check | checkmark}} {{label}} ' +
                 '</div>' +
                 '<div ng-show="editForm" class="checkbox">' +
-                    '<label><input type="checkbox" ng-model="value" /> {{label}}</label>' +
+                    '<label><input type="checkbox" ng-model="check" ng-change="change()"/> {{label}}</label>' +
                 '</div>';
 
         return {
@@ -19,6 +19,13 @@ sentinelfApp
                 label: '=',
                 value: '=',
                 editForm: '='
+            },
+            link: function (scope) {
+                scope.check = (scope.value) ? true : false;
+
+                scope.change = function () {
+                    scope.value = (scope.check) ? 1 : 0;
+                }
             }
         };
     }
