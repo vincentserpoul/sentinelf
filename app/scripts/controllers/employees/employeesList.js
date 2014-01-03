@@ -32,5 +32,12 @@ sentinelfApp.controller(
             $scope.displayList = true;
         }
 
+        $scope.clearEmployees = function (){
+            /* Load the progressive service to load list of employees */
+            $scope.employeesSearchLazyloadFactory = null;
+            /* hide search results */
+            $scope.displayList = false;
+        }
+
     }
 ]);

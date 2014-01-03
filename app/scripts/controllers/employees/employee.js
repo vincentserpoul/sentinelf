@@ -15,11 +15,6 @@ sentinelfApp.controller(
 
         /* Display profile tab and hide the two others */
         $scope.showAssignments = function(){
-            $scope.displayProfile=false;
-            $scope.displayPayments=false;
-            $scope.displayAssignments = !$scope.displayAssignments;
-            $scope.displayUnpaidAssignments=false;
-
             if($scope.displayAssignments){
                 employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
                     $scope.globaleventPeriods = data['globalevent_periods'];
@@ -29,11 +24,6 @@ sentinelfApp.controller(
 
         /* Display profile tab and hide the two others */
         $scope.showUnpaidAssignments = function(){
-            $scope.displayProfile=false;
-            $scope.displayPayments=false;
-            $scope.displayAssignments = false;
-            $scope.displayUnpaidAssignments=!$scope.displayUnpaidAssignments;
-
             if($scope.displayUnpaidAssignments){
                 employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
                     $scope.unpaidGlobaleventPeriods = data['globalevent_periods'];
@@ -49,10 +39,6 @@ sentinelfApp.controller(
                         $scope.employee[item].init();
                 $scope.init = true;
             }
-            $scope.displayProfile = !$scope.displayProfile;
-            $scope.displayPayments=false;
-            $scope.displayAssignments=false;
-            $scope.displayUnpaidAssignments=false;
         }
 
 
