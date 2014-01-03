@@ -5,10 +5,10 @@ sentinelfApp
     , function() {
 
         var editInputTextTemplate =
-            '<div ng-hide="editForm" class="button-edit">' +
+            '<div ng-if="editForm == false" class="button-edit">' +
                 '{{value}} ' +
             '</div>' +
-            '<div ng-show="editForm" class="button-edit">' +
+            '<div ng-show="editForm == true" class="button-edit">' +
                 '<input class="form-control input-sm" ng-model="value">' +
             '</div>';
 

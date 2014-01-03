@@ -15,29 +15,35 @@ sentinelfApp.controller(
 
         /* Display profile tab and hide the two others */
         $scope.showAssignments = function(){
-            if($scope.displayAssignments){
-                employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
-                    $scope.globaleventPeriods = data['globalevent_periods'];
-                });
-            }
+            /* render optimization */
+            $scope.employee.shownAssignments = true;
+
+            /* get Data */
+            employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
+                $scope.globaleventPeriods = data['globalevent_periods'];
+            });
         }
 
         /* Display profile tab and hide the two others */
         $scope.showUnpaidAssignments = function(){
-            if($scope.displayUnpaidAssignments){
-                employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
-                    $scope.unpaidGlobaleventPeriods = data['globalevent_periods'];
-                });
-            }
+            /* render optimization */
+            $scope.employee.shownUnpaidAssignments = true;
+
+            /* get Data */
+            employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
+                $scope.unpaidGlobaleventPeriods = data['globalevent_periods'];
+            });
         }
 
         /* Display profile tab and hide the two others */
         $scope.showProfile = function(){
-            if (!$scope.init) {
-                for (var item in $scope.employee)
-                    if ($scope.employee[item]['toinit'])
-                        $scope.employee[item].init();
-                $scope.init = true;
+
+            /* get Data for the specific employee if it is not there yet (if sex_id is there, it means we got the employee) */
+            if(!$scope.employee.sex_id){
+                employeesFactory.get({employeeId: $scope.employee.id}, function(data){
+                    $scope.employee = data['employees'][0];
+                    $scope.profileTemplate = 'views/employees/employeeProfile.html';
+                });
             }
         }
 

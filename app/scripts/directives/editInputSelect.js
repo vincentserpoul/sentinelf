@@ -17,7 +17,6 @@ sentinelfApp
             template: editInputSelectTemplate,
             scope: {
                 uniqIdValue: '=',
-                initLabel: '@',
                 altLabel: '@',
                 altRef: '@',
                 modelRefResource: '=',
@@ -29,32 +28,30 @@ sentinelfApp
                 filterVar: '='
             },
             link: function (scope) {
-                scope.label = scope.altLabel ? scope.altLabel : 'label';
+                scope.label = 'label';
 
-                if (!scope.ngModel) {
-                    scope.ngModel = {'toinit':true};
-                    scope.ngModel[scope.label] = scope.initLabel;
+                scope.init = function() {
 
-                    scope.ngModel.init = function (savObj, item) {
-                        if (scope.filterKey) {scope.filterParams = {}; scope.filterParams[scope.filterKey] = scope.filterVarId}
+                    if (scope.filterKey) {scope.filterParams = {}; scope.filterParams[scope.filterKey] = scope.filterVarId}
 
-                        /* We have to wait for the resource to come back so we get its promise and move when it is there */
-                        scope.modelRefResource.$promise.then(function(modelRefResult){
-                            
-                            if (!scope.altRef) {
-                                scope.modelRefList = modelRefResult.labels[scope.modelRefType];
-                            } else if (scope.altRef == 'none') {
-                                scope.modelRefList = modelRefResult[scope.modelRefType];    
-                            } else {
-                                scope.modelRefList = modelRefResult[scope.altRef][scope.modelRefType];
-                            }
+                    /* We have to wait for the resource to come back so we get its promise and move when it is there */
+                    scope.modelRefResource.$promise.then(function(modelRefResult){
 
-                            /* Preselect the select box with the given value uniqIdValue */
-                            scope.ngModel = scope.findItemByUniqId(scope.modelRefList, scope.uniqIdValue);
-                            if (savObj) savObj[item] = scope.ngModel;
-                        });
-                    }
+                        if (!scope.altRef) {
+                            scope.modelRefList = modelRefResult.labels[scope.modelRefType];
+                        } else if (scope.altRef == 'none') {
+                            scope.modelRefList = modelRefResult[scope.modelRefType];
+                        } else {
+                            scope.modelRefList = modelRefResult[scope.altRef][scope.modelRefType];
+                        }
+
+                        /* Preselect the select box with the given value uniqIdValue */
+                        scope.ngModel = scope.findItemByUniqId(scope.modelRefList, scope.uniqIdValue);
+                    });
+
+                    if (scope.altLabel) scope.label = scope.altLabel;
                 }
+
                 /**
                  * findObjectById: Function to find the item (object) corresponding to the id or code inside a given list
                  *
@@ -68,26 +65,33 @@ sentinelfApp
 
                     /* We only search for the preselected item if there is an actual preselected uniqIdValue */
                     if(uniqIdValue != '' && modelRefList != ''){
-                        /* loop through the modelfRefList to find the item with the uniqIdValue */
-                        for (var i in modelRefList) {
-                            if (modelRefList[i]['code'] == uniqIdValue)
-                                return modelRefList[i];
-                            else if (modelRefList[i]['id'] == uniqIdValue)
-                                return modelRefList[i];
 
-                        }
-                        return null;
+                        /* default selectedItem is the first one */
+                        var selectedItem = modelRefList[0];
+                        /* loop through the modelfRefList to find the item with the uniqIdValue */
+                        angular.forEach(modelRefList, function(listItem){
+                            /* if we find the uniqIdValue in the list, we put it inside selectedItem */
+                            if(listItem['code'] == uniqIdValue){
+                                selectedItem = listItem;
+                            } else if(listItem['id'] == uniqIdValue){
+                                selectedItem = listItem;
+                            }
+                        });
+
+                        return selectedItem;
                     }
 
                 }
-                
+
+                /* if it changes, then we filter our select box */
                 scope.$watch('filterVar', function (oldValue, newValue) {
+                    /* watch the filterVar variable */
                     if (scope.filterVar) {
                         scope.filterParams[scope.filterKey] = scope.filterVar;
                     }
-                }) 
+                })
 
-                //init();
+                scope.init();
             }
         };
     }

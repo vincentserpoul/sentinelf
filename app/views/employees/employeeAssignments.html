@@ -1,0 +1,10 @@
+<ng-if="employee.shownAssignments">
+    <p ng-repeat="globaleventPeriod in globaleventPeriods">
+
+        <ng-switch on="globaleventPeriod.payment_id">
+            <button ng-switch-default class="btn btn-xs btn-info"><i class="fa fa-money"></i> Payed</button>
+            <button ng-click="payEmployee()" ng-switch-when="null" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Pay!</button>
+        </ng-switch>
+        {{globaleventPeriod.label}} ({{globaleventPeriod.number_of_employee_needed}}) : from {{globaleventPeriod.start_datetime}} to {{globaleventPeriod.end_datetime}}
+    </p>
+</ng-if>
