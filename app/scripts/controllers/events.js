@@ -5,16 +5,19 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
    init();
 
     function init(){
+        $scope.eventTemplate = 'views/events/eventView.html';
         /* Load the progressive service to load list of employees */
         $scope.eventsLazyloadFactory = new eventsLazyloadFactory();
         /* First launch */
         $scope.eventsLazyloadFactory.loadMore();
 
+        /*
         //Fetch all events
         $scope.employersResource = employersFactory.get();
 
         //Fetch all departments
         $scope.departmentsResource = departmentsFactory.get();
+        */
     };
 
     $scope.setEventPeriodEmployees = function (eventPeriodEmployees) {

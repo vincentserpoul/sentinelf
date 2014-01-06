@@ -51,26 +51,13 @@
                 <th>Department</th>
                 <th>Date</th>
                 <th>Actions</th>
+                <th><i class="fa fa-list"></i> Sublists</th>
             </tr>
         </thead>
         <tbody ng-repeat="event in eventsLazyloadFactory.events" class="repeat-animation" ng-controller='EventCtrl'>
-            <tr>
-                <td>{{event.id}}</td>
-                <td><edit-input-text value="event.label" edit-form="editForm"></edit-input-text></td>
-                <td><edit-input-select uniq-id-value="event.employer_id" init-label="{{event.employer_name}}" model-ref-resource="employersResource" model-ref-type="employers" edit-form="editForm" ng-model="event.employer" alt-label="name" alt-ref="none"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="event.employer_department_id" init-label="{{event.employer_department_label}}" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="editForm" ng-model="event.employer_department" alt-ref="none" filter-key="employer_id" filter-var-id="event.employer_id" filter-var="event.employer.id"></edit-input-select></td>
-                <td><edit-input-date date="event.date" edit-form="editForm"></edit-input-datetime></td>
-                <td class="btn-group-vertical btn-group-xs">
-                    <button ng-hide="editForm" type="button" class="btn btn-primary" ng-click="editEvent()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                    <button ng-show="editForm" type="button" class="btn btn-success" ng-click="saveEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
-                    <button ng-show="editForm" type="button" class="btn btn-default" ng-click="cancelEditEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseEventPeriod{{event.id}}" ng-click="loadEventPeriods()">Event periods</button>
-                    <button type="button" class="btn btn-primary" ng-click="openAssignments()">Assignments</button> 
-                    <button ng-hide="editForm" type="button" class="btn btn-warning" ng-click="deleteEvent()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
-                </td>
-            </tr>
+            <tr ng-include src="eventTemplate"></tr>
             <tr style="border: none;">
-                <td colspan="6" style="border: none; padding: 0px;">
+                <td colspan="7" style="border: none; padding: 0px;">
                     <div ng-show="openEventPeriods" class="show-hide-animation" ng-include src="eventPeriodsTemplate"></div>
                  </td>
             </tr>        
