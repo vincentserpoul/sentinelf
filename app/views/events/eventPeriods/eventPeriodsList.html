@@ -3,32 +3,34 @@
         {{event.label}}'s Event Periods
         <button type="button" class="btn btn-primary btn-xs" ng-click="newEventPeriod()"><i class="fa fa-plus fa-fw"></i> New</button>
     </div>
-    <div class="panel panel-primary collapse" id="collapseNewEventPeriod{{event.id}}">
-        <div class="panel-heading">New Event Period</div>
-        <div class="panel-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Number of Employees needed</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><edit-input-datetime datetime="createdEventPeriod.start_datetime" edit-form="true"></edit-input-datetime></td>
-                        <td><edit-input-datetime datetime="createdEventPeriod.end_datetime" edit-form="true"></edit-input-datetime></td>
-                        <td><edit-input-text value="createdEventPeriod.number_of_employee_needed" edit-form="true"></edit-input-text></td>
-                        <td>
-                            <div class="btn-group-vertical">
-                                <button type="button" class="btn btn-success btn-xs" ng-click="saveNewEventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
-                                <button type="button" class="btn btn-default btn-xs" ng-click="cancelNewEventPeriod()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div ng-show="showNew">
+        <div class="panel panel-primary">
+            <div class="panel-heading">New Event Period</div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Number of Employees needed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><edit-input-datetime datetime="new_eventPeriod.start_datetime" edit-form="true"></edit-input-datetime></td>
+                            <td><edit-input-datetime datetime="new_eventPeriod.end_datetime" edit-form="true"></edit-input-datetime></td>
+                            <td><edit-input-text value="new_eventPeriod.number_of_employee_needed" edit-form="true"></edit-input-text></td>
+                            <td>
+                                <div class="btn-group-vertical">
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="saveNewEventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                    <button type="button" class="btn btn-default btn-xs" ng-click="cancelNewEventPeriod()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <table class="table" ng-show="eventPeriodsLazyloadFactory.eventPeriods.length">
@@ -36,31 +38,15 @@
             <th>ID</th>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Number of Employees assigned</th>
             <th>Number of Employees needed</th>
             <th>Actions</th>
+            <th><i class="fa fa-list"></i> Sublists</th>
         </tr>
         <tbody ng-repeat="eventPeriod in eventPeriodsLazyloadFactory.eventPeriods" ng-controller='EventPeriodCtrl' class="repeat-animation">
-            <tr>
-                <td>{{ eventPeriod.id }}</td>
-                <td><edit-input-datetime datetime="eventPeriod.start_datetime" edit-form="editForm"></edit-input-datetime></td>
-                <td><edit-input-datetime datetime="eventPeriod.end_datetime" edit-form="editForm"></edit-input-datetime></td>
-                <td>
-                    <div ng-hide="assignedEmployeesLazyloadFactory">{{eventPeriod.number_of_employees_assigned}}</div>
-                    <div ng-show="assignedEmployeesLazyloadFactory">{{assignedEmployeesLazyloadFactory.total}}</div>
-                </td>
-                <td><edit-input-text value="eventPeriod.number_of_employee_needed" edit-form="editForm"></edit-input-text></td>
-                <td class="btn-group-vertical">
-                    <button ng-hide="editForm" type="button" class="btn btn-primary btn-xs" ng-click="editEventPeriod()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                    <button ng-show="editForm" type="button" class="btn btn-success btn-xs" ng-click="saveEventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
-                    <button ng-show="editForm" type="button" class="btn btn-default btn-xs" ng-click="cancelEditEventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click='loadAssignments()'><i class="fa fa-calendar"></i> Assigned</button> 
-                    <button ng-hide="editForm" type="button" class="btn btn-warning btn-xs" ng-click="deleteEventPeriod()"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li></button>
-                </td>
-            </tr>
+            <tr ng-include src="eventPeriodTemplate"></tr>
             <tr style="border: none;">
                 <td colspan="6" style="border: none; padding: 0px;">
-                    <div class="collapse" id="collapseAssignmentEventPerdiod{{eventPeriod.id}}">
+                    <div ng-show="showAssignments">
                         <div class="well well-sm" ng-include src="'views/events/eventPeriods/assignmentsList.html'" ng-controller="EventPeriodsAssignmentsCtrl"></div>
                     </div>
                 </td>

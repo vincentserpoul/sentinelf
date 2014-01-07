@@ -9,7 +9,7 @@
                 <th>Country</th>
                 <th>D.O.B</th>
                 <th>Mobile</th>
-                <th>school</th>
+                <th>School</th>
                 <th>Joined</th>
                 <th>Race</th>
                 <th>Status</th>
@@ -24,16 +24,16 @@
             <tr ng-repeat="assigned_employee in assignedEmployeesLazyloadFactory.assigned_employees" class="repeat-animation">
                 <td ng-show="unassignForm"><input type="checkbox" ng-model="assigned_employee.isUnassigned"></td>
                 <td>{{assigned_employee.id}}</td>
-                <td class="dropdown">{{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
-                <td><edit-input-select uniq-id-value="assigned_employee.sex_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="sex" ng-model="assigned_employee.sex" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="assigned_employee.country_code" model-ref-resource="countryListResource" model-ref-type="country" ng-model="assigned_employee.country" edit-form="false"></edit-input-select></td>
-                <td><edit-input-date date="assigned_employee.date_of_birth" edit-form="false"></edit-input-date></td>
-                <td><edit-input-text value="assigned_employee.mobile_phone_number" edit-form="false"></edit-input-text></td>
-                <td><edit-input-text value="assigned_employee.school" edit-form="false"></edit-input-text></td>
-                <td><edit-input-date date="assigned_employee.join_date" edit-form="false"></edit-input-date></td>
-                <td><edit-input-select uniq-id-value="assigned_employee.race_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="race" ng-model="assigned_employee.race" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="assigned_employee.status_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="status" ng-model="assigned_employee.status" edit-form="false"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="assigned_employee.work_pass_type_id" model-ref-resource="employeeStaticLabelsResource" model-ref-type="work_pass_type" ng-model="assigned_employee.work_pass_type" edit-form="false"></edit-input-select></td>
+                <td>{{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
+                <td></td>
+                <td></td>
+                <td>{{assigned_employee.date_of_birth}}</td>
+                <td>{{assigned_employee.mobile_phone_number}}</td>
+                <td>{{assigned_employee.school}}</td>
+                <td>{{assigned_employee.join_date}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         </tbody>
     </table>

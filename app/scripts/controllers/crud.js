@@ -18,10 +18,15 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 			'view': 'views/events/eventView.html',
 			'edit': 'views/events/eventEdit.html'
 		},
+		'eventPeriod': {
+			'view': 'views/events/eventPeriods/eventPeriodView.html',
+			'edit': 'views/events/eventPeriods/eventPeriodEdit.html'
+		}
 	}
 
 	var objLabels = {
-		'event': 'label'
+		'event': 'label',
+		'eventPeriod': 'id'
 	}
 
 	return {
@@ -79,7 +84,7 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		new: function ($scope, obj, preselectedValues) {
 			loadResources($scope, obj);
 			$scope['new_' + obj] = preselectedValues;
-        	$('#collapse_new_' + obj).collapse('show');
+			$scope.showNew = true;
 		}, 
 
 		create: function ($scope, obj) {
@@ -92,11 +97,11 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 	                if (error['data']) AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
 	            }
 	        )
-	        $('#collapse_new_' + obj).collapse('hide');
+	        $scope.showNew = false;
 		}, 
 
-		cancelNew: function (obj) {
-			$('#collapse_new_' + obj).collapse('hide');
+		cancelNew: function ($scope) {
+			$scope.showNew = false;
 		}
 	}
 })

@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$filter', 'formService', 'AlertService', 'eventPeriodEmployeeFactory', 'assignedEmployeesFactory', 'employeesEventPeriodsFactory', function($scope, $filter, formService, AlertService, eventPeriodEmployeeFactory, assignedEmployeesFactory, employeesEventPeriodsFactory){
+sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$filter', 'formService', 'AlertService', 'eventPeriodEmployeeFactory', 'assignedEmployeesFactory', 'employeesEventPeriodsFactory', 'ngTableParams', function($scope, $filter, formService, AlertService, eventPeriodEmployeeFactory, assignedEmployeesFactory, employeesEventPeriodsFactory, ngTableParams){
 
 	$scope.unassign = function () {
         $scope.allSelected = false;

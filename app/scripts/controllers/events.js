@@ -1,16 +1,13 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'formService', 'AlertService', 'eventFactory', 'eventsLazyloadFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, crud, formService, AlertService, eventFactory, eventsLazyloadFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory', 'employersFactory', 'departmentsFactory', function ($scope, crud, eventsLazyloadFactory, employersFactory, departmentsFactory){
 
-    init();
-
-    function init(){
-        $scope.eventTemplate = 'views/events/eventView.html';
-        /* Load the progressive service to load list of employees */
-        $scope.eventsLazyloadFactory = new eventsLazyloadFactory();
-        /* First launch */
-        $scope.eventsLazyloadFactory.loadMore();
-    };
+    $scope.eventTemplate = 'views/events/eventView.html';
+    /* Load the progressive service to load list of employees */
+    $scope.eventsLazyloadFactory = new eventsLazyloadFactory();
+    /* First launch */
+    $scope.eventsLazyloadFactory.loadMore();
+    $scope.showNew = false;
 
     $scope.loadEmployersAndDepartments = function () {
         //Fetch all events
@@ -22,14 +19,6 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'formService', 'AlertSe
         departmentsFactory.get(function (data) {
             $scope.employer_departments = data['EmployerDepartments'];
         });
-    }
-
-    $scope.setEventPeriodEmployees = function (eventPeriodEmployees) {
-        $scope.eventPeriodEmployees = eventPeriodEmployees;
-    }
-
-    $scope.setAllPossibleGlobaleventPeriods = function (all_possible_globalevent_periods) {
-        $scope.all_possible_globalevent_periods = all_possible_globalevent_periods;
     }
 
     var obj = 'event';
@@ -48,7 +37,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'formService', 'AlertSe
     }
 
     $scope.cancelNewEvent = function () {
-        crud.cancelNew(obj);
+        crud.cancelNew($scope);
     }
 }]);
 

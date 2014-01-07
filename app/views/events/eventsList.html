@@ -12,45 +12,53 @@
             {{alert.message}}
         </div>
     </div>
-    <div class="panel panel-primary collapse" id="collapse_new_event">
-        <div class="panel-heading">New Event</div>
-        <div class="panel-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Employer</th>
-                        <th>Department</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input class="form-control input-sm" ng-model="new_event.label" />
-                        </td>
-                        <td>
-                            <select class="form-control input-sm" ng-model="new_event.employer_id" ng-options="employer.id as employer.name for employer in employers"></select>
-                        </td>
-                        <td>
-                            <select class="form-control input-sm" ng-model="new_event.employer_department_id" ng-options="employer_department.id as employer_department.label for employer_department in employer_departments | filter: {employer_id: new_event.employer_id}"></select>
-                        </td>
-                        <td>
-                            <input type="date" ng-model="new_event.date" class="form-control input-sm" />
-                        </td>
-                        <td>
-                            <div class="btn-group-vertical btn-group-sm">
-                                <button type="button" class="btn btn-success" ng-click="createEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
-                                <button type="button" class="btn btn-default" ng-click="cancelNewEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div ng-show="showNew" class="show-hide-animation">
+        <div class="panel panel-primary">
+            <div class="panel-heading">New Event</div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Employer</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input class="form-control input-sm" ng-model="new_event.label" />
+                            </td>
+                            <td>
+                                <select ui-select2 ng-model="new_event.employer_id" data-placeholder="Pick an employer">
+                                    <option value=""></option>
+                                    <option ng-repeat="employer in employers" value="{{employer.id}}">{{employer.name}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ui-select2 ng-model="new_event.employer_department_id" data-placeholder="Pick a department">
+                                    <option value=""></option>
+                                    <option ng-repeat="employer_department in employer_departments | filter: {employer_id: new_event.employer_id}" value="{{employer_department.id}}">{{employer_department.label}}</option>    
+                                </select>
+                            </td>
+                            <td>
+                                <input type="date" ng-model="new_event.date" class="form-control input-sm" />
+                            </td>
+                            <td>
+                                <div class="btn-group-vertical btn-group-sm">
+                                    <button type="button" class="btn btn-success" ng-click="createEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                    <button type="button" class="btn btn-default" ng-click="cancelNewEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <table class="table table-hover" infinite-scroll='eventsLazyloadFactory.loadMore()' infinite-scroll-disabled='eventsLazyloadFactory.busyLoadingEvents' infinite-scroll-distance='5'>
+    <table class="table table-hover" infinite-scroll='eventsLazyloadFactory.loadMore()' infinite-scroll-disabled='eventsLazyloadFactory.busyLoadingEvents' infinite-scroll-distance='1'>
         <thead>
             <tr>
                 <th>ID</th>
