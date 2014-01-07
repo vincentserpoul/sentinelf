@@ -1,8 +1,8 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventsLazyloadFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, eventsLazyloadFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'formService', 'AlertService', 'eventFactory', 'eventsLazyloadFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, crud, formService, AlertService, eventFactory, eventsLazyloadFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
 
-   init();
+    init();
 
     function init(){
         $scope.eventTemplate = 'views/events/eventView.html';
@@ -10,15 +10,19 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         $scope.eventsLazyloadFactory = new eventsLazyloadFactory();
         /* First launch */
         $scope.eventsLazyloadFactory.loadMore();
+    };
 
-        /*
+    $scope.loadEmployersAndDepartments = function () {
         //Fetch all events
-        $scope.employersResource = employersFactory.get();
+        employersFactory.get(function (data) {
+            $scope.employers = data['employers'];
+        });
 
         //Fetch all departments
-        $scope.departmentsResource = departmentsFactory.get();
-        */
-    };
+        departmentsFactory.get(function (data) {
+            $scope.employer_departments = data['EmployerDepartments'];
+        });
+    }
 
     $scope.setEventPeriodEmployees = function (eventPeriodEmployees) {
         $scope.eventPeriodEmployees = eventPeriodEmployees;
@@ -28,92 +32,45 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         $scope.all_possible_globalevent_periods = all_possible_globalevent_periods;
     }
 
-    $scope.newEvent = function () {// preselected values for new event
-        $scope.createdEvent = {
-            "label":"Event's name",
-            "employer_id": 1,
-            "employer_department_id": 1,
-            "date" : "2013-01-01"};
-        $('#collapseNewEvent').collapse('show');
+    var obj = 'event';
+    var preselectedValues = {
+        "label":"Event's name",
+        "employer_id": 1,
+        "employer_department_id": 1,
+        "date" : "2013-01-01"};
+
+    $scope.newEvent = function () {
+        crud.new($scope, obj, preselectedValues);
     }
 
-    $scope.saveNewEvent = function () {
-        // get code from model
-        $scope.createdEvent.employer_id = $scope.createdEvent.employer.id;
-        $scope.createdEvent.employer_department_id = $scope.createdEvent.employer_department.id;
-        /* Call the factory to update the new event in db */
-        eventsFactory.save($scope.createdEvent,
-            function (data) {
-                $scope.eventsLazyloadFactory.events.unshift(data['Globalevent']);
-                AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-            }, function (error) {
-                if (error['data']) AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-            }
-        )
-        $('#collapseNewEvent').collapse('hide');
+    $scope.createEvent = function () {
+        crud.create($scope, obj);
     }
 
     $scope.cancelNewEvent = function () {
-        $('#collapseNewEvent').collapse('hide');
+        crud.cancelNew(obj);
     }
 }]);
 
 
-sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodsLazyloadFactory', function ($scope, $modal, formService, AlertService, eventsFactory, eventPeriodsLazyloadFactory) {
-    
-    $scope.init = false;
-    $scope.editForm = false;
+sentinelfApp.controller("EventCtrl", ['$scope', 'crud', '$modal', 'eventPeriodsLazyloadFactory', function ($scope, crud, $modal, eventPeriodsLazyloadFactory) {
+    var obj = 'event';
 
     $scope.editEvent = function () {
-        $scope.savEvent = {};
-        formService.copyProps($scope.event, $scope.savEvent);
-        // Activate the edit
-        $scope.editForm = true;
+        crud.edit($scope, obj);
     }
 
     $scope.saveEvent = function () {
-        // get code from model
-        $scope.event.employer_id = $scope.event.employer['id'];
-        $scope.event.employer_department_id = $scope.event.employer_department['id'];
-        /* Call the factory to update the new event in db */
-        eventsFactory.update($scope.event,
-            function (data) {
-                if (data) {
-                    // when success, reset the savEvent
-                    $scope.savEvent = null;
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-            }
-        );
-        $scope.editForm = false;
+        crud.save($scope, obj);
     };
 
     $scope.cancelEditEvent = function () {
-        // Reset the data to what it was before the edit
-        formService.copyProps($scope.savEvent, $scope.event);
-        // Deactivate the edit
-        $scope.editForm = false;
+        crud.cancelEdit($scope, obj);
     };
 
     /* Delete employee button for each employee */
     $scope.deleteEvent = function () {
-
-        var modalInstance = formService.popup('event', $scope.event.label);
-
-        modalInstance.result.then(function(){
-            eventsFactory.delete({eventId:$scope.event.id},
-                function (data) {
-                    $scope.eventsLazyloadFactory.events.splice(formService.findInArray($scope.eventsLazyloadFactory.events, $scope.event.id), 1);
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }, function (error) {
-                    if (error['data'])
-                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-                }
-            );
-        });
+        crud.delete($scope, obj);
     }
 
     $scope.loadEventPeriods = function () {

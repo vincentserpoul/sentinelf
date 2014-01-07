@@ -1,7 +1,7 @@
 'use strict';
 
 /* Lazy loading of the employee list */
-sentinelfApp.factory('eventsLazyloadFactory', ['eventsFactory', function(eventsFactory) {
+sentinelfApp.factory('eventsLazyloadFactory', ['eventFactory', function(eventFactory) {
 
     var eventsLazyloadFactory = function () {
         this.events = [];
@@ -23,7 +23,7 @@ sentinelfApp.factory('eventsLazyloadFactory', ['eventsFactory', function(eventsF
         this.busyLoadingEvents = true;
 
         /* Get the employee list, page by page */
-        eventsFactory.get({page:this.nextpage}, function(data){
+        eventFactory.get({page:this.nextpage}, function(data){
             this.events = this.events.concat(data['Globalevents']);
 
             /* update the current page */

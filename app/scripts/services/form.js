@@ -70,6 +70,9 @@ sentinelfApp.factory('formService', function($resource, $modal) {
                 }
             }
             return savObj;
+        },
+        alert: function () {
+            alert('123');
         }
  	}   
 });

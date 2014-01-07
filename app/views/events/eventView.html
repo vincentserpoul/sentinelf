@@ -3,17 +3,15 @@
 <td>{{event.employer_name}}</td>
 <td>{{event.employer_department_label}}</td>
 <td>{{event.date}}</td>
-<td class="btn-group">
-    <button type="button" class="btn btn-primary btn-sm" ng-click="editEvent()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-        <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-        <li><a ng-click="deleteEvent()"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
-    </ul>
+<td>
+    <div class="btn-group-vertical btn-group-sm">
+        <button type="button" class="btn btn-primary" ng-click="editEvent()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+        <button type="button" class="btn btn-danger" ng-click="deleteEvent()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+    </div>
 </td>   
 <td>
-    <button type="button" class="btn btn-info btn-sm" data-toggle="collapse" data-target="#collapseEventPeriod{{event.id}}" ng-click="loadEventPeriods()"><i class="fa fa-calendar"></i> Event periods</button>
-    <button type="button" class="btn btn-info btn-sm" ng-click="openAssignments()"><i class="fa fa-user"></i> Assignments</button> 
+    <div class="btn-group-vertical btn-group-sm">
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapseEventPeriod{{event.id}}" ng-click="loadEventPeriods()"><i class="fa fa-calendar"></i> Event periods</button>
+        <button type="button" class="btn btn-info" ng-click="openAssignments()"><i class="fa fa-user"></i> Assignments</button> 
+    </div>
 </td>

@@ -31,7 +31,7 @@ sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'formService', 'AlertServ
     }
 }])
 
-sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventPeriodFactory', 'assignedEmployeesLazyloadFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, eventPeriodFactory, assignedEmployeesLazyloadFactory, employeesEventPeriodsFactory) {
+sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'formService', 'AlertService', 'eventFactory', 'eventPeriodFactory', 'assignedEmployeesLazyloadFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventFactory, eventPeriodFactory, assignedEmployeesLazyloadFactory, employeesEventPeriodsFactory) {
 
     $scope.editForm = false;
 

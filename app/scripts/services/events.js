@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.factory('eventsFactory', ['$resource', function($resource) {
+sentinelfApp.factory('eventFactory', ['$resource', function($resource) {
 
     return $resource('http://dev.sentinelb.com/api/v1/globalevent/:eventId',
                 {eventId: "@id" },
