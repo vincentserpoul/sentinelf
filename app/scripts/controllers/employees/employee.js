@@ -5,12 +5,8 @@ sentinelfApp.controller(
     '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
     function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
 
-        init();
-
-        /* Regroup init of the page in one single function */
-        function init() {
-            $scope.editForm = false;
-            $scope.init = false;
+        $scope.toggleDetails = function(){
+            $scope.showDetails = !$scope.showDetails;
         }
 
         /* Display profile tab and hide the two others */
@@ -37,6 +33,11 @@ sentinelfApp.controller(
 
         /* Display profile tab and hide the two others */
         $scope.showProfile = function(){
+
+            /* Get the labels necessary for the list of countries not to be only codes */
+            $scope.countryListResource.$promise.then(function(data){
+                $scope.countries = data['labels']['country'];
+            });
 
             /* get Data for the specific employee if it is not there yet (if sex_id is there, it means we got the employee) */
             if(!$scope.employee.sex_id){
@@ -101,7 +102,7 @@ sentinelfApp.controller(
 
             /* Call the factory to update/create the employee in db */
             if(angular.isDefined($scope.employee.id)){
-                employeesFactory.update($scope.employee,
+                employeesFactory.update({employeeId: $scope.employee.id}, $scope.employee,
                     function(data){
                         // when success, reset the savEmployer
                         $scope.employee = data['employee'];
@@ -132,7 +133,7 @@ sentinelfApp.controller(
         /* Delete employee button for each employee */
         $scope.deleteEmployee= function(){
 
-            var modalInstance = formService.popup('employee', $scope.employee.first_name + $scope.employee.last_name);
+            var modalInstance = formService.popup('employee', $scope.employee.first_name +' '+ $scope.employee.last_name);
 
             modalInstance.result.then(function(){
                 employeesFactory.delete({employeeId:$scope.employee.id},
@@ -159,6 +160,7 @@ sentinelfApp.controller(
             console.log($scope.newEmployeeDoc);
             /* hide back the form */
             $scope.employeeDocForm = false;
+
             $scope.newEmployeeDoc.doc_type_id = $scope.newEmployeeDoc.doc_type.id;
             /* We need to copy to make sure a new element is created each time */
             $scope.employee.employee_doc.unshift(angular.copy($scope.newEmployeeDoc));

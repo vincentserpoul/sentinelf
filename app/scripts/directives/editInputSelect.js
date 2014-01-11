@@ -91,7 +91,22 @@ sentinelfApp
                     }
                 })
 
-                scope.init();
+                /* if it changes, then we filter our select box */
+                scope.$watch('uniqIdValue', function (oldValue, newValue) {
+                    /* watch the filterVar variable */
+                    if (scope.uniqIdValue) {
+                        scope.init();
+                    }
+                })
+
+                /* if it changes, then we filter our select box */
+                scope.$watch('editForm', function (oldValue, newValue) {
+                    /* watch the filterVar variable */
+                    if (scope.editForm) {
+                        scope.init();
+                    }
+                })
+
             }
         };
     }

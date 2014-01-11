@@ -11,7 +11,7 @@ sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
                     {
                         "get": {method:"GET", cache: true},
                         "create": {method:"POST"},
-                    	"update": {method:"POST"},
+                    	"update": {method:"PUT"},
         				"delete": {method:"DELETE"},
                         "search": {
                             method:"GET",
