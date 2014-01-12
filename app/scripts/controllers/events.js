@@ -39,6 +39,18 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
     $scope.cancelNewEvent = function () {
         crud.cancelNew($scope);
     }
+
+    $scope.updateEmployer = function () {
+        if ($scope.new_event.employer_id) {
+            var employer = null;
+            for (var i in $scope.employers) {
+                if ($scope.employers[i].id == $scope.new_event.employer_id) {
+                    employer = $scope.employers[i];
+                    break;
+                }
+            }
+        }
+    }
 }]);
 
 
