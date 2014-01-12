@@ -67,7 +67,7 @@ var sentinelfApp = angular.module('sentinelfApp', [
                 controller:     'AdministrationCtrl',
                 access:         ['admin']
             })
-        .when('/test', 
+        .when('/test',
             {
                 templateUrl:    'views/test.html',
                 controller:     'EmployersCtrl',
@@ -120,5 +120,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
             }
         }
     });
+
+    /* backend url API */
+    $rootScope.backendApiUrldev = 'http://dev.sentinelb.com/api/v1/';
 
 }]);
