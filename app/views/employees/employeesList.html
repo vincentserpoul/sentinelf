@@ -8,36 +8,48 @@
         {{alert.message}}
     </div>
 </div>
-    <div ng-include src="'views/employees/employeesSearch.html'"></div>
-    <div ng-show="displayList" class="panel panel-default">
-        <div class="panel-heading" ng-show="employeesSearchLazyloadFactory.total+1">{{employeesSearchLazyloadFactory.total}} employee(s) found</div>
-        <div class="panel-body">
-            <ul class="list-unstyled" infinite-scroll='employeesSearchLazyloadFactory.loadMore()' infinite-scroll-disabled='employeesSearchLazyloadFactory.busyLoadingEmployees' infinite-scroll-distance='5'>
-                <li class="col-md-4" ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeCtrl">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">{{employee.title_label}} {{employee.first_name}} {{employee.last_name}} ({{employee.age}}yo)<button ng-show="!employee.id" class="btn btn-default btn-xs" ng-click="cancelAddEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button></div>
-                        <div class="panel-body">
-                            <tabset>
-                                <tab heading="Infos">
-                                    <p><br />
-                                        Number of hours worked this week: 80h<br />
-                                        Any other important information<br />
-                                    </p>
-                                </tab>
-                                <tab heading="Profile" select="showProfile()">
-                                    <div ng-include src="'views/employees/employeeProfile.html'"></div>
-                                </tab>
-                                <tab heading="Assignments" select="showAssignments()">
-                                    <div ng-include src="'views/employees/employeeAssignments.html'"></div>
-                                </tab>
-                                <tab heading="Unpaid assignments" select="showUnpaidAssignments()">
-                                    <div ng-include src="'views/employees/employeeUnpaidAssignments.html'"></div>
-                                </tab>
-                            </tabset>
-                        </div>
+<div ng-include src="'views/employees/employeesSearch.html'"></div>
+<div ng-show="displayList" class="panel panel-default">
+    <div class="panel-heading" ng-show="employeesSearchLazyloadFactory.total+1">{{employeesSearchLazyloadFactory.total}} employee(s) found</div>
+    <div class="panel-body">
+        <ul class="list-unstyled" infinite-scroll='employeesSearchLazyloadFactory.loadMore()' infinite-scroll-disabled='employeesSearchLazyloadFactory.busyLoadingEmployees' infinite-scroll-distance='5'>
+            <li class="col-md-4" ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeCtrl">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{employee.title_label}} {{employee.first_name}} {{employee.last_name}} ({{employee.age}}yo) - {{employee.identity_doc_number}}
+                        <button ng-show="!employee.id" class="btn btn-default btn-xs" ng-click="cancelAddEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                        <button class="btn btn-default btn-xs pull-right" ng-hide="showDetails" ng-click="toggleDetails()"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-default btn-xs pull-right" ng-show="showDetails" ng-click="toggleDetails()"><i class="fa fa-minus"></i></button>
                     </div>
-                </li>
-            </ul>
-            <div ng-show="employeesSearchLazyloadFactory.busyLoadingEmployees"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
-        </div>
+                    <div class="panel-body" ng-show="showDetails">
+                        <accordion close-others="oneAtATime">
+                            <accordion-group heading="Profile" is-open="true">
+                                Prof
+                            </accordion-group>
+                            <accordion-group heading="Unpaid assignments">
+                                Ass
+                            </accordion-group>
+                            <accordion-group heading="All assignments">
+                                All Ass
+                            </accordion-group>
+                        </accordion>
+
+                    <!--
+                        <tabset>
+                            <tab heading="Profile" select="showProfile()">
+                                <div ng-include src="'views/employees/employeeProfile.html'"></div>
+                            </tab>
+                            <tab heading="Assignments" select="showAssignments()">
+                                <div ng-include src="'views/employees/employeeAssignments.html'"></div>
+                            </tab>
+                            <tab heading="Unpaid assignments" select="showUnpaidAssignments()">
+                                <div ng-include src="'views/employees/employeeUnpaidAssignments.html'"></div>
+                            </tab>
+                        </tabset>-->
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div ng-show="employeesSearchLazyloadFactory.busyLoadingEmployees"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
     </div>
+</div>

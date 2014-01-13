@@ -1,3 +1,5 @@
+<select ng-model="employee.country_code" ng-options="country.code as country.label for country in countries"></select><br/>
+
 
 <p><edit-input-select uniq-id-value="employee.title_id" ng-model="employee.title" model-ref-type="title" model-ref-resource="staticLabelListResource" edit-form="editForm"></edit-input-select></p>
 <p><edit-input-text value="employee.first_name" edit-form="editForm"></edit-input-text></p>

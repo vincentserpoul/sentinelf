@@ -2,8 +2,6 @@
   <fieldset>
 
   <!-- Form Name -->
-  <legend>Search</legend>
-
   <!-- Search input-->
   <div class="form-group">
     <div class="col-md-3">
@@ -40,8 +38,11 @@
       <select id="race_id" name="race_id" class="form-control" ng-model="searchCriterias.race" ng-options="race.label for race in employeeStaticLabels['race']" multiple="multiple"></select>
     </div>
     <div class="col-md-3">
-      <button type="reset" class="btn btn-danger btn-sm" ng-click="clearEmployees()"><i class="fa fa-reset"></i> Clear</button>
-      <button type="submit" class="btn btn-primary btn-sm" ng-click="searchEmployees()"><i class="fa fa-search"></i> Search</button>
+    <div class="btn-group">
+        <button type="submit" class="btn btn-primary btn-sm" ng-click="searchEmployees()"><i class="fa fa-search"></i> Search</button>
+        <button type="reset" class="btn btn-danger btn-sm" ng-click="clearEmployees()"><i class="fa fa-reset"></i> Clear</button>        
+    </div>
+
   </div>
 
   </fieldset>
