@@ -5,27 +5,8 @@
 			<th>Group</th>
 			<th>Actions</th>
 		</thead>
-		<tbody>
-			<tr ng-repeat="user in users" class="repeat-animation" ng-controller="UserCtrl">
-				<td>{{user.email}}</td>
-				<td>
-					<div ng-hide="editForm">{{user.group.name}}</div>
-					<div ng-show="editForm">
-						<select ng-model="user.group" ng-options="group.name for group in groups" class="form-control input-sm">
-							<option value="">--- choose a group ---</option>
-						</select>
-					</div>
-				</td>
-				<td class="btn-group">
-					<div ng-hide="editForm">
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="editUser()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                    </div>
-                    <div ng-show="editForm" class="btn-group">
-                        <button type="button" class="btn btn-success btn-xs" ng-click="saveEditUser()"><i class="fa fa-save fa-fw"></i> Save</button>
-                        <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditUser()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                    </div>      
-				</td>
-			</tr>
+		<tbody ng-repeat="user in users" class="repeat-animation" ng-controller="UserCtrl">
+			<tr ng-include src="userTemplate"></tr>
 		</tbody>
 	</table>
 </div>

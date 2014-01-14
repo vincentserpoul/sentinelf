@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.factory('usersFactory', ['$resource', function($resource) {
+sentinelfApp.factory('userFactory', ['$resource', function($resource) {
 
     var usersResource = $resource('http://dev.sentinelb.com/api/v1/users/:userId',
                                         {userId: "@id" },

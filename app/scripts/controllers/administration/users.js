@@ -1,33 +1,28 @@
 'use strict';
 
-sentinelfApp.controller('UserCtrl', ['$scope', 'formService', 'AlertService', 'usersFactory', 'UsersGroupsService', function($scope, formService, AlertService, usersFactory, UsersGroupsService){
-    
+function change () {
+    alert('on change');
+}
+
+sentinelfApp.controller('UserCtrl', ['$scope', 'crud', function ($scope, crud) { 
+    var obj = "user";
+    $scope.userTemplate = 'views/administration/users/userView.html';
+
     $scope.editUser = function () {
-        $scope.savUser = angular.copy($scope.user);
-        // copy group to saved user
-        $scope.savUser.group = $scope.user.group;
-        $scope.editForm = true;
+        crud.edit($scope, obj);
     }
 
     $scope.saveEditUser = function () {
-        usersFactory.update($scope.user,
-            function (data) {
-                if (data) {
-                    $scope.users = data['users'];
-                    UsersGroupsService.merge($scope.users, $scope.groups);
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-            }
-        );
-        $scope.editForm = false;
+        $scope.user.groups = new Array();
+        angular.forEach($scope.groups, function (value, key) {
+            if (angular.element('#groupCheck' + $scope.user.id + value.id).prop('checked')) 
+                $scope.user.groups.push(value.id);
+        });
+        crud.save($scope, obj);
     };
 
     $scope.cancelEditUser = function () {
-        formService.copyProps($scope.savUser, $scope.user);
-        $scope.editForm = false;
+        crud.cancelEdit($scope, obj);   
     }
 
     /* Delete user button for each user */
@@ -49,3 +44,18 @@ sentinelfApp.controller('UserCtrl', ['$scope', 'formService', 'AlertService', 'u
         });
     }
 }])
+
+/*
+* create filter for property check
+*/
+sentinelfApp.filter('inGroupCheckmark', function(){
+    return function(input, user){
+        return user.groups.filter(function(value, index){return value === input.id}).length ? '\u2713' : '\u2717';
+    }
+});
+
+sentinelfApp.filter('inGroup', function(){
+    return function(input, user){
+        return user.groups.filter(function(value, index){return value === input.id}).length ? true : false;
+    }
+});

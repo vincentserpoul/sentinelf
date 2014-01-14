@@ -23,6 +23,10 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		'eventPeriod': {
 			'view': 'views/events/eventPeriods/eventPeriodView.html',
 			'edit': 'views/events/eventPeriods/eventPeriodEdit.html'
+		},
+		'user': {
+			'view': 'views/administration/users/userView.html',
+			'edit': 'views/administration/users/userEdit.html',
 		}
 	}
 	// obj labels for displaying in deleting confirmation message

@@ -1,0 +1,9 @@
+<td>{{user.email}}</td>
+<td class="row">
+	<div class="col-xs-4" ng-repeat="group in groups">
+		{{group | inGroupCheckmark:user}} {{group.name}}
+	</div>
+</td>
+<td>
+    <button type="button" class="btn btn-primary btn-sm" ng-click="editUser()"><i class="fa fa-edit fa-fw"></i> Edit</button>      
+</td>

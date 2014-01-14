@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('AdministrationCtrl', ['$scope', 'usersFactory', 'groupsFactory', 'permissionsFactory', 'UsersGroupsService', function($scope, usersFactory, groupsFactory, permissionsFactory, UsersGroupsService){
+sentinelfApp.controller('AdministrationCtrl', ['$scope', 'userFactory', 'groupsFactory', 'permissionsFactory', 'UsersGroupsService', function($scope, userFactory, groupsFactory, permissionsFactory, UsersGroupsService){
 	$scope.tabs = [
 		{
 			title: 'users',
@@ -24,14 +24,12 @@ sentinelfApp.controller('AdministrationCtrl', ['$scope', 'usersFactory', 'groups
 	init();
 
 	function init(){
-		usersFactory.get(function(data){
+		userFactory.get(function(data){
 			// get users' data
 			$scope.users = data['users'];
 			groupsFactory.get(function(data){
 				// get groups' data
 				$scope.groups = data['groups'];
-				// merge users and groups permissions
-				UsersGroupsService.merge($scope.users, $scope.groups);
 				// get permissions
 				permissionsFactory.get(function(data){
 					$scope.permissions = data['permissions'];

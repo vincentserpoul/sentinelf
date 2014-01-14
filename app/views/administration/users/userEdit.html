@@ -1,0 +1,10 @@
+<td>{{user.email}}</td>
+<td class="row">
+	<div class="col-xs-4" ng-repeat="group in groups">
+		<input type="checkbox" id="groupCheck{{user.id}}{{group.id}}" ng-checked="{{group | inGroup:user}}" /> {{group.name}} 
+	</div>
+</td>	
+<td class="btn-group-vertical btn-group-sm">
+	<button type="button" class="btn btn-success" ng-click="saveEditUser()"><i class="fa fa-save fa-fw"></i> Save</button>
+    <button type="button" class="btn btn-default" ng-click="cancelEditUser()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+</td>
