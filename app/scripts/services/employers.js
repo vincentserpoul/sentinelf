@@ -1,8 +1,8 @@
 'use strict';
 
-sentinelfApp.factory('employersFactory', ['$resource', function($resource) {
+sentinelfApp.factory('employersFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    var employersResource = $resource('http://dev.sentinelb.com/api/v1/employer/:employerId',
+    var employersResource = $resource( SENTINEL_API_END_POINT + '/employer/:employerId',
                                         {employerId: "@id"},
                                         {
                                         	"update": {method:"PUT", params:{employerId: "@id"}},

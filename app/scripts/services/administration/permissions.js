@@ -1,10 +1,10 @@
 'use strict';
 
-sentinelfApp.factory('permissionsFactory', ['$resource', function($resource) {
+sentinelfApp.factory('permissionsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    var permissionsResource = $resource('http://dev.sentinelb.com/api/v1/permissions/:permissionId',
+    var permissionsResource = $resource( SENTINEL_API_END_POINT + '/permissions/:permissionId',
                                         {permissionId: "@id" },
-                                        { 
+                                        {
                                         	"update": {method:"PUT", params:{permissionId: "@id"}},
                                         	"delete": {method:"DELETE", params:{permissionId: "@id"}}
                                         }

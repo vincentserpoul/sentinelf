@@ -1,8 +1,8 @@
 'use strict';
 
-sentinelfApp.factory('modelStaticLabelsFactory', ['$resource', function($resource) {
+sentinelfApp.factory('modelStaticLabelsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    var modelStaticLabelsResource = $resource('http://dev.sentinelb.com/api/v1/modelstaticlabels/:model',
+    var modelStaticLabelsResource = $resource( SENTINEL_API_END_POINT + '/modelstaticlabels/:model',
                     {
                         model: "@model"
                     },
