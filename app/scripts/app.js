@@ -10,13 +10,10 @@ var sentinelfApp = angular.module('sentinelfApp', [
     'http-auth-interceptor',
     'ngAnimate',
     'infinite-scroll',
-<<<<<<< HEAD
     'ui.utils',
     'ui.select2',
-    'ngTable'
-=======
+    'ngTable',
     'configuration'
->>>>>>> master
 ])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider){
         /* To enable CORS AJAX requests */

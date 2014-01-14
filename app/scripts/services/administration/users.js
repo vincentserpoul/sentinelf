@@ -1,10 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
-sentinelfApp.factory('userFactory', ['$resource', function($resource) {
-=======
-sentinelfApp.factory('usersFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
->>>>>>> master
+sentinelfApp.factory('userFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
     var usersResource = $resource( SENTINEL_API_END_POINT + '/users/:userId',
                                         {userId: "@id" },

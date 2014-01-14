@@ -1,10 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
-sentinelfApp.factory('eventFactory', ['$resource', function($resource) {
-=======
-sentinelfApp.factory('eventsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
->>>>>>> master
+sentinelfApp.factory('eventFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
     return $resource( SENTINEL_API_END_POINT + '/globalevent/:eventId',
                 {eventId: "@id" },
