@@ -1,11 +1,11 @@
 'use strict';
 
-sentinelfApp.factory('AuthenticationService', ['$http', function($http){
+sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT', function($http, SENTINEL_API_END_POINT){
 
 	var currentUser = {email: '', userRole: {title: 'public', permissions: ['public']}};
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://dev.sentinelb.com/auth/state', false);
+	xhr.open('GET', SENTINEL_API_END_POINT + '/auth/state', false);
 	xhr.useXDomain = true;
 	xhr.withCredentials = true;
 	xhr.send(null);
@@ -33,7 +33,7 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 		},
 		register: function(user, success, error) {
 			var login =  $http({
-				url: 'http://dev.sentinelb.com/auth/register',
+				url: SENTINEL_API_END_POINT + '/auth/register',
 				method: "POST",
 				data: user,
 				headers: {
@@ -50,7 +50,7 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 		},
 		login: function(user, success, error) {
 			var login =  $http({
-				url: 'http://dev.sentinelb.com/auth/login',
+				url: SENTINEL_API_END_POINT + '/auth/login',
 				method: "POST",
 				data: user,
 				headers: {
@@ -73,7 +73,7 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 		},
 		logout: function(success, error) {
 			var logout = $http({
-				url: 'http://dev.sentinelb.com/auth/logout',
+				url: SENTINEL_API_END_POINT + '/auth/logout',
 				method: "GET",
 				withCredentials: true
 			});
@@ -86,7 +86,7 @@ sentinelfApp.factory('AuthenticationService', ['$http', function($http){
 		},
 		token: function() {
 			var token = $http({
-				url: 'http://dev.sentinelb.com/auth/token',
+				url: SENTINEL_API_END_POINT + '/auth/token',
 				method: "GET",
 				withCredentials: true
 			});

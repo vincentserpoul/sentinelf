@@ -1,8 +1,8 @@
 'use strict';
 
-sentinelfApp.factory('eventsFactory', ['$resource', function($resource) {
+sentinelfApp.factory('eventsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/globalevent/:eventId',
+    return $resource( SENTINEL_API_END_POINT + '/globalevent/:eventId',
                 {eventId: "@id" },
                 {"update": {method:"PUT", params:{eventId: "@id"}} },
                 {"delete": {method:"DELETE", params:{eventId: "@id"}} }
@@ -11,9 +11,9 @@ sentinelfApp.factory('eventsFactory', ['$resource', function($resource) {
 }]);
 
 
-sentinelfApp.factory('eventPeriodFactory', ['$resource', function ($resource) {
+sentinelfApp.factory('eventPeriodFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/globalevent_period/:eventPeriodId',
+    return $resource( SENTINEL_API_END_POINT + '/globalevent_period/:eventPeriodId',
                 {eventPeriodId: "@id" },
                 {"update": {method:"PUT", params:{eventPeriodId: "@id"}} },
                 {"delete": {method:"DELETE", params:{eventPeriodId: "@id"}} }
@@ -21,9 +21,9 @@ sentinelfApp.factory('eventPeriodFactory', ['$resource', function ($resource) {
 
 }]);
 
-sentinelfApp.factory('eventPeriodEmployeeFactory', ['$resource', function ($resource) {
+sentinelfApp.factory('eventPeriodEmployeeFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/globalevent_period_employee/:eventPeriodEmployeeId',
+    return $resource( SENTINEL_API_END_POINT + '/globalevent_period_employee/:eventPeriodEmployeeId',
                 {eventPeriodEmployeeId: "@id" },
                 {"update": {method:"PUT", params:{eventPeriodEmployeeId: "@id"}} },
                 {"delete": {method:"DELETE", params:{eventPeriodEmployeeId: "@id"}} }
@@ -31,13 +31,14 @@ sentinelfApp.factory('eventPeriodEmployeeFactory', ['$resource', function ($reso
 
 }])
 
-sentinelfApp.factory('wholeEventFactory', ['$resource', function ($resource) {
+sentinelfApp.factory('wholeEventFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/globalevent_period_employee/assign_whole_event');
+    return $resource( SENTINEL_API_END_POINT + '/globalevent_period_employee/assign_whole_event');
 
 }])
 
-sentinelfApp.factory('eventPeriodsFactory', ['$resource', function ($resource) {
-    return $resource('http://dev.sentinelb.com/api/v1/globalevent/globalevent_periods/:globalevent_id', 
+sentinelfApp.factory('eventPeriodsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
+
+    return $resource( SENTINEL_API_END_POINT + '/globalevent/globalevent_periods/:globalevent_id',
                     {globalevent_id: '@id'},{"get": {method:"GET", cache: true}});
 }])

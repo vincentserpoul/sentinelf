@@ -1,8 +1,8 @@
 'use strict';
 
-sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
+sentinelfApp.factory('employeesFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/:listFilter:employeeId/:listFilterParams/',
+    return $resource( SENTINEL_API_END_POINT + '/employee/:listFilter:employeeId/:listFilterParams/',
                     {
                         employeeId: "@employeeId",
                         listFilter: "@listFilter",
@@ -23,35 +23,35 @@ sentinelfApp.factory('employeesFactory', ['$resource', function($resource) {
                 	});
 }]);
 
-sentinelfApp.factory('employeesGlobaleventPeriodFactory', ['$resource', function($resource) {
+sentinelfApp.factory('employeesGlobaleventPeriodFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/:employeeId/globalevent_period',
+    return $resource( SENTINEL_API_END_POINT + '/employee/:employeeId/globalevent_period',
                     {employeeId: "@id"});
 }]);
 
-sentinelfApp.factory('employeesGlobaleventPeriodUnpaidFactory', ['$resource', function($resource) {
+sentinelfApp.factory('employeesGlobaleventPeriodUnpaidFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/:employeeId/unpaid_globalevent_period',
+    return $resource( SENTINEL_API_END_POINT + '/employee/:employeeId/unpaid_globalevent_period',
                     {employeeId: "@id"});
 }]);
 
-sentinelfApp.factory('employeesEventPeriodsFactory', ['$resource', function ($resource) {
+sentinelfApp.factory('employeesEventPeriodsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/all_possible_globalevent_period/:event_id',
+    return $resource( SENTINEL_API_END_POINT + '/employee/all_possible_globalevent_period/:event_id',
                     {event_id: "@id"});
 
 }]);
 
-sentinelfApp.factory('employeeEventPeriodsFactory', ['$resource', function ($resource) {
+sentinelfApp.factory('employeeEventPeriodsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/:employee_id/possible_globalevent_period/:event_id',
+    return $resource( SENTINEL_API_END_POINT + '/employee/:employee_id/possible_globalevent_period/:event_id',
                     {employee_id: "@id", event_id: "@id"});
 
 }]);
 
-sentinelfApp.factory('assignedEmployeesFactory', ['$resource', function ($resource) {
+sentinelfApp.factory('assignedEmployeesFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource('http://dev.sentinelb.com/api/v1/employee/assigned_employees/:globalevent_period_id',
+    return $resource( SENTINEL_API_END_POINT + '/employee/assigned_employees/:globalevent_period_id',
                     {globalevent_period_id: "@id"});
 
 }]);

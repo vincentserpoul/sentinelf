@@ -9,7 +9,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
     'angularTreeview',
     'http-auth-interceptor',
     'ngAnimate',
-    'infinite-scroll'
+    'infinite-scroll',
+    'configuration'
 ])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider){
         /* To enable CORS AJAX requests */
@@ -82,8 +83,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
         $routeProvider.otherwise({redirectTo:'/404', access: []});
 
         /* To enable clean routing without # */
-        //$locationProvider.html5Mode(true);
         $locationProvider.html5Mode(false);
+        //$locationProvider.html5Mode(false);
 
         var interceptor = ['$location', '$q', function($location, $q) {
             function success(response) {
@@ -120,8 +121,5 @@ var sentinelfApp = angular.module('sentinelfApp', [
             }
         }
     });
-
-    /* backend url API */
-    $rootScope.backendApiUrldev = 'http://dev.sentinelb.com/api/v1/';
 
 }]);
