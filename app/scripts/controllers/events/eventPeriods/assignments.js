@@ -15,7 +15,7 @@ sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$filter', 'fo
         for (var i in $scope.assignedEmployeesLazyloadFactory.assigned_employees) {
             if ($scope.assignedEmployeesLazyloadFactory.assigned_employees[i].isUnassigned) {
                 var index = i;
-                eventPeriodEmployeeFactory.delete({eventPeriodEmployeeId: $scope.assignedEmployeesLazyloadFactory.assigned_employees[i].globalevent_period_employee_id}, function (data) {
+                eventPeriodEmployeeFactory.delete({eventPeriodEmployeeId: 0, employee_id: $scope.assignedEmployeesLazyloadFactory.assigned_employees[i].id, event_period_id: $scope.eventPeriod.id}, function (data) {
                     unassigned_employee_ids.push(index);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }, function (error) {

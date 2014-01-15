@@ -25,7 +25,7 @@ sentinelfApp.factory('assignedEmployeesLazyloadFactory', ['assignedEmployeesFact
 
         /* Get the employee list, page by page */
         assignedEmployeesFactory.get({globalevent_period_id: this.event_period_id, page:this.nextpage}, function(data){
-            this.assigned_employees = this.assigned_employees.concat(data['Employees']);
+            this.assigned_employees = this.assigned_employees.concat(data['employees']);
 
             /* update the current page */
             if(data['current_page'] < data['last_page']){

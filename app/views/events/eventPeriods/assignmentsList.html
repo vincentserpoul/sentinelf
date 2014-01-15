@@ -5,15 +5,8 @@
                 <th ng-show="unassignForm"></th>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Sex</th>
-                <th>Country</th>
-                <th>D.O.B</th>
-                <th>Mobile</th>
-                <th>School</th>
-                <th>Joined</th>
-                <th>Race</th>
-                <th>Status</th>
-                <th>Work pass</th>
+                <th>IC</th>
+                <th>Age</th>
             </tr>
         </thead>
         <tbody>
@@ -24,16 +17,9 @@
             <tr ng-repeat="assigned_employee in assignedEmployeesLazyloadFactory.assigned_employees" class="repeat-animation">
                 <td ng-show="unassignForm"><input type="checkbox" ng-model="assigned_employee.isUnassigned"></td>
                 <td>{{assigned_employee.id}}</td>
-                <td>{{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
-                <td></td>
-                <td></td>
-                <td>{{assigned_employee.date_of_birth}}</td>
-                <td>{{assigned_employee.mobile_phone_number}}</td>
-                <td>{{assigned_employee.school}}</td>
-                <td>{{assigned_employee.join_date}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{assigned_employee.title_label}} {{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
+                <td>{{assigned_employee.identity_doc_number}}</td>
+                <td>{{assigned_employee.age}}</td>
             </tr>
         </tbody>
     </table>
