@@ -27,12 +27,17 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		'user': {
 			'view': 'views/administration/users/userView.html',
 			'edit': 'views/administration/users/userEdit.html',
+		},
+		'group': {
+			'view': 'views/administration/groups/groupView.html',
+			'edit': 'views/administration/groups/groupEdit.html',	
 		}
 	}
 	// obj labels for displaying in deleting confirmation message
 	var objLabels = {
 		'event': 'label',
-		'eventPeriod': 'id'
+		'eventPeriod': 'id',
+		'group': 'name'
 	}
 
 	return {
@@ -77,7 +82,7 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		},
 
 		// call this function when users want to delete obj
-		delete: function ($scope, obj) {
+		delete: function ($scope, obj, notLazyLoad) {
 			// load a modal asking users to confirm the deletion
 			var modalInstance = formService.popup(obj, $scope[obj][objLabels[obj]]);
 			var params = {}; params[obj + 'Id'] = $scope[obj]['id'];
@@ -87,7 +92,10 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 	            $injector.get(obj + 'Factory').delete(params,
 	                function (data) {
 	                	// find obj in the obj list and remove it
-	                    $scope[obj + 'sLazyloadFactory'][obj + 's'].splice(formService.findInArray($scope[obj + 'sLazyloadFactory'][obj + 's'], $scope[obj]['id']), 1);
+	                	if (notLazyLoad)
+	                    	$scope[obj + 's'].splice(formService.findInArray($scope[obj + 's'], $scope[obj]['id']), 1);
+	                    else 
+	                    	$scope[obj + 'sLazyloadFactory'][obj + 's'].splice(formService.findInArray($scope[obj + 'sLazyloadFactory'][obj + 's'], $scope[obj]['id']), 1);
 	                    // show success message
 	                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
 	                }, function (error) {
@@ -107,12 +115,15 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		}, 
 
 		// call this function when users confirm the new obj
-		create: function ($scope, obj) {
+		create: function ($scope, obj, notLazyLoad) {
 			/* Call the factory to update the new event in db */
 	        $injector.get(obj + 'Factory').save($scope['new_' + obj],
 	            function (data) {
 	            	// add obj into obj list
-	                $scope[obj + 'sLazyloadFactory'][obj + 's'].unshift(data[obj]);
+	            	if (notLazyLoad)
+	                	$scope[obj + 's'].unshift(data[obj]);	                	
+	                else
+	                	$scope[obj + 'sLazyloadFactory'][obj + 's'].unshift(data[obj]);
 	                // show success message
 	                AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
 	            }, function (error) {

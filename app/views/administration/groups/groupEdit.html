@@ -1,0 +1,10 @@
+<td><input type="text" class="form-control input-sm" ng-model="group.name" /></td>
+<td>
+	<div ng-repeat="permission in group.group_permissions">
+        <input type="checkbox" ng-model="permission.isPermitted" /> {{permission.name}}
+	</div>
+</td>
+<td class="btn-group-vertical btn-group-sm">
+    <button type="button" class="btn btn-success" ng-click="saveGroup()"><i class="fa fa-save fa-fw"></i> Save</button>
+    <button type="button" class="btn btn-default" ng-click="cancelEditGroup()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+</td>

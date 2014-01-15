@@ -1,93 +1,60 @@
 'use strict';
 
-sentinelfApp.controller('GroupsCtrl', ['$scope', 'groupsFactory', 'UsersGroupsService', 'AlertService', function ($scope, groupsFactory, UsersGroupsService, AlertService) {
+sentinelfApp.controller('GroupsCtrl', ['$scope', 'crud', 'groupFactory', 'UsersGroupsService', 'AlertService', function ($scope, crud, groupFactory, UsersGroupsService, AlertService) {
+
+    var obj = "group";
+    var notLazyLoad = true;
+    var newGroupPermissions = angular.copy($scope.groupPermissions);
+    var preselectedValues = {
+            'name': 'new group name',
+            'group_permissions': newGroupPermissions
+        };
+
+    $scope.groupTemplate = 'views/administration/groups/groupView.html';
 
     $scope.newGroup = function () {
-        var newGroupPermissions = angular.copy($scope.groupPermissions);
-
-        $scope.newGroups = [{
-            'name': 'new group name',
-            'permissions': newGroupPermissions
-        }];
-
-        $('#collapseNewGroup').collapse('show');
+        crud.new($scope, obj, preselectedValues);
     }
 
     $scope.saveNewGroup = function () {
-        /* Call the factory to update the new group in db */
-        groupsFactory.save($scope.newGroups[0],
-            function (data) {
-                if (data) {
-                    $scope.groups = data['groups'];
-                    // merge users and groups permissions
-                    UsersGroupsService.merge($scope.users, $scope.groups);
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-            }
-        );
-
-        $('#collapseNewGroup').collapse('hide');
+        crud.create($scope, obj, notLazyLoad);
     }
 
     $scope.cancelNewGroup = function () {
-        $('#collapseNewGroup').collapse('hide');
+        crud.cancelNew($scope, obj);
     }
 
 }])
 
-sentinelfApp.controller('GroupCtrl', ['$scope', 'formService', 'AlertService', 'groupsFactory', 'UsersGroupsService', function ($scope, formService, AlertService, groupsFactory, UsersGroupsService) {
+sentinelfApp.controller('GroupCtrl', ['$scope', 'crud', 'formService', 'AlertService', 'groupFactory', 'UsersGroupsService', function ($scope, crud, formService, AlertService, groupFactory, UsersGroupsService) {
 
-    $scope.editForm = false;
+    var obj = "group";
+    var notLazyLoad = true;
 
     $scope.editGroup = function () {
-        // Save employer in case of cancel, to rollback to previous values
-        $scope.savGroup = angular.copy($scope.group);
-        $scope.editForm = true;
+        crud.edit($scope, obj);
     }
 
     $scope.saveGroup = function () {
-        /* Call the factory to update the new employer in db */
-        groupsFactory.update($scope.group,
-            function (data) {
-                if (data) {
-                    // when success, reset the savEmployer
-                    $scope.savGroup = null;
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-            }
-        );
-        $scope.editForm = false;
+        /* Call the factory to update the group in db */
+        crud.save($scope, obj);
     }
 
     $scope.cancelEditGroup = function () {
-        // Reset the data to what it was before the edit
-        $scope.group = $scope.savGroup;
-        // Deactivate the edit
-        $scope.editForm = false;
+        crud.cancelEdit($scope, obj);
     }
 
     /* Delete group button for each group */
     $scope.deleteGroup = function () {
-
-        var modalInstance = formService.popup('group', $scope.group.name);
-
-        modalInstance.result.then(function(){
-            groupsFactory.delete({groupId:$scope.group.id},
-                function (data) {
-                    $scope.groups.splice(formService.findInArray($scope.groups, $scope.group.id), 1);
-                    if (data)
-                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }, function (error) {
-                    if (error['data'])
-                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-                }
-            );
-        });
+        crud.delete($scope, obj, notLazyLoad);
     }
 }]);
+
+/*
+* create filter for property check
+*/
+sentinelfApp.filter('checkmark', function(){
+    return function(input){
+        return input ? '\u2713' : '\u2717';
+    }
+});

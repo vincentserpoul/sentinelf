@@ -13,19 +13,17 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>Country</th>
-                        <th>DOB</th>
-                        <th>Phone</th>
+                        <th>IC</th>
+                        <th>Age</th>
                         <th>Assign to</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="employee in employeesSearchLazyloadFactory.employees">
                         <td>{{employee.id}}</td>
-                        <td>{{employee.first_name}} {{employee.last_name}}</td>
-                        <td>{{employee.country_code}}</td>
-                        <td>{{employee.date_of_birth}}</td>
-                        <td>{{employee.mobile_phone_number}}</td>
+                        <td>{{employee.title_label}} {{employee.first_name}} {{employee.last_name}}</td>
+                        <td>{{employee.identity_doc_number}}</td>
+                        <td>{{employee.age}}</td>
                         <td ng-controller="EmployeeEventAssignmentCtrl">
                             <ul class="list-unstyled">
                                 <li ng-repeat="possible_globalevent_period in employee.possible_globalevent_periods" class="repeat-animation"><a class="btn btn-link btn-sm" ng-click="assign(possible_globalevent_period.id)">{{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}</a>

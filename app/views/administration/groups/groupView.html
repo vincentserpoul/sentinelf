@@ -1,0 +1,10 @@
+<td>{{group.name}}</td>
+<td>
+	<div ng-repeat="permission in group.group_permissions">
+		{{permission.isPermitted | checkmark}} {{permission.name}}
+	</div>
+</td>
+<td class="btn-group-vertical btn-group-sm">
+    <button type="button" class="btn btn-primary" ng-click="editGroup()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+    <button type="button" class="btn btn-danger" ng-click="deleteGroup()"><i class="fa fa-edit fa-fw"></i> Delete</button>   
+</td>

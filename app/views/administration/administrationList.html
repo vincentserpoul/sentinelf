@@ -8,18 +8,24 @@
 	        {{alert.message}}
 	    </div>
 	</div>
-	<tabset>
-		<tab ng-repeat="tab in tabs" heading="{{tab.heading}}" select="select(tab)"></tab>
-	</tabset>
-	<div ng-switch on="selection">
-		<div ng-switch-when="users">
-			<div ng-include src="'views/administration/users/usersList.html'"></div>
+	<div class="row">
+		<div class="col-md-2">
+			<tabset vertical="true" type="'pills'">
+				<tab ng-repeat="nav in navs" heading="{{nav.heading}}" select="select(nav)"></tab>
+			</tabset>
 		</div>
-		<div ng-switch-when="groups">
-			<div ng-include src="'views/administration/groups/groupsList.html'"></div>
-		</div>
-		<div ng-switch-when="permissions">
-			<div ng-include src="'views/administration/permissions/permissionsList.html'"></div>
+		<div class="col-md-10">
+			<div ng-switch on="selection">
+				<div ng-switch-when="users">
+					<div ng-include src="'views/administration/users/usersList.html'"></div>
+				</div>
+				<div ng-switch-when="groups">
+					<div ng-include src="'views/administration/groups/groupsList.html'"></div>
+				</div>
+				<div ng-switch-when="permissions">
+					<div ng-include src="'views/administration/permissions/permissionsList.html'"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

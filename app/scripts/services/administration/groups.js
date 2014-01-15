@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.factory('groupsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
+sentinelfApp.factory('groupFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
     var groupsResource = $resource( SENTINEL_API_END_POINT + '/groups/:groupId',
                                         {groupId: "@id" },
