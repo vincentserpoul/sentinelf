@@ -11,103 +11,103 @@ var sentinelfApp = angular.module('sentinelfApp', [
     'ngAnimate',
     'infinite-scroll',
     'configuration'
-])
+    ])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider){
-        /* To enable CORS AJAX requests */
-        $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://dev.sentinelb.com/**']);
-        $httpProvider.defaults.useXDomain = true;
-        $httpProvider.defaults.withCredentials = true;
-        $httpProvider.defaults.xsrfCookieName = 'laravel_session';
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    /* To enable CORS AJAX requests */
+    $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://dev.sentinelb.com/**']);
+    $httpProvider.defaults.useXDomain = true;
+    $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.xsrfCookieName = 'laravel_session';
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
-        $routeProvider.when('/',
-            {
-                templateUrl:    '/views/main.html',
-                controller:     'MainCtrl',
-                access:         ['user']
-            })
-        .when('/login',
-            {
-                templateUrl:    '/views/login.html',
-                controller:     'LoginCtrl',
-                access:         ['public']
-            })
-        .when('/register',
-            {
-                templateUrl:    '/views/register.html',
-                controller:     'RegisterCtrl',
-                access:         ['public']
-            })
-        .when('/employees',
-            {
-                templateUrl:    '/views/employees/employeesList.html',
-                controller:     'EmployeesListCtrl',
-                access:         ['user']
-            })
-        .when('/employers',
-            {
-                templateUrl:    '/views/employers/employersList.html',
-                controller:     'EmployersCtrl',
-                access:         ['user']
-            })
-        .when('/events',
-            {
-                templateUrl:    '/views/events/eventsList.html',
-                controller:     'EventsCtrl',
-                access:         ['user']
-            })
-        .when('/assignments',
-            {
-                templateUrl:    '/views/assignments/assign.html',
-                controller:     'AssignmentsCtrl',
-                access:         ['user']
-            })
-        .when('/administration',
-            {
-                templateUrl:    'views/administration/administrationList.html',
-                controller:     'AdministrationCtrl',
-                access:         ['admin']
-            })
-        .when('/test',
-            {
-                templateUrl:    'views/test.html',
-                controller:     'EmployersCtrl',
-                access:         ['admin']
-            })
-        .when('/404',
-            {
-                templateUrl:    '/views/404.html',
-                access:         []
-            });
+    $routeProvider.when('/',
+        {
+            templateUrl:    '/views/main.html',
+            controller:     'MainCtrl',
+            access:         ['user']
+        })
+    .when('/login',
+        {
+            templateUrl:    '/views/login.html',
+            controller:     'LoginCtrl',
+            access:         ['public']
+        })
+    .when('/register',
+        {
+            templateUrl:    '/views/register.html',
+            controller:     'RegisterCtrl',
+            access:         ['public']
+        })
+    .when('/employees',
+        {
+            templateUrl:    '/views/employees/employeesList.html',
+            controller:     'EmployeesListCtrl',
+            access:         ['user']
+        })
+    .when('/employers',
+        {
+            templateUrl:    '/views/employers/employersList.html',
+            controller:     'EmployersCtrl',
+            access:         ['user']
+        })
+    .when('/events',
+        {
+            templateUrl:    '/views/events/eventsList.html',
+            controller:     'EventsCtrl',
+            access:         ['user']
+        })
+    .when('/assignments',
+        {
+            templateUrl:    '/views/assignments/assign.html',
+            controller:     'AssignmentsCtrl',
+            access:         ['user']
+        })
+    .when('/administration',
+        {
+            templateUrl:    'views/administration/administrationList.html',
+            controller:     'AdministrationCtrl',
+            access:         ['admin']
+        })
+    .when('/test',
+        {
+            templateUrl:    'views/test.html',
+            controller:     'EmployersCtrl',
+            access:         ['admin']
+        })
+    .when('/404',
+        {
+            templateUrl:    '/views/404.html',
+            access:         []
+        });
 
-        $routeProvider.otherwise({redirectTo:'/404', access: []});
+    $routeProvider.otherwise({redirectTo:'/404', access: []});
 
-        /* To enable clean routing without # */
-        $locationProvider.html5Mode(false);
-        //$locationProvider.html5Mode(false);
+    /* To enable clean routing without # */
+    $locationProvider.html5Mode(false);
+    //$locationProvider.html5Mode(false);
 
-        var interceptor = ['$location', '$q', function($location, $q) {
-            function success(response) {
-                return response;
+    var interceptor = ['$location', '$q', function($location, $q) {
+        function success(response) {
+            return response;
+        }
+
+        function error(response) {
+
+            if(response.status === 401) {
+                $location.path('/#/login');
+                return $q.reject(response);
             }
-
-            function error(response) {
-
-                if(response.status === 401) {
-                    $location.path('/#/login');
-                    return $q.reject(response);
-                }
-                else {
-                    return $q.reject(response);
-                }
+            else {
+                return $q.reject(response);
             }
+        }
 
-            return function(promise) {
-                return promise.then(success, error);
-            }
-        }];
+        return function(promise) {
+            return promise.then(success, error);
+        }
+    }];
 
-        $httpProvider.responseInterceptors.push(interceptor);
+    $httpProvider.responseInterceptors.push(interceptor);
 }])
 .run(['$rootScope', '$location', 'AuthenticationService', 'AlertService', function ($rootScope, $location, AuthenticationService, AlertService) {
 
