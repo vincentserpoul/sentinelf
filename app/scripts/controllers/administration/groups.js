@@ -10,7 +10,9 @@ sentinelfApp.controller('GroupsCtrl', ['$scope', 'crud', 'groupFactory', 'UsersG
             'group_permissions': newGroupPermissions
         };
 
-    $scope.groupTemplate = 'views/administration/groups/groupView.html';
+    $scope.viewTemplate = 'views/administration/groups/groupView.html';
+    $scope.editTemplate = 'views/administration/groups/groupEdit.html';
+    $scope.groupTemplate = $scope.viewTemplate;
 
     $scope.newGroup = function () {
         crud.new($scope, obj, preselectedValues);
@@ -46,7 +48,7 @@ sentinelfApp.controller('GroupCtrl', ['$scope', 'crud', 'formService', 'AlertSer
 
     /* Delete group button for each group */
     $scope.deleteGroup = function () {
-        crud.delete($scope, obj, notLazyLoad);
+        crud.delete($scope, obj, 'name', notLazyLoad);
     }
 }]);
 

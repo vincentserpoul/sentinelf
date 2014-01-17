@@ -2,7 +2,9 @@
 
 sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory', 'employersFactory', 'departmentsFactory', function ($scope, crud, eventsLazyloadFactory, employersFactory, departmentsFactory){
 
-    $scope.eventTemplate = 'views/events/eventView.html';
+    $scope.viewTemplate = 'views/events/eventView.html';
+    $scope.editTemplate = 'views/events/eventEdit.html';
+    $scope.eventTemplate = $scope.viewTemplate;
     /* Load the progressive service to load list of employees */
     $scope.eventsLazyloadFactory = new eventsLazyloadFactory();
     /* First launch */
@@ -10,15 +12,17 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
     $scope.showNew = false;
 
     $scope.loadEmployersAndDepartments = function () {
-        //Fetch all events
-        employersFactory.get(function (data) {
-            $scope.employers = data['employers'];
-        });
+        if (!($scope.employers && $scope.employer_departments)) {
+            //Fetch all events
+            employersFactory.get(function (data) {
+                $scope.employers = data['employers'];
+            });
 
-        //Fetch all departments
-        departmentsFactory.get(function (data) {
-            $scope.employer_departments = data['EmployerDepartments'];
-        });
+            //Fetch all departments
+            departmentsFactory.get(function (data) {
+                $scope.employer_departments = data['EmployerDepartments'];
+            });
+        }
     }
 
     var obj = 'event';
@@ -58,7 +62,7 @@ sentinelfApp.controller("EventCtrl", ['$scope', 'crud', '$modal', 'eventPeriodsL
     var obj = 'event';
 
     $scope.editEvent = function () {
-        crud.edit($scope, obj);
+        crud.edit($scope, obj, $scope.loadEmployersAndDepartments);
     }
 
     $scope.saveEvent = function () {
@@ -71,7 +75,7 @@ sentinelfApp.controller("EventCtrl", ['$scope', 'crud', '$modal', 'eventPeriodsL
 
     /* Delete employee button for each employee */
     $scope.deleteEvent = function () {
-        crud.delete($scope, obj);
+        crud.delete($scope, obj, 'label');
     }
 
     $scope.loadEventPeriods = function () {

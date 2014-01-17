@@ -12,12 +12,9 @@
     "angular-route": "1.*",
     "angular-animate": "1.*",
     "angular-bootstrap": "~0.*",
-    "angular-ui-utils": "~0.*",
     "jquery": "~2.0.3",
     "font-awesome": "~4.*.*",
     "ngInfiniteScroll": "1.*",
-    "select2": "~3.4.*",
-    "ng-table": "~0.3.*",
     "angular-ui-select2": "~0.*"
   },
   "devDependencies": {

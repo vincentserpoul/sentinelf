@@ -1,52 +1,13 @@
 'use strict';
 
 sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
-	// call this function to get iso labels or static labels for displaying if not 
-	// being set
-	function loadResources ($scope, obj) {
-		switch (obj) {
-			case 'event':
-				if (!($scope.employers && $scope.employer_departments))
-					$scope.loadEmployersAndDepartments(); 
-				break;
-			default:
-				break;
-		}
-	}
-	// templates including one template for viewing and one template for editing
-	// for each obj
-	var objTemplates = {
-		'event': {
-			'view': 'views/events/eventView.html',
-			'edit': 'views/events/eventEdit.html'
-		},
-		'eventPeriod': {
-			'view': 'views/events/eventPeriods/eventPeriodView.html',
-			'edit': 'views/events/eventPeriods/eventPeriodEdit.html'
-		},
-		'user': {
-			'view': 'views/administration/users/userView.html',
-			'edit': 'views/administration/users/userEdit.html',
-		},
-		'group': {
-			'view': 'views/administration/groups/groupView.html',
-			'edit': 'views/administration/groups/groupEdit.html',	
-		}
-	}
-	// obj labels for displaying in deleting confirmation message
-	var objLabels = {
-		'event': 'label',
-		'eventPeriod': 'id',
-		'group': 'name'
-	}
-
 	return {
 		// call this function when users press editing button 
-		edit: function ($scope, obj) {
+		edit: function ($scope, obj, loadResourcesFn) {
 			// load necessary resources for selection
-			loadResources($scope, obj);
+			if (loadResourcesFn) loadResourcesFn();
 			// load editing template
-		    $scope[obj + 'Template'] = objTemplates[obj]['edit'];
+		    $scope[obj + 'Template'] = $scope.editTemplate;
 		    // create obj clone
 		    $scope['sav_' + obj] = {};
 		    formService.copyProps($scope[obj], $scope['sav_' + obj]);
@@ -70,7 +31,7 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 	            }
 	        );
 	        // load back view template
-	        $scope[obj + 'Template'] = objTemplates[obj]['view'];
+	        $scope[obj + 'Template'] = $scope.viewTemplate;
 		}, 
 
 		// call this function when users dont want to edit obj
@@ -78,13 +39,13 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 			// Reset the data to what it was before the edit
         	formService.copyProps($scope['sav_' + obj], $scope[obj]);
 			// load back view template
-	        $scope[obj + 'Template'] = objTemplates[obj]['view'];
+	        $scope[obj + 'Template'] = $scope.viewTemplate;
 		},
 
 		// call this function when users want to delete obj
-		delete: function ($scope, obj, notLazyLoad) {
+		delete: function ($scope, obj, objLabel, notLazyLoad) {
 			// load a modal asking users to confirm the deletion
-			var modalInstance = formService.popup(obj, $scope[obj][objLabels[obj]]);
+			var modalInstance = formService.popup(obj, $scope[obj][objLabel]);
 			var params = {}; params[obj + 'Id'] = $scope[obj]['id'];
 
 			// if users confirm deletion, remove the obj from the obj list

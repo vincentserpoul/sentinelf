@@ -8,7 +8,8 @@ sentinelfApp.factory('modelIsoLabelsFactory', ['$resource', 'SENTINEL_API_END_PO
                     },
                     {
                         "get": {
-                            method:"GET"
+                            method:"GET", 
+                            cache: true
                         }
                     });
 

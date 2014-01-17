@@ -8,7 +8,9 @@ sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'crud', 'formService', 'A
         "end_datetime": "2013-01-01 00:00:10",
         "number_of_employee_needed": 1};
     $scope.showNew = false;
-    $scope.eventPeriodTemplate = "views/events/eventPeriods/eventPeriodView.html";
+    $scope.viewTemplate = "views/events/eventPeriods/eventPeriodView.html";
+    $scope.editTemplate = "views/events/eventPeriods/eventPeriodEdit.html";
+    $scope.eventPeriodTemplate = $scope.viewTemplate;
 
     $scope.newEventPeriod = function () {
         crud.new($scope, obj, preselectedValues);
@@ -40,7 +42,7 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'crud', 'assignedEmployees
 
     /* Delete employee button for each employee */
     $scope.deleteEventPeriod = function () {
-        crud.delete($scope, obj);
+        crud.delete($scope, obj, 'id');
     }
 
     // load assigned employees for event period

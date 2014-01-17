@@ -6,7 +6,9 @@ function change () {
 
 sentinelfApp.controller('UserCtrl', ['$scope', 'crud', function ($scope, crud) { 
     var obj = "user";
-    $scope.userTemplate = 'views/administration/users/userView.html';
+    $scope.viewTemplate = 'views/administration/users/userView.html';
+    $scope.editTemplate = 'views/administration/users/userEdit.html';
+    $scope.userTemplate = $scope.viewTemplate;
 
     $scope.editUser = function () {
         crud.edit($scope, obj);
@@ -23,25 +25,6 @@ sentinelfApp.controller('UserCtrl', ['$scope', 'crud', function ($scope, crud) {
 
     $scope.cancelEditUser = function () {
         crud.cancelEdit($scope, obj);   
-    }
-
-    /* Delete user button for each user */
-    $scope.deleteUser = function(){
-
-        var modalInstance = formService.popup('user', $scope.user.email);
-
-        modalInstance.result.then(function(){
-            usersFactory.delete({userId:$scope.user.id},
-                function (data) {
-                    $scope.users.splice(formService.findInArray($scope.users, $scope.user.id), 1);
-                    if (data)
-                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }, function (error) {
-                    if (error['data'])
-                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-                }
-            );
-        });
     }
 }])
 
