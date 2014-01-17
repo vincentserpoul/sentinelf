@@ -20,7 +20,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Employer</th>
+                            <th>Client</th>
                             <th>Department</th>
                             <th>Date</th>
                             <th>Actions</th>
@@ -32,15 +32,15 @@
                                 <input class="form-control input-sm" ng-model="new_event.label" />
                             </td>
                             <td>
-                                <select ui-select2 ng-model="new_event.employer_id" data-placeholder="Pick an employer" ng-change="updateEmployer()" ng-required="true">
+                                <select ui-select2 ng-model="new_event.client_id" data-placeholder="Pick an client" ng-change="updateClient()" ng-required="true">
                                     <option value=""></option>
-                                    <option ng-repeat="employer in employers" value="{{employer.id}}">{{employer.name}}</option>
+                                    <option ng-repeat="client in clients" value="{{client.id}}">{{client.name}}</option>
                                 </select>
                             </td>
                             <td>
-                                <select ui-select2 ng-model="new_event.employer_department_id" data-placeholder="Pick a department" ng-change="updateDept()" ng-required="true">
+                                <select ui-select2 ng-model="new_event.client_department_id" data-placeholder="Pick a department" ng-change="updateDept()" ng-required="true">
                                     <option value=""></option>
-                                    <option ng-repeat="employer_department in employer_departments | filter: {employer_id: new_event.employer_id}" value="{{employer_department.id}}">{{employer_department.label}}</option>    
+                                    <option ng-repeat="client_department in client_departments | filter: {client_id: new_event.client_id}" value="{{client_department.id}}">{{client_department.label}}</option>    
                                 </select>
                             </td>
                             <td>
@@ -63,7 +63,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Employer</th>
+                <th>Client</th>
                 <th>Department</th>
                 <th>Date</th>
                 <th>Actions</th>

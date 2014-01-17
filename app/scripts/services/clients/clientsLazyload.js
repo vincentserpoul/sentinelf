@@ -1,33 +1,33 @@
 'use strict';
 
-/* Lazy loading of the employer list */
-sentinelfApp.factory('employersLazyloadFactory', ['employersFactory', function(employersFactory) {
+/* Lazy loading of the client list */
+sentinelfApp.factory('clientsLazyloadFactory', ['clientsFactory', function(clientsFactory) {
 
-    var employersLazyloadFactory = function(searchCriterias) {
-        this.employers = [];
+    var clientsLazyloadFactory = function(searchCriterias) {
+        this.clients = [];
         this.nextpage = 1;
         this.completelyLoaded = false;
-        this.busyLoadingEmployers = false;
+        this.busyLoadingClients = false;
         this.total = null;
     };
 
     /* Create the function for the object (called prototyping in js) */
-    employersLazyloadFactory.prototype.loadMore = function() {
+    clientsLazyloadFactory.prototype.loadMore = function() {
         /* If the list os already complete, no need to reload it */
         if(this.completelyLoaded) return;
 
         /* Do not call next page multiple times */
-        if(this.busyLoadingEmployers) return;
+        if(this.busyLoadingClients) return;
 
         /* activate the business just before calling the service */
-        this.busyLoadingEmployers = true;
+        this.busyLoadingClients = true;
 
-        /* Get the employer list, page by page */
-        employersFactory.get({page:this.nextpage}, function(data){
-            /* Push each employer in the main list */
-            angular.forEach(data['employers'], function(employer){
-                this.push(employer);
-            }, this.employers);
+        /* Get the client list, page by page */
+        clientsFactory.get({page:this.nextpage}, function(data){
+            /* Push each client in the main list */
+            angular.forEach(data['clients'], function(client){
+                this.push(client);
+            }, this.clients);
 
 
             /* update the current page */
@@ -36,7 +36,7 @@ sentinelfApp.factory('employersLazyloadFactory', ['employersFactory', function(e
             } else {
                 this.completelyLoaded = true;
             }
-            this.busyLoadingEmployers = false;
+            this.busyLoadingClients = false;
 
             /* to display the total */
             this.total = data['total'];
@@ -44,5 +44,5 @@ sentinelfApp.factory('employersLazyloadFactory', ['employersFactory', function(e
         }.bind(this)); /* bind is to associate the params to object properties, I guess...? */
     };
 
-    return employersLazyloadFactory;
+    return clientsLazyloadFactory;
 }]);

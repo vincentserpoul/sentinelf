@@ -45,10 +45,10 @@ var sentinelfApp = angular.module('sentinelfApp', [
             controller:     'EmployeesListCtrl',
             access:         ['user']
         })
-    .when('/employers',
+    .when('/clients',
         {
-            templateUrl:    '/views/employers/employersList.html',
-            controller:     'EmployersCtrl',
+            templateUrl:    '/views/clients/clientsList.html',
+            controller:     'ClientsCtrl',
             access:         ['user']
         })
     .when('/events',
@@ -72,7 +72,7 @@ var sentinelfApp = angular.module('sentinelfApp', [
     .when('/test',
         {
             templateUrl:    'views/test.html',
-            controller:     'EmployersCtrl',
+            controller:     'ClientsCtrl',
             access:         ['admin']
         })
     .when('/404',

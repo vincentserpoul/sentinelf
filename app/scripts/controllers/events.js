@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory', 'employersFactory', 'departmentsFactory', function ($scope, crud, eventsLazyloadFactory, employersFactory, departmentsFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory', 'clientsFactory', 'departmentsFactory', function ($scope, crud, eventsLazyloadFactory, clientsFactory, departmentsFactory){
 
     $scope.viewTemplate = 'views/events/eventView.html';
     $scope.editTemplate = 'views/events/eventEdit.html';
@@ -11,16 +11,16 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
     $scope.eventsLazyloadFactory.loadMore();
     $scope.showNew = false;
 
-    $scope.loadEmployersAndDepartments = function () {
-        if (!($scope.employers && $scope.employer_departments)) {
+    $scope.loadClientsAndDepartments = function () {
+        if (!($scope.clients && $scope.client_departments)) {
             //Fetch all events
-            employersFactory.get(function (data) {
-                $scope.employers = data['employers'];
+            clientsFactory.get(function (data) {
+                $scope.clients = data['clients'];
             });
 
             //Fetch all departments
             departmentsFactory.get(function (data) {
-                $scope.employer_departments = data['EmployerDepartments'];
+                $scope.client_departments = data['ClientDepartments'];
             });
         }
     }
@@ -28,8 +28,8 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
     var obj = 'event';
     var preselectedValues = {
         "label":"Event's name",
-        "employer_id": 1,
-        "employer_department_id": 1,
+        "client_id": 1,
+        "client_department_id": 1,
         "date" : "2013-01-01"};
 
     $scope.newEvent = function () {
@@ -44,12 +44,12 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
         crud.cancelNew($scope);
     }
 
-    $scope.updateEmployer = function () {
-        if ($scope.new_event.employer_id) {
-            var employer = null;
-            for (var i in $scope.employers) {
-                if ($scope.employers[i].id == $scope.new_event.employer_id) {
-                    employer = $scope.employers[i];
+    $scope.updateClient = function () {
+        if ($scope.new_event.client_id) {
+            var client = null;
+            for (var i in $scope.clients) {
+                if ($scope.clients[i].id == $scope.new_event.client_id) {
+                    client = $scope.clients[i];
                     break;
                 }
             }
@@ -62,7 +62,7 @@ sentinelfApp.controller("EventCtrl", ['$scope', 'crud', '$modal', 'eventPeriodsL
     var obj = 'event';
 
     $scope.editEvent = function () {
-        crud.edit($scope, obj, $scope.loadEmployersAndDepartments);
+        crud.edit($scope, obj, $scope.loadClientsAndDepartments);
     }
 
     $scope.saveEvent = function () {

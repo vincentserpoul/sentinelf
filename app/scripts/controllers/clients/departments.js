@@ -7,8 +7,8 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
     /* Regroup init of the page in one single function */
     function init() {
         $scope.detailReady = 'disabled';
-        departmentsFactory.get({employer_id : $scope.employer.id}, function (data) {
-            $scope.departments = data['EmployerDepartments'];
+        departmentsFactory.get({client_id : $scope.client.id}, function (data) {
+            $scope.departments = data['ClientDepartments'];
         });
 
         $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
@@ -28,15 +28,15 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
     }
 
     $scope.saveDepartment = function () {
-        /* Call the factory to update the new employer in db */
+        /* Call the factory to update the new client in db */
         //update codes
         $scope.selectedDepartments[0].work_type_id = $scope.selectedDepartments[0].work_type['id'];
         $scope.selectedDepartments[0].employee_h_rate_currency_code = $scope.selectedDepartments[0].employee_h_rate_currency['code'];
-        $scope.selectedDepartments[0].employer_h_rate_currency_code = $scope.selectedDepartments[0].employer_h_rate_currency['code'];
+        $scope.selectedDepartments[0].client_h_rate_currency_code = $scope.selectedDepartments[0].client_h_rate_currency['code'];
         departmentsFactory.update($scope.selectedDepartments[0],
             function (data) {
                 if (data) {
-                    $scope.departments = data['EmployerDepartments'];
+                    $scope.departments = data['ClientDepartments'];
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }
             }, function (error) {
@@ -64,8 +64,8 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
                 function (data) {
                     if (data) {
                         $scope.selectedDepartments = [{'label': 'None'}];
-                        $('#collapseDepartment' + $scope.employer.id).collapse('hide');
-                        $scope.departments = data['EmployerDepartments'];
+                        $('#collapseDepartment' + $scope.client.id).collapse('hide');
+                        $scope.departments = data['ClientDepartments'];
                         AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                     }
                 }, function (error) { 
@@ -83,12 +83,12 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
         parent_id = (parent_id) ? parent_id : null;
         $scope.selectedDepartments = 
             [{'parent_id': parent_id,
-            'employer_id': $scope.employer.id,
+            'client_id': $scope.client.id,
             'label': 'New department', 
             'description': 'description',
             'work_type_id': 1,
-            'employer_h_rate': 9,
-            'employer_h_rate_currency_code': 'SGD', 
+            'client_h_rate': 9,
+            'client_h_rate_currency_code': 'SGD', 
             'employee_h_rate': 9, 
             'employee_h_rate_currency_code': 'SGD'}];
     }
@@ -99,7 +99,7 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
         departmentsFactory.save($scope.selectedDepartments[0],
             function (data) {
                 if (data) {
-                    $scope.departments = data['EmployerDepartments'];
+                    $scope.departments = data['ClientDepartments'];
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
@@ -133,12 +133,12 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
 
     $scope.$watch( 'newForm', function (newObj, oldObj) {
         if (newObj == true) {
-            if (angular.element('#collapseDepartment' + $scope.employer.id).hasClass('in')) {
-                $('#collapseDepartment' + $scope.employer.id).collapse('hide');
+            if (angular.element('#collapseDepartment' + $scope.client.id).hasClass('in')) {
+                $('#collapseDepartment' + $scope.client.id).collapse('hide');
             }
         } else if (oldObj == true && newObj == false) {
-            if (angular.element('#collapseNewDepartment' + $scope.employer.id).hasClass('in')) {
-                $('#collapseNewDepartment' + $scope.employer.id).collapse('hide');
+            if (angular.element('#collapseNewDepartment' + $scope.client.id).hasClass('in')) {
+                $('#collapseNewDepartment' + $scope.client.id).collapse('hide');
             }
         }
     })

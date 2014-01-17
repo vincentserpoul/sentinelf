@@ -1,24 +1,24 @@
 <div class="panel panel-info accordion" ng-controller="DepartmentsCtrl" id="accordion">
 	<div class="panel-heading">
-		{{employer.name}}'s Departments
-		<button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" data-target="#collapseNewDepartment{{employer.id}}" ng-click="newDepartment()"><i class="fa fa-plus fa-fw"></i> New Root</button>
+		{{client.name}}'s Departments
+		<button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" data-target="#collapseNewDepartment{{client.id}}" ng-click="newDepartment()"><i class="fa fa-plus fa-fw"></i> New Root</button>
 		<div class="pull-right">
 			{{departmentTree.currentNode.label}} is selected 
 			<div class="btn-group">
-				<button type="button" class="btn btn-primary btn-xs {{detailReady}}" data-toggle="collapse" data-parent="#accordion" data-target="#collapseDepartment{{employer.id}}" ng-click="showDetail()"><i class="fa fa-info-circle fa-fw"></i> Detail</button>
+				<button type="button" class="btn btn-primary btn-xs {{detailReady}}" data-toggle="collapse" data-parent="#accordion" data-target="#collapseDepartment{{client.id}}" ng-click="showDetail()"><i class="fa fa-info-circle fa-fw"></i> Detail</button>
 	            <button type="button" class="btn btn-primary btn-xs dropdown-toggle {{detailReady}}" data-toggle="dropdown">
 	                <span class="caret {{detailReady}}"></span>
 	                <span class="sr-only">Toggle Dropdown</span>
 	            </button>
 	            <ul class="dropdown-menu" role="menu">
-	                <li ng-click="newDepartment(departmentTree.currentNode.id)" data-toggle="collapse" data-parent="#accordion" data-target="#collapseNewDepartment{{employer.id}}"><a><i class="fa fa-plus fa-fw"></i> New Subdepartment</a></li>
+	                <li ng-click="newDepartment(departmentTree.currentNode.id)" data-toggle="collapse" data-parent="#accordion" data-target="#collapseNewDepartment{{client.id}}"><a><i class="fa fa-plus fa-fw"></i> New Subdepartment</a></li>
 	            </ul>
             </div>
 		</div>
 	</div>
 	<div class="panel-body">
 		<div class="panel-group">
-			<div class="panel panel-primary collapse" id="collapseNewDepartment{{employer.id}}">
+			<div class="panel panel-primary collapse" id="collapseNewDepartment{{client.id}}">
 				<div class="panel-heading">{{departmentTree.currentNode.label}}'s New Subdepartment</div>
 				<div class="panel-body">
 					<table class="table">
@@ -29,8 +29,8 @@
 				                <th>Work Type</th>
 				                <th>Employee Hourly Rate</th>
 				                <th>Employee Hourly Rate Currency</th>
-				                <th>Employer Hourly Rate</th>
-				                <th>Employer Hourly Rate Currency</th>
+				                <th>Client Hourly Rate</th>
+				                <th>Client Hourly Rate Currency</th>
 				                <th>Actions</th>
 				            </tr>
 			            </thead>
@@ -41,13 +41,13 @@
 			                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="true"></edit-input-select></td>
 			                    <td><edit-input-text value="selectedDepartment.employee_h_rate" edit-form="true"></edit-input-text></td>
 			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_h_rate_currency_code" ng-model="selectedDepartment.employee_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="true"></edit-input-select></td>
-			                    <td><edit-input-text value="selectedDepartment.employer_h_rate" edit-form="true"></edit-input-text></td>
-			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_h_rate_currency_code" ng-model="selectedDepartment.employer_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="true"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.client_h_rate" edit-form="true"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.client_h_rate_currency_code" ng-model="selectedDepartment.client_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="true"></edit-input-select></td>
 			                    <!-- action buttons -->
 			                    <td class="btn-toolbar">
 			                        <div class="btn-group">
 			                            <button type="button" class="btn btn-success btn-xs" ng-click="saveNewDepartment()"><i class="fa fa-save fa-fw"></i> Save</button>
-			                            <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapseNewDepartment{{employer.id}}" ng-click="cancelNewDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+			                            <button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#collapseNewDepartment{{client.id}}" ng-click="cancelNewDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
 			                        </div>
 			                    </td>
 			                </tr>
@@ -55,7 +55,7 @@
 			        </table>
 				</div>
 			</div>
-			<div class="panel panel-primary collapse" id="collapseDepartment{{employer.id}}">
+			<div class="panel panel-primary collapse" id="collapseDepartment{{client.id}}">
 				<div class="panel-heading">{{departmentTree.currentNode.label}}'s Detail</div>
 				<div class="panel-body">
 					<table class="table">
@@ -66,8 +66,8 @@
 				                <th>Work Type</th>
 				                <th>Employee Hourly Rate</th>
 				                <th>Employee Hourly Rate Currency</th>
-				                <th>Employer Hourly Rate</th>
-				                <th>Employer Hourly Rate Currency</th>
+				                <th>Client Hourly Rate</th>
+				                <th>Client Hourly Rate Currency</th>
 				                <th>Actions</th>
 				            </tr>
 			            </thead>
@@ -78,8 +78,8 @@
 			                    <td><edit-input-select uniq-id-value="selectedDepartment.work_type_id" ng-model="selectedDepartment.work_type"  model-ref-type="work_type" model-ref-resource="departmentsStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
 			                    <td><edit-input-text value="selectedDepartment.employee_h_rate" edit-form="editForm"></edit-input-text></td>
 			                    <td><edit-input-select uniq-id-value="selectedDepartment.employee_h_rate_currency_code" ng-model="selectedDepartment.employee_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
-			                    <td><edit-input-text value="selectedDepartment.employer_h_rate" edit-form="editForm"></edit-input-text></td>
-			                    <td><edit-input-select uniq-id-value="selectedDepartment.employer_h_rate_currency_code" ng-model="selectedDepartment.employer_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
+			                    <td><edit-input-text value="selectedDepartment.client_h_rate" edit-form="editForm"></edit-input-text></td>
+			                    <td><edit-input-select uniq-id-value="selectedDepartment.client_h_rate_currency_code" ng-model="selectedDepartment.client_h_rate_currency"  model-ref-type="currency" model-ref-resource="currencyIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
 			                    <!-- action buttons -->
 			                    <td class="btn-toolbar">
 			                        <div ng-hide="editForm" class="btn-group">

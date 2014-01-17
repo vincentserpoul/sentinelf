@@ -3,9 +3,9 @@
 /* Lazy loading of the contact list */
 sentinelfApp.factory('contactsLazyloadFactory', ['contactsFactory', function(contactsFactory) {
 
-    var contactsLazyloadFactory = function(employer_id) {
+    var contactsLazyloadFactory = function(client_id) {
         this.contacts = [];
-        this.employer_id = employer_id;
+        this.client_id = client_id;
         this.nextpage = 1;
         this.completelyLoaded = false;
         this.busyLoadingContacts = false;
@@ -24,9 +24,9 @@ sentinelfApp.factory('contactsLazyloadFactory', ['contactsFactory', function(con
         this.busyLoadingContacts = true;
 
         /* Get the contact list, page by page */
-        contactsFactory.get({employer_id: this.employer_id, page:this.nextpage}, function(data){
+        contactsFactory.get({client_id: this.client_id, page:this.nextpage}, function(data){
             /* Push each contact in the main list */
-            angular.forEach(data['EmployerContacts'], function(contact){
+            angular.forEach(data['ClientContacts'], function(contact){
                 this.push(contact);
             }, this.contacts);
 

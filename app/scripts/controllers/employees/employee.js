@@ -79,7 +79,7 @@ sentinelfApp.controller(
         }
 
         $scope.editEmployee = function(){
-            // Save employer in case of cancel, to rollback to previous values
+            // Save client in case of cancel, to rollback to previous values
             $scope.savEmployee = angular.copy($scope.employee);
             // Activate the edit
             $scope.editForm = true;
@@ -104,7 +104,7 @@ sentinelfApp.controller(
             if(angular.isDefined($scope.employee.id)){
                 employeesFactory.update({employeeId: $scope.employee.id}, $scope.employee,
                     function(data){
-                        // when success, reset the savEmployer
+                        // when success, reset the savClient
                         $scope.employee = data['employee'];
                         $scope.savEmployee = null;
                         $scope.editForm = false;
@@ -113,7 +113,7 @@ sentinelfApp.controller(
             } else {
                 employeesFactory.create($scope.employee,
                     function(data){
-                        // when success, reset the savEmployer
+                        // when success, reset the savClient
                         $scope.savEmployee = null;
                         $scope.employee = data['employee'];
                         $scope.editForm = false;

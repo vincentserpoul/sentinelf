@@ -1,9 +1,9 @@
 <div class="panel panel-info" ng-controller="ContactsCtrl">
     <div class="panel-heading">
-        {{employer.name}}'s Contacts
-        <button access-level="['add_employer_contact']" type="button" class="btn btn-primary btn-xs" ng-click="newContact()"><i class="fa fa-plus fa-fw"></i> New</button>
+        {{client.name}}'s Contacts
+        <button access-level="['add_client_contact']" type="button" class="btn btn-primary btn-xs" ng-click="newContact()"><i class="fa fa-plus fa-fw"></i> New</button>
     </div>
-    <div class="panel panel-primary collapse" id="collapseNewContact{{employer.id}}">
+    <div class="panel panel-primary collapse" id="collapseNewContact{{client.id}}">
         <div class="panel-heading">New Contact</div>
         <div class="panel-body">
             <table class="table">
