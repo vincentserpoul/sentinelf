@@ -7,14 +7,14 @@
         <td><input ng-model="formEvent.label" required/></td>
     </tr>
     <tr>
-        <td>Employer : </td>
+        <td>Client : </td>
         <td>
             <select
-                    ng-model="formEvent.employer"
-                    name="employer"
+                    ng-model="formEvent.client"
+                    name="client"
                     required
-                    ng-options="employer.name for employer in employers"
-                    ng-change="employerChange()">
+                    ng-options="client.name for client in clients"
+                    ng-change="clientChange()">
             </select>
         </td>
     </tr>

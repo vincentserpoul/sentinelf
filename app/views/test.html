@@ -1,5 +1,5 @@
-<div ng-hide="employersLazyloadFactory.busyLoadingEmployers" ng-repeat="employer in employersLazyloadFactory.employers" class="repeat-animation">
-	<div>{{employer.name}}</div>
-	<div>{{employer.country_code}}</div>
+<div ng-hide="clientsLazyloadFactory.busyLoadingClients" ng-repeat="client in clientsLazyloadFactory.clients" class="repeat-animation">
+	<div>{{client.name}}</div>
+	<div>{{client.country_code}}</div>
 </div>
-<div ng-show="employersLazyloadFactory.busyLoadingEmployers"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
+<div ng-show="clientsLazyloadFactory.busyLoadingClients"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>

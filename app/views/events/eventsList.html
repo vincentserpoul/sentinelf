@@ -19,7 +19,7 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Employer</th>
+                        <th>Client</th>
                         <th>Department</th>
                         <th>Date</th>
                         <th>Actions</th>
@@ -28,8 +28,8 @@
                 <tbody>
                     <tr>
                         <td><edit-input-text value="createdEvent.label" edit-form="true"></edit-input-text></td>
-                        <td><edit-input-select uniq-id-value="createdEvent.employer_id" model-ref-resource="employersResource" model-ref-type="employers" edit-form="true" ng-model="createdEvent.employer" alt-label="name" alt-ref="none"></edit-input-select></td>
-                        <td><edit-input-select uniq-id-value="createdEvent.employer_department_id" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="true" ng-model="createdEvent.employer_department" alt-ref="none" filter-key="employer_id" filter-var-id="createdEvent.employer_id" filter-var="createdEvent.employer.id"></edit-input-select></td>
+                        <td><edit-input-select uniq-id-value="createdEvent.client_id" model-ref-resource="clientsResource" model-ref-type="clients" edit-form="true" ng-model="createdEvent.client" alt-label="name" alt-ref="none"></edit-input-select></td>
+                        <td><edit-input-select uniq-id-value="createdEvent.client_department_id" model-ref-resource="departmentsResource" model-ref-type="ClientDepartments" edit-form="true" ng-model="createdEvent.client_department" alt-ref="none" filter-key="client_id" filter-var-id="createdEvent.client_id" filter-var="createdEvent.client.id"></edit-input-select></td>
                         <td><edit-input-date date="createdEvent.date" edit-form="true"></edit-input-datetime></td>
                         <td>
                             <div class="btn-group-vertical">
@@ -47,7 +47,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Employer</th>
+                <th>Client</th>
                 <th>Department</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -57,8 +57,8 @@
             <tr>
                 <td>{{event.id}}</td>
                 <td><edit-input-text value="event.label" edit-form="editForm"></edit-input-text></td>
-                <td><edit-input-select uniq-id-value="event.employer_id" init-label="{{event.employer_name}}" model-ref-resource="employersResource" model-ref-type="employers" edit-form="editForm" ng-model="event.employer" alt-label="name" alt-ref="none"></edit-input-select></td>
-                <td><edit-input-select uniq-id-value="event.employer_department_id" init-label="{{event.employer_department_label}}" model-ref-resource="departmentsResource" model-ref-type="EmployerDepartments" edit-form="editForm" ng-model="event.employer_department" alt-ref="none" filter-key="employer_id" filter-var-id="event.employer_id" filter-var="event.employer.id"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="event.client_id" init-label="{{event.client_name}}" model-ref-resource="clientsResource" model-ref-type="clients" edit-form="editForm" ng-model="event.client" alt-label="name" alt-ref="none"></edit-input-select></td>
+                <td><edit-input-select uniq-id-value="event.client_department_id" init-label="{{event.client_department_label}}" model-ref-resource="departmentsResource" model-ref-type="ClientDepartments" edit-form="editForm" ng-model="event.client_department" alt-ref="none" filter-key="client_id" filter-var-id="event.client_id" filter-var="event.client.id"></edit-input-select></td>
                 <td><edit-input-date date="event.date" edit-form="editForm"></edit-input-datetime></td>
                 <td class="btn-group-vertical btn-group-xs">
                     <button ng-hide="editForm" type="button" class="btn btn-primary" ng-click="editEvent()"><i class="fa fa-edit fa-fw"></i> Edit</button>

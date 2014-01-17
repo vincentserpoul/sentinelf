@@ -43,17 +43,17 @@ sentinelfApp.controller('GroupCtrl', ['$scope', 'formService', 'AlertService', '
     $scope.editForm = false;
 
     $scope.editGroup = function () {
-        // Save employer in case of cancel, to rollback to previous values
+        // Save client in case of cancel, to rollback to previous values
         $scope.savGroup = angular.copy($scope.group);
         $scope.editForm = true;
     }
 
     $scope.saveGroup = function () {
-        /* Call the factory to update the new employer in db */
+        /* Call the factory to update the new client in db */
         groupsFactory.update($scope.group,
             function (data) {
                 if (data) {
-                    // when success, reset the savEmployer
+                    // when success, reset the savClient
                     $scope.savGroup = null;
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }

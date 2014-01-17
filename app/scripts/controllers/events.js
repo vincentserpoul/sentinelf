@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventsLazyloadFactory', 'employeesFactory', 'employersFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, eventsLazyloadFactory, employeesFactory, employersFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 'eventsFactory', 'eventsLazyloadFactory', 'employeesFactory', 'clientsFactory', 'departmentsFactory', 'eventPeriodFactory', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'employeesEventPeriodsFactory', function ($scope, formService, AlertService, eventsFactory, eventsLazyloadFactory, employeesFactory, clientsFactory, departmentsFactory, eventPeriodFactory, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, employeesEventPeriodsFactory){
 
    init();
 
@@ -11,7 +11,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
         $scope.eventsLazyloadFactory.loadMore();
 
         //Fetch all events
-        $scope.employersResource = employersFactory.get();
+        $scope.clientsResource = clientsFactory.get();
 
         //Fetch all departments
         $scope.departmentsResource = departmentsFactory.get();
@@ -28,16 +28,16 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'formService', 'AlertService', 
     $scope.newEvent = function () {// preselected values for new event
         $scope.createdEvent = {
             "label":"Event's name",
-            "employer_id": 1,
-            "employer_department_id": 1,
+            "client_id": 1,
+            "client_department_id": 1,
             "date" : "2013-01-01"};
         $('#collapseNewEvent').collapse('show');
     }
 
     $scope.saveNewEvent = function () {
         // get code from model
-        $scope.createdEvent.employer_id = $scope.createdEvent.employer.id;
-        $scope.createdEvent.employer_department_id = $scope.createdEvent.employer_department.id;
+        $scope.createdEvent.client_id = $scope.createdEvent.client.id;
+        $scope.createdEvent.client_department_id = $scope.createdEvent.client_department.id;
         /* Call the factory to update the new event in db */
         eventsFactory.save($scope.createdEvent,
             function (data) {
@@ -70,8 +70,8 @@ sentinelfApp.controller("EventCtrl", ['$scope', '$modal', 'formService', 'AlertS
 
     $scope.saveEvent = function () {
         // get code from model
-        $scope.event.employer_id = $scope.event.employer['id'];
-        $scope.event.employer_department_id = $scope.event.employer_department['id'];
+        $scope.event.client_id = $scope.event.client['id'];
+        $scope.event.client_department_id = $scope.event.client_department['id'];
         /* Call the factory to update the new event in db */
         eventsFactory.update($scope.event,
             function (data) {

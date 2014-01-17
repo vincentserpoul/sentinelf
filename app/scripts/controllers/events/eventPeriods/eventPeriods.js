@@ -2,7 +2,7 @@
 
 sentinelfApp.controller("EventPeriodsCtrl", ['$scope', 'formService', 'AlertService', 'eventPeriodFactory', 'employeesEventPeriodsFactory',  function ($scope, formService, AlertService, eventPeriodFactory, employeesEventPeriodsFactory) {
     $scope.newEventPeriod = function () {
-        // preselected values for new employer
+        // preselected values for new client
         $scope.createdEventPeriod = {
             "event_id": $scope.event.id,
             "start_datetime": "2013-01-01 00:00:00",

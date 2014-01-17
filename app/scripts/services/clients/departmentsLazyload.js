@@ -3,9 +3,9 @@
 /* Lazy loading of the department list */
 sentinelfApp.factory('departmentsLazyloadFactory', ['departmentsFactory', function(departmentsFactory) {
 
-    var departmentsLazyloadFactory = function(employer_id) {
+    var departmentsLazyloadFactory = function(client_id) {
         this.departments = [];
-        this.employer_id = employer_id;
+        this.client_id = client_id;
         this.nextpage = 1;
         this.completelyLoaded = false;
         this.busyLoadingDepartments = false;
@@ -24,9 +24,9 @@ sentinelfApp.factory('departmentsLazyloadFactory', ['departmentsFactory', functi
         this.busyLoadingDepartments = true;
 
         /* Get the department list, page by page */
-        departmentsFactory.get({employer_id: this.employer_id, page:this.nextpage}, function(data){
+        departmentsFactory.get({client_id: this.client_id, page:this.nextpage}, function(data){
             /* Push each department in the main list */
-            angular.forEach(data['EmployerDepartments'], function(department){
+            angular.forEach(data['ClientDepartments'], function(department){
                 this.push(department);
             }, this.departments);
 

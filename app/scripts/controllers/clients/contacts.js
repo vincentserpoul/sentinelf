@@ -11,14 +11,14 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService'
 
     $scope.newContact = function () {
         $scope.createdContact = {
-            "employer_id": $scope.employer.id,
+            "client_id": $scope.client.id,
             "first_name": "contact's first name",
             "last_name": "contact's last name",
             "title_id": 1,
             "sex_id": 1,
             "mobile_phone_number": "+6599999999",
             "primary_contact": 0};
-        $('#collapseNewContact' + $scope.employer.id).collapse('show');
+        $('#collapseNewContact' + $scope.client.id).collapse('show');
     }
 
     $scope.saveContact = function () {
@@ -31,20 +31,20 @@ sentinelfApp.controller('ContactsCtrl', ['$scope', 'formService', 'AlertService'
         contactsFactory.save($scope.createdContact,
             function (data) {
                 if (data) {
-                    $scope.contactsLazyloadFactory.contacts.unshift(data['EmployerContact']);
+                    $scope.contactsLazyloadFactory.contacts.unshift(data['ClientContact']);
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                 }
-                $('#collapseNewContact' + $scope.employer.id).collapse('hide');
+                $('#collapseNewContact' + $scope.client.id).collapse('hide');
             }, function (error) {
                 if (error['data'])
                     AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
-                $('#collapseNewContact' + $scope.employer.id).collapse('hide');
+                $('#collapseNewContact' + $scope.client.id).collapse('hide');
             }
         );
     }
 
     $scope.closeNewContact = function () {
-        $('#collapseNewContact' + $scope.employer.id).collapse('hide');
+        $('#collapseNewContact' + $scope.client.id).collapse('hide');
     }
 }])
 
@@ -83,7 +83,7 @@ sentinelfApp.controller('ContactCtrl', ['$scope', 'formService', 'AlertService',
 
     $scope.cancelEditContact = function(){
         // Reset the data to what it was before the edit
-        formService.copyProps($scope.savEmployer, $scope.employer);
+        formService.copyProps($scope.savClient, $scope.client);
         // Deactivate the edit
         $scope.editForm = false;
     };
