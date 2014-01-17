@@ -1,0 +1,20 @@
+<td>
+    <select ui-select2 ng-model="contact.title_id" data-placeholder="Pick a title">
+        <option value=""></option>
+        <option ng-repeat="title in titles" value="{{title.id}}">{{title.label}}</option>
+    </select>
+</td>
+<td><input type="text" class="form-control input-sm" ng-model="contact.first_name" /></td>
+<td><input type="text" class="form-control input-sm" ng-model="contact.last_name" /></td>
+<td>
+    <select ui-select2 ng-model="contact.sex_id" data-placeholder="Pick a sex">
+        <option value=""></option>
+        <option ng-repeat="sex in sexes" value="{{sex.id}}">{{sex.label}}</option>
+    </select>
+</td>
+<td><input type="text" class="form-control input-sm" ng-model="contact.mobile_phone_number" /></td>
+<td><edit-input-check value="contact.primary_contact" edit-form="true"></edit-input-check></td>
+<td class="btn-group-vertical btn-group-xs">
+    <button type="button" class="btn btn-success" ng-click="saveContact()"><i class="fa fa-save fa-fw"></i> Save</button>
+    <button type="button" class="btn btn-default" ng-click="cancelEditContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+</td>

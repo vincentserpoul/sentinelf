@@ -1,0 +1,20 @@
+<td>{{client.name}}</td>
+<td>{{client.address}}</td>
+<td>{{client.city}}</td>
+<td>{{client.postcode}}</td>
+<td>{{client.country_code}}</td>
+<td>{{client.phone_number}}</td>
+<td>{{client.fax_number}}</td>
+<td>
+	<div  class="btn-group-vertical btn-group-sm">
+	    <button type="button" class="btn btn-primary" ng-click="editClient()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+	    <button type="button" class="btn btn-danger" ng-click="deleteClient()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+    </div>
+</td>
+<td>
+	<div class="btn-group-vertical btn-group-sm">
+	    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapseDepartments{{client.id}}" ng-click="loadDepartments()"><i class="fa fa-home fa-fw"></i> Departments</button>
+	    <!-- whenever the button is clicked, the collapse value (Contacts List Collapse) will be toggled -->
+	    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapseContacts{{client.id}}" ng-click="loadContacts()"><i class="fa fa-users fa-fw"></i> Contacts</button>
+	</div>
+</td>

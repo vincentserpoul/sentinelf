@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory', 'clientsFactory', 'departmentsFactory', function ($scope, crud, eventsLazyloadFactory, clientsFactory, departmentsFactory){
+sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory', 'clientFactory', 'departmentFactory', function ($scope, crud, eventsLazyloadFactory, clientFactory, departmentFactory){
 
     $scope.viewTemplate = 'views/events/eventView.html';
     $scope.editTemplate = 'views/events/eventEdit.html';
@@ -33,7 +33,7 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
         "date" : "2013-01-01"};
 
     $scope.newEvent = function () {
-        crud.new($scope, obj, preselectedValues);
+        crud.new($scope, obj, preselectedValues, $scope.loadClientsAndDepartments);
     }
 
     $scope.createEvent = function () {

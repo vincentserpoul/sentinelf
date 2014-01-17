@@ -69,8 +69,8 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		},
 
 		// call this function when users press add/new button
-		new: function ($scope, obj, preselectedValues) {
-			loadResources($scope, obj);
+		new: function ($scope, obj, preselectedValues, loadResourcesFn) {
+			if (loadResourcesFn) loadResourcesFn();
 			$scope['new_' + obj] = preselectedValues;
 			$scope.showNew = true;
 		}, 

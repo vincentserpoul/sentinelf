@@ -11,31 +11,35 @@
             {{alert.message}}
         </div>
     </div>
-    <div class="panel panel-primary collapse" id="collapseNewClient">
+    <div class="panel panel-primary" ng-show="showNew">
         <div class="panel-heading">New Client</div>
         <div class="panel-body">
             <table class="table">
                 <tbody>
                     <tr>
-                        <td><edit-input-text value="createdClient.name" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdClient.address" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdClient.city" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdClient.postcode" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-select uniq-id-value="createdClient.country_code" ng-model="createdClient.country"  model-ref-type="country" model-ref-resource="countryIsoLabelsResource" edit-form="newForm"></edit-input-select></td>
-                        <td><edit-input-text value="createdClient.phone_number" edit-form="newForm"></edit-input-text></td>
-                        <td><edit-input-text value="createdClient.fax_number" edit-form="newForm"></edit-input-text></td>
-                        <td class="btn-group-vertical">
-                            <button type="button" class="btn btn-success btn-xs" ng-click="saveNewClient()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="cancelNewClient()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_client.name" /></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_client.address" /></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_client.city" /></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_client.postcode" /></td>
+                        <td>
+                            <select ui-select2 ng-model="new_client.country_code" data-placeholder="Pick a country">
+                                <option value=""></option>
+                                <option ng-repeat="country in countries" value="{{country.code}}">{{country.label}}</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_client.phone_number" /></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_client.fax_number" /></td>
+                        <td class="btn-group-vertical btn-group-sm">
+                            <button type="button" class="btn btn-success" ng-click="saveNewClient()"><i class="fa fa-save fa-fw"></i> Save</button>
+                            <button type="button" class="btn btn-default" ng-click="cancelNewClient()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-hover" infinite-scroll='clientsLazyloadFactory.loadMore()' infinite-scroll-disabled='clientsLazyloadFactory.busyLoadingClients' infinite-scroll-distance='1'>
-            <thead>
+    <table class="table table-hover">
+        <thead>
             <tr>
                 <th>Name</th>
                 <th>Address</th>
@@ -45,45 +49,25 @@
                 <th>Phone</th>
                 <th>Fax</th>
                 <th>Actions</th>
+                <th><i class="fa fa-list"></i> Sublists</th>
             </tr>
-            </thead>
-            <!-- use ng-repeat to render clients' information rows -->
-            <tbody ng-repeat="client in clientsLazyloadFactory.clients" class="repeat-animation" ng-controller="ClientCtrl">
-                <!-- information row -->
-                <tr>
-                    <td><edit-input-text value="client.name" edit-form="editForm"></edit-input-text></td>
-                    <td><edit-input-text value="client.address" edit-form="editForm"></edit-input-text></td>
-                    <td><edit-input-text value="client.city" edit-form="editForm"></edit-input-text></td>
-                    <td><edit-input-text value="client.postcode" edit-form="editForm"></edit-input-text></td>
-                    <td><edit-input-select uniq-id-value="client.country_code" ng-model="client.country"  model-ref-type="country" model-ref-resource="countryIsoLabelsResource" edit-form="editForm"></edit-input-select></td>
-                    <td><edit-input-text value="client.phone_number" edit-form="editForm"></edit-input-text></td>
-                    <td><edit-input-text value="client.fax_number" edit-form="editForm"></edit-input-text></td>
-                    <!-- action buttons -->
-                    <td class="btn-group-vertical btn-group-xs">
-                        <button ng-hide="editForm" type="button" class="btn btn-primary" ng-click="editClient()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                        <button ng-show="editForm" type="button" class="btn btn-success" ng-click="saveClient()"><i class="fa fa-save fa-fw"></i> Save</button>
-                        <button ng-show="editForm" type="button" class="btn btn-default" ng-click="cancelEditClient()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                        <!-- whenever the button is clicked, the collapse value (Department List Collapse) will be toggled -->
-                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseDepartments{{client.id}}" ng-click="loadDepartments()">Departments</button>
-                        <!-- whenever the button is clicked, the collapse value (Contacts List Collapse) will be toggled -->
-                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseContacts{{client.id}}" ng-click="loadContacts()">Contacts</button>
-                        <button ng-hide="editForm" type="button" class="btn btn-warning" ng-click="deleteClient()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
-                    </td>
-                <!-- department row -->
-                </tr>
-                <tr style="border: none;">
-                    <td colspan="8" style="border: none; padding: 0px;">
-                        <div ng-show="openDepartments" class="show-hide-animation" ng-include src="departmentsTemplate"></div>
-                    </td>
-                </tr>
-                <!-- contacts row -->
-                <tr style="border: none;">
-                    <td colspan="8" style="border: none; padding: 0px;">
-                        <div ng-show="openContacts" class="show-hide-animation" ng-include src="contactsTemplate"></div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div ng-show="clientsLazyloadFactory.busyLoadingClients"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
-    </div>
+        </thead>
+        <!-- use ng-repeat to render clients' information rows -->
+        <tbody ng-repeat="client in clients" class="repeat-animation" ng-controller="ClientCtrl">
+            <!-- information row -->
+            <tr ng-include src="clientTemplate"></tr>
+            <tr style="border: none;">
+                <td colspan="9" style="border: none; padding: 0px;">
+                    <div ng-show="openDepartments" class="show-hide-animation" ng-include src="departmentsTemplate"></div>
+                </td>
+            </tr>
+            <!-- contacts row -->
+            <tr style="border: none;">
+                <td colspan="9" style="border: none; padding: 0px;">
+                    <div ng-show="openContacts" class="show-hide-animation" ng-include src="contactsTemplate"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-show="clientsLazyloadFactory.busyLoadingClients"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
 </div>

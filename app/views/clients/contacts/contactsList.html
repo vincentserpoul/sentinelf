@@ -3,7 +3,7 @@
         {{client.name}}'s Contacts
         <button access-level="['add_client_contact']" type="button" class="btn btn-primary btn-xs" ng-click="newContact()"><i class="fa fa-plus fa-fw"></i> New</button>
     </div>
-    <div class="panel panel-primary collapse" id="collapseNewContact{{client.id}}">
+    <div class="panel panel-primary" ng-show="showNew">
         <div class="panel-heading">New Contact</div>
         <div class="panel-body">
             <table class="table">
@@ -20,22 +20,32 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><edit-input-select uniq-id-value="createdContact.title_id" ng-model="createdContact.title"  model-ref-type="title" model-ref-resource="contactStaticLabelsResource" edit-form="true"></edit-input-select></td>
-                        <td><div edit-input-text value="createdContact.first_name" edit-form="true"></div></td>
-                        <td><div edit-input-text value="createdContact.last_name" edit-form="true"></div></td>
-                        <td><edit-input-select uniq-id-value="createdContact.sex_id" ng-model="createdContact.sex"  model-ref-type="sex" model-ref-resource="contactStaticLabelsResource" edit-form="true"></edit-input-select></td>
-                        <td><div edit-input-text value="createdContact.mobile_phone_number" edit-form="true"></div></td>
-                        <td><div edit-input-check value="createdContact.primary_contact" edit-form="true"></div></td>
-                        <td class="btn-group">
-                            <button type="button" class="btn btn-success btn-xs" ng-click="saveContact()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default btn-xs" ng-click="closeNewContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                        <td>
+                            <select ui-select2 ng-model="new_contact.title_id" data-placeholder="Pick a title">
+                                <option value=""></option>
+                                <option ng-repeat="title in titles" value="{{title.id}}">{{title.label}}</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_contact.first_name" /></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_contact.last_name" /></td>
+                        <td>
+                            <select ui-select2 ng-model="new_contact.sex_id" data-placeholder="Pick a sex">
+                                <option value=""></option>
+                                <option ng-repeat="sex in sexes" value="{{sex.id}}">{{sex.label}}</option>
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_contact.mobile_phone_number" /></td>
+                        <td><edit-input-check value="new_contact.primary_contact" edit-form="true"></edit-input-check></td>
+                        <td class="btn-group-vertical btn-group-xs">
+                            <button type="button" class="btn btn-success" ng-click="saveContact()"><i class="fa fa-save fa-fw"></i> Save</button>
+                            <button type="button" class="btn btn-default" ng-click="cancelNewContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <table class="table" ng-show="contactsLazyloadFactory.contacts.length">
+    <table class="table" ng-show="contacts.length">
         <thead>
             <tr>            
                 <th>Title</th>
@@ -47,30 +57,9 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <tr ng-repeat="contact in contactsLazyloadFactory.contacts" ng-controller="ContactCtrl" class="repeat-animation">
-                <td><edit-input-select uniq-id-value="contact.title_id" ng-model="contact.title"  model-ref-type="title" model-ref-resource="contactStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
-                <td><edit-input-text value="contact.first_name" edit-form="editForm"></edit-input-text></td>
-                <td><edit-input-text value="contact.last_name" edit-form="editForm"></edit-input-text></td>
-                <td><edit-input-select uniq-id-value="contact.sex_id" ng-model="contact.sex"  model-ref-type="sex" model-ref-resource="contactStaticLabelsResource" edit-form="editForm"></edit-input-select></td>
-                <td><div edit-input-text value="contact.mobile_phone_number" edit-form="editForm"></div></td>
-                <td><div edit-input-check value="contact.primary_contact" edit-form="editForm"></div></td>
-                <td>
-                    <div ng-hide="editForm" class="btn-group-vertical btn-group-xs">
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="editContact()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-                        <button type="button" class="btn btn-warning btn-xs" ng-click="editContact()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
-                    </div>      
-                    <div ng-show="editForm" class="btn-group-vertical btn-group-xs">
-                        <button type="button" class="btn btn-success btn-xs" ng-click="saveContact()"><i class="fa fa-save fa-fw"></i> Save</button>
-                        <button type="button" class="btn btn-default btn-xs" ng-click="cancelEditContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-                    </div>
-                </td>
-            </tr>
+        <tbody ng-repeat="contact in contacts" ng-controller="ContactCtrl" class="repeat-animation">
+            <tr ng-include src="contactTemplate"></tr>
         </tbody>
     </table>
-    <div ng-hide="contactsLazyloadFactory.completelyLoaded || contactsLazyloadFactory.busyLoadingContacts">
-        <button type="button" class="btn btn-link" ng-click="contactsLazyloadFactory.loadMore()">More...</button>
-    </div>
-    <div class="panel-body" ng-hide="contactsLazyloadFactory.contacts.length || contactsLazyloadFactory.busyLoadingContacts"><p class="text-muted" >Empty</p></div>
-    <div class="panel-footer" ng-show="contactsLazyloadFactory.busyLoadingContacts"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+    <div class="panel-body" ng-hide="contacts.length || contactsLazyloadFactory.busyLoadingContacts"><p class="text-muted" >Empty</p></div>
 </div>

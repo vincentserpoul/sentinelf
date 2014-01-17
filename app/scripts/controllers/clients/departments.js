@@ -1,13 +1,13 @@
 'use strict';
 
-sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
     function init() {
         $scope.detailReady = 'disabled';
-        departmentsFactory.get({client_id : $scope.client.id}, function (data) {
+        departmentFactory.get({client_id : $scope.client.id}, function (data) {
             $scope.departments = data['ClientDepartments'];
         });
 

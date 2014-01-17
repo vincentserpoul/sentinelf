@@ -1,122 +1,90 @@
 'use strict';
 
-sentinelfApp.controller('ClientsCtrl', ['$scope', 'formService', 'AlertService', 'clientsFactory', 'clientsLazyloadFactory', 'modelIsoLabelsFactory', 'modelStaticLabelsFactory', function($scope, formService, AlertService, clientsFactory, clientsLazyloadFactory, modelIsoLabelsFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('ClientsCtrl', ['$scope', 'crud', 'clientFactory', 'modelIsoLabelsFactory', 'modelStaticLabelsFactory', function($scope, crud, clientFactory, modelIsoLabelsFactory, modelStaticLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
 	function init() {
+        clientFactory.get(function (data) {
+            $scope.clients = data['clients'];
+        })
 
-        /* Initialize the list of clients */
-        /* Load the progressive service to load list of employees */
-        $scope.clientsLazyloadFactory = new clientsLazyloadFactory();
-        /* First launch */
-        $scope.clientsLazyloadFactory.loadMore();
-        /* Get the labels necessary for the list of countries not to be only codes */
-        $scope.countryIsoLabelsResource = modelIsoLabelsFactory.get({model:'country'});
-        $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
-        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
-        $scope.contactStaticLabelsResource = modelStaticLabelsFactory.get({model:'contact'});
+        $scope.viewTemplate = 'views/clients/clientView.html';
+        $scope.editTemplate = 'views/clients/clientEdit.html';
+        $scope.clientTemplate = $scope.viewTemplate;
 
-        $scope.newForm = true;
+        modelStaticLabelsFactory.get({model:'contact'}, function (data) {
+            $scope.titles = data['labels']['title'];
+            $scope.sexes = data['labels']['sex'];
+        })
     };
 
+    var obj = 'client';
+    var preselectedValues = {
+        "name":"Client's Name",
+        "address":"5 jalan bukit merah",
+        "city": "Singapore",
+        "postcode" : "159960",
+        "country_code":"SGP",
+        "phone_number":"+6599999999",
+        "fax_number":"+6599999999"};
+
+    $scope.loadCountries = function () {
+        /* Get the labels necessary for the list of countries not to be only codes */
+        modelIsoLabelsFactory.get({model:'country'}, function (data){
+            $scope.countries = data['labels']['country'];
+        });
+    }
+
+    $scope.loadDepartmentLabels = function () {
+        $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
+        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
+    }
+
     $scope.newClient = function () {// preselected values for new client
-        $scope.createdClient = {
-            "name":"Client's Name",
-            "address":"5 jalan bukit merah",
-            "city": "Singapore",
-            "postcode" : "159960",
-            "country_code":"SGP",
-            "phone_number":"+6599999999",
-            "fax_number":"+6599999999"};
-        $('#collapseNewClient').collapse('show');
+        crud.new($scope, obj, preselectedValues, $scope.loadCountries);
     }
 
     $scope.saveNewClient = function () {
-        // get code from model
-        $scope.createdClient.country_code = $scope.createdClient.country['code'];
-        /* Call the factory to update the new client in db */
-        clientsFactory.save($scope.createdClient,
-            function (data) {
-                if (data) {
-                    $scope.clientsLazyloadFactory.clients.unshift(data['client']);
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data']) AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-            }
-        );
-        $('#collapseNewClient').collapse('hide');
+        crud.create($scope, obj, true);
     }
 
     $scope.cancelNewClient = function () {
-        $('#collapseNewClient').collapse('hide');
+        crud.cancelNew($scope);
     }
 }]);
 
-sentinelfApp.controller('ClientCtrl', ['$scope', 'formService', 'clientsFactory', 'departmentsLazyloadFactory', 'contactsLazyloadFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'AlertService', function($scope, formService, clientsFactory, departmentsLazyloadFactory, contactsLazyloadFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, AlertService){
+sentinelfApp.controller('ClientCtrl', ['$scope', 'crud', 'departmentFactory', 'contactFactory', function($scope, crud, departmentFactory, contactFactory){
 
     $scope.init = false;
     $scope.editForm = false;
 
+    var obj = 'client';
+
     $scope.editClient = function () {
-        $scope.savClient = {};
-        formService.copyProps($scope.client, $scope.savClient);
-        // Activate the edit
-        $scope.editForm = true;
+        crud.edit($scope, obj, $scope.loadCountries);
     }
 
     $scope.saveClient = function () {
-        // get code from model
-        $scope.client.country_code = $scope.client.country['code'];
-        /* Call the factory to update the new client in db */
-        clientsFactory.update($scope.client,
-            function (data) {
-                if (data) {
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-            }
-        );
-        $scope.editForm = false;
+        crud.save($scope, obj);
     };
 
     $scope.cancelEditClient = function () {
-        // Reset the data to what it was before the edit
-        formService.copyProps($scope.savClient, $scope.client);
-        // Deactivate the edit
-        $scope.editForm = false;
+        crud.cancelEdit($scope, obj);
     };
 
     /* Delete employee button for each employee */
     $scope.deleteClient = function () {
-
-        var modalInstance = formService.popup('client', $scope.client.name);
-
-        modalInstance.result.then(function(){
-            clientsFactory.delete({clientId:$scope.client.id},
-                function (data) {
-                    $scope.clientsLazyloadFactory.clients.splice(formService.findInArray($scope.clientsLazyloadFactory.clients, $scope.client.id), 1);
-                    if (data)
-                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }, function (error) {
-                    if (error['data'])
-                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-                }
-            );
-        });
+        crud.delete($scope, obj, 'name', true);
     }
 
     $scope.loadDepartments = function () {
-        if (!$scope.departmentsLazyloadFactory) {
+        if (!$scope.departments) {
             /* Initialize the list of departments */
-            /* Load the progressive service to load list of departments */
-            $scope.departmentsLazyloadFactory = new departmentsLazyloadFactory($scope.client.id);
-            /* First launch */
-            $scope.departmentsLazyloadFactory.loadMore();
+            departmentFactory.get(function (data) {
+                $scope.departments = data['ClientDepartments'];
+            })
         }
         if (!$scope.departmentsTemplate)
             $scope.departmentsTemplate = 'views/clients/departments/departmentsList.html';
@@ -124,12 +92,11 @@ sentinelfApp.controller('ClientCtrl', ['$scope', 'formService', 'clientsFactory'
     }
 
     $scope.loadContacts = function () {
-        if (!$scope.contactsLazyloadFactory) {
-            /* Initialize the list of departments */
-            /* Load the progressive service to load list of departments */
-            $scope.contactsLazyloadFactory = new contactsLazyloadFactory($scope.client.id);
-            /* First launch */
-            $scope.contactsLazyloadFactory.loadMore();
+        if (!$scope.contacts) {
+            /* Initialize the list of contacts */
+            contactFactory.get({client_id: $scope.client.id}, function (data) {
+                $scope.contacts = data['ClientContacts'];
+            })
         }
         if (!$scope.contactsTemplate)
             $scope.contactsTemplate = 'views/clients/contacts/contactsList.html';
