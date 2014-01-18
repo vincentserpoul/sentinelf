@@ -32,13 +32,13 @@
                                 <input class="form-control input-sm" ng-model="new_event.label" />
                             </td>
                             <td>
-                                <select ui-select2 ng-model="new_event.client_id" data-placeholder="Pick an client" ng-change="updateClient()" ng-required="true">
+                                <select ui-select2 ng-model="new_event.client_id" data-placeholder="Pick an client" ng-change="updateClient(new_event)">
                                     <option value=""></option>
                                     <option ng-repeat="client in clients" value="{{client.id}}">{{client.name}}</option>
                                 </select>
                             </td>
                             <td>
-                                <select ui-select2 ng-model="new_event.client_department_id" data-placeholder="Pick a department" ng-change="updateDept()" ng-required="true">
+                                <select ui-select2 ng-model="new_event.client_department_id" data-placeholder="Pick a department">
                                     <option value=""></option>
                                     <option ng-repeat="client_department in client_departments | filter: {client_id: new_event.client_id}" value="{{client_department.id}}">{{client_department.label}}</option>    
                                 </select>

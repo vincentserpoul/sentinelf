@@ -14,12 +14,12 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
     $scope.loadClientsAndDepartments = function () {
         if (!($scope.clients && $scope.client_departments)) {
             //Fetch all events
-            clientsFactory.get(function (data) {
+            clientFactory.get(function (data) {
                 $scope.clients = data['clients'];
             });
 
             //Fetch all departments
-            departmentsFactory.get(function (data) {
+            departmentFactory.get(function (data) {
                 $scope.client_departments = data['ClientDepartments'];
             });
         }
@@ -43,18 +43,14 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
     $scope.cancelNewEvent = function () {
         crud.cancelNew($scope);
     }
-
-    $scope.updateClient = function () {
-        if ($scope.new_event.client_id) {
-            var client = null;
-            for (var i in $scope.clients) {
-                if ($scope.clients[i].id == $scope.new_event.client_id) {
-                    client = $scope.clients[i];
-                    break;
-                }
-            }
-        }
+    
+    $scope.updateClient = function (event) {
+        if ($scope.client_departments)
+            if (!$scope.client_departments.filter(function (value, index) {event.client_id === value.client_id})
+            .filter(function (value, index) {event.client_department_id === value.id}).length)
+                event.client_department_id = null;
     }
+    
 }]);
 
 
