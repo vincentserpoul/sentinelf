@@ -1,8 +1,8 @@
 'use strict';
 
-sentinelfApp.factory('contactFactory', ['$resource', function($resource) {
+sentinelfApp.factory('contactsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    var contactsResource = $resource('http://dev.sentinelb.com/api/v1/client_contact/:contactId',
+    var contactsResource = $resource( SENTINEL_API_END_POINT + '/client_contact/:contactId',
                                         {contactId: "@id" },
                                         { "update": {method:"PUT", params:{contactId: "@id"}} }
                             );
