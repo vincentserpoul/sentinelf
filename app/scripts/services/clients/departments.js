@@ -2,7 +2,7 @@
 
 sentinelfApp.factory('departmentFactory', ['$resource', function($resource) {
 
-    var departmentsResource = $resource('http://dev.sentinelb.com/api/v1/client_department/:departmentId',
+    var departmentsResource = $resource( SENTINEL_API_END_POINT + '/client_department/:departmentId',
                                         {departmentId: "@id" },
                                         { 
                                         	"update": {method:"PUT", params:{departmentId: "@id"}},
