@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.factory('contactFactory', ['$resource', function($resource) {
+sentinelfApp.factory('contactFactory', ['$resource', function($resource, SENTINEL_API_END_POINT) {
 
     var contactsResource = $resource( SENTINEL_API_END_POINT + '/client_contact/:contactId',
                                         {contactId: "@id" },
