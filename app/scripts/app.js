@@ -10,7 +10,6 @@ var sentinelfApp = angular.module('sentinelfApp', [
     'http-auth-interceptor',
     'ngAnimate',
     'infinite-scroll',
-    'ui.select2',
     'configuration'
     ])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider){
