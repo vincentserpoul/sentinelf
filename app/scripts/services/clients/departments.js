@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.factory('departmentsFactory', ['$resource', function($resource, SENTINEL_API_END_POINT) {
+sentinelfApp.factory('departmentsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
     var departmentsResource = $resource( SENTINEL_API_END_POINT + '/client_department/:departmentId',
                                         {departmentId: "@id" },
