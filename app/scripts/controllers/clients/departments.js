@@ -11,29 +11,35 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
             $scope.departments = data['ClientDepartments'];
         });
 
-        $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
-        $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
+        modelStaticLabelsFactory.get({model:'department'}, function (data) {
+            $scope.work_types = data['labels']['work_type'];
+        });
+        modelIsoLabelsFactory.get({model:'currency'}, function (data) {
+            $scope.currencies = data['labels']['currency'];
+        });
 
-        $scope.selectedDepartments = [{'label': 'None'}];
+        $scope.selectedDepartment = {'label': 'None'};
+
+        $scope.viewTemplate = 'views/clients/departments/departmentView.html';
+        $scope.editTemplate = 'views/clients/departments/departmentEdit.html';
+        $scope.departmentTemplate = $scope.viewTemplate;
     };
 
     $scope.showDetail = function () {
-        $scope.newForm = false;
+        // hide new panel and show detail panel
+        $scope.detailShow = !$scope.detailShow;
+        $scope.showNew = false;
     }
 
     $scope.editDepartment = function () {
-        // Activate the edit
-        $scope.newForm = false;
-        $scope.editForm = true;
+        // Load edit template
+        $scope.departmentTemplate = $scope.editTemplate;
     }
 
     $scope.saveDepartment = function () {
         /* Call the factory to update the new client in db */
         //update codes
-        $scope.selectedDepartments[0].work_type_id = $scope.selectedDepartments[0].work_type['id'];
-        $scope.selectedDepartments[0].employee_h_rate_currency_code = $scope.selectedDepartments[0].employee_h_rate_currency['code'];
-        $scope.selectedDepartments[0].client_h_rate_currency_code = $scope.selectedDepartments[0].client_h_rate_currency['code'];
-        departmentsFactory.update($scope.selectedDepartments[0],
+        departmentFactory.update($scope.selectedDepartment,
             function (data) {
                 if (data) {
                     $scope.departments = data['ClientDepartments'];
@@ -49,22 +55,22 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
 
     $scope.cancelEditDepartment = function () {
         // Reset the data to what it was before the edit
-        $scope.selectedDepartments = [angular.copy($scope.departmentTree.currentNode)];
-        // Deactivate the edit
-        $scope.editForm = false;
+        $scope.selectedDepartment = angular.copy($scope.departmentTree.currentNode);
+        // Load view template
+        $scope.departmentTemplate = $scope.viewTemplate;
     };
 
     /* Delete employee button for each employee */
     $scope.deleteDepartment = function(){
 
-        var modalInstance = formService.popup('department', $scope.selectedDepartments[0].label);
+        var modalInstance = formService.popup('department', $scope.selectedDepartment.label);
 
         modalInstance.result.then(function(){
-            departmentsFactory.delete({departmentId:$scope.selectedDepartments[0].id},
+            departmentFactory.delete({departmentId:$scope.selectedDepartment.id},
                 function (data) {
                     if (data) {
-                        $scope.selectedDepartments = [{'label': 'None'}];
-                        $('#collapseDepartment' + $scope.client.id).collapse('hide');
+                        $scope.selectedDepartment = {'label': 'None'};
+                        $scope.detailShow = false;
                         $scope.departments = data['ClientDepartments'];
                         AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
                     }
@@ -79,10 +85,9 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
     }
 
     $scope.newDepartment = function (parent_id) {
-        $scope.newForm = true;
         parent_id = (parent_id) ? parent_id : null;
-        $scope.selectedDepartments = 
-            [{'parent_id': parent_id,
+        $scope.new_department = 
+            {'parent_id': parent_id,
             'client_id': $scope.client.id,
             'label': 'New department', 
             'description': 'description',
@@ -90,16 +95,17 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
             'client_h_rate': 9,
             'client_h_rate_currency_code': 'SGD', 
             'employee_h_rate': 9, 
-            'employee_h_rate_currency_code': 'SGD'}];
+            'employee_h_rate_currency_code': 'SGD'};
+        $scope.showNew = true;
     }
 
     $scope.saveNewDepartment = function () {
-        $scope.newForm = false;
         /* Call the factory to update the new department in db */
-        departmentsFactory.save($scope.selectedDepartments[0],
+        departmentFactory.save($scope.new_department,
             function (data) {
                 if (data) {
                     $scope.departments = data['ClientDepartments'];
+                    $scope.showNew = false;
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
@@ -107,26 +113,24 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
                     AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
         );
-        $scope.selectedDepartments = [angular.copy($scope.departmentTree.currentNode)];
     }
 
     $scope.cancelNewDepartment = function () {
-        $scope.newForm = false;
-        $scope.selectedDepartments = [angular.copy($scope.departmentTree.currentNode)];
+        $scope.showNew = false;
     }
 
     $scope.$watch( 'departmentTree.currentNode', function (newObj, oldObj) {
         if( $scope.departmentTree && angular.isObject($scope.departmentTree.currentNode) ) {
-            $scope.selectedDepartments = [angular.copy($scope.departmentTree.currentNode)];
+            $scope.selectedDepartment = angular.copy($scope.departmentTree.currentNode);
             $scope.editForm = false;
             $scope.newForm = false;
         }
     }, false);
 
-    $scope.$watch( 'selectedDepartments', function (newObj, oldObj) {
-        if ($scope.selectedDepartments[0].label != 'None' && $scope.departmentsStaticLabelsResource && $scope.currencyIsoLabelsResource) {
+    $scope.$watch( 'selectedDepartment', function (newObj, oldObj) {
+        if ($scope.selectedDepartment.label != 'None' && $scope.work_types && $scope.currencies) {
             $scope.detailReady = 'enabled';
-        } else if ($scope.selectedDepartments[0].label == 'None') {
+        } else if ($scope.selectedDepartment.label == 'None') {
             $scope.detailReady = 'disabled';
         }
     });

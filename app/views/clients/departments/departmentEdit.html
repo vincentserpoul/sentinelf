@@ -1,0 +1,27 @@
+<td><input type="text" class="form-control input-sm" ng-model="selectedDepartment.label" /></td>
+<td><input type="text" class="form-control input-sm" ng-model="selectedDepartment.description" /></td>
+<td>
+	<select ui-select2 ng-model="selectedDepartment.work_type_id" data-placeholder="Pick a sex">
+        <option value=""></option>
+        <option ng-repeat="work_type in work_types" value="{{work_type.id}}">{{work_type.label}}</option>
+    </select>
+</td>
+<td><input type="text" class="form-control input-sm" ng-model="selectedDepartment.employee_h_rate" /></td>
+<td>
+	<select ui-select2 ng-model="selectedDepartment.employee_h_rate_currency_code" data-placeholder="Pick a currency">
+        <option value=""></option>
+        <option ng-repeat="currency in currencies" value="{{currency.code}}">{{currency.label}}</option>
+    </select>
+</td>
+<td><input type="text" class="form-control input-sm" ng-model="selectedDepartment.client_h_rate" /></td>
+<td>
+	<select ui-select2 ng-model="selectedDepartment.client_h_rate_currency_code" data-placeholder="Pick a currency">
+        <option value=""></option>
+        <option ng-repeat="currency in currencies" value="{{currency.code}}">{{currency.label}}</option>
+    </select>
+</td>
+<!-- action buttons -->
+<td class="btn-group-vertical btn-group-xs">
+    <button type="button" class="btn btn-success" ng-click="saveDepartment()"><i class="fa fa-save fa-fw"></i> Save</button>
+    <button type="button" class="btn btn-default" ng-click="cancelEditDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+</td>
