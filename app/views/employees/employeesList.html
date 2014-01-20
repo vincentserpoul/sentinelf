@@ -24,7 +24,8 @@
                     <div class="panel-body" ng-show="showDetails">
                         <accordion close-others="oneAtATime">
                             <accordion-group heading="Profile" is-open="true">
-                                Prof
+                                <div ng-show="busyLoadingProfile"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                <div ng-include src="profileTemplate"></div>
                             </accordion-group>
                             <accordion-group heading="Unpaid assignments">
                                 Ass

@@ -11,15 +11,14 @@ sentinelfApp.controller(
         function init() {
 
             /* Get the labels necessary for the list not to be only numbers */
-            $scope.staticLabelListResource = modelStaticLabelsFactory.get({model:'employee'});
-
-            /* For access in the list directly */
-            $scope.staticLabelListResource.$promise.then(function(data){
+            $scope.staticLabelListResource = modelStaticLabelsFactory.get({model:'employee'}, function(data){
                 $scope.employeeStaticLabels = data['labels'];
             });
 
             /* Get the labels necessary for the list of countries not to be only codes */
-            $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'});
+            $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'}, function(data){
+                $scope.countries = data['labels']['country'];
+            });
 
         }
 

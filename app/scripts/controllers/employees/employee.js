@@ -6,6 +6,7 @@ sentinelfApp.controller(
     function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, modelStaticLabelsFactory, modelIsoLabelsFactory){
 
         $scope.toggleDetails = function(){
+            $scope.showProfile();
             $scope.showDetails = !$scope.showDetails;
         }
 
@@ -34,15 +35,17 @@ sentinelfApp.controller(
         /* Display profile tab and hide the two others */
         $scope.showProfile = function(){
 
-            /* Get the labels necessary for the list of countries not to be only codes */
-            $scope.countryListResource.$promise.then(function(data){
-                $scope.countries = data['labels']['country'];
-            });
-
             /* get Data for the specific employee if it is not there yet (if sex_id is there, it means we got the employee) */
             if(!$scope.employee.sex_id){
+                /* display loading profile */
+                $scope.busyLoadingProfile = true;
                 employeesFactory.get({employeeId: $scope.employee.id}, function(data){
-                    $scope.employee = data['employees'][0];
+                    /* Merge new data with existing employee object */
+                    angular.extend($scope.employee, data['employees'][0]);
+                    /* Push the template to the profile tab */
+                    $scope.profileTemplate = 'views/employees/employeeProfile.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingProfile = false;
                 });
             }
         }
@@ -79,44 +82,35 @@ sentinelfApp.controller(
         }
 
         $scope.editEmployee = function(){
-            // Save client in case of cancel, to rollback to previous values
+            /* Save client in case of cancel, to rollback to previous values */
             $scope.savEmployee = angular.copy($scope.employee);
-            // Activate the edit
-            $scope.editForm = true;
-            /* init the add employee doc form */
-            $scope.addNewEmployeeDocForm  = false;
-            /* init the add employee identity doc form */
-            $scope.addNewEmployeeIdentityDocForm  = false;
+            /* Activate the edit form */
+            $scope.profileTemplate = 'views/employees/employeeEdit.html';
         }
 
         $scope.saveEmployee = function(){
-
-            /* Needed because the input return a damn json array */
-            $scope.employee.country_code = $scope.employee.country.code;
-            $scope.employee.work_pass_type_id = $scope.employee.work_pass_type.id;
-            $scope.employee.race_id = $scope.employee.race.id;
-            $scope.employee.status_id = $scope.employee.status.id;
             /* hide back the doc forms */
             $scope.employeeDocForm = false;
             $scope.employeeIdentityDocForm = false;
+            $scope.busyLoadingProfile = false;
 
             /* Call the factory to update/create the employee in db */
             if(angular.isDefined($scope.employee.id)){
                 employeesFactory.update({employeeId: $scope.employee.id}, $scope.employee,
                     function(data){
-                        // when success, reset the savClient
-                        $scope.employee = data['employee'];
+                        angular.extend($scope.employee, data['employee']);
                         $scope.savEmployee = null;
-                        $scope.editForm = false;
+                        $scope.profileTemplate = 'views/employees/employeeProfile.html';
+                        $scope.busyLoadingProfile = false;
                     }
                 );
             } else {
                 employeesFactory.create($scope.employee,
                     function(data){
-                        // when success, reset the savClient
+                        angular.extend($scope.employee, data['employee']);
                         $scope.savEmployee = null;
-                        $scope.employee = data['employee'];
-                        $scope.editForm = false;
+                        $scope.profileTemplate = 'views/employees/employeeProfile.html';
+                        $scope.busyLoadingProfile = true;
                     }
                 );
             }
@@ -127,7 +121,7 @@ sentinelfApp.controller(
             // Reset the data to what it was before the edit
             $scope.employee = $scope.savEmployee;
             // Deactivate the edit
-            $scope.editForm = false;
+            $scope.profileTemplate = 'views/employees/employeeProfile.html';
         };
 
         /* Delete employee button for each employee */
@@ -157,13 +151,12 @@ sentinelfApp.controller(
         }
         /* Add employee doc */
         $scope.addEmployeeDoc = function(){
-            console.log($scope.newEmployeeDoc);
-            /* hide back the form */
-            $scope.employeeDocForm = false;
-
-            $scope.newEmployeeDoc.doc_type_id = $scope.newEmployeeDoc.doc_type.id;
             /* We need to copy to make sure a new element is created each time */
-            $scope.employee.employee_doc.unshift(angular.copy($scope.newEmployeeDoc));
+            $scope.employee.employee_doc.unshift($scope.newEmployeeDoc);
+
+            /* hide back the form */
+            $scope.newEmployeeDoc = null;
+            $scope.employeeDocForm = !$scope.employeeDocForm;
         }
 
         /* Employee Identity doc related function */
