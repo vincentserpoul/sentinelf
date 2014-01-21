@@ -97,6 +97,7 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
             'employee_h_rate': 9, 
             'employee_h_rate_currency_code': 'SGD'};
         $scope.showNew = true;
+        $scope.detailShow = false;
     }
 
     $scope.saveNewDepartment = function () {
