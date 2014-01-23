@@ -7,7 +7,6 @@ var sentinelfApp = angular.module('sentinelfApp', [
     'ngSanitize',
     'ngRoute',
     'angularTreeview',
-    'http-auth-interceptor',
     'ngAnimate',
     'infinite-scroll',
     'configuration',
@@ -87,28 +86,20 @@ var sentinelfApp = angular.module('sentinelfApp', [
     $locationProvider.html5Mode(false);
     //$locationProvider.html5Mode(false);
 
-    var interceptor = ['$location', '$q', function($location, $q) {
-        function success(response) {
-            return response;
-        }
-
-        function error(response) {
-
-            if(response.status === 401) {
-                $location.path('/#/login');
-                return $q.reject(response);
-            }
-            else {
-                return $q.reject(response);
+    // if cookie expires, redirect user to login page
+    $httpProvider.interceptors.push(function ($q, $location, $rootScope) {
+        return {
+            response: function (response) {
+                return response || $q.when(response);
+            },
+            responseError: function (rejection) {
+                if (rejection.status === 401) {
+                    $rootScope.$broadcast('logout');
+                }
+                return $q.reject(rejection);
             }
         }
-
-        return function(promise) {
-            return promise.then(success, error);
-        }
-    }];
-
-    $httpProvider.responseInterceptors.push(interceptor);
+    })
 }])
 .run(['$rootScope', '$location', 'AuthenticationService', 'AlertService', function ($rootScope, $location, AuthenticationService, AlertService) {
 
@@ -122,5 +113,17 @@ var sentinelfApp = angular.module('sentinelfApp', [
             }
         }
     });
+
+    $rootScope.$on("logout", function () {
+        AuthenticationService.logout(
+            function(response) {
+                $location.path('/login');
+                AlertService.show({ "message": response.message, "type": "alert-success"}, true);
+            }, 
+            function() {
+                AlertService.show({ "message": response.message, "type": "alert-danger" }, false);  
+            }
+        );
+    })
 
 }]);
