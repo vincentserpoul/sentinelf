@@ -1,9 +1,8 @@
-<div ng-controller="EventPeriodsAssignmentsCtrl" ng-show="assignedEmployeesLazyloadFactory.assigned_employees.length">
+<div ng-controller="EmployeeAssignedCtrl" ng-show="assignedEmployeesLazyloadFactory.assigned_employees.length">
     <table class="table-striped table-bordered table-condensed">
         <thead>
             <tr>
                 <th ng-show="unassignForm"></th>
-                <th>Id</th>
                 <th>Name</th>
                 <th>IC</th>
                 <th>Age</th>
@@ -15,7 +14,6 @@
                 <td><strong>Select all</strong></td>
             </tr>
             <tr ng-repeat="assigned_employee in assignedEmployeesLazyloadFactory.assigned_employees" class="repeat-animation">
-                <td ng-show="unassignForm"><input type="checkbox" ng-model="assigned_employee.isUnassigned"></td>
                 <td>{{assigned_employee.id}}</td>
                 <td>{{assigned_employee.title_label}} {{assigned_employee.first_name}} {{assigned_employee.last_name}}</td>
                 <td>{{assigned_employee.identity_doc_number}}</td>
