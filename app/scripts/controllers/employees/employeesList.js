@@ -36,6 +36,8 @@ sentinelfApp.controller(
             $scope.employeesSearchLazyloadFactory = null;
             /* hide search results */
             $scope.displayList = false;
+            /* criterias resetted too */
+            this.searchCriterias = null;
         }
 
     }

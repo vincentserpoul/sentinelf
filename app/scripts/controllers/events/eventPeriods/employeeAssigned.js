@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$filter', 'formService', 'AlertService', 'eventPeriodEmployeeFactory', 'assignedEmployeesFactory', 'employeesEventPeriodsFactory', function($scope, $filter, formService, AlertService, eventPeriodEmployeeFactory, assignedEmployeesFactory, employeesEventPeriodsFactory){
+sentinelfApp.controller("EvmployeeAssignedCtrl", ['$scope', '$filter', 'formService', 'AlertService', 'eventPeriodEmployeeFactory', 'assignedEmployeesFactory', 'employeesEventPeriodsFactory', function($scope, $filter, formService, AlertService, eventPeriodEmployeeFactory, assignedEmployeesFactory, employeesEventPeriodsFactory){
 
 	$scope.unassign = function () {
         $scope.allSelected = false;
@@ -26,7 +26,7 @@ sentinelfApp.controller("EventPeriodsAssignmentsCtrl", ['$scope', '$filter', 'fo
                         $scope.assignedEmployeesLazyloadFactory.assigned_employees.splice(unassigned_employee_ids[j] - j, 1);
                         $scope.assignedEmployeesLazyloadFactory.total--;
                     }
-                }); 
+                });
             }
         }
     	$scope.unassignForm = false;

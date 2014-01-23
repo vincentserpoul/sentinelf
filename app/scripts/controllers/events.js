@@ -43,14 +43,14 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
     $scope.cancelNewEvent = function () {
         crud.cancelNew($scope);
     }
-    
+
     $scope.updateClient = function (event) {
         if ($scope.client_departments)
             if (!$scope.client_departments.filter(function (value, index) {event.client_id === value.client_id})
             .filter(function (value, index) {event.client_department_id === value.id}).length)
                 event.client_department_id = null;
     }
-    
+
 }]);
 
 
@@ -85,11 +85,11 @@ sentinelfApp.controller("EventCtrl", ['$scope', 'crud', '$modal', 'eventPeriodsL
             $scope.eventPeriodsTemplate = 'views/events/eventPeriods/eventPeriodsList.html';
         $scope.openEventPeriods = !$scope.openEventPeriods;
     }
-    
+
     $scope.openAssignments = function () {
         var assignmentsModalInstance = $modal.open({
                 templateUrl: 'views/events/assignments/assignmentsList.html',
-                controller: 'EmployeeEventAssignmentsCtrl',
+                controller: 'AssignmentsCtrl',
                 resolve: {
                     globalevent_id: function () {
                         return $scope.event.id;

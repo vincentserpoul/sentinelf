@@ -1,6 +1,6 @@
 <div>
     <div class="modal-header">
-        {{label}}'s Assignments
+        {{globalEvent.label}}'s Assignments
     </div>
     <div class="modal-body">
         <div ng-include src="'views/employees/employeesSearch.html'"></div>
@@ -19,20 +19,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="employee in employeesSearchLazyloadFactory.employees">
+                    <tr ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeAssignmentsCtrl">
                         <td>{{employee.id}}</td>
                         <td>{{employee.title_label}} {{employee.first_name}} {{employee.last_name}}</td>
                         <td>{{employee.identity_doc_number}}</td>
                         <td>{{employee.age}}</td>
-                        <td ng-controller="EmployeeEventAssignmentCtrl">
+                        <td>
                             <ul class="list-unstyled">
-                                <li ng-repeat="possible_globalevent_period in employee.possible_globalevent_periods" class="repeat-animation"><a class="btn btn-link btn-sm" ng-click="assign(possible_globalevent_period.id)">{{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}</a>
+                                <li ng-repeat="possible_globalevent_period in globalEvent.globalevent_period" class="repeat-animation">
+                                    <a ng-show="employee[possible_globalevent_period.id] == ''" class="label label-primary" ng-click="assign(possible_globalevent_period.id)">
+                                        {{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}
+                                    </a>
+                                    <span ng-hide="employee[possible_globalevent_period.id] == ''" class="label label-danger">
+                                        {{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}
+                                    </span>
                                 </li>
-                                <li class="btn btn-link disabled" style="opacity: 100" ng-hide="employee.possible_globalevent_periods.length"><p class="text-muted">No more event period(s) to assign</p></li>
-                                <!--
-                                <li><a ng-show="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length" class="btn btn-warning btn-xs" ng-click="assign_whole_event()">Whole event</a></li>
-                                <li class="text-muted" ng-hide="(eventsPeriods | filter_event_periods: {globalevent_id: event.id, employee_id: employee.id, all_possible_globalevent_periods: all_possible_globalevent_periods}).length">No more event period(s) to assign</li>
-                                -->
                             </ul>
                         </td>
                     </tr>
@@ -45,6 +46,6 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-default" ng-click="cancel()">Back to events</button>
     </div>
 </div>
