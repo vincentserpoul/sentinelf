@@ -15,6 +15,17 @@
         <div class="panel-heading">New Client</div>
         <div class="panel-body">
             <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>PostCode</th>
+                        <th>Country</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td><input type="text" class="form-control input-sm" ng-model="new_client.name" /></td>
@@ -28,7 +39,6 @@
                             </select>
                         </td>
                         <td><input type="text" class="form-control input-sm" ng-model="new_client.phone_number" /></td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_client.fax_number" /></td>
                         <td class="btn-group-vertical btn-group-sm">
                             <button type="button" class="btn btn-success" ng-click="saveNewClient()"><i class="fa fa-save fa-fw"></i> Save</button>
                             <button type="button" class="btn btn-default" ng-click="cancelNewClient()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
@@ -47,7 +57,6 @@
                 <th>PostCode</th>
                 <th>Country</th>
                 <th>Phone</th>
-                <th>Fax</th>
                 <th>Actions</th>
                 <th><i class="fa fa-list"></i> Sublists</th>
             </tr>

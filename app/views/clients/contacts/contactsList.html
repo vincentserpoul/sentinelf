@@ -3,7 +3,7 @@
         {{client.name}}'s Contacts
         <button access-level="['add_client_contact']" type="button" class="btn btn-primary btn-xs" ng-click="newContact()"><i class="fa fa-plus fa-fw"></i> New</button>
     </div>
-    <div class="panel panel-primary" ng-show="showNew">
+    <div class="panel panel-primary show-hide-animation" ng-show="showNew">
         <div class="panel-heading">New Contact</div>
         <div class="panel-body">
             <table class="table">

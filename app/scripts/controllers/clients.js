@@ -27,8 +27,7 @@ sentinelfApp.controller('ClientsCtrl', ['$scope', 'crud', 'clientFactory', 'mode
         "city": "Singapore",
         "postcode" : "159960",
         "country_code":"SGP",
-        "phone_number":"+6599999999",
-        "fax_number":"+6599999999"};
+        "phone_number":"+6599999999"};
 
     $scope.loadCountries = function () {
         /* Get the labels necessary for the list of countries not to be only codes */
