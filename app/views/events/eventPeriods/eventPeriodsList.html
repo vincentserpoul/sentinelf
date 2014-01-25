@@ -3,15 +3,16 @@
         {{event.label}}'s Event Periods
         <button type="button" class="btn btn-primary btn-xs" ng-click="newEventPeriod()"><i class="fa fa-plus fa-fw"></i> New</button>
     </div>
-    <div ng-show="showNew">
+    <div class="show-hide-animation" ng-show="showNew">
         <div class="panel panel-primary">
             <div class="panel-heading">New Event Period</div>
             <div class="panel-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>Start Datetime</th>
+                            <th>End Datetime</th>
+                            <th>Number of Hours</th>
                             <th>Number of Employees needed</th>
                             <th>Actions</th>
                         </tr>
@@ -20,6 +21,7 @@
                         <tr>
                             <td><edit-input-datetime datetime="new_eventPeriod.start_datetime" edit-form="true"></edit-input-datetime></td>
                             <td><edit-input-datetime datetime="new_eventPeriod.end_datetime" edit-form="true"></edit-input-datetime></td>
+                            <td>{{new_eventPeriod | timediff}}</td>
                             <td><edit-input-text value="new_eventPeriod.number_of_employee_needed" edit-form="true"></edit-input-text></td>
                             <td>
                                 <div class="btn-group-vertical">
@@ -36,14 +38,16 @@
     <table class="table" ng-show="eventPeriodsLazyloadFactory.eventPeriods.length">
         <tr>
             <th>ID</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>Start Datetime</th>
+            <th>End Datetime</th>
+            <th>Number of Hours</th>
             <th>Number of Employees needed</th>
             <th>Actions</th>
             <th><i class="fa fa-list"></i> Sublists</th>
         </tr>
         <tbody ng-repeat="eventPeriod in eventPeriodsLazyloadFactory.eventPeriods" ng-controller='EventPeriodCtrl' class="repeat-animation">
             <tr ng-include src="eventPeriodTemplate"></tr>
+            <!--
             <tr style="border: none;">
                 <td colspan="6" style="border: none; padding: 0px;">
                     <div ng-show="showAssignments" class="show-hide-animation">
@@ -51,6 +55,7 @@
                     </div>
                 </td>
             </tr>
+            -->
         </tbody>
     </table>
     <div ng-hide="eventPeriodsLazyloadFactory.completelyLoaded || eventPeriodsLazyloadFactory.busyLoadingEventPeriods">

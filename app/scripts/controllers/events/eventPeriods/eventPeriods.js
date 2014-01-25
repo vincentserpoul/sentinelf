@@ -64,3 +64,15 @@ sentinelfApp.controller("EventPeriodCtrl", ['$scope', 'crud', 'assignedEmployees
         }
     })
 }]);
+
+sentinelfApp.filter('timediff', function () {
+    return function (input) {
+        if (input) {
+            var timediff = (new Date(input.end_datetime) - new Date(input.start_datetime))/(1000 * 60 * 60);
+            if (timediff)
+                return timediff;
+            return 0;
+        }
+        return 0;
+    }
+})

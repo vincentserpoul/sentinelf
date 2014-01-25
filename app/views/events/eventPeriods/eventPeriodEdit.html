@@ -6,6 +6,9 @@
 	<input class="form-control input-sm" type="datetime" ng-model="eventPeriod.end_datetime" required />
 </td>
 <td>
+	{{ eventPeriod | timediff }}
+</td>
+<td>
 	<input name="number_of_employee_needed" class="form-control input-sm" type="number" ng-model="eventPeriod.number_of_employee_needed" ui-validate="" required />
 </td>
 <td class="btn-group-vertical btn-group-xs">
