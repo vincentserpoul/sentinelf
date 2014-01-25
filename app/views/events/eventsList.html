@@ -23,6 +23,7 @@
                             <th>Client</th>
                             <th>Department</th>
                             <th>Date</th>
+                            <th>Remark</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -47,6 +48,9 @@
                                 <input type="date" ng-model="new_event.date" class="form-control input-sm" />
                             </td>
                             <td>
+                                <input type="text" ng-model="new_event.remark" class="form-control input-sm" />
+                            </td>
+                            <td>
                                 <div class="btn-group-vertical btn-group-sm">
                                     <button type="button" class="btn btn-success" ng-click="createEvent()"><i class="fa fa-save fa-fw"></i> Save</button>
                                     <button type="button" class="btn btn-default" ng-click="cancelNewEvent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
@@ -66,6 +70,7 @@
                 <th>Client</th>
                 <th>Department</th>
                 <th>Date</th>
+                <th>Remark</th>
                 <th>Actions</th>
                 <th><i class="fa fa-list"></i> Sublists</th>
             </tr>

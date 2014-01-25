@@ -30,7 +30,8 @@ sentinelfApp.controller("EventsCtrl", ['$scope', 'crud', 'eventsLazyloadFactory'
         "label":"Event's name",
         "client_id": 1,
         "client_department_id": 1,
-        "date" : "2013-01-01"};
+        "date" : "2013-01-01",
+        "remark": "Event remark"};
 
     $scope.newEvent = function () {
         crud.new($scope, obj, preselectedValues, $scope.loadClientsAndDepartments);
