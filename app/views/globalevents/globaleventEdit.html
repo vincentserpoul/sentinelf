@@ -1,0 +1,29 @@
+<td>{{globalevent.id}}</td>
+<td>
+    <input type="text" class="form-control input-sm" ng-model="globalevent.label" placeholder="event's name" />
+</td>
+<td>
+    <select ui-select2 ng-model="globalevent.client_id" data-placeholder="Pick an client" ng-change="updateClient(globalevent)">
+    	<option value=""></option>
+    	<option ng-repeat="client in clients" value="{{client.id}}">{{client.name}}</option>
+    </select>
+</td>
+<td>
+	<select ui-select2 ng-model="globalevent.client_department_id" data-placeholder="Pick a department">
+		<option value=""></option>
+		<option ng-repeat="client_department in client_departments | filter: {client_id: globalevent.client_id}" value="{{client_department.id}}">{{client_department.label}}</option>
+	</select>
+</td>
+<td colspan="2">&nbsp;</td>
+<td>
+	<div class="btn-group-vertical btn-group-sm">
+	    <button type="button" class="btn btn-success" ng-click="saveglobalevent()"><i class="fa fa-save fa-fw"></i> Save</button>
+	    <button type="button" class="btn btn-default" ng-click="cancelEditglobalevent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+    </div>
+</td>
+<td>
+	<div class="btn-group-vertical btn-group-sm">
+	    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapseGlobaleventPeriod{{globalevent.id}}" ng-click="loadGlobaleventPeriods()"><i class="fa fa-calendar"></i> globalevent periods</button>
+	    <button type="button" class="btn btn-info" ng-click="openAssignments()"><i class="fa fa-user"></i> Assignments</button>
+    </div>
+</td>

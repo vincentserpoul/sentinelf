@@ -1,30 +1,31 @@
 'use strict';
 
 /* Lazy loading of the employee list */
-sentinelfApp.factory('eventsLazyloadFactory', ['eventFactory', function(eventFactory) {
+sentinelfApp.factory('globaleventPeriodsLazyloadFactory', ['globaleventPeriodsFactory', function(globaleventPeriodsFactory) {
 
-    var eventsLazyloadFactory = function () {
-        this.events = [];
+    var globaleventPeriodsLazyloadFactory = function (globalevent_id) {
+        this.globalevent_id = globalevent_id;
+        this.globaleventPeriods = [];
         this.nextpage = 1;
         this.completelyLoaded = false;
-        this.busyLoadingEvents = false;
+        this.busyLoadingGlobaleventPeriods = false;
         this.total = 0;
     };
 
     /* Create the function for the object (called prototyping in js) */
-    eventsLazyloadFactory.prototype.loadMore = function () {
+    globaleventPeriodsLazyloadFactory.prototype.loadMore = function () {
         /* If the list os already complete, no need to reload it */
         if(this.completelyLoaded) return;
 
         /* Do not call next page multiple times */
-        if(this.busyLoadingEvents) return;
+        if(this.busyLoadingGlobaleventPeriods) return;
 
         /* activate the business just before calling the service */
-        this.busyLoadingEvents = true;
+        this.busyLoadingGlobaleventPeriods = true;
 
         /* Get the employee list, page by page */
-        eventFactory.get({page:this.nextpage}, function(data){
-            this.events = this.events.concat(data['Globalevents']);
+        globaleventPeriodsFactory.get({globalevent_id: this.globalevent_id, page:this.nextpage}, function(data){
+            this.globaleventPeriods = this.globaleventPeriods.concat(data['globaleventPeriods']);
 
             /* update the current page */
             if(data['current_page'] < data['last_page']){
@@ -32,7 +33,7 @@ sentinelfApp.factory('eventsLazyloadFactory', ['eventFactory', function(eventFac
             } else {
                 this.completelyLoaded = true;
             }
-            this.busyLoadingEvents = false;
+            this.busyLoadingGlobaleventPeriods = false;
 
             /* to display the total */
             this.total = data['total'];
@@ -40,5 +41,5 @@ sentinelfApp.factory('eventsLazyloadFactory', ['eventFactory', function(eventFac
         }.bind(this)); /* bind is to associate the params to object properties, I guess...? */
     };
 
-    return eventsLazyloadFactory;
+    return globaleventPeriodsLazyloadFactory;
 }]);

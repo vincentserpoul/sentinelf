@@ -1,0 +1,22 @@
+'use strict';
+
+sentinelfApp.controller(
+    'GlobaleventsListCtrl', [
+    '$scope', 'globaleventsLazyloadFactory'
+    function ($scope, globaleventsLazyloadFactory) {
+
+        init();
+
+        /* Regroup init of the page in one single function */
+        function init() {
+            /* Load the progressive service to load list of employees */
+            $scope.globaleventsLazyloadFactory = new globaleventsLazyloadFactory();
+            /* First launch */
+            $scope.employeesSearchLazyloadFactory.loadMore();
+            /* display the search results */
+            $scope.displayList = true;
+
+        }
+
+    }
+]);

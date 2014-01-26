@@ -52,8 +52,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
         })
     .when('/events',
         {
-            templateUrl:    '/views/events/eventsList.html',
-            controller:     'EventsCtrl',
+            templateUrl:    '/views/globalevents/globaleventsList.html',
+            controller:     'GlobaleventsListCtrl',
             access:         ['user']
         })
     .when('/assignments',
@@ -119,9 +119,9 @@ var sentinelfApp = angular.module('sentinelfApp', [
             function(response) {
                 $location.path('/login');
                 AlertService.show({ "message": response.message, "type": "alert-success"}, true);
-            }, 
+            },
             function() {
-                AlertService.show({ "message": response.message, "type": "alert-danger" }, false);  
+                AlertService.show({ "message": response.message, "type": "alert-danger" }, false);
             }
         );
     })
