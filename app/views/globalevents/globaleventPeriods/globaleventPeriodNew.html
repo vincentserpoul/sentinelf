@@ -1,0 +1,29 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">New event Period</div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Start Datetime</th>
+                    <th>End Datetime</th>
+                    <th>Number of Hours</th>
+                    <th>Number of Employees needed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><edit-input-datetime datetime="new_globaleventPeriod.start_datetime" edit-form="true"></edit-input-datetime></td>
+                    <td><edit-input-datetime datetime="new_globaleventPeriod.end_datetime" edit-form="true"></edit-input-datetime></td>
+                    <td><edit-input-text value="new_globaleventPeriod.number_of_employee_needed" edit-form="true"></edit-input-text></td>
+                    <td>
+                        <div class="btn-group-vertical">
+                            <button type="button" class="btn btn-success btn-xs" ng-click="saveNewGlobaleventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
+                            <button type="button" class="btn btn-default btn-xs" ng-click="cancelNewGlobaleventPeriod()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
