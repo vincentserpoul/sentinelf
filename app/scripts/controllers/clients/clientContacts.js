@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('ContactsCtrl', ['$scope', 'crud', function($scope, crud) {
+sentinelfApp.controller('ClientContactsCtrl', ['$scope', 'crud', function($scope, crud) {
     var obj = 'contact';
     var preselectedValues = {
             "client_id": $scope.client.id,

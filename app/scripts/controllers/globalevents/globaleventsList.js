@@ -1,16 +1,16 @@
 'use strict';
 
-sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyloadFactory', 'globaleventsFactory', 'clientFactory', 'departmentFactory',
-    function ($scope, globaleventsLazyloadFactory, globaleventsFactory, clientFactory, departmentFactory){
+sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyloadFactory', 'globaleventsFactory', 'clientDepartmentsFactory',
+    function ($scope, globaleventsLazyloadFactory, globaleventsFactory, clientDepartmentsFactory){
 
         init();
 
         /* Regroup init of the page in one single function */
         function init() {
-            /* Setting the edit template */
-            $scope.editTemplate = 'views/globalevents/globaleventEdit.html';
             /* Setting the view template */
-            $scope.globaleventTemplate = 'views/globalevents/globaleventView.html';
+            $scope.globaleventViewTemplate = 'views/globalevents/globaleventView.html';
+            /* Setting up the default template in the list */
+            $scope.globaleventTemplate = $scope.globaleventViewTemplate;
             /* Load the progressive service to load list of globalevents */
             $scope.globaleventsLazyloadFactory = new globaleventsLazyloadFactory();
             /* First launch */
@@ -20,15 +20,10 @@ sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyload
         }
 
         /* Load clients and deps */
-        $scope.loadClientsAndDepartments = function () {
+        $scope.loadClientDepartments = function () {
             if (!($scope.clients && $scope.client_departments)) {
-                //Fetch all globalevent
-                clientFactory.get(function (data) {
-                    $scope.clients = data['clients'];
-                });
-
                 //Fetch all departments
-                departmentFactory.get(function (data) {
+                clientDepartmentsFactory.get(function (data) {
                     $scope.client_departments = data['ClientDepartments'];
                 });
             }
@@ -36,15 +31,20 @@ sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyload
 
         /* Display new form */
         $scope.newGlobalevent = function () {
-            /* Get needed select list */
-            $scope.loadClientsAndDepartments();
-            /* Default evetn data */
-            $scope.new_globalevent = {
-                    "client_id": 1,
-                    "client_department_id": 1
-            };
-            /* Show the form */
-            $scope.showNewForm = true;
+            $scope.showNewForm = !$scope.showNewForm;
+
+            if($scope.showNewForm){
+                $scope.globaleventNewTemplate = 'views/globalevents/globaleventNew.html';
+                /* Get needed select list */
+                $scope.loadClientDepartments();
+                /* Default evetn data */
+                $scope.new_globalevent = {
+                        "client_id": 1,
+                        "client_department_id": 1
+                };
+            } else {
+                $scope.globaleventNewTemplate = '';
+            }
         }
 
         /* Cancel new event creation */

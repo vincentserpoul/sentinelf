@@ -16,14 +16,14 @@
 </td>
 <td colspan="2">&nbsp;</td>
 <td>
-	<div class="btn-group-vertical btn-group-sm">
-	    <button type="button" class="btn btn-success" ng-click="saveglobalevent()"><i class="fa fa-save fa-fw"></i> Save</button>
-	    <button type="button" class="btn btn-default" ng-click="cancelEditglobalevent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+	<div class="btn-group btn-group-sm">
+	    <button type="button" class="btn btn-success" ng-click="saveGlobalevent()"><i class="fa fa-save fa-fw"></i> Save</button>
+	    <button type="button" class="btn btn-default" ng-click="cancelEditGlobalevent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
     </div>
 </td>
 <td>
-	<div class="btn-group-vertical btn-group-sm">
-	    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapseGlobaleventPeriod{{globalevent.id}}" ng-click="loadGlobaleventPeriods()"><i class="fa fa-calendar"></i> globalevent periods</button>
+	<div class="btn-group btn-group-sm">
+	    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapseGlobaleventPeriod{{globalevent.id}}" ng-click="loadGlobaleventPeriods()"><i class="fa fa-calendar"></i> event periods</button>
 	    <button type="button" class="btn btn-info" ng-click="openAssignments()"><i class="fa fa-user"></i> Assignments</button>
     </div>
 </td>

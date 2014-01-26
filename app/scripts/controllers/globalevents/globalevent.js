@@ -23,31 +23,44 @@ sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeri
             )
         };
 
-    /* Load the list of glbalevent_periods */
-    $scope.loadGlobaleventPeriods = function(){
-            /* Load the progressive service to load list of globalevents */
-            $scope.globaleventPeriodsLazyloadFactory = new globaleventPeriodsLazyloadFactory();
-            /* First launch */
-            $scope.globaleventPeriodsLazyloadFactory.loadMore();
-            /* Assign the template */
-            $scope.globaleventPeriodsTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodsList.html';
-            /* Open the template */
-            $scope.openEventPeriods = !$scope.openEventPeriods;
-    }
+        /* Load the list of glbalevent_periods */
+        $scope.loadGlobaleventPeriods = function(){
+                /* Load the progressive service to load list of globalevents */
+                $scope.globaleventPeriodsLazyloadFactory = new globaleventPeriodsLazyloadFactory();
+                /* First launch */
+                $scope.globaleventPeriodsLazyloadFactory.loadMore();
+                /* Assign the template */
+                $scope.globaleventPeriodsTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodsList.html';
+                /* Open the template */
+                $scope.openEventPeriods = !$scope.openEventPeriods;
+        }
+
+        /* Edit an existing event */
+        $scope.editGlobalevent = function () {
+            /* Load dept */
+            $scope.loadClientDepartments();
+            /* Change the template from view to edit */
+            $scope.globaleventEditTemplate = 'views/globalevents/globaleventEdit.html';
+            $scope.globaleventTemplate = $scope.globaleventEditTemplate;
+
+        }
+
+        /* update an existing global event */
+        $scope.saveGlobalevent = function () {
+            /* Launch service to create new db */
+            globaleventsFactory.update({eventId:$scope.globalevent.Id}, $scope.globalevent, function(data){
+                $scope.globaleventTemplate = $scope.globaleventViewTemplate;
+            });
+        };
+
+        $scope.cancelEditGlobalevent = function () {
+            /* Change the template from view to edit */
+            $scope.globaleventTemplate = $scope.globaleventViewTemplate;
+        };
 
  /*   var obj = 'event';
 
-    $scope.editEvent = function () {
-        crud.edit($scope, obj, $scope.loadClientsAndDepartments);
-    }
-
-    $scope.saveEvent = function () {
-        crud.save($scope, obj);
-    };
-
-    $scope.cancelEditEvent = function () {
-        crud.cancelEdit($scope, obj);
-    };*/
+*/
 
 
 

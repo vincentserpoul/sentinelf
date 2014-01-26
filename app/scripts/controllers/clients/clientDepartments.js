@@ -1,6 +1,6 @@
 'use strict';
 
-sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
     init();
 
@@ -43,14 +43,14 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
             function (data) {
                 if (data) {
                     $scope.departments = data['ClientDepartments'];
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                 }
             }, function (error) {
                 if (error['data'])
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
             }
         );
-        $scope.editForm = false;   
+        $scope.editForm = false;
     };
 
     $scope.cancelEditDepartment = function () {
@@ -72,11 +72,11 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
                         $scope.selectedDepartment = {'label': 'None'};
                         $scope.detailShow = false;
                         $scope.departments = data['ClientDepartments'];
-                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true); 
+                        AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
                     }
-                }, function (error) { 
+                }, function (error) {
                     if (error['data'])
-                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false); 
+                        AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
                 }
             );
         });
@@ -86,15 +86,15 @@ sentinelfApp.controller('DepartmentsCtrl', ['$scope', 'formService', 'AlertServi
 
     $scope.newDepartment = function (parent_id) {
         parent_id = (parent_id) ? parent_id : null;
-        $scope.new_department = 
+        $scope.new_department =
             {'parent_id': parent_id,
             'client_id': $scope.client.id,
-            'label': 'New department', 
+            'label': 'New department',
             'description': 'description',
             'work_type_id': 1,
             'client_h_rate': 9,
-            'client_h_rate_currency_code': 'SGD', 
-            'employee_h_rate': 9, 
+            'client_h_rate_currency_code': 'SGD',
+            'employee_h_rate': 9,
             'employee_h_rate_currency_code': 'SGD'};
         $scope.showNew = true;
         $scope.detailShow = false;
