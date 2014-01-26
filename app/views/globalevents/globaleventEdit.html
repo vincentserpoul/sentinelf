@@ -2,19 +2,14 @@
 <td>
     <input type="text" class="form-control input-sm" ng-model="globalevent.label" placeholder="event's name" />
 </td>
-<td>
-    <select ui-select2 ng-model="globalevent.client_id" data-placeholder="Pick an client" ng-change="updateClient(globalevent)">
-    	<option value=""></option>
-    	<option ng-repeat="client in clients" value="{{client.id}}">{{client.name}}</option>
+<td colspan="2">
+    <select ng-model="globalevent.client_department_id">
+        <optgroup label= "{{client.name}}" ng-repeat="client in client_departments">
+            <option value="{{client_department.id}}" ng-repeat="client_department in client.client_department">{{client_department.label}}</option>
+        </optgroup>
     </select>
-</td>
 <td>
-	<select ui-select2 ng-model="globalevent.client_department_id" data-placeholder="Pick a department">
-		<option value=""></option>
-		<option ng-repeat="client_department in client_departments | filter: {client_id: globalevent.client_id}" value="{{client_department.id}}">{{client_department.label}}</option>
-	</select>
-</td>
-<td colspan="2">&nbsp;</td>
+<td colspan="1">&nbsp;</td>
 <td>
 	<div class="btn-group btn-group-sm">
 	    <button type="button" class="btn btn-success" ng-click="saveGlobalevent()"><i class="fa fa-save fa-fw"></i> Save</button>

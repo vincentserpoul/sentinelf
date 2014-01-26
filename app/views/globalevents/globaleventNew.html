@@ -5,7 +5,6 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Client</th>
                     <th>Department</th>
                     <th>Actions</th>
                 </tr>
@@ -16,17 +15,12 @@
                         <input class="form-control input-sm" ng-model="new_globalevent.label" />
                     </td>
                     <td>
-                        <select ui-select2 ng-model="new_globalevent.client_id" data-placeholder="Pick an client" ng-change="updateClient(new_globalevent)">
-                            <option value=""></option>
-                            <option ng-repeat="client in clients" value="{{client.id}}">{{client.name}}</option>
+                        <select ng-model="new_globalevent.client_department_id">
+                            <optgroup label= "{{client.name}}" ng-repeat="client in client_departments">
+                                <option value="{{client_department.id}}" ng-repeat="client_department in client.client_department">{{client_department.label}}</option>
+                            </optgroup>
                         </select>
-                    </td>
                     <td>
-                        <select ui-select2 ng-model="new_globalevent.client_department_id" data-placeholder="Pick a department">
-                            <option value=""></option>
-                            <option ng-repeat="client_department in client_departments | filter: {client_id: new_globalevent.client_id}" value="{{client_department.id}}">{{client_department.label}}</option>
-                        </select>
-                    </td>
                     <td>
                         <div class="btn-group btn-group-sm">
                             <button type="button" class="btn btn-success" ng-click="createNewGlobalevent()"><i class="fa fa-save fa-fw"></i> Save</button>

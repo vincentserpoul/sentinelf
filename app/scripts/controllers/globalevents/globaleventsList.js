@@ -24,7 +24,7 @@ sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyload
             if (!($scope.clients && $scope.client_departments)) {
                 //Fetch all departments
                 clientDepartmentsFactory.get(function (data) {
-                    $scope.client_departments = data['ClientDepartments'];
+                    $scope.client_departments = data['client_departments'];
                 });
             }
         }

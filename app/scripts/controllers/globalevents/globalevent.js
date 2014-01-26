@@ -6,7 +6,7 @@ sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeri
         /* Delete employee button for each employee */
         $scope.deleteGlobalevent = function(){
 
-            globaleventsFactory.delete({eventId:$scope.globalevent.id},
+            globaleventsFactory.delete({globaleventId:$scope.globalevent.id},
                 function(data){
                     if(data && data['error'] == false){
                         /* Get the index of the targeted event */
@@ -50,6 +50,7 @@ sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeri
             /* Launch service to create new db */
             globaleventsFactory.update({eventId:$scope.globalevent.Id}, $scope.globalevent, function(data){
                 $scope.globaleventTemplate = $scope.globaleventViewTemplate;
+                angular.extend($scope.globalevent, data['globalevents'][0]);
             });
         };
 

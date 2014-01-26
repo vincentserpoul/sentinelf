@@ -2,13 +2,13 @@
 
 sentinelfApp.factory('globaleventsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource( SENTINEL_API_END_POINT + '/globalevent/:eventId',
+    return $resource( SENTINEL_API_END_POINT + '/globalevent/:globaleventId',
                 {eventId: "@id" },
                 {
                     "get": {method:"GET"},
                     "create": {method:"POST"},
-                    "update": {method:"PUT", params:{eventId: "@id"}},
-                    "delete": {method:"DELETE", params:{eventId: "@id"}}
+                    "update": {method:"PUT", params:{globaleventId: "@id"}},
+                    "delete": {method:"DELETE", params:{globaleventId: "@id"}}
                 }
             );
 
