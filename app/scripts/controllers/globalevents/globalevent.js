@@ -3,7 +3,7 @@
 sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeriodsLazyloadFactory', 'globaleventsFactory',
     function ($scope, $modal, globaleventPeriodsLazyloadFactory, globaleventsFactory) {
 
-        /* Delete employee button for each employee */
+        /* Delete globalevent button for each globalevent */
         $scope.deleteGlobalevent = function(){
 
             globaleventsFactory.delete({globaleventId:$scope.globalevent.id},
@@ -26,13 +26,17 @@ sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeri
         /* Load the list of glbalevent_periods */
         $scope.loadGlobaleventPeriods = function(){
                 /* Load the progressive service to load list of globalevents */
-                $scope.globaleventPeriodsLazyloadFactory = new globaleventPeriodsLazyloadFactory();
+                $scope.globaleventPeriodsLazyloadFactory = new globaleventPeriodsLazyloadFactory($scope.globalevent.id);
                 /* First launch */
                 $scope.globaleventPeriodsLazyloadFactory.loadMore();
+
                 /* Assign the template */
-                $scope.globaleventPeriodsTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodsList.html';
+                $scope.globaleventPeriodsListTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodsList.html';
+                $scope.globaleventPeriodViewTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodView.html';
+
+                $scope.globaleventPeriodTemplate = $scope.globaleventPeriodViewTemplate;
                 /* Open the template */
-                $scope.openEventPeriods = !$scope.openEventPeriods;
+                $scope.openGlobaleventPeriods = !$scope.openGlobaleventPeriods;
         }
 
         /* Edit an existing event */

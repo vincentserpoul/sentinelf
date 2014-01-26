@@ -1,11 +1,11 @@
 'use strict';
 
 /* Lazy loading of the employee list */
-sentinelfApp.factory('globaleventPeriodsLazyloadFactory', ['globaleventPeriodsFactory', function(globaleventPeriodsFactory) {
+sentinelfApp.factory('globaleventPeriodsLazyloadFactory', ['globaleventsFactory', function(globaleventsFactory) {
 
-    var globaleventPeriodsLazyloadFactory = function (globalevent_id) {
-        this.globalevent_id = globalevent_id;
-        this.globaleventPeriods = [];
+    var globaleventPeriodsLazyloadFactory = function (globaleventId) {
+        this.globaleventId = globaleventId;
+        this.globalevent_periods = [];
         this.nextpage = 1;
         this.completelyLoaded = false;
         this.busyLoadingGlobaleventPeriods = false;
@@ -24,8 +24,8 @@ sentinelfApp.factory('globaleventPeriodsLazyloadFactory', ['globaleventPeriodsFa
         this.busyLoadingGlobaleventPeriods = true;
 
         /* Get the employee list, page by page */
-        globaleventPeriodsFactory.get({globalevent_id: this.globalevent_id, page:this.nextpage}, function(data){
-            this.globaleventPeriods = this.globaleventPeriods.concat(data['globaleventPeriods']);
+        globaleventsFactory.getGlobaleventPeriods({globaleventId: this.globaleventId, page:this.nextpage}, function(data){
+            this.globalevent_periods = this.globalevent_periods.concat(data['globalevent_periods']);
 
             /* update the current page */
             if(data['current_page'] < data['last_page']){

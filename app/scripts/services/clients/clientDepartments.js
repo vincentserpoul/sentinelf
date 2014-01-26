@@ -5,6 +5,7 @@ sentinelfApp.factory('clientDepartmentsFactory', ['$resource', 'SENTINEL_API_END
     var clientDepartmentsResource = $resource( SENTINEL_API_END_POINT + '/client_department/:clientDepartmentId',
                                         {clientDepartmentId: "@id" },
                                         {
+                                            "get": {method:"GET", cache: true},
                                         	"update": {method:"PUT", params:{clientDepartmentId: "@id"}},
                                         	"delete": {method:"DELETE", params:{clientDepartmentId: "@id"}}
                                         }

@@ -1,15 +1,15 @@
-<td>{{ eventPeriod.id }}</td>
+<td>{{globalevent_period.id }}</td>
 <td>
-	{{ eventPeriod.start_datetime }}
+	{{globalevent_period.start_datetime }}
 </td>
 <td>
-	{{ eventPeriod.end_datetime }}
+	{{globalevent_period.end_datetime }}
 </td>
 <td>
-	{{ eventPeriod | timediff }}
+	{{globalevent_period | timediff }}
 </td>
 <td>
-	{{ eventPeriod.number_of_employee_needed }}
+	{{globalevent_period.number_of_employee_needed}}
 </td>
 <td class="btn-group-vertical btn-group-xs">
 	<button type="button" class="btn btn-primary" ng-click="editEventPeriod()"><i class="fa fa-edit fa-fw"></i> Edit</button>
@@ -17,8 +17,8 @@
 </td>
 <td>
 	<button type="button" class="btn btn-info btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click='loadAssignments()'>
-		<i class="fa fa-calendar"></i> Assigned 
-		<span ng-hide="assignedEmployeesLazyloadFactory" class="badge">{{ eventPeriod.number_of_employees_assigned }}</span>
-		<span ng-show="assignedEmployeesLazyloadFactory" class="badge">{{assignedEmployeesLazyloadFactory.total}}</span> 
-	</button> 
+		<i class="fa fa-calendar"></i> Assigned
+		<span ng-hide="assignedEmployeesLazyloadFactory" class="badge">{{ globalevent_period.number_employees_assigned }}</span>
+		<span ng-show="assignedEmployeesLazyloadFactory" class="badge">{{assignedEmployeesLazyloadFactory.total}}</span>
+	</button>
 </td>
