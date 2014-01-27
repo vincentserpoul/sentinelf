@@ -1,24 +1,18 @@
-<td>{{ eventPeriod.id }}</td>
+<td>{{ globalevent_period.id }}</td>
 <td>
-	<input class="form-control input-sm" type="datetime" ng-model="eventPeriod.start_datetime" required />
-</td>
-<td>
-	<input class="form-control input-sm" type="datetime" ng-model="eventPeriod.end_datetime" required />
+	<input class="form-control input-sm" type="datetime" ng-model="globalevent_period.start_datetime" required />
 </td>
 <td>
-	{{ eventPeriod | timediff }}
+	<input class="form-control input-sm" type="datetime" ng-model="globalevent_period.end_datetime" required />
 </td>
 <td>
-	<input name="number_of_employee_needed" class="form-control input-sm" type="number" ng-model="eventPeriod.number_of_employee_needed" ui-validate="" required />
-</td>
-<td class="btn-group-vertical btn-group-xs">
-	<button type="button" class="btn btn-success" ng-click="saveEventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
-	<button type="button" class="btn btn-default" ng-click="cancelEditEventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+	&nbsp;
 </td>
 <td>
-	<button type="button" class="btn btn-info btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click='loadAssignments()'>
-		<i class="fa fa-calendar"></i> Assigned 
-		<span ng-hide="assignedEmployeesLazyloadFactory" class="badge">{{ eventPeriod.number_of_employees_assigned }}</span>
-		<span ng-show="assignedEmployeesLazyloadFactory" class="badge">{{assignedEmployeesLazyloadFactory.total}}</span> 
-	</button> 
+	<input name="number_of_employee_needed" class="form-control input-sm" type="number" ng-model="globalevent_period.number_of_employee_needed" ui-validate="" required />
 </td>
+<td class="btn-group btn-group-xs">
+	<button type="button" class="btn btn-success" ng-click="saveGlobaleventPeriod()"><i class="fa fa-save fa-fw"></i> Save</button>
+	<button type="button" class="btn btn-default" ng-click="cancelEditGlobaleventPeriod()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+</td>
+<td>&nbsp;</td>

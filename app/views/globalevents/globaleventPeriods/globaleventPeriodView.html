@@ -1,24 +1,33 @@
-<td>{{globalevent_period.id }}</td>
-<td>
-	{{globalevent_period.start_datetime }}
-</td>
-<td>
-	{{globalevent_period.end_datetime }}
-</td>
-<td>
-	{{globalevent_period | timediff }}
-</td>
-<td>
-	{{globalevent_period.number_of_employee_needed}}
-</td>
-<td class="btn-group-vertical btn-group-xs">
-	<button type="button" class="btn btn-primary" ng-click="editEventPeriod()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-	<button type="button" class="btn btn-danger" ng-click="deleteEventPeriod()"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li></button>
-</td>
-<td>
-	<button type="button" class="btn btn-info btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click='loadAssignments()'>
-		<i class="fa fa-calendar"></i> Assigned
-		<span ng-hide="assignedEmployeesLazyloadFactory" class="badge">{{ globalevent_period.number_employees_assigned }}</span>
-		<span ng-show="assignedEmployeesLazyloadFactory" class="badge">{{assignedEmployeesLazyloadFactory.total}}</span>
-	</button>
-</td>
+<tr>
+	<td>{{globalevent_period.id}}</td>
+	<td>
+		{{globalevent_period.start_datetime}}
+	</td>
+	<td>
+		{{globalevent_period.end_datetime}}
+	</td>
+	<td>
+		{{globalevent_period.duration}}
+	</td>
+	<td>
+		{{globalevent_period.number_of_employee_needed}}
+	</td>
+	<td class="btn-group btn-group-xs">
+		<button type="button" class="btn btn-primary" ng-click="editGlobaleventPeriod()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+		<button type="button" class="btn btn-danger" ng-click="deleteGlobaleventPeriod()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+	</td>
+	<td>
+		<button type="button" class="btn btn-info btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click='loadAssignmedEmployees()'>
+			<i class="fa fa-user"></i> Assigned employees
+			<span ng-hide="assignedEmployeesLazyloadFactory" class="badge">{{globalevent_period.number_of_employee_assigned}}</span>
+			<span ng-show="assignedEmployeesLazyloadFactory" class="badge">{{assignedEmployeesLazyloadFactory.total}}</span>
+		</button>
+	</td>
+</tr>
+<tr style="border: none;">
+    <td colspan="6" style="border: none; padding: 0px;">
+        <div ng-show="showAssignments" class="show-hide-animation">
+            <div class="well well-sm" ng-include src="'views/globalevents/globaleventPeriods/assignmentsList.html'"></div>
+        </div>
+    </td>
+</tr>

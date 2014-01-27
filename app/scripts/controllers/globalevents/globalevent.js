@@ -3,6 +3,13 @@
 sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeriodsLazyloadFactory', 'globaleventsFactory',
     function ($scope, $modal, globaleventPeriodsLazyloadFactory, globaleventsFactory) {
 
+        init();
+
+        function init(){
+            /* hide event period details at first launch */
+            $scope.openGlobaleventPeriods = false;
+        }
+
         /* Delete globalevent button for each globalevent */
         $scope.deleteGlobalevent = function(){
 
@@ -20,23 +27,7 @@ sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeri
                     }
 
                 }
-            )
-        };
-
-        /* Load the list of glbalevent_periods */
-        $scope.loadGlobaleventPeriods = function(){
-                /* Load the progressive service to load list of globalevents */
-                $scope.globaleventPeriodsLazyloadFactory = new globaleventPeriodsLazyloadFactory($scope.globalevent.id);
-                /* First launch */
-                $scope.globaleventPeriodsLazyloadFactory.loadMore();
-
-                /* Assign the template */
-                $scope.globaleventPeriodsListTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodsList.html';
-                $scope.globaleventPeriodViewTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodView.html';
-
-                $scope.globaleventPeriodTemplate = $scope.globaleventPeriodViewTemplate;
-                /* Open the template */
-                $scope.openGlobaleventPeriods = !$scope.openGlobaleventPeriods;
+            );
         }
 
         /* Edit an existing event */
@@ -63,37 +54,31 @@ sentinelfApp.controller("GlobaleventCtrl", ['$scope', '$modal', 'globaleventPeri
             $scope.globaleventTemplate = $scope.globaleventViewTemplate;
         };
 
- /*   var obj = 'event';
+        /* Load the list of glbalevent_periods */
+        $scope.loadGlobaleventPeriods = function(){
+                /* Load the progressive service to load list of globalevents */
+                $scope.globaleventPeriodsLazyloadFactory = new globaleventPeriodsLazyloadFactory($scope.globalevent.id);
+                /* First launch */
+                $scope.globaleventPeriodsLazyloadFactory.loadMore();
 
-*/
+                $scope.globaleventPeriodViewTemplate = 'views/globalevents/globaleventPeriods/globaleventPeriodView.html';
+                /* Open the template */
+                $scope.openGlobaleventPeriods = !$scope.openGlobaleventPeriods;
+        }
 
-
-
-    //$scope.loadEventPeriods = function () {
-    //    if (!$scope.eventPeriodsLazyloadFactory) {
-            /* Load the progressive service to load list of employees */
-            //$scope.eventPeriodsLazyloadFactory = new eventPeriodsLazyloadFactory($scope.event.id);
-            /* First launch */
-            //$scope.eventPeriodsLazyloadFactory.loadMore();
-        //}
-        //if (!$scope.eventPeriodsTemplate)
-        //    $scope.eventPeriodsTemplate = 'views/globalevent/eventPeriods/eventPeriodsList.html';
-        //$scope.openEventPeriods = !$scope.openEventPeriods;
-    //}
-
-    //$scope.openAssignments = function () {
-     //   var assignmentsModalInstance = $modal.open({
-      //          templateUrl: 'views/globalevent/assignments/assignmentsList.html',
-       //         controller: 'AssignmentsCtrl',
-        //        resolve: {
-         //           globalevent_id: function () {
-          //              return $scope.event.id;
-           //         },
-            //        label: function () {
-             //           return $scope.event.label;
-              //      }
-            //    }
-          //  });
-    //}
+        $scope.openAssignments = function () {
+            var assignmentsModalInstance = $modal.open({
+                    templateUrl: 'views/globalevents/assignments/assignmentsList.html',
+                    controller: 'AssignmentsCtrl',
+                    resolve: {
+                        globalevent_id: function () {
+                            return $scope.globalevent.id;
+                        },
+                        label: function () {
+                            return $scope.globalevent.label;
+                        }
+                    }
+                });
+        }
 
 }]);

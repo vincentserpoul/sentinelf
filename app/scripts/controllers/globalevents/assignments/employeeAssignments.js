@@ -1,12 +1,12 @@
 'use strict';
 
 sentinelfApp.controller('EmployeeAssignmentsCtrl',
-    ['$scope', 'eventPeriodEmployeeFactory', 'AlertService',
-    function ($scope, eventPeriodEmployeeFactory, AlertService) {
+    ['$scope', 'globaleventPeriodEmployeesFactory', 'AlertService',
+    function ($scope, globaleventPeriodEmployeesFactory, AlertService) {
 
     $scope.assign = function (globalevent_period_id) {
 
-        eventPeriodEmployeeFactory.save({'globalevent_period_id': globalevent_period_id, 'employee_id': $scope.employee.id},
+        globaleventPeriodEmployeesFactory.save({'globalevent_period_id': globalevent_period_id, 'employee_id': $scope.employee.id},
             function (data) {
                if (data) {
                     $scope.employee[globalevent_period_id] = globalevent_period_id;
@@ -27,7 +27,7 @@ sentinelfApp.controller('EmployeeAssignmentsCtrl',
                 if (data) {
                     for (var i in data['globalevent_period_employees'])
                         $scope.eventPeriodEmployees.push(data['globalevent_period_employees'][i]);
-                    employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
+                    employeesEventPeriodsFactory.get({'globalevent_id': 0}, function (data) {
                         $scope.all_possible_globalevent_periods = data['possible_globalevent_periods'];
                     })
                     AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);

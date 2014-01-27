@@ -1,18 +1,56 @@
-<td>{{globalevent.id}}</td>
-<td>{{globalevent.label}}</td>
-<td>{{globalevent.client_name}}</td>
-<td>{{globalevent.client_department_label}}</td>
-<td>{{globalevent.start_datetime}}</td>
-<td>{{globalevent.end_datetime}}</td>
-<td>
-    <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-primary" ng-click="editGlobalevent()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-        <button type="button" class="btn btn-danger" ng-click="deleteGlobalevent()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
-    </div>
-</td>
-<td>
-    <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-info" ng-click="loadGlobaleventPeriods()"><i class="fa fa-calendar"></i> Event periods</button>
-        <button type="button" class="btn btn-info" ng-click="openAssignments()"><i class="fa fa-user"></i> Assignments</button>
-    </div>
-</td>
+<tr>
+    <td>{{globalevent.id}}</td>
+    <td>{{globalevent.label}}</td>
+    <td>{{globalevent.client_name}}</td>
+    <td>{{globalevent.client_department_label}}</td>
+    <td>{{globalevent.start_datetime}}</td>
+    <td>{{globalevent.end_datetime}}</td>
+    <td>
+        <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-primary" ng-click="editGlobalevent()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+            <button type="button" class="btn btn-danger" ng-click="deleteGlobalevent()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+        </div>
+    </td>
+    <td>
+        <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-info" ng-click="loadGlobaleventPeriods()"><i class="fa fa-calendar"></i> Event periods</button>
+            <button type="button" class="btn btn-info" ng-click="openAssignments()"><i class="fa fa-user"></i> Assignments</button>
+        </div>
+    </td>
+</tr>
+<tr style="border: none;" ng-show="openGlobaleventPeriods">
+    <td>&nbsp;</td>
+    <td colspan="7" style="border: none; padding: 0px;">
+        <div class="panel panel-info" ng-controller="GlobaleventPeriodsListCtrl" >
+            <div class="panel-heading">
+                {{globalevent.label}}'s event periods
+                <button type="button" class="btn btn-primary btn-xs" ng-click="newGlobaleventPeriod()"><i class="fa fa-plus fa-fw"></i> New</button>
+            </div>
+            <div class="show-hide-animation" ng-show="showNewForm" ng-include src="globaleventPeriodNewTemplate">
+            </div>
+            <table class="table" ng-show="globaleventPeriodsLazyloadFactory.globalevent_periods.length">
+                <tr>
+                    <thead>
+                        <th>ID</th>
+                        <th>Start Datetime</th>
+                        <th>End Datetime</th>
+                        <th>Duration (h)</th>
+                        <th>Number of Employees needed</th>
+                        <th>Actions</th>
+                        <th><i class="fa fa-list"></i> Sublists</th>
+                    </thead>
+                </tr>
+                <tbody ng-repeat="globalevent_period in globaleventPeriodsLazyloadFactory.globalevent_periods" ng-controller='GlobaleventPeriodCtrl' class="repeat-animation" ng-include src="globaleventPeriodTemplate">
+                </tbody>
+            </table>
+            <div ng-hide="globaleventPeriodsLazyloadFactory.completelyLoaded || globaleventPeriodsLazyloadFactory.busyLoadingGlobaleventPeriods">
+                <button type="button" class="btn btn-link" ng-click="globaleventPeriodsLazyloadFactory.loadMore()">More...</button>
+            </div>
+            <div class="panel-body" ng-hide="globaleventPeriodsLazyloadFactory.globalevent_periods.length || globaleventPeriodsLazyloadFactory.busyLoadingGlobaleventPeriods">
+                <p class="text-muted">Empty</p>
+            </div>
+            <div class="panel-footer" ng-show="globaleventPeriodsLazyloadFactory.busyLoadingGlobaleventPeriods"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+        </div>
+        <div ng-show="openGlobaleventPeriods" class="show-hide-animation" ng-include src="globaleventPeriodsListTemplate"></div>
+    </td>
+</tr>

@@ -21,18 +21,22 @@ sentinelfApp.factory('globaleventsFactory', ['$resource', 'SENTINEL_API_END_POIN
 
 sentinelfApp.factory('globaleventPeriodsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
-    return $resource( SENTINEL_API_END_POINT + '/globalevent_periods/:globaleventPeriodId/',
-                    {globaleventPeriodId: '@id'},
-                    {
-                        "get": {method:"GET"},
-                        "create": {method:"POST"},
-                        "update": {method:"PUT", params:{globaleventPeriodId: "@id"}},
-                        "delete": {method:"DELETE", params:{globaleventPeriodId: "@id"}},
-                        "getAssignedEmployees": {method:"GET", params:{globaleventPeriodId: "@id"}}
-                    });
-}])
+    return $resource( SENTINEL_API_END_POINT + '/globalevent_period/:globaleventPeriodId/:subResource/',
+                {
+                    globaleventPeriodId: '@id',
+                    subResource: "@subResource"
+                },
+                {
+                    "get": {method:"GET"},
+                    "create": {method:"POST"},
+                    "update": {method:"PUT"},
+                    "delete": {method:"DELETE"},
+                    "getAssignedEmployees": {method:"GET", params:{globaleventPeriodId: "@id", subResource: "globalevent_periods"}}
+                }
+            );
+}]);
 
-sentinelfApp.factory('globaleventPeriodsEmployeeFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
+sentinelfApp.factory('globaleventPeriodEmployeesFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
     return $resource( SENTINEL_API_END_POINT + '/globalevent_period_employee/:eventPeriodEmployeeId',
                 {eventPeriodEmployeeId: "@id" },

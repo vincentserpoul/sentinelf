@@ -1,16 +1,16 @@
 'use strict';
 
 sentinelfApp.controller('AssignmentsCtrl',
-    ['$scope', '$modalInstance', 'eventFactory', 'employeesSearchLazyloadFactory', 'globalevent_id', 'eventPeriodEmployeeFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function ($scope, $modalInstance, eventFactory, employeesSearchLazyloadFactory, globalevent_id, eventPeriodEmployeeFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+    ['$scope', '$modalInstance', 'globaleventsFactory', 'employeesSearchLazyloadFactory', 'globalevent_id', 'globaleventPeriodEmployeesFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
+    function ($scope, $modalInstance, globaleventsFactory, employeesSearchLazyloadFactory, globalevent_id, globaleventPeriodEmployeesFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
         init();
 
         /* Regroup init of the page in one single function */
         function init() {
             // Get details about the current global event
-            eventFactory.get({eventId:globalevent_id}, function(data){
-                $scope.globalEvent = data['globalevents'][0];
+            globaleventsFactory.get({eventId:globalevent_id}, function(data){
+                $scope.globalevent = data['globalevents'][0];
             });
 
             /* Get the labels necessary for the list not to be only numbers */
@@ -28,7 +28,7 @@ sentinelfApp.controller('AssignmentsCtrl',
         $scope.searchEmployees = function (){
 
             /* specify which globalevent we are targeting to get results with assignments info */
-            this.searchCriterias['globalevent_id'] = $scope.globalEvent.id;
+            this.searchCriterias['globalevent_id'] = $scope.globalevent.id;
 
             /* Load the progressive service to load list of employees */
             $scope.employeesSearchLazyloadFactory = new employeesSearchLazyloadFactory(this.searchCriterias);
@@ -53,7 +53,7 @@ sentinelfApp.controller('AssignmentsCtrl',
 
     $scope.assign = function (globalevent_period_id) {
 
-        eventPeriodEmployeeFactory.save({'globalevent_period_id': globalevent_period_id, 'employee_id': $scope.employee.id},
+        globaleventPeriodEmployeesFactory.save({'globalevent_period_id': globalevent_period_id, 'employee_id': $scope.employee.id},
             function (data) {
                if (data) {
                     $scope.employee[globalevent_period_id] = globalevent_period_id;
@@ -69,11 +69,11 @@ sentinelfApp.controller('AssignmentsCtrl',
     };
 
     $scope.assign_whole_event = function () {
-        wholeEventFactory.save({'globalevent_id': $scope.event.id, 'employee_id': $scope.employee.id},
+        wholeglobaleventsFactory.save({'globalevent_id': $scope.event.id, 'employee_id': $scope.employee.id},
             function (data) {
                 if (data) {
                     for (var i in data['globalevent_period_employees'])
-                        $scope.eventPeriodEmployees.push(data['globalevent_period_employees'][i]);
+                        $scope.globaleventPeriodEmployees.push(data['globalevent_period_employees'][i]);
                     employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
                         $scope.all_possible_globalevent_periods = data['possible_globalevent_periods'];
                     })
@@ -82,7 +82,7 @@ sentinelfApp.controller('AssignmentsCtrl',
             }, function (error) {
                 if (error['data']) {
                     for (var i in error['data']['globalevent_period_employees'])
-                        $scope.eventPeriodEmployees.push(error['data']['globalevent_period_employees'][i]);
+                        $scope.globaleventPeriodEmployees.push(error['data']['globalevent_period_employees'][i]);
                     employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
                         $scope.all_possible_globalevent_periods = data['possible_globalevent_periods'];
                     })

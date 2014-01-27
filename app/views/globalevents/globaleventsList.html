@@ -27,14 +27,7 @@
                 <th><i class="fa fa-list"></i> Sublists</th>
             </tr>
         </thead>
-        <tbody ng-repeat="globalevent in globaleventsLazyloadFactory.globalevents" class="repeat-animation" ng-controller='GlobaleventCtrl'>
-            <tr ng-include src="globaleventTemplate">
-            </tr>
-            <tr style="border: none;">
-                <td colspan="7" style="border: none; padding: 0px;">
-                    <div ng-show="openGlobaleventPeriods" class="show-hide-animation" ng-include src="globaleventPeriodsListTemplate"></div>
-                </td>
-            </tr>
+        <tbody ng-repeat="globalevent in globaleventsLazyloadFactory.globalevents" class="repeat-animation" ng-controller='GlobaleventCtrl' ng-include src="globaleventTemplate">
         </tbody>
     </table>
     <div ng-show="globaleventsLazyloadFactory.busyLoadingGlobalevents"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
