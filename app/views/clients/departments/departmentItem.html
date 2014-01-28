@@ -1,0 +1,17 @@
+<span ng-mouseenter="showControls=true" ng-mouseleave="showControls=false" >
+	<span ng-hide="showChildren" ng-click="showChildren=!showChildren">
+		<a class="btn btn-primary btn-xs"><i class="fa fa-chevron-circle-right fa-fw"></i></a>
+	</span>
+	<span ng-show="showChildren" ng-click="showChildren=!showChildren">
+		<a class="btn btn-primary btn-xs"><i class="fa fa-chevron-circle-down fa-fw"></i></a>
+	</span>
+	{{clientDepartment.label}}
+	<span ng-show="showControls">
+		<a class="btn btn-success btn-xs" ng-click="editClientDepartment()"><i class="fa fa-edit fa-fw"></i></a>
+		<a class="btn btn-info btn-xs"><i class="fa fa-plus fa-fw"></i></a>
+		<a class="btn btn-danger btn-xs"><i class="fa fa-trash-o fa-fw"></i></a>
+	</span>
+</span>
+<ul ng-show="showChildren" style="list-style-type: none !important">
+    <li ng-repeat="clientDepartment in clientDepartments | filter:{parent_id:clientDepartment.id}" ng-include="'views/clients/departments/departmentItem.html'" ng-controller="ClientDepartmentCtrl"></li>
+</ul>

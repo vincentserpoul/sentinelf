@@ -1,13 +1,13 @@
 'use strict';
 
-sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'departmentFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, departmentFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
+sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'AlertService', 'clientDepartmentsFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', function($scope, formService, AlertService, clientDepartmentsFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
     function init() {
         $scope.detailReady = 'disabled';
-        departmentFactory.get({client_id : $scope.client.id}, function (data) {
+        clientDepartmentsFactory.get({client_id : $scope.client.id}, function (data) {
             $scope.departments = data['ClientDepartments'];
         });
 
@@ -39,7 +39,7 @@ sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'Aler
     $scope.saveDepartment = function () {
         /* Call the factory to update the new client in db */
         //update codes
-        departmentFactory.update($scope.selectedDepartment,
+        clientDepartmentsFactory.update($scope.selectedDepartment,
             function (data) {
                 if (data) {
                     $scope.departments = data['ClientDepartments'];
@@ -66,7 +66,7 @@ sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'Aler
         var modalInstance = formService.popup('department', $scope.selectedDepartment.label);
 
         modalInstance.result.then(function(){
-            departmentFactory.delete({departmentId:$scope.selectedDepartment.id},
+            clientDepartmentsFactory.delete({departmentId:$scope.selectedDepartment.id},
                 function (data) {
                     if (data) {
                         $scope.selectedDepartment = {'label': 'None'};
@@ -80,8 +80,6 @@ sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'Aler
                 }
             );
         });
-
-
     }
 
     $scope.newDepartment = function (parent_id) {
@@ -102,7 +100,7 @@ sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'Aler
 
     $scope.saveNewDepartment = function () {
         /* Call the factory to update the new department in db */
-        departmentFactory.save($scope.new_department,
+        clientDepartmentsFactory.save($scope.new_department,
             function (data) {
                 if (data) {
                     $scope.departments = data['ClientDepartments'];
@@ -148,3 +146,12 @@ sentinelfApp.controller('ClientDepartmentsCtrl', ['$scope', 'formService', 'Aler
         }
     })
 }]);
+
+sentinelfApp.controller('ClientDepartmentCtrl', ['$scope', '$modal', function ($scope, $modal) {
+    $scope.showChildren = false;
+    $scope.showControls = false;
+
+    $scope.editClientDepartment = function () {
+        
+    }
+}])

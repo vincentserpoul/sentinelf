@@ -1,13 +1,17 @@
 'use strict';
 
-sentinelfApp.controller('ClientsCtrl', ['$scope', 'crud', 'clientFactory', 'modelIsoLabelsFactory', 'modelStaticLabelsFactory', function($scope, crud, clientFactory, modelIsoLabelsFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('ClientsCtrl', ['$scope', 'crud', 'clientsFactory', 'clientDepartmentsFactory', 'modelIsoLabelsFactory', 'modelStaticLabelsFactory', function($scope, crud, clientsFactory, clientDepartmentsFactory, modelIsoLabelsFactory, modelStaticLabelsFactory) {
 
     init();
 
     /* Regroup init of the page in one single function */
 	function init() {
-        clientFactory.get(function (data) {
+        clientsFactory.get(function (data) {
             $scope.clients = data['clients'];
+        })
+
+        clientDepartmentsFactory.get(function (data) {
+            $scope.clientDepartments = data['ClientDepartments'];
         })
 
         $scope.viewTemplate = 'views/clients/clientView.html';
@@ -54,7 +58,7 @@ sentinelfApp.controller('ClientsCtrl', ['$scope', 'crud', 'clientFactory', 'mode
     }
 }]);
 
-sentinelfApp.controller('ClientCtrl', ['$scope', 'crud', 'departmentFactory', 'contactFactory', function($scope, crud, departmentFactory, contactFactory){
+sentinelfApp.controller('ClientCtrl', ['$scope', 'crud', 'clientDepartmentsFactory', 'clientContactsFactory', function($scope, crud, clientDepartmentsFactory, clientContactsFactory){
 
     $scope.init = false;
     $scope.editForm = false;
@@ -79,26 +83,20 @@ sentinelfApp.controller('ClientCtrl', ['$scope', 'crud', 'departmentFactory', 'c
     }
 
     $scope.loadDepartments = function () {
-        if (!$scope.departments) {
-            /* Initialize the list of departments */
-            departmentFactory.get(function (data) {
-                $scope.departments = data['ClientDepartments'];
-            })
-        }
-        if (!$scope.departmentsTemplate)
-            $scope.departmentsTemplate = 'views/clients/departments/departmentsList.html';
+        if (!$scope.clientDepartmentsTemplate)
+            $scope.clientDepartmentsTemplate = 'views/clients/departments/departmentsList.html';
         $scope.openDepartments = !$scope.openDepartments;
     }
 
     $scope.loadContacts = function () {
-        if (!$scope.contacts) {
+        if (!$scope.clientContacts) {
             /* Initialize the list of contacts */
-            contactFactory.get({client_id: $scope.client.id}, function (data) {
-                $scope.contacts = data['ClientContacts'];
+            clientContactsFactory.get({client_id: $scope.client.id}, function (data) {
+                $scope.clientContacts = data['ClientContacts'];
             })
         }
-        if (!$scope.contactsTemplate)
-            $scope.contactsTemplate = 'views/clients/contacts/contactsList.html';
+        if (!$scope.clientContactsTemplate)
+            $scope.clientContactsTemplate = 'views/clients/contacts/contactsList.html';
         $scope.openContacts = !$scope.openContacts;
     }
 }])

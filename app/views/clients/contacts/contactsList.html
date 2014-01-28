@@ -1,7 +1,7 @@
-<div class="panel panel-info" ng-controller="ContactsCtrl">
+<div class="panel panel-info" ng-controller="ClientContactsCtrl">
     <div class="panel-heading">
         {{client.name}}'s Contacts
-        <button access-level="['add_client_contact']" type="button" class="btn btn-primary btn-xs" ng-click="newContact()"><i class="fa fa-plus fa-fw"></i> New</button>
+        <button access-level="['add_client_contact']" type="button" class="btn btn-primary btn-xs" ng-click="newClientContact()"><i class="fa fa-plus fa-fw"></i> New</button>
     </div>
     <div class="panel panel-primary show-hide-animation" ng-show="showNew">
         <div class="panel-heading">New Contact</div>
@@ -21,31 +21,31 @@
                 <tbody>
                     <tr>
                         <td>
-                            <select ui-select2 ng-model="new_contact.title_id" data-placeholder="Pick a title">
+                            <select ui-select2 ng-model="new_clientContact.title_id" data-placeholder="Pick a title">
                                 <option value=""></option>
                                 <option ng-repeat="title in titles" value="{{title.id}}">{{title.label}}</option>
                             </select>
                         </td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_contact.first_name" /></td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_contact.last_name" /></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_clientContact.first_name" /></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_clientContact.last_name" /></td>
                         <td>
-                            <select ui-select2 ng-model="new_contact.sex_id" data-placeholder="Pick a sex">
+                            <select ui-select2 ng-model="new_clientContact.sex_id" data-placeholder="Pick a sex">
                                 <option value=""></option>
                                 <option ng-repeat="sex in sexes" value="{{sex.id}}">{{sex.label}}</option>
                             </select>
                         </td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_contact.mobile_phone_number" /></td>
-                        <td><edit-input-check value="new_contact.primary_contact" edit-form="true"></edit-input-check></td>
+                        <td><input type="text" class="form-control input-sm" ng-model="new_clientContact.mobile_phone_number" /></td>
+                        <td><edit-input-check value="new_clientContact.primary_contact" edit-form="true"></edit-input-check></td>
                         <td class="btn-group-vertical btn-group-xs">
-                            <button type="button" class="btn btn-success" ng-click="saveContact()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default" ng-click="cancelNewContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                            <button type="button" class="btn btn-success" ng-click="saveNewClientContact()"><i class="fa fa-save fa-fw"></i> Save</button>
+                            <button type="button" class="btn btn-default" ng-click="cancelNewClientContact()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <table class="table" ng-show="contacts.length">
+    <table class="table" ng-show="clientContacts.length">
         <thead>
             <tr>            
                 <th>Title</th>
@@ -57,9 +57,9 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody ng-repeat="contact in contacts" ng-controller="ContactCtrl" class="repeat-animation">
-            <tr ng-include src="contactTemplate"></tr>
+        <tbody ng-repeat="clientContact in clientContacts" ng-controller="ClientContactCtrl" class="repeat-animation">
+            <tr ng-include src="clientContactTemplate"></tr>
         </tbody>
     </table>
-    <div class="panel-body" ng-hide="contacts.length || contactsLazyloadFactory.busyLoadingContacts"><p class="text-muted" >Empty</p></div>
+    <div class="panel-body" ng-hide="clientContacts.length"><p class="text-muted" >Empty</p></div>
 </div>

@@ -1,10 +1,10 @@
-<td>{{(titles | filter:{id: contact.title_id})[0]['label'] }}</td>
-<td>{{contact.first_name}}</td>
-<td>{{contact.last_name}}</td>
-<td>{{(sexes | filter:{id: contact.sex_id})[0]['label'] }}</td>
-<td>{{contact.mobile_phone_number}}</td>
-<td>{{contact.primary_contact | checkmark}}</td>
+<td>{{(titles | filter:{id: clientContact.title_id})[0]['label'] }}</td>
+<td>{{clientContact.first_name}}</td>
+<td>{{clientContact.last_name}}</td>
+<td>{{(sexes | filter:{id: clientContact.sex_id})[0]['label'] }}</td>
+<td>{{clientContact.mobile_phone_number}}</td>
+<td>{{clientContact.primary_contact | checkmark}}</td>
 <td class="btn-group-vertical btn-group-xs">
-    <button type="button" class="btn btn-primary" ng-click="editContact()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-    <button type="button" class="btn btn-danger" ng-click="deleteContact()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>     
+    <button type="button" class="btn btn-primary" ng-click="editClientContact()"><i class="fa fa-edit fa-fw"></i> Edit</button>
+    <button type="button" class="btn btn-danger" ng-click="deleteClientContact()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>     
 </td>

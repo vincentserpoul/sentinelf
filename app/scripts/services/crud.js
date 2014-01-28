@@ -16,7 +16,7 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		// call this function when users save the edited obj (confirm editing)
 		save: function ($scope, obj) {
 	        /* Call the factory to update the new obj in db */
-	        $injector.get(obj + 'Factory').update($scope[obj],
+	        $injector.get(obj + 'sFactory').update($scope[obj],
 	        	// if success, set the obj to be the edited obj
 	        	// and show success message
 	            function (data) {
@@ -50,7 +50,7 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 
 			// if users confirm deletion, remove the obj from the obj list
 	        modalInstance.result.then(function(){
-	            $injector.get(obj + 'Factory').delete(params,
+	            $injector.get(obj + 'sFactory').delete(params,
 	                function (data) {
 	                	// find obj in the obj list and remove it
 	                	if (notLazyLoad)
@@ -78,7 +78,7 @@ sentinelfApp.factory('crud', function (formService, AlertService, $injector) {
 		// call this function when users confirm the new obj
 		create: function ($scope, obj, notLazyLoad) {
 			/* Call the factory to update the new event in db */
-	        $injector.get(obj + 'Factory').save($scope['new_' + obj],
+	        $injector.get(obj + 'sFactory').save($scope['new_' + obj],
 	            function (data) {
 	            	// add obj into obj list
 	            	if (notLazyLoad)

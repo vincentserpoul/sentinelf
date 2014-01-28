@@ -1,7 +1,7 @@
 'use strict';
 
 sentinelfApp.controller('ClientContactsCtrl', ['$scope', 'crud', function($scope, crud) {
-    var obj = 'contact';
+    var obj = 'clientContact';
     var preselectedValues = {
             "client_id": $scope.client.id,
             "first_name": "contact's first name",
@@ -13,37 +13,37 @@ sentinelfApp.controller('ClientContactsCtrl', ['$scope', 'crud', function($scope
 
     $scope.viewTemplate = 'views/clients/contacts/contactView.html';
     $scope.editTemplate = 'views/clients/contacts/contactEdit.html';
-    $scope.contactTemplate = $scope.viewTemplate;
+    $scope.clientContactTemplate = $scope.viewTemplate;
 
-    $scope.newContact = function () {
+    $scope.newClientContact = function () {
         crud.new($scope, obj, preselectedValues);
     }
 
-    $scope.saveContact = function () {
+    $scope.saveNewClientContact = function () {
         crud.create($scope, obj, true);
     }
 
-    $scope.cancelNewContact = function () {
+    $scope.cancelNewClientContact = function () {
         crud.cancelNew($scope);
     }
 }])
 
-sentinelfApp.controller('ContactCtrl', ['$scope', 'crud', function($scope, crud) {
-    var obj = 'contact';
+sentinelfApp.controller('ClientContactCtrl', ['$scope', 'crud', function($scope, crud) {
+    var obj = 'clientContact';
 
-    $scope.editContact = function () {
+    $scope.editClientContact = function () {
         crud.edit($scope, obj);
     }
 
-    $scope.saveContact = function(){
+    $scope.saveClientContact = function(){
         crud.save($scope, obj);
     };
 
-    $scope.cancelEditContact = function(){
+    $scope.cancelEditClientContact = function(){
         crud.cancelEdit($scope, obj);
     };
 
-    $scope.deleteContact = function(){
+    $scope.deleteClientContact = function(){
         crud.delete($scope, obj, 'first_name', true)
     }
 }])

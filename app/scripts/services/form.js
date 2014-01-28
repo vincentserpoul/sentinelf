@@ -31,7 +31,7 @@ sentinelfApp.factory('formService', function($resource, $modal) {
             }
             return null;
         },
-        popup: function (name, identity,url){
+        popup: function (name, identity, url, obj){
             if( typeof(url) == 'undefined' ){
                 url = 'popup.html'
             }
@@ -44,6 +44,9 @@ sentinelfApp.factory('formService', function($resource, $modal) {
                     },
                     identity: function () {
                         return identity;
+                    },
+                    obj: function () {
+                        return obj;
                     }
                 }
             });
@@ -77,9 +80,10 @@ sentinelfApp.factory('formService', function($resource, $modal) {
  	}   
 });
 
-sentinelfApp.controller('popupCtrl', ['$scope', '$modalInstance', 'name', 'identity', function($scope, $modalInstance, name, identity){
+sentinelfApp.controller('popupCtrl', ['$scope', '$modalInstance', 'name', 'identity', 'obj', function($scope, $modalInstance, name, identity, obj){
     $scope.name = name;
     $scope.identity = identity;
+    $scope.obj = obj;
 
     $scope.confirm = function () {
         $modalInstance.close();

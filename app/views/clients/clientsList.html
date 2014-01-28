@@ -48,7 +48,7 @@
             </table>
         </div>
     </div>
-    <table class="table table-hover">
+    <table class="table table-hover" ng-show="clients.length">
         <thead>
             <tr>
                 <th>Name</th>
@@ -67,16 +67,16 @@
             <tr ng-include src="clientTemplate"></tr>
             <tr style="border: none;">
                 <td colspan="9" style="border: none; padding: 0px;">
-                    <div ng-show="openDepartments" class="show-hide-animation" ng-include src="departmentsTemplate"></div>
+                    <div ng-show="openDepartments" class="show-hide-animation" ng-include src="clientDepartmentsTemplate"></div>
                 </td>
             </tr>
             <!-- contacts row -->
             <tr style="border: none;">
                 <td colspan="9" style="border: none; padding: 0px;">
-                    <div ng-show="openContacts" class="show-hide-animation" ng-include src="contactsTemplate"></div>
+                    <div ng-show="openContacts" class="show-hide-animation" ng-include src="clientContactsTemplate"></div>
                 </td>
             </tr>
         </tbody>
     </table>
-    <div ng-show="clientsLazyloadFactory.busyLoadingClients"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
+    <div ng-hide="clients.length"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
 </div>

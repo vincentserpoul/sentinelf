@@ -1,4 +1,4 @@
-<div class="panel panel-info accordion" ng-controller="DepartmentsCtrl" id="accordion">
+<div class="panel panel-info accordion" ng-controller="ClientDepartmentsCtrl" id="accordion">
 	<div class="panel-heading">
 		{{client.name}}'s Departments
 		<button type="button" class="btn btn-primary btn-xs" data-toggle="collapse" data-parent="#accordion" data-target="#collapseNewDepartment{{client.id}}" ng-click="newDepartment()"><i class="fa fa-plus fa-fw"></i> New Root</button>
@@ -36,32 +36,32 @@
 			            </thead>
 			            <tbody>
 			                <tr>
-			                    <td><input type="text" class="form-control input-sm" ng-model="new_department.label" /></td>
-								<td><input type="text" class="form-control input-sm" ng-model="new_department.description" /></td>
+			                    <td><input type="text" class="form-control input-sm" ng-model="new_clientDepartment.label" /></td>
+								<td><input type="text" class="form-control input-sm" ng-model="new_clientDepartment.description" /></td>
 								<td>
-									<select ui-select2 ng-model="new_department.work_type_id" data-placeholder="Pick a sex">
+									<select ui-select2 ng-model="new_clientDepartment.work_type_id" data-placeholder="Pick a sex">
 								        <option value=""></option>
 								        <option ng-repeat="work_type in work_types" value="{{work_type.id}}">{{work_type.label}}</option>
 								    </select>
 								</td>
-								<td><input type="text" class="form-control input-sm" ng-model="new_department.employee_h_rate" /></td>
+								<td><input type="text" class="form-control input-sm" ng-model="new_clientDepartment.employee_h_rate" /></td>
 								<td>
-									<select ui-select2 ng-model="new_department.employee_h_rate_currency_code" data-placeholder="Pick a currency">
+									<select ui-select2 ng-model="new_clientDepartment.employee_h_rate_currency_code" data-placeholder="Pick a currency">
 								        <option value=""></option>
 								        <option ng-repeat="currency in currencies" value="{{currency.code}}">{{currency.label}}</option>
 								    </select>
 								</td>
-								<td><input type="text" class="form-control input-sm" ng-model="new_department.client_h_rate" /></td>
+								<td><input type="text" class="form-control input-sm" ng-model="new_clientDepartment.client_h_rate" /></td>
 								<td>
-									<select ui-select2 ng-model="new_department.client_h_rate_currency_code" data-placeholder="Pick a currency">
+									<select ui-select2 ng-model="new_clientDepartment.client_h_rate_currency_code" data-placeholder="Pick a currency">
 								        <option value=""></option>
 								        <option ng-repeat="currency in currencies" value="{{currency.code}}">{{currency.label}}</option>
 								    </select>
 								</td>
 			                    <!-- action buttons -->
 			                    <td class="btn-group-vertical btn-group-xs">
-		                            <button type="button" class="btn btn-success" ng-click="saveNewDepartment()"><i class="fa fa-save fa-fw"></i> Save</button>
-		                            <button type="button" class="btn btn-default" ng-click="cancelNewDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+		                            <button type="button" class="btn btn-success" ng-click="saveNewClientDepartment()"><i class="fa fa-save fa-fw"></i> Save</button>
+		                            <button type="button" class="btn btn-default" ng-click="cancelNewClientDepartment()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
 			                    </td>
 			                </tr>
 			            </tbody>
@@ -85,19 +85,25 @@
 				            </tr>
 			            </thead>
 			            <tbody>
-			                <tr ng-include src="departmentTemplate"></tr>
+			                <tr ng-include src="clientDepartmentTemplate"></tr>
 			            </tbody>
 			        </table>
 				</div>
 			</div>
 		</div>
+		<!--
 		<div
 		    data-angular-treeview="true"
 		    data-tree-id="departmentTree"
-		    data-tree-model="departments"
+		    data-tree-model="clientDepartments"
 		    data-node-id="id"
 		    data-node-label="label"
 		    data-node-children="children">
 		</div>
+		-->
+		<ul style="list-style-type:none">
+			<li ng-repeat="clientDepartment in clientDepartments | filter:{client_id:client.id, parent_id:null}" ng-include="'views/clients/departments/departmentItem.html'" ng-controller="ClientDepartmentCtrl"></li>
+		</ul>
+		<div class="panel-body" ng-hide="clientDepartments.length"><p class="text-muted" >Empty</p></div>
 	</div>
 </div>
