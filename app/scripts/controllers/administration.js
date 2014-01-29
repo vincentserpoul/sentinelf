@@ -4,20 +4,20 @@ sentinelfApp.controller('AdministrationCtrl', ['$scope', 'userFactory', 'groupFa
 	$scope.navs = [
 		{
 			title: 'users',
-			heading: 'Users'		
-		}, 
+			heading: 'Users'
+		},
 		{
-			title: 'groups', 
+			title: 'groups',
 			heading: 'Groups'
-		}, 
+		},
 		{
-			title: 'permissions', 
+			title: 'permissions',
 			heading: 'Permissions'
 		}
-	];	
-	
+	];
 
-	$scope.select = function(nav){		
+
+	$scope.select = function(nav){
 		$scope.selection = nav.title;
 	}
 
