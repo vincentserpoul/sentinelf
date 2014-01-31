@@ -22,8 +22,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
 
     $routeProvider.when('/',
         {
-            templateUrl:    '/views/main.html',
-            controller:     'MainCtrl',
+           templateUrl:    '/views/main.html',
+           controller:     'MainCtrl',
             access:         ['user']
         })
     .when('/login',

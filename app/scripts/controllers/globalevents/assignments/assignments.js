@@ -1,34 +1,34 @@
 'use strict';
 
 sentinelfApp.controller('AssignmentsCtrl',
-    ['$scope', '$modalInstance', 'globaleventsFactory', 'employeesSearchLazyloadFactory', 'globalevent_id', 'globaleventPeriodEmployeesFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory',
-    function ($scope, $modalInstance, globaleventsFactory, employeesSearchLazyloadFactory, globalevent_id, globaleventPeriodEmployeesFactory, modelStaticLabelsFactory, modelIsoLabelsFactory) {
-
-        init();
+    ['$scope', '$modalInstance', 'globaleventsFactory', 'employeesSearchLazyloadFactory', 'globaleventId', 'globaleventPeriodEmployeesFactory', 'modelStaticLabelsFactory', 'modelIsoLabelsFactory', 'AlertService',
+    function ($scope, $modalInstance, globaleventsFactory, employeesSearchLazyloadFactory, globaleventId, globaleventPeriodEmployeesFactory, modelStaticLabelsFactory, modelIsoLabelsFactory, AlertService) {
 
         /* Regroup init of the page in one single function */
         function init() {
             // Get details about the current global event
-            globaleventsFactory.get({eventId:globalevent_id}, function(data){
-                $scope.globalevent = data['globalevents'][0];
+            globaleventsFactory.get({globaleventId:globaleventId}, function(data){
+                $scope.globalevent = data.globalevents[0];
             });
 
             /* Get the labels necessary for the list not to be only numbers */
             $scope.staticLabelListResource = modelStaticLabelsFactory.get({model:'employee'}, function(data){
-                $scope.employeeStaticLabels = data['labels'];
+                $scope.employeeStaticLabels = data.labels;
             });
 
             /* Get the labels necessary for the list of countries not to be only codes */
             $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'}, function(data){
-                $scope.countries = data['labels']['country'];
+                $scope.countries = data.labels.country;
             });
         }
+
+        init();
 
         /* search employees according to the given criterias as well as the globaleventid */
         $scope.searchEmployees = function (){
 
             /* specify which globalevent we are targeting to get results with assignments info */
-            this.searchCriterias['globalevent_id'] = $scope.globalevent.id;
+            this.searchCriterias.globalevent_id = $scope.globalevent.id;
 
             /* Load the progressive service to load list of employees */
             $scope.employeesSearchLazyloadFactory = new employeesSearchLazyloadFactory(this.searchCriterias);
@@ -36,7 +36,7 @@ sentinelfApp.controller('AssignmentsCtrl',
             $scope.employeesSearchLazyloadFactory.loadMore();
             /* display the search results */
             $scope.displayList = true;
-        }
+        };
 
         $scope.clearEmployees = function (){
             /* Load the progressive service to load list of employees */
@@ -45,50 +45,10 @@ sentinelfApp.controller('AssignmentsCtrl',
             $scope.displayList = false;
             /* criterias resetted too */
             this.searchCriterias = null;
-        }
+        };
 
-    $scope.cancel = function () {
-        $modalInstance.dismiss();
+        $scope.cancel = function () {
+            $modalInstance.dismiss();
+        };
     }
-
-    $scope.assign = function (globalevent_period_id) {
-
-        globaleventPeriodEmployeesFactory.save({'globalevent_period_id': globalevent_period_id, 'employee_id': $scope.employee.id},
-            function (data) {
-               if (data) {
-                    $scope.employee[globalevent_period_id] = globalevent_period_id;
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data']){
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-                }
-            }
-        )
-
-    };
-
-    $scope.assign_whole_event = function () {
-        wholeglobaleventsFactory.save({'globalevent_id': $scope.event.id, 'employee_id': $scope.employee.id},
-            function (data) {
-                if (data) {
-                    for (var i in data['globalevent_period_employees'])
-                        $scope.globaleventPeriodEmployees.push(data['globalevent_period_employees'][i]);
-                    employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
-                        $scope.all_possible_globalevent_periods = data['possible_globalevent_periods'];
-                    })
-                    AlertService.show({ "message": data['message'], "type": 'alert-success' }, true);
-                }
-            }, function (error) {
-                if (error['data']) {
-                    for (var i in error['data']['globalevent_period_employees'])
-                        $scope.globaleventPeriodEmployees.push(error['data']['globalevent_period_employees'][i]);
-                    employeesEventPeriodsFactory.get({'event_id': 0}, function (data) {
-                        $scope.all_possible_globalevent_periods = data['possible_globalevent_periods'];
-                    })
-                    AlertService.show({ "message": error['data']['message'], "type": 'alert-danger' }, false);
-                }
-            }
-        )
-    }
-}])
+]);

@@ -17,7 +17,7 @@
 		<button type="button" class="btn btn-danger" ng-click="deleteGlobaleventPeriod()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
 	</td>
 	<td>
-		<button type="button" class="btn btn-info btn-xs" data-toggle="collapse" data-target="#collapseAssignmentEventPerdiod{{eventPeriod.id}}" ng-click='loadAssignmedEmployees()'>
+		<button type="button" class="btn btn-info btn-xs" ng-click="loadAssignedEmployees()">
 			<i class="fa fa-user"></i> Assigned employees
 			<span ng-hide="assignedEmployeesLazyloadFactory" class="badge">{{globalevent_period.number_of_employee_assigned}}</span>
 			<span ng-show="assignedEmployeesLazyloadFactory" class="badge">{{assignedEmployeesLazyloadFactory.total}}</span>

@@ -1,6 +1,6 @@
 <div>
     <div class="modal-header">
-        {{globalEvent.label}}'s Assignments
+        {{globalevent.label}}'s Assignments
     </div>
     <div class="modal-body">
         <div ng-include src="'views/employees/employeesSearch.html'"></div>
@@ -26,12 +26,12 @@
                         <td>{{employee.age}}</td>
                         <td>
                             <ul class="list-unstyled">
-                                <li ng-repeat="possible_globalevent_period in globalEvent.globalevent_period" class="repeat-animation">
-                                    <a ng-show="employee[possible_globalevent_period.id] == ''" class="label label-primary" ng-click="assign(possible_globalevent_period.id)">
-                                        {{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}
+                                <li ng-repeat="possibleGlobaleventPeriod in globalevent.globalevent_period" class="repeat-animation">
+                                    <a ng-show="employee[possibleGlobaleventPeriod.id] == ''" class="label label-primary" ng-click="assign(possibleGlobaleventPeriod.id)">
+                                        {{possibleGlobaleventPeriod.id}} : {{possibleGlobaleventPeriod.start_datetime}} -> {{possibleGlobaleventPeriod.end_datetime}}
                                     </a>
-                                    <span ng-hide="employee[possible_globalevent_period.id] == ''" class="label label-danger">
-                                        {{possible_globalevent_period.id}} : {{possible_globalevent_period.start_datetime}} -> {{possible_globalevent_period.end_datetime}}
+                                    <span ng-hide="employee[possibleGlobaleventPeriod.id] == ''" class="label label-danger">
+                                        {{possibleGlobaleventPeriod.id}} : {{possibleGlobaleventPeriod.start_datetime}} -> {{possibleGlobaleventPeriod.end_datetime}}
                                     </span>
                                 </li>
                             </ul>
