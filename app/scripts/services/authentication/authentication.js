@@ -10,7 +10,9 @@ sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT'
 	xhr.withCredentials = true;
 	xhr.send(null);
 
-	if(xhr.status === 200) currentUser = JSON.parse(xhr.responseText).user;
+	if(xhr.status === 200){
+		currentUser = JSON.parse(xhr.responseText).user;
+	}
 
 	function changeUser(user){
 		angular.extend(currentUser, user);
@@ -18,10 +20,16 @@ sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT'
 
 	return {
 		authorize: function(permissions) {
-			if(!permissions) return true;
-			if(!permissions.length) return true;
+			if(!permissions){
+				return true;
+			}
+			if(!permissions.length){
+				return true;
+			}
 			for(var i = 0; i < permissions.length; i++){
-				if(currentUser.userRole.permissions.indexOf(permissions[i]) > -1) return true;
+				if(currentUser.userRole.permissions.indexOf(permissions[i]) > -1){
+					return true;
+				}
 			}
 			return false;
 		},
@@ -32,9 +40,9 @@ sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT'
 			return (user.userRole.permissions.indexOf('public') === -1) && user.userRole.permissions.length;
 		},
 		register: function(user, success, error) {
-			var login =  $http({
+			$http({
 				url: SENTINEL_API_END_POINT + '/auth/register',
-				method: "POST",
+				method: 'POST',
 				data: user,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
@@ -42,16 +50,17 @@ sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT'
 				withCredentials: true,
 				transformRequest: function(obj) {
                     var str = [];
-                    for(var p in obj)
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
+                    for(var p in obj){
+						str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+                    }
+                    return str.join('&');
                 }
 			}).success(success).error(error);
 		},
 		login: function(user, success, error) {
 			var login =  $http({
 				url: SENTINEL_API_END_POINT + '/auth/login',
-				method: "POST",
+				method: 'POST',
 				data: user,
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
@@ -59,9 +68,10 @@ sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT'
 				withCredentials: true,
 				transformRequest: function(obj) {
                     var str = [];
-                    for(var p in obj)
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                    return str.join("&");
+                    for(var p in obj){
+						str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+					}
+                    return str.join('&');
                 }
 			});
 			login.success(function(response){
@@ -74,7 +84,7 @@ sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT'
 		logout: function(success, error) {
 			var logout = $http({
 				url: SENTINEL_API_END_POINT + '/auth/logout',
-				method: "GET",
+				method: 'GET',
 				withCredentials: true
 			});
 			logout.success(function(response){
@@ -87,11 +97,11 @@ sentinelfApp.factory('AuthenticationService', ['$http', 'SENTINEL_API_END_POINT'
 		token: function() {
 			var token = $http({
 				url: SENTINEL_API_END_POINT + '/auth/token',
-				method: "GET",
+				method: 'GET',
 				withCredentials: true
 			});
 			return token;
 		},
         user: currentUser
-	}
+	};
 }]);

@@ -1,9 +1,8 @@
 'use strict';
 
-sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyloadFactory', 'globaleventsFactory', 'clientDepartmentsFactory',
+sentinelfApp.controller('GlobaleventsListCtrl', ['$scope', 'globaleventsLazyloadFactory', 'globaleventsFactory', 'clientDepartmentsFactory',
     function ($scope, globaleventsLazyloadFactory, globaleventsFactory, clientDepartmentsFactory){
 
-        init();
 
         /* Regroup init of the page in one single function */
         function init() {
@@ -19,15 +18,17 @@ sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyload
             $scope.showNewForm = false;
         }
 
+        init();
+
         /* Load clients and deps */
         $scope.loadClientDepartments = function () {
             if (!($scope.clients && $scope.client_departments)) {
                 //Fetch all departments
-                clientDepartmentsFactory.get(function (data) {
+                clientDepartmentsFactory.clients_departments(function (data) {
                     $scope.client_departments = data['client_departments'];
                 });
             }
-        }
+        };
 
         /* Display new form */
         $scope.newGlobalevent = function () {
@@ -39,18 +40,17 @@ sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyload
                 $scope.loadClientDepartments();
                 /* Default evetn data */
                 $scope.new_globalevent = {
-                        "client_id": 1,
-                        "client_department_id": 1
+                    'client_department_id': 1
                 };
             } else {
                 $scope.globaleventNewTemplate = '';
             }
-        }
+        };
 
         /* Cancel new event creation */
         $scope.cancelNewGlobalevent = function () {
             $scope.showNewForm = false;
-        }
+        };
 
         /* Save new event */
         $scope.createNewGlobalevent = function() {
@@ -59,12 +59,13 @@ sentinelfApp.controller("GlobaleventsListCtrl", ['$scope', 'globaleventsLazyload
             /* Launch service to create new db */
             globaleventsFactory.create($scope.new_globalevent, function(data){
                 /* Add the newly created event to the list */
-                $scope.globaleventsLazyloadFactory.globalevents.unshift(data['globalevents'][0]);
+                $scope.globaleventsLazyloadFactory.globalevents.unshift(data.globalevents[0]);
                 /* Empty the default event */
                 $scope.new_globalevent = null;
                 /* Counter +1 */
                 $scope.globaleventsLazyloadFactory.total += 1;
             });
-        }
+        };
 
-}]);
+    }
+]);

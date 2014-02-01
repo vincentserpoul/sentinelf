@@ -5,25 +5,29 @@ sentinelfApp
     return {
         restrict: 'A',
         link: function($scope, element, attrs) {
-            var prevDisp = element.css('display')
-                , permissions;
-                
+            var prevDisp = element.css('display'),
+                permissions;
+
             $scope.user = AuthenticationService.user;
-            $scope.$watch('user', function(user) {
+            $scope.$watch('user', function() {
                 updateCSS();
             }, true);
-            
+
             attrs.$observe('accessLevel', function(al) {
-                if(al) permissions = $scope.$eval(al);
+                if(al){
+                    permissions = $scope.$eval(al);
+                }
                 updateCSS();
             });
 
             function updateCSS() {
                 if(permissions) {
-                    if(!AuthenticationService.authorize(permissions))
+                    if(!AuthenticationService.authorize(permissions)){
                         element.css('display', 'none');
-                    else
+                    }
+                    else{
                         element.css('display', prevDisp);
+                    }
                 }
             }
         }
@@ -33,7 +37,7 @@ sentinelfApp
 sentinelfApp.directive('activeNav', ['$location', function($location) {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
+        link: function(scope, element) {
             var nestedA = element.find('a')[0];
             var path = nestedA.href;
 

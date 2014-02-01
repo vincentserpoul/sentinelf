@@ -1,37 +1,29 @@
 <p>
-    <label class="sr-only" for="country">Country</label>
-    <select id="country" ng-model="employee.country_code" ng-options="country.code as country.label for country in countries"></select>
+    <label for="country">Country:&nbsp;</label>{{(countries | filter:employee.country_code)[0].label}}
 </p>
 <p>
-    <label class="sr-only" for="date_of_birth">Date of birth</label>
-    <input type="date" id="date_of_birth" ng-model="employee.date_of_birth" />
+    <label for="date_of_birth">Date of birth:&nbsp;</label>{{employee.date_of_birth | date:'medium'}}
 </p>
 <p>
-    <label class="sr-only" for="mobile_phone_number">Phone</label>
-    <input type="tel" id="mobile_phone_number" ng-model="employee.mobile_phone_number" />
+    <label for="mobile_phone_number">Phone:&nbsp;</label>{{employee.mobile_phone_number}}
 </p>
 <p>
-    <label class="sr-only" for="school">School</label>
-    <input type="text" id="school" ng-model="employee.school" />
+    <label for="school">School:&nbsp;</label>{{employee.school}}
 </p>
 <p>
-    <label class="sr-only" for="join_date">Join date</label>
-    <input type="text" id="school" ng-model="employee.join_date" />
+    <label for="join_date">Join date:&nbsp;</label>{{employee.join_date | date:'medium'}}
 </p>
 <p>
-    <label class="sr-only" for="race">Race</label>
-    <select id="race" ng-model="employee.race_id" ng-options="race.id as race.label for race in employeeStaticLabels['race']"></select>
+    <label for="race">Race:&nbsp;</label>{{(employeeStaticLabels.race | filter:employee.race_id)[0].label}}
 </p>
 <p>
-    <label class="sr-only" for="status">Status</label>
-    <select id="status" ng-model="employee.status_id" ng-options="status.id as status.label for status in employeeStaticLabels['status']"></select>
+    <label for="status">Status:&nbsp;</label>{{(employeeStaticLabels.status | filter:employee.status_id)[0].label}}
 </p>
 <p>
-    <label class="sr-only" for="work_pass_type">Work pass</label>
-    <select id="work_pass_type" ng-model="employee.work_pass_type_id" ng-options="work_pass_type.id as work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']"></select>
+    <label for="work_pass_type">Work pass:&nbsp;</label>{{(employeeStaticLabels.work_pass_type | filter:employee.work_pass_type_id)[0].label}}
 </p>
 <p>
-    Employee documents
+    <label for="employee_docs">Employee documents</label>
     <ul>
         <li ng-repeat="employee_doc_unit in employee.employee_doc">
             <p>
@@ -41,7 +33,7 @@
     </ul>
 </p>
 <p>
-    Employee identity documents
+    <label for="employee_identity_docs">Employee identity documents</label>
     <ul>
         <li ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
             <p>
@@ -56,6 +48,6 @@
 <p>
     <div class="btn-group button-edit">
         <button type="button" class="btn btn-primary btn-xs" ng-click="editEmployee()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-        <button type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployee()"><i class="fa fa-trash-o fa-fw"></i></button>
+        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEmployee()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
     </div>
 </p>

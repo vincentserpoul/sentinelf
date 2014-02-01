@@ -11,7 +11,7 @@ var sentinelfApp = angular.module('sentinelfApp', [
     'infinite-scroll',
     'configuration',
     'ui.select2'
-    ])
+])
 .config(['$routeProvider', '$locationProvider', '$httpProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $httpProvider, $sceDelegateProvider){
     /* To enable CORS AJAX requests */
     $sceDelegateProvider.resourceUrlWhitelist(['self', 'http://dev.sentinelb.com/**']);
@@ -22,8 +22,8 @@ var sentinelfApp = angular.module('sentinelfApp', [
 
     $routeProvider.when('/',
         {
-           templateUrl:    '/views/main.html',
-           controller:     'MainCtrl',
+            templateUrl:    '/views/main.html',
+            controller:     'MainCtrl',
             access:         ['user']
         })
     .when('/login',
@@ -98,15 +98,17 @@ var sentinelfApp = angular.module('sentinelfApp', [
                 }
                 return $q.reject(rejection);
             }
-        }
-    })
+        };
+    });
 }])
 .run(['$rootScope', '$location', 'AuthenticationService', 'AlertService', function ($rootScope, $location, AuthenticationService, AlertService) {
 
-    $rootScope.$on("$routeChangeStart", function (event, next, current) {
+    $rootScope.$on('$routeChangeStart', function (event, next) {
         $rootScope.error = null;
         if (!AuthenticationService.authorize(next.access)) {
-            if(AuthenticationService.isLoggedIn()) $location.path('/');
+            if(AuthenticationService.isLoggedIn()){
+                $location.path('/');
+            }
             else {
                 AlertService.show({ 'message': 'Please login to continue', 'type': 'alert-warning'}, true);
                 $location.path('/login');
@@ -114,16 +116,16 @@ var sentinelfApp = angular.module('sentinelfApp', [
         }
     });
 
-    $rootScope.$on("logout", function () {
+    $rootScope.$on('logout', function () {
         AuthenticationService.logout(
             function(response) {
                 $location.path('/login');
-                AlertService.show({ "message": response.message, "type": "alert-success"}, true);
+                AlertService.show({ 'message': response.message, 'type': 'alert-success'}, true);
             },
-            function() {
-                AlertService.show({ "message": response.message, "type": "alert-danger" }, false);
+            function(response) {
+                AlertService.show({ 'message': response.message, 'type': 'alert-danger' }, false);
             }
         );
-    })
+    });
 
 }]);
