@@ -50,41 +50,6 @@ sentinelfApp.controller(
             }
         };
 
-
-        $scope.newEmployee = function(){
-            // Create a defulat empty employee
-            var defaultEmployee = {
-                'title_id':1,
-                'first_name':'First name',
-                'last_name':'Last name',
-                'sex_id':1,
-                'country_code':'SGP',
-                'date_of_birth':'1980-01-01',
-                'mobile_phone_number':'+65',
-                'school':'School',
-                'join_date':'2012-02-03 00:00:00',
-                'race_id':1,
-                'status_id':1,
-                'work_pass_type_id':1,
-                'employee_identity_doc':[],
-                'employee_doc':[]
-            };
-
-            // Add it to the list!
-            $scope.displayProfile = true;
-            if(!$scope.employeesSearchLazyloadFactory){
-                $scope.employeesSearchLazyloadFactory = [];
-            }
-            $scope.employeesSearchLazyloadFactory.employees.unshift(defaultEmployee);
-            $scope.showProfile();
-            $scope.editForm = true;
-        };
-
-        $scope.cancelAddEmployee = function(){
-            /* remove the first element of the employees array */
-            $scope.employeesSearchLazyloadFactory.employees.splice(0,1);
-        };
-
         $scope.editEmployee = function(){
             /* Save client in case of cancel, to rollback to previous values */
             $scope.savEmployee = angular.copy($scope.employee);
@@ -98,26 +63,15 @@ sentinelfApp.controller(
             $scope.employeeIdentityDocForm = false;
             $scope.busyLoadingProfile = false;
 
-            /* Call the factory to update/create the employee in db */
-            if(angular.isDefined($scope.employee.id)){
-                employeesFactory.update({employeeId: $scope.employee.id}, $scope.employee,
-                    function(data){
-                        angular.extend($scope.employee, data.employee);
-                        $scope.savEmployee = null;
-                        $scope.profileTemplate = 'views/employees/employeeProfile.html';
-                        $scope.busyLoadingProfile = false;
-                    }
-                );
-            } else {
-                employeesFactory.create($scope.employee,
-                    function(data){
-                        angular.extend($scope.employee, data.employee);
-                        $scope.savEmployee = null;
-                        $scope.profileTemplate = 'views/employees/employeeProfile.html';
-                        $scope.busyLoadingProfile = true;
-                    }
-                );
-            }
+            /* Call the factory to update the employee in db */
+            employeesFactory.update({employeeId: $scope.employee.id}, $scope.employee,
+                function(data){
+                    angular.extend($scope.employee, data.employee);
+                    $scope.savEmployee = null;
+                    $scope.profileTemplate = 'views/employees/employeeProfile.html';
+                    $scope.busyLoadingProfile = false;
+                }
+            );
 
         };
 
@@ -145,6 +99,26 @@ sentinelfApp.controller(
                     }
                 );
             });
+        };
+
+        /* Cancel new event creation */
+        $scope.cancelNewEmployee = function () {
+            $scope.showNewEmployee();
+        };
+
+        /* Save new event */
+        $scope.createNewEmployee = function() {
+            /* hide back the doc forms */
+            $scope.showNewForm = false;
+            /* Launch service to create new db */
+            employeesFactory.create($scope.employee,
+                function(data){
+                    angular.extend($scope.employee, data.employee);
+                    $scope.savEmployee = null;
+                    $scope.profileTemplate = 'views/employees/employeeProfile.html';
+                    $scope.busyLoadingProfile = true;
+                }
+            );
         };
 
         /* EmployeeDoc related functions */
@@ -185,7 +159,6 @@ sentinelfApp.controller(
             modalInstance.result.then(function(){
 
              });
-
         };
     }
 ]);

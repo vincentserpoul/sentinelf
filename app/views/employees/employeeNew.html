@@ -1,0 +1,108 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">New Employee</div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+          <fieldset>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label class="sr-only" for="title">Title</label>
+                    <select id="title" ng-model="defaultEmployee.title_id" ng-options="title.id as title.label for title in employeeStaticLabels['title']"></select>
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="first_name">First name</label>
+                    <input type="text" id="first_name" ng-model="defaultEmployee.first_name" />
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="last_name">Last name</label>
+                    <input type="text" id="last_name" ng-model="defaultEmployee.last_name" />
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="country">Country</label>
+                    <select id="country" ng-model="defaultEmployee.country_code" ng-options="country.code as country.label for country in countries"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label class="sr-only" for="date_of_birth">Date of birth</label>
+                    <input type="date" id="date_of_birth" ng-model="defaultEmployee.date_of_birth" />
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="mobile_phone_number">Phone</label>
+                    <input type="tel" id="mobile_phone_number" ng-model="defaultEmployee.mobile_phone_number" />
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="school">School</label>
+                    <input type="text" id="school" ng-model="defaultEmployee.school" />
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="race">Race</label>
+                    <select id="race" ng-model="defaultEmployee.race_id" ng-options="race.id as race.label for race in employeeStaticLabels['race']"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label class="sr-only" for="status">Status</label>
+                    <select id="status" ng-model="defaultEmployee.status_id" ng-options="status.id as status.label for status in employeeStaticLabels['status']"></select>
+                </div>
+                <div class="col-md-3">
+                    <label class="sr-only" for="work_pass_type">Work pass</label>
+                    <select id="work_pass_type" ng-model="defaultEmployee.work_pass_type_id" ng-options="work_pass_type.id as work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']"></select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-plus fa-fw"></i></button>
+                    Employee documents
+                    <ul>
+                        <li ng-repeat="employee_doc_unit in defaultEmployee.employee_doc">
+                            <p>
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeDoc(employee_doc_unit)"><i class="fa fa-trash-o fa-fw"></i></button>
+                                <img ng-if="employee_doc_unit.image_name != null" ng-src="http://dev.sentinelb.com/images/employee_docs/{{employee_doc_unit.image_name}}" /> {{(employeeStaticLabels['doc_type'] | filter:employee_doc_unit.doc_type_id)[0].label}}
+                            </p>
+                        </li>
+                        <li ng-show="employeeDocForm">
+                            <p>
+                                <select id="doc_type" ng-model="newEmployeeDoc.doc_type_id" ng-options="doc_type.id as doc_type.label for doc_type in employeeStaticLabels['doc_type']">
+                                </select>
+                            </p>
+                            <p><input type="file" image-drop accept="image/*" image="newEmployeeDoc.doc_image" /></p>
+                            <p>
+                                <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                <button type="button" class="btn btn-default btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="employeeIdentityDocForm = !employeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i></button>
+                    Employee identity documents
+                    <ul>
+                        <li ng-repeat="employee_identity_doc_unit in defaultEmployee.employee_identity_doc">
+                            <p>
+                                <button type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeIdentityDoc(employee_identity_doc_unit)"><i class="fa fa-trash-o fa-fw"></i></button>
+                                <img ng-if="employee_identity_doc_unit.image_name != null"  ng-src="http://dev.sentinelb.com/images/employee_identity_docs/{{employee_identity_doc_unit.image_name}}" />
+                                {{(employeeStaticLabels['identity_doc_type'] | filter:employee_identity_doc_unit.identity_doc_type_id)[0].label}}:
+                                {{employee_identity_doc_unit.identity_doc_number}}
+                                ({{employee_identity_doc_unit.identity_doc_validity_start}} - {{employee_identity_doc_unit.identity_doc_validity_end}})
+                            </p>
+                        </li>
+                        <li ng-show="employeeIdentityDocForm" >
+                            <p><edit-input-select uniq-id-value="" model-ref-type="identity_doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="newEmployeeIdentityDoc.identity_doc_type"></edit-input-select></p>
+                            <p><input type="file" image-drop accept="image/*" image="newEmployeeIdentityDoc.doc_image" /></p>
+                            <p><input type="text" ng-model="newEmployeeIdentityDoc.identity_doc_number" placeholder="identity doc number" /></p>
+                            <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_start" /></p>
+                            <p><input type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_end" /></p>
+                            <p>
+                                <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeIdentityDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
+                                <button type="button" class="btn btn-default btn-xs" ng-click="employeeIdentityDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <div class="btn-group button-edit">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="createNewEmployee()"><i class="fa fa-save fa-fw"></i> Save</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="cancelNewEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

@@ -1,11 +1,8 @@
-<div>
-    <div class="page-header">
-        <h2>
-            Events
-            <button type="button" class="btn btn-primary btn-sm" ng-click="newGlobalevent()"><i class="fa fa-plus fa-fw"></i> New</button>
-        </h2>
-        <p class="text-muted">{{globaleventsLazyloadFactory.total}} events</p>
-    </div>
+<h2>
+    Events
+    <button type="button" class="btn btn-primary btn-sm" ng-click="newGlobalevent()"><i class="fa fa-plus fa-fw"></i> New</button>
+</h2>
+<p class="text-muted">{{globaleventsLazyloadFactory.total}} events</p>
     <div>
         <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable repeat-animation">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
