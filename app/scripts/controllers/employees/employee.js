@@ -111,14 +111,15 @@ sentinelfApp.controller(
             /* hide back the doc forms */
             $scope.showNewForm = false;
             /* Launch service to create new db */
-            employeesFactory.create($scope.employee,
+/*            employeesFactory.create($scope.employee,
                 function(data){
-                    angular.extend($scope.employee, data.employee);
-                    $scope.savEmployee = null;
-                    $scope.profileTemplate = 'views/employees/employeeProfile.html';
-                    $scope.busyLoadingProfile = true;
+                    if(data && data.error === false){
+                        AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                    } else {
+                        AlertService.show({ 'message': data.message, 'type': 'alert-error' }, true);
+                    }
                 }
-            );
+            );*/
         };
 
         /* EmployeeDoc related functions */

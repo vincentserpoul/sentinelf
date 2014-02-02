@@ -15,7 +15,7 @@
                         <input class="form-control input-sm" ng-model="new_globalevent.label" />
                     </td>
                     <td>
-                        <select ng-model="new_globalevent.client_department_id">
+                        <select class="form-control input-sm" ng-model="new_globalevent.client_department_id">
                             <optgroup label= "{{client.name}}" ng-repeat="client in client_departments">
                                 <option value="{{client_department.id}}" ng-repeat="client_department in client.client_department">{{client_department.label}}</option>
                             </optgroup>

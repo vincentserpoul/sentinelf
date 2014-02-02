@@ -6,19 +6,19 @@
   <div class="form-group">
     <div class="col-md-3">
       <label for="last_name" class="sr-only">Last name</label>
-      <input ng-model="searchCriterias.last_name" id="last_name" type="search" placeholder="Last name" class="form-control input-md">
+      <input ng-model="searchCriterias.last_name" id="last_name" type="search" placeholder="Last name" class="form-control input-sm">
     </div>
     <div class="col-md-3">
       <label for="identity_doc_number" class="sr-only">Id number</label>
-      <input ng-model="searchCriterias.identity_doc_number" id="identity_doc_number" type="search" placeholder="nric or passport number" class="form-control input-md">
+      <input ng-model="searchCriterias.identity_doc_number" id="identity_doc_number" type="search" placeholder="nric or passport number" class="form-control input-sm">
     </div>
     <div class="col-md-3">
       <label for="age_min" class="sr-only">Min age</label>
-      <input ng-model="searchCriterias.age_min" id="age_min" type="number" placeholder="Min age" class="form-control input-md" min="0" max="100" integer />
+      <input ng-model="searchCriterias.age_min" id="age_min" type="number" placeholder="Min age" class="form-control input-sm" min="0" max="100" integer />
     </div>
     <div class="col-md-3">
       <label for="age_max" class="sr-only">Max age</label>
-      <input ng-model="searchCriterias.age_max" id="age_max" type="number" placeholder="Max age" class="form-control input-md" min="0" max="100" integer />
+      <input ng-model="searchCriterias.age_max" id="age_max" type="number" placeholder="Max age" class="form-control input-sm" min="0" max="100" integer />
     </div>
   </div>
 
@@ -38,13 +38,11 @@
       <select id="race_id" name="race_id" class="form-control" ng-model="searchCriterias.race" ng-options="race.label for race in employeeStaticLabels['race']" multiple="multiple"></select>
     </div>
     <div class="col-md-3">
-    <div class="btn-group">
-        <button type="submit" class="btn btn-primary btn-sm" ng-click="searchEmployees()"><i class="fa fa-search"></i> Search</button>
-        <button type="reset" class="btn btn-danger btn-sm" ng-click="clearEmployees()"><i class="fa fa-reset"></i> Clear</button>        
-    </div>
-
+      <div class="btn-group">
+          <button type="submit" class="btn btn-primary btn-sm" ng-click="searchEmployees()"><i class="fa fa-search"></i> Search</button>
+          <button type="reset" class="btn btn-danger btn-sm" ng-click="clearEmployees()"><i class="fa fa-reset"></i> Clear</button>
+      </div>
   </div>
-
   </fieldset>
 </form>
 
