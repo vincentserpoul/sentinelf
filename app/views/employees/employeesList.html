@@ -8,13 +8,13 @@
         {{alert.message}}
     </div>
 </div>
-<div ng-show="showNewForm" class="show-hide-animation" ng-include src="'views/employees/employeeNew.html'"></div>
+<div ng-show="showNewForm" class="show-hide-animation" ng-include src="'views/employees/employeeNew.html'" ng-controller="EmployeeCtrl"></div>
 <div ng-include src="'views/employees/employeesSearch.html'"></div>
 <div ng-show="displayList" class="panel panel-default">
     <div class="panel-heading" ng-show="employeesSearchLazyloadFactory.total+1">{{employeesSearchLazyloadFactory.total}} employee(s) found</div>
     <div class="panel-body">
         <ul class="list-unstyled" infinite-scroll='employeesSearchLazyloadFactory.loadMore()' infinite-scroll-disabled='employeesSearchLazyloadFactory.busyLoadingEmployees' infinite-scroll-distance='5'>
-            <li class="col-md-4" ng-repeat="employee in employeesSearchLazyloadFactory.employees">
+            <li class="col-md-4" ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeCtrl">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {{employee.title_label}} {{employee.first_name}} {{employee.last_name}} ({{employee.age}}yo) - {{employee.identity_doc_number}}

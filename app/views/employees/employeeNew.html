@@ -4,9 +4,13 @@
         <form class="form-horizontal">
             <fieldset>
                 <div class="form-group">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <label class="sr-only" for="title">Title</label>
                         <select class="form-control input-sm" id="title" ng-model="employee.title_id" ng-options="title.id as title.label for title in employeeStaticLabels['title']"></select>
+                    </div>
+                    <div class="col-md-1">
+                        <label class="sr-only" for="sex">Sex</label>
+                        <select class="form-control input-sm" id="sex" ng-model="employee.sex_id" ng-options="sex.id as sex.label for sex in employeeStaticLabels['sex']"></select>
                     </div>
                     <div class="col-md-3">
                         <label class="sr-only" for="first_name">First name</label>
@@ -45,7 +49,7 @@
                         <select class="form-control input-sm" id="work_pass_type" ng-model="employee.work_pass_type_id" ng-options="work_pass_type.id as work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']"></select>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-plus fa-fw"></i></button>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="showEmployeeDocForm = !showEmployeeDocForm"><i class="fa fa-plus fa-fw"></i></button>
                         Employee documents
                         <ul>
                             <li ng-repeat="employee_doc_unit in employee.employee_doc">
@@ -54,21 +58,21 @@
                                     <img ng-if="employee_doc_unit.image_name != null" ng-src="http://dev.sentinelb.com/images/employee_docs/{{employee_doc_unit.image_name}}" /> {{(employeeStaticLabels['doc_type'] | filter:employee_doc_unit.doc_type_id)[0].label}}
                                 </p>
                             </li>
-                            <li ng-show="employeeDocForm">
+                            <li ng-show="showEmployeeDocForm">
                                 <p>
-                                    <select class="form-control input-sm" id="doc_type" ng-model="employeeDoc.doc_type_id" ng-options="doc_type.id as doc_type.label for doc_type in employeeStaticLabels['doc_type']">
+                                    <select class="form-control input-sm" id="doc_type" ng-model="newEmployeeDoc.doc_type_id" ng-options="doc_type.id as doc_type.label for doc_type in employeeStaticLabels['doc_type']">
                                     </select>
                                 </p>
-                                <p><input class="form-control input-sm" type="file" image-drop accept="image/*" image="employeeDoc.doc_image" /></p>
+                                <p><input class="form-control input-sm" type="file" image-drop accept="image/*" image="newEmployeeDoc.doc_image" /></p>
                                 <p>
                                     <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
-                                    <button type="button" class="btn btn-default btn-xs" ng-click="employeeDocForm = !employeeDocForm"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                                    <button type="button" class="btn btn-default btn-xs" ng-click="showEmployeeDocForm = !showEmployeeDocForm"><i class="fa fa-ban fa-fw"></i> Cancel</button>
                                 </p>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-xs" ng-click="employeeIdentityDocForm = !employeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i></button>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="showEmployeeIdentityDocForm = !showEmployeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i></button>
                         Employee identity documents
                         <ul>
                             <li ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
@@ -80,15 +84,18 @@
                                     ({{employee_identity_doc_unit.identity_doc_validity_start}} - {{employee_identity_doc_unit.identity_doc_validity_end}})
                                 </p>
                             </li>
-                            <li ng-show="employeeIdentityDocForm" >
-                                <p><edit-input-select uniq-id-value="" model-ref-type="identity_doc_type" model-ref-resource="staticLabelListResource" edit-form="true" ng-model="employeeIdentityDoc.identity_doc_type"></edit-input-select></p>
-                                <p><input class="form-control input-sm" type="file" image-drop accept="image/*" image="employeeIdentityDoc.doc_image" /></p>
-                                <p><input class="form-control input-sm" type="text" ng-model="employeeIdentityDoc.identity_doc_number" placeholder="identity doc number" /></p>
-                                <p><input class="form-control input-sm" type="date" ng-model="employeeIdentityDoc.identity_doc_validity_start" /></p>
-                                <p><input class="form-control input-sm" type="date" ng-model="employeeIdentityDoc.identity_doc_validity_end" /></p>
+                            <li ng-show="showEmployeeIdentityDocForm">
+                                <p>
+                                    <label class="sr-only" for="identity_doc_type">identity doc type</label>
+                                    <select class="form-control input-sm" id="race" ng-model="newEmployeeIdentityDoc.identity_doc_type_id" ng-options="identity_doc_type.id as identity_doc_type.label for identity_doc_type in employeeStaticLabels['identity_doc_type']"></select>
+                                </p>
+                                <p><input class="form-control input-sm" type="file" image-drop accept="image/*" image="newEmployeeIdentityDoc.doc_image" /></p>
+                                <p><input class="form-control input-sm" type="text" ng-model="newEmployeeIdentityDoc.identity_doc_number" placeholder="identity doc number" /></p>
+                                <p><input class="form-control input-sm" type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_start" /></p>
+                                <p><input class="form-control input-sm" type="date" ng-model="newEmployeeIdentityDoc.identity_doc_validity_end" /></p>
                                 <p>
                                     <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeIdentityDoc()"><i class="fa fa-save fa-fw"></i> Save</button>
-                                    <button type="button" class="btn btn-default btn-xs" ng-click="employeeIdentityDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
+                                    <button type="button" class="btn btn-default btn-xs" ng-click="showEmployeeIdentityDocForm = false"><i class="fa fa-ban fa-fw"></i> Cancel</button>
                                 </p>
                             </li>
                         </ul>

@@ -9,7 +9,7 @@ sentinelfApp.factory('employeesFactory', ['$resource', 'SENTINEL_API_END_POINT',
             listFilterParams: '@listFilterParams',
         },
         {
-            'get': {method:'GET', cache: true},
+            'get': {method:'GET'},
             'create': {method:'POST'},
             'update': {method:'PUT'},
             'delete': {method:'DELETE'},

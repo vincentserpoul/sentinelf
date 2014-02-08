@@ -1,4 +1,7 @@
 <p>
+    <label for="country">Sex:&nbsp;</label>{{(employeeStaticLabels.sex | filter:employee.sex_id)[0].label}}
+</p>
+<p>
     <label for="country">Country:&nbsp;</label>{{(countries | filter:employee.country_code)[0].label}}
 </p>
 <p>

@@ -66,10 +66,18 @@ sentinelfApp.controller(
             /* Call the factory to update the employee in db */
             employeesFactory.update({employeeId: $scope.employee.id}, $scope.employee,
                 function(data){
-                    angular.extend($scope.employee, data.employee);
-                    $scope.savEmployee = null;
-                    $scope.profileTemplate = 'views/employees/employeeProfile.html';
-                    $scope.busyLoadingProfile = false;
+                    if(data && data.error === false){
+                        AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                        /* hide back the doc forms */
+                        angular.extend($scope.employee, data.employee);
+                        $scope.savEmployee = null;
+                        $scope.profileTemplate = 'views/employees/employeeProfile.html';
+                        $scope.busyLoadingProfile = false;
+                    }
+                }, function (error) {
+                    if (error.data){
+                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
+                    }
                 }
             );
 
@@ -91,37 +99,46 @@ sentinelfApp.controller(
                 employeesFactory.delete({employeeId:$scope.employee.id},
                     function(data){
                         if(data && data.error === false){
-                            $scope.employee.delete();
+                            AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                            var index = $scope.employeesSearchLazyloadFactory.employees.indexOf($scope.employee);
+                            $scope.employeesSearchLazyloadFactory.employees.splice(index, 1);
+                            $scope.employeesSearchLazyloadFactory.total -= 1;
                         } else {
                             console.log(data.error);
                         }
 
+                    }, function (error) {
+                    if (error.data){
+                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
                     }
+                }
                 );
             });
         };
 
+
         /* Cancel new event creation */
         $scope.cancelNewEmployee = function () {
-            $scope.showNewEmployee();
+            $scope.showNewForm = false;
         };
 
         /* Save new event */
         $scope.createNewEmployee = function() {
-            /* hide back the doc forms */
-            $scope.showNewForm = false;
             /* Launch service to create new db */
-/*            employeesFactory.create($scope.employee,
+            employeesFactory.create($scope.employee,
                 function(data){
                     if(data && data.error === false){
                         AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
-                    } else {
-                        AlertService.show({ 'message': data.message, 'type': 'alert-error' }, true);
+                        /* hide back the doc forms */
+                        $scope.showNewForm = false;
+                    }
+                }, function (error) {
+                    if (error.data){
+                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
                     }
                 }
-            );*/
+            );
         };
-
         /* EmployeeDoc related functions */
         /* Delete employee doc */
         $scope.deleteEmployeeDoc = function(employeeDoc){
@@ -131,11 +148,11 @@ sentinelfApp.controller(
         /* Add employee doc */
         $scope.addEmployeeDoc = function(){
             /* We need to copy to make sure a new element is created each time */
-            $scope.employee.employee_doc.unshift($scope.newEmployeeDoc);
+            $scope.employee.employee_doc.unshift(this.newEmployeeDoc);
 
             /* hide back the form */
-            $scope.newEmployeeDoc = null;
-            $scope.employeeDocForm = !$scope.employeeDocForm;
+            this.newEmployeeDoc = null;
+            this.showEmployeeDocForm =false;
         };
 
         /* Employee Identity doc related function */
@@ -148,10 +165,9 @@ sentinelfApp.controller(
         /* Add employee identity doc */
         $scope.addEmployeeIdentityDoc = function(){
             /* hide back the form */
-            $scope.employeeIdentityDocForm = false;
-            $scope.newEmployeeIdentityDoc.identity_doc_type_id = $scope.newEmployeeIdentityDoc.identity_doc_type.id;
+            this.showEmployeeIdentityDocForm = false;
             /* We need to copy to make sure a new element is created each time */
-            $scope.employee.employee_identity_doc.unshift(angular.copy($scope.newEmployeeIdentityDoc));
+            $scope.employee.employee_identity_doc.unshift(angular.copy(this.newEmployeeIdentityDoc));
         };
 
         /* Add employee identity doc */
@@ -159,7 +175,7 @@ sentinelfApp.controller(
             var modalInstance = formService.popup('Pay employee', 'Confirm you want to pay employee ?', 'update.html');
             modalInstance.result.then(function(){
 
-             });
+            });
         };
     }
 ]);
