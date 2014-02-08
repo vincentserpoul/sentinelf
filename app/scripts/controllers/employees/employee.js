@@ -131,6 +131,7 @@ sentinelfApp.controller(
                         AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
                         /* hide back the doc forms */
                         $scope.$parent.showNewEmployeeForm = false;
+                        $scope.employee = $scope.$parent.defaultEmployee;
                     }
                 }, function (error) {
                     if (error.data){

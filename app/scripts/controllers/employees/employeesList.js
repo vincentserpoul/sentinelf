@@ -18,7 +18,18 @@ sentinelfApp.controller(
                 $scope.countries = data.labels.country;
             });
 
-            $scope.showNewForm = false;
+            $scope.showNewEmployeeForm = false;
+            $scope.defaultEmployee = {
+                    'title_id':1,
+                    'sex_id':1,
+                    'country_code':'SGP',
+                    'date_of_birth':'1980-01-01',
+                    'race_id':1,
+                    'status_id':1,
+                    'work_pass_type_id':1,
+                    'employee_identity_doc':[],
+                    'employee_doc':[]
+                };
 
         }
 
@@ -49,17 +60,7 @@ sentinelfApp.controller(
             if($scope.showNewEmployeeForm){
 
                 /* Create a defulat empty employee */
-                $scope.employee = {
-                    'title_id':1,
-                    'sex_id':1,
-                    'country_code':'SGP',
-                    'date_of_birth':'1980-01-01',
-                    'race_id':1,
-                    'status_id':1,
-                    'work_pass_type_id':1,
-                    'employee_identity_doc':[],
-                    'employee_doc':[]
-                };
+                $scope.employee = $scope.defaultEmployee;
             }
         };
     }
