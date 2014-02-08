@@ -44,9 +44,9 @@ sentinelfApp.controller(
 
         /* Display new form */
         $scope.showNewEmployee = function () {
-            $scope.showNewForm = !$scope.showNewForm;
+            $scope.showNewEmployeeForm = !$scope.showNewEmployeeForm;
 
-            if($scope.showNewForm){
+            if($scope.showNewEmployeeForm){
 
                 /* Create a defulat empty employee */
                 $scope.employee = {
@@ -60,8 +60,6 @@ sentinelfApp.controller(
                     'employee_identity_doc':[],
                     'employee_doc':[]
                 };
-            } else {
-                $scope.employeeNewTemplate = '';
             }
         };
     }

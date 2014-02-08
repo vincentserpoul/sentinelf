@@ -119,7 +119,7 @@ sentinelfApp.controller(
 
         /* Cancel new event creation */
         $scope.cancelNewEmployee = function () {
-            $scope.showNewForm = false;
+            $scope.$parent.showNewEmployeeForm = false;
         };
 
         /* Save new event */
@@ -130,7 +130,7 @@ sentinelfApp.controller(
                     if(data && data.error === false){
                         AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
                         /* hide back the doc forms */
-                        $scope.showNewForm = false;
+                        $scope.$parent.showNewEmployeeForm = false;
                     }
                 }, function (error) {
                     if (error.data){
