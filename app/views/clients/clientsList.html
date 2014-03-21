@@ -25,20 +25,18 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_client.name" /></td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_client.address" /></td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_client.city" /></td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_client.postcode" /></td>
-                        <td>
-                            <select ui-select2 ng-model="new_client.country_code" data-placeholder="Pick a country">
-                                <option value=""></option>
-                                <option ng-repeat="country in countries" value="{{country.code}}">{{country.label}}</option>
-                            </select>
+                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.name" /></td>
+                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.address" /></td>
+                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.city" /></td>
+                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.postcode" /></td>
+                        <td class="col-md-2">
+                            <label class="sr-only" for="country">Country</label>
+                            <select class="form-control input-sm" id="country" ng-model="new_client.country_code" ng-options="country.code as country.label for country in countries"></select>
                         </td>
-                        <td><input type="text" class="form-control input-sm" ng-model="new_client.phone_number" /></td>
-                        <td class="btn-group-vertical btn-group-sm">
-                            <button type="button" class="btn btn-success" ng-click="saveNewClient()"><i class="fa fa-save fa-fw"></i> Save</button>
-                            <button type="button" class="btn btn-default" ng-click="cancelNewClient()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
+                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.phone_number" /></td>
+                        <td class="btn-group btn-group-sm col-md-1">
+                            <button type="button" class="btn btn-success" ng-click="saveNewClient()"><i class="fa fa-save fa-fw"></i> </button>
+                            <button type="button" class="btn btn-default" ng-click="cancelNewClient()"><i class="fa fa-ban fa-fw"></i></button>
                         </td>
                     </tr>
                 </tbody>

@@ -9,7 +9,7 @@
             {{alert.message}}
         </div>
     </div>
-    <div ng-show="showNewForm" class="show-hide-animation" ng-include src="globaleventNewTemplate">
+    <div ng-show="showNewForm" ng-include src="globaleventNewTemplate">
     </div>
     <table class="table table-hover" infinite-scroll='globaleventsLazyloadFactory.loadMore()' infinite-scroll-disabled='globaleventsLazyloadFactory.busyLoadingEvents' infinite-scroll-distance='1'>
         <thead>
@@ -24,8 +24,7 @@
                 <th><i class="fa fa-list"></i> Sublists</th>
             </tr>
         </thead>
-        <tbody ng-repeat="globalevent in globaleventsLazyloadFactory.globalevents" class="repeat-animation" ng-controller='GlobaleventCtrl' ng-include src="globaleventTemplate">
+        <tbody ng-repeat="globalevent in globaleventsLazyloadFactory.globalevents" ng-controller='GlobaleventCtrl' ng-include src="globaleventTemplate">
         </tbody>
     </table>
     <div ng-show="globaleventsLazyloadFactory.busyLoadingGlobalevents"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
-</div>

@@ -7,14 +7,14 @@
     <td>{{globalevent.end_datetime}}</td>
     <td>
         <div class="btn-group btn-group-sm">
-            <button type="button" class="btn btn-primary" ng-click="editGlobalevent()"><i class="fa fa-edit fa-fw"></i> Edit</button>
-            <button type="button" class="btn btn-danger" ng-click="deleteGlobalevent()"><i class="fa fa-trash-o fa-fw"></i> Delete</button>
+            <button type="button" class="btn btn-primary" ng-click="editGlobalevent()"><i class="fa fa-edit fa-fw"></i> </button>
+            <button type="button" class="btn btn-danger" ng-click="deleteGlobalevent()"><i class="fa fa-trash-o fa-fw"></i> </button>
         </div>
     </td>
     <td>
         <div class="btn-group btn-group-sm">
-            <button type="button" class="btn btn-info" ng-click="loadGlobaleventPeriods()"><i class="fa fa-calendar"></i> Event periods</button>
-            <button type="button" class="btn btn-info" ng-click="openAssignments()"><i class="fa fa-user"></i> Assignments</button>
+            <button type="button" class="btn btn-info" ng-click="loadGlobaleventPeriods()"><i class="fa fa-calendar"></i></button>
+            <button type="button" class="btn btn-info" ng-click="openAssignments()"><i class="fa fa-user"></i> </button>
         </div>
     </td>
 </tr>
@@ -26,8 +26,7 @@
                 {{globalevent.label}}'s event periods
                 <button type="button" class="btn btn-primary btn-xs" ng-click="newGlobaleventPeriod()"><i class="fa fa-plus fa-fw"></i> New</button>
             </div>
-            <div class="show-hide-animation" ng-show="showNewForm" ng-include src="globaleventPeriodNewTemplate">
-            </div>
+            <div ng-show="showNewForm" ng-include src="globaleventPeriodNewTemplate"></div>
             <table class="table" ng-show="globaleventPeriodsLazyloadFactory.globalevent_periods.length">
                 <tr>
                     <thead>
@@ -40,7 +39,7 @@
                         <th><i class="fa fa-list"></i> Sublists</th>
                     </thead>
                 </tr>
-                <tbody ng-repeat="globalevent_period in globaleventPeriodsLazyloadFactory.globalevent_periods" ng-controller='GlobaleventPeriodCtrl' class="repeat-animation" ng-include src="globaleventPeriodTemplate">
+                <tbody ng-repeat="globalevent_period in globaleventPeriodsLazyloadFactory.globalevent_periods" ng-controller='GlobaleventPeriodCtrl' ng-include src="globaleventPeriodTemplate">
                 </tbody>
             </table>
             <div ng-hide="globaleventPeriodsLazyloadFactory.completelyLoaded || globaleventPeriodsLazyloadFactory.busyLoadingGlobaleventPeriods">
@@ -51,6 +50,6 @@
             </div>
             <div class="panel-footer" ng-show="globaleventPeriodsLazyloadFactory.busyLoadingGlobaleventPeriods"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
         </div>
-        <div ng-show="openGlobaleventPeriods" class="show-hide-animation" ng-include src="globaleventPeriodsListTemplate"></div>
+        <div ng-show="openGlobaleventPeriods" ng-include src="globaleventPeriodsListTemplate"></div>
     </td>
 </tr>

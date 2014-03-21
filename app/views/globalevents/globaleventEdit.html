@@ -1,18 +1,22 @@
-<td>{{globalevent.id}}</td>
-<td>
-    <input type="text" class="form-control input-sm" ng-model="globalevent.label" placeholder="event's name" />
-</td>
-<td colspan="2">
-    <select ng-model="globalevent.client_department_id">
-        <optgroup label= "{{client.name}}" ng-repeat="client in client_departments">
-            <option value="{{client_department.id}}" ng-repeat="client_department in client.client_department">{{client_department.label}}</option>
-        </optgroup>
-    </select>
-<td>
-<td>&nbsp;</td>
-<td>
-	<div class="btn-group btn-group-sm">
-	    <button type="button" class="btn btn-success" ng-click="saveGlobalevent()"><i class="fa fa-save fa-fw"></i> Save</button>
-	    <button type="button" class="btn btn-default" ng-click="cancelEditGlobalevent()"><i class="fa fa-ban fa-fw"></i>Cancel</button>
-    </div>
-<td>&nbsp;</td>
+<tr>
+    <td>{{globalevent.id}}</td>
+    <td>
+        <input type="text" class="form-control input-sm" ng-model="globalevent.label" placeholder="event's name" />
+    </td>
+    <td colspan="2">
+        <select ng-model="globalevent.client_department_id">
+            <optgroup label= "{{client.name}}" ng-repeat="client in client_departments">
+                <option value="{{client_department.id}}" ng-repeat="client_department in client.client_department">{{client_department.label}}</option>
+            </optgroup>
+        </select>
+    </td>
+    <td>{{globalevent.start_datetime}}</td>
+    <td>{{globalevent.end_datetime}}</td>
+    <td>
+    	<div class="btn-group btn-group-sm">
+    	    <button type="button" class="btn btn-success" ng-click="saveGlobalevent()"><i class="fa fa-save fa-fw"></i> </button>
+    	    <button type="button" class="btn btn-default" ng-click="cancelEditGlobalevent()"><i class="fa fa-ban fa-fw"></i> </button>
+        </div>
+    </td>
+    <td>&nbsp;</td>
+</tr>
