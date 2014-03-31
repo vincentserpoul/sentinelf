@@ -13,7 +13,7 @@
             <tr ng-repeat="assignedEmployee in assignedEmployeesLazyloadFactory.assignedEmployees" class="repeat-animation" ng-controller="GlobaleventPeriodEmployeeCtrl">
                 <td><button type="button" class="btn btn-danger btn-xs" ng-click="unassignEmployee()"><i class="fa fa-trash-o fa-fw"></i> </button></td>
                 <td>{{assignedEmployee.id}}</td>
-                <td>{{assignedEmployee.title_label}} {{assignedEmployee.first_name}} {{assignedEmployee.last_name}}</td>
+                <td>{{assignedEmployee.first_name}} {{assignedEmployee.last_name}}</td>
                 <td>{{assignedEmployee.identity_doc_number}}</td>
                 <td>{{assignedEmployee.age}}</td>
             </tr>

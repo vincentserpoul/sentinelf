@@ -14,10 +14,10 @@
     <div class="panel-heading" ng-show="employeesSearchLazyloadFactory.total+1">{{employeesSearchLazyloadFactory.total}} employee(s) found</div>
     <div class="panel-body">
         <ul class="list-unstyled" infinite-scroll='employeesSearchLazyloadFactory.loadMore()' infinite-scroll-disabled='employeesSearchLazyloadFactory.busyLoadingEmployees' infinite-scroll-distance='5'>
-            <li class="col-md-4" ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeCtrl">
+            <li ng-repeat="employee in employeesSearchLazyloadFactory.employees" ng-controller="EmployeeCtrl">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{employee.title_label}} {{employee.first_name}} {{employee.last_name}} ({{employee.age}}yo) - {{employee.identity_doc_number}}
+                        <span class="list-index">{{$index+1}}</span>{{employee.first_name}} {{employee.last_name}} ({{employee.age}}yo) - {{employee.identity_doc_number}}
                         <button ng-show="!employee.id" class="btn btn-default btn-xs" ng-click="cancelAddEmployee()"><i class="fa fa-ban fa-fw"></i> Cancel</button>
                         <button class="btn btn-default btn-xs pull-right" ng-hide="showDetails" ng-click="toggleDetails()"><i class="fa fa-plus"></i></button>
                         <button class="btn btn-default btn-xs pull-right" ng-show="showDetails" ng-click="toggleDetails()"><i class="fa fa-minus"></i></button>
