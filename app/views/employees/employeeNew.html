@@ -5,43 +5,43 @@
             <fieldset>
                 <div class="form-group">
                     <div class="col-md-3">
-                        <label class="sr-only" for="sex">Sex</label>
+                        <label for="sex">Sex</label>
                         <select class="form-control input-sm" id="sex" ng-model="employee.sex_id" ng-options="sex.id as sex.label for sex in employeeStaticLabels['sex']"></select>
                     </div>
                     <div class="col-md-3">
-                        <label class="sr-only" for="first_name">First name</label>
+                        <label for="first_name">First name</label>
                         <input class="form-control input-sm" type="text" id="first_name" ng-model="employee.first_name" placeholder="First name"/>
                     </div>
                     <div class="col-md-3">
-                        <label class="sr-only" for="last_name">Last name</label>
+                        <label for="last_name">Last name</label>
                         <input class="form-control input-sm" type="text" id="last_name" ng-model="employee.last_name" placeholder="Last name"/>
                     </div>
                     <div class="col-md-3">
-                        <label class="sr-only" for="country">Country</label>
+                        <label for="country">Country</label>
                         <select class="form-control input-sm" id="country" ng-model="employee.country_code" ng-options="country.code as country.label for country in countries"></select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-3">
-                        <label class="sr-only" for="date_of_birth">Date of birth</label>
+                        <label for="date_of_birth">Date of birth</label>
                         <input class="form-control input-sm" type="date" id="date_of_birth" ng-model="employee.date_of_birth" />
                     </div>
                     <div class="col-md-3">
-                        <label class="sr-only" for="mobile_phone_number">Phone</label>
+                        <label for="mobile_phone_number">Phone</label>
                         <input class="form-control input-sm" type="tel" id="mobile_phone_number" ng-model="employee.mobile_phone_number" placeholder="+65" />
                     </div>
                     <div class="col-md-3">
-                        <label class="sr-only" for="school">School</label>
+                        <label for="school">School</label>
                         <input class="form-control input-sm" type="text" id="school" ng-model="employee.school" placeholder="School" />
                     </div>
                     <div class="col-md-3">
-                        <label class="sr-only" for="race">Race</label>
+                        <label for="race">Race</label>
                         <select class="form-control input-sm" id="race" ng-model="employee.race_id" ng-options="race.id as race.label for race in employeeStaticLabels['race']"></select>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-3">
-                        <label class="sr-only" for="work_pass_type">Work pass</label>
+                        <label for="work_pass_type">Work pass</label>
                         <select class="form-control input-sm" id="work_pass_type" ng-model="employee.work_pass_type_id" ng-options="work_pass_type.id as work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']"></select>
                     </div>
                     <div class="col-md-3">
@@ -82,7 +82,7 @@
                             </li>
                             <li ng-show="showEmployeeIdentityDocForm">
                                 <p>
-                                    <label class="sr-only" for="identity_doc_type">identity doc type</label>
+                                    <label for="identity_doc_type">identity doc type</label>
                                     <select class="form-control input-sm" id="race" ng-model="newEmployeeIdentityDoc.identity_doc_type_id" ng-options="identity_doc_type.id as identity_doc_type.label for identity_doc_type in employeeStaticLabels['identity_doc_type']"></select>
                                 </p>
                                 <p><input class="form-control input-sm" type="file" image-drop accept="image/*" image="newEmployeeIdentityDoc.doc_image" /></p>
