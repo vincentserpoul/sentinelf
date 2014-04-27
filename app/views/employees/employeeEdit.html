@@ -1,46 +1,83 @@
 <p>
-    <label class="sr-only" for="sex">Sex</label>
+    <label for="sex">Sex</label>
     <select class="form-control input-sm" id="sex" ng-model="employee.sex_id" ng-options="sex.id as sex.label for sex in employeeStaticLabels['sex']"></select>
 </p>
 <p>
-    <label class="sr-only" for="first_name">First name</label>
+    <label for="first_name">First name</label>
     <input class="form-control input-sm" type="text" id="first_name" ng-model="employee.first_name" />
 </p>
 <p>
-    <label class="sr-only" for="last_name">Last name</label>
+    <label for="last_name">Last name</label>
     <input class="form-control input-sm" type="text" id="last_name" ng-model="employee.last_name" />
 </p>
 <p>
-    <label class="sr-only" for="country">Country</label>
+    <label for="country">Country</label>
     <select class="form-control input-sm" id="country" ng-model="employee.country_code" ng-options="country.code as country.label for country in countries"></select>
 </p>
 <p>
-    <label class="sr-only" for="date_of_birth">Date of birth</label>
+    <label for="date_of_birth">Date of birth</label>
     <input class="form-control input-sm" type="date" id="date_of_birth" ng-model="employee.date_of_birth" />
 </p>
 <p>
-    <label class="sr-only" for="mobile_phone_number">Phone</label>
+    <label for="mobile_phone_number">Phone</label>
     <input class="form-control input-sm" type="tel" id="mobile_phone_number" ng-model="employee.mobile_phone_number" />
 </p>
 <p>
-    <label class="sr-only" for="school">School</label>
+    <label for="school">School</label>
     <input class="form-control input-sm" type="text" id="school" ng-model="employee.school" />
 </p>
 <p>
-    <label class="sr-only" for="join_date">Join date</label>
+    <label for="join_date">Join date</label>
     <input class="form-control input-sm" type="text" id="school" ng-model="employee.join_date" />
 </p>
 <p>
-    <label class="sr-only" for="race">Race</label>
+    <label for="race">Race</label>
     <select class="form-control input-sm" id="race" ng-model="employee.race_id" ng-options="race.id as race.label for race in employeeStaticLabels['race']"></select>
 </p>
 <p>
-    <label class="sr-only" for="status">Status</label>
+    <label for="status">Status</label>
     <select class="form-control input-sm" id="status" ng-model="employee.status_id" ng-options="status.id as status.label for status in employeeStaticLabels['status']"></select>
 </p>
 <p>
-    <label class="sr-only" for="work_pass_type">Work pass</label>
+    <label for="work_pass_type">Work pass</label>
     <select class="form-control input-sm" id="work_pass_type" ng-model="employee.work_pass_type_id" ng-options="work_pass_type.id as work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']"></select>
+</p>
+<p>
+    <button type="button" class="btn btn-primary btn-xs" ng-click="showEmployeeContactForm = !showEmployeeContactForm"><i class="fa fa-plus fa-fw"></i></button>
+    Employee emergency contacts
+    <ul>
+        <li ng-repeat="employee_contact_unit in employee.employee_contact">
+            <p>
+                <button type="button" class="btn btn-primary btn-xs" ng-click="deleteEmployeeContact(employee_contact_unit)"><i class="fa fa-trash-o fa-fw"></i></button>
+                {{(employeeStaticLabels.title | filter:employee_contact_unit.title_id)[0].label}}
+                {{employee_contact_unit.last_name}}
+                {{employee_contact_unit.first_name}}
+                ({{employee_contact_unit.mobile_phone_number}})
+            </p>
+        </li>
+        <li ng-show="showEmployeeContactForm">
+            <p>
+                <label for="sex">Sex</label>
+                <select class="form-control input-sm" id="sex" ng-model="newEmployeeContact.sex_id" ng-options="sex.id as sex.label for sex in employeeStaticLabels['sex']"></select>
+            </p>
+            <p>
+                <label for="first_name">First name</label>
+                <input class="form-control input-sm" type="text" id="first_name" ng-model="newEmployeeContact.first_name" />
+            </p>
+            <p>
+                <label for="last_name">Last name</label>
+                <input class="form-control input-sm" type="text" id="last_name" ng-model="newEmployeeContact.last_name" />
+            </p>
+            <p>
+                <label for="mobile_phone_number">Phone number</label>
+                <input class="form-control input-sm" type="text" id="mobile_phone_number" ng-model="newEmployeeContact.mobile_phone_number" />
+            </p>
+            <p>
+                <button type="button" class="btn btn-success btn-xs" ng-click="addEmployeeContact()"><i class="fa fa-save fa-fw"></i> </button>
+                <button type="button" class="btn btn-default btn-xs" ng-click="showEmployeeContactForm = !showEmployeeContactForm"><i class="fa fa-ban fa-fw"></i> </button>
+            </p>
+        </li>
+    </ul>
 </p>
 <p>
     <button type="button" class="btn btn-primary btn-xs" ng-click="showEmployeeDocForm = !showEmployeeDocForm"><i class="fa fa-plus fa-fw"></i></button>
@@ -80,7 +117,7 @@
         </li>
         <li ng-show="showEmployeeIdentityDocForm">
             <p>
-                <label class="sr-only" for="identity_doc_type">identity doc type</label>
+                <label for="identity_doc_type">identity doc type</label>
                 <select class="form-control input-sm" id="race" ng-model="newEmployeeIdentityDoc.identity_doc_type_id" ng-options="identity_doc_type.id as identity_doc_type.label for identity_doc_type in employeeStaticLabels['identity_doc_type']"></select>
             </p>
             <p><input class="form-control input-sm" type="file" image-drop accept="image/*" image="newEmployeeIdentityDoc.doc_image" /></p>

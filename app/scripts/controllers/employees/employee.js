@@ -140,6 +140,24 @@ sentinelfApp.controller(
                 }
             );
         };
+
+        /* EmployeeContact related functions */
+        /* Delete employee doc */
+        $scope.deleteEmployeeContact = function(employeeContact){
+            var index = $scope.employee.employee_contact.indexOf(employeeContact);
+            $scope.employee.employee_contact.splice(index, 1);
+        };
+        /* Add employee doc */
+        $scope.addEmployeeContact = function(){
+            /* We need to copy to make sure a new element is created each time */
+            $scope.employee.employee_contact.unshift(this.newEmployeeContact);
+
+            /* hide back the form */
+            this.newEmployeeContact = null;
+            this.showEmployeeContactForm =false;
+        };
+
+
         /* EmployeeDoc related functions */
         /* Delete employee doc */
         $scope.deleteEmployeeDoc = function(employeeDoc){

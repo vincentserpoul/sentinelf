@@ -26,6 +26,19 @@
     <label for="work_pass_type">Work pass:&nbsp;</label>{{(employeeStaticLabels.work_pass_type | filter:employee.work_pass_type_id)[0].label}}
 </p>
 <p>
+    <label for="employee_contact">Employee emergency contact:&nbsp;</label>
+    <ul>
+        <li ng-repeat="employee_contact_unit in employee.employee_contact">
+            <p>
+                {{(employeeStaticLabels.title | filter:employee_contact_unit.title_id)[0].label}}
+                {{employee_contact_unit.last_name}}
+                {{employee_contact_unit.first_name}}
+                ({{employee_contact_unit.mobile_phone_number}})
+            </p>
+        </li>
+    </ul>
+</p>
+<p>
     <label for="employee_docs">Employee documents</label>
     <ul>
         <li ng-repeat="employee_doc_unit in employee.employee_doc">
