@@ -41,6 +41,10 @@
       <select id="race_id" name="race_id" class="form-control" ng-model="searchCriterias.race" ng-options="race.label for race in employeeStaticLabels['race']" multiple="multiple"></select>
     </div>
     <div class="col-md-3">
+      <label for="status_id" class="sr-only">Status</label>
+      <select id="status_id" name="status_id" class="form-control" ng-model="searchCriterias.status" ng-options="status.label for status in employeeStaticLabels['status']" multiple="multiple"></select>
+    </div>
+    <div class="col-md-3">
       <div class="btn-group">
           <button type="submit" class="btn btn-primary btn-sm" ng-click="searchEmployees()"><i class="fa fa-search"></i> </button>
           <button type="reset" class="btn btn-danger btn-sm" ng-click="clearEmployees()"><i class="fa fa-ban fa-fw"></i> </button>

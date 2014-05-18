@@ -9,10 +9,6 @@
                         <select class="form-control input-sm" id="sex" ng-model="employee.sex_id" ng-options="sex.id as sex.label for sex in employeeStaticLabels['sex']"></select>
                     </div>
                     <div class="col-md-3">
-                        <label for="first_name">First name</label>
-                        <input class="form-control input-sm" type="text" id="first_name" ng-model="employee.first_name" placeholder="First name"/>
-                    </div>
-                    <div class="col-md-3">
                         <label for="last_name">Last name</label>
                         <input class="form-control input-sm" type="text" id="last_name" ng-model="employee.last_name" placeholder="Last name"/>
                     </div>
@@ -45,8 +41,8 @@
                         <select class="form-control input-sm" id="work_pass_type" ng-model="employee.work_pass_type_id" ng-options="work_pass_type.id as work_pass_type.label for work_pass_type in employeeStaticLabels['work_pass_type']"></select>
                     </div>
                     <div class="col-md-3">
+                        <label for="employee_documents">Employee documents</label>
                         <button type="button" class="btn btn-primary btn-xs" ng-click="showEmployeeDocForm = !showEmployeeDocForm"><i class="fa fa-plus fa-fw"></i></button>
-                        Employee documents
                         <ul>
                             <li ng-repeat="employee_doc_unit in employee.employee_doc">
                                 <p>
@@ -68,8 +64,8 @@
                         </ul>
                     </div>
                     <div class="col-md-3">
+                        <label for="employee_identity_documents">Employee identity documents</label>
                         <button type="button" class="btn btn-primary btn-xs" ng-click="showEmployeeIdentityDocForm = !showEmployeeIdentityDocForm"><i class="fa fa-plus fa-fw"></i></button>
-                        Employee identity documents
                         <ul>
                             <li ng-repeat="employee_identity_doc_unit in employee.employee_identity_doc">
                                 <p>
