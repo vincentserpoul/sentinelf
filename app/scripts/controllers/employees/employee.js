@@ -2,34 +2,94 @@
 
 sentinelfApp.controller(
     'EmployeeCtrl', [
-    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory',
-    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory){
+    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'employeeRemarks',
+    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, employeeRemarks){
 
         $scope.toggleDetails = function(){
             $scope.showProfile();
+            $scope.showUnpaidAssignments();
+            $scope.showRemarks();
+            $scope.showLatestAssignments();
             $scope.showDetails = !$scope.showDetails;
         };
 
         /* Display profile tab and hide the two others */
-        $scope.showAssignments = function(){
-            /* render optimization */
-            $scope.employee.shownAssignments = true;
+        $scope.showUnpaidAssignments = function(){
+            if(!$scope.showDetails){
+                /* display loading  */
+                $scope.busyLoadingUnpaidAssignments = true;
 
-            /* get Data */
-            employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
-                $scope.globaleventPeriods = data.globalevent_periods;
-            });
+                /* get Data */
+                employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
+                    $scope.unpaidGlobaleventPeriods = data.globalevent_periods;
+                    /* Push the template to the page */
+                    $scope.unpaidAssignmentsTemplate = 'views/employees/employeeUnpaidAssignments.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingUnpaidAssignments = false;
+                });
+            }
         };
 
-        /* Display profile tab and hide the two others */
-        $scope.showUnpaidAssignments = function(){
-            /* render optimization */
-            $scope.employee.shownUnpaidAssignments = true;
+        /* Display list of remarks */
+        $scope.showRemarks = function(){
+            if(!$scope.showDetails){
+                /* display loading  */
+                $scope.busyLoadingRemarks = true;
+                $scope.showNewRemarkForm = false;
+                /* get Data */
+                employeeRemarks.get({employeeId: $scope.employee.id}, function(data){
 
+                    $scope.remarks = data.employee_remarks;
+                    /* Push the template to the page */
+                    $scope.remarksTemplate = 'views/employees/employeeRemarks.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingRemarks = false;
+                });
+            }
+        };
+
+        /* Display remark */
+        $scope.toggleRemarks = function(){
+            $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
+        }
+
+        /* Display new form */
+        $scope.createNewRemark = function(){
             /* get Data */
-            employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
-                $scope.unpaidGlobaleventPeriods = data.globalevent_periods;
-            });
+            /* Launch service to create new remark */
+            var newEmployeeRemark = new employeeRemarks;
+            newEmployeeRemark.employeeId = $scope.employee.id;
+            newEmployeeRemark.remark = $scope.new_remark;
+            newEmployeeRemark.$save(
+                function(data){
+                    if(data && data.error === false){
+                        AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                        /* hide back the doc forms */
+                        $scope.remarks.unshift(data.employee_remark);
+                        $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
+                    }
+                }, function (error) {
+                    if (error.data){
+                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
+                    }
+                }
+            );
+        }
+
+        /* Display profile tab and hide the two others */
+        $scope.showLatestAssignments = function(){
+            if(!$scope.showDetails){
+                /* display loading  */
+                $scope.busyLatestAssignments = true;
+                /* get Data */
+                employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
+                    $scope.latestGlobaleventPeriods = data.globalevent_periods;
+                    /* Push the template to the page */
+                    $scope.latestAssignmentsTemplate = 'views/employees/employeeLatestAssignments.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingLatestAssignments = false;
+                });
+            }
         };
 
         /* Display profile tab and hide the two others */
@@ -108,10 +168,10 @@ sentinelfApp.controller(
                         }
 
                     }, function (error) {
-                    if (error.data){
-                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
+                        if (error.data){
+                            AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
+                        }
                     }
-                }
                 );
             });
         };

@@ -56,5 +56,10 @@ sentinelfApp.factory('assignedEmployeesFactory', ['$resource', 'SENTINEL_API_END
 
 }]);
 
+sentinelfApp.factory('employeeRemarks', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
+    return $resource( SENTINEL_API_END_POINT + '/employee/:employeeId/remark',
+                    {employeeId: '@employeeId'});
+
+}]);
 

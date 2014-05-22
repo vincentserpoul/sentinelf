@@ -1,6 +1,5 @@
-<ng-if="employee.shownUnpaidAssignments">
-    <p ng-repeat="unpaidGlobaleventPeriod in unpaidGlobaleventPeriods">
-        <button ng-click="payEmployee()" class="btn btn-xs btn-primary"><i class="fa fa-money"></i> Unpaid</button>
-        {{unpaidGlobaleventPeriod.label}} ({{unpaidGlobaleventPeriod.number_of_employee_needed}}) : from {{unpaidGlobaleventPeriod.start_datetime}} to {{unpaidGlobaleventPeriod.end_datetime}}
-    </p>
-</ng-if>
+<ul>
+    <li ng-repeat="unpaidAssignment in unpaidGlobaleventPeriods">
+        {{unpaidAssignment.label}}: {{unpaidAssignment.real_start_datetime}} -> {{unpaidAssignment.real_end_datetime}}
+    </li>
+</ul>

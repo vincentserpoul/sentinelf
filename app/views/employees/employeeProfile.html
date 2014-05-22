@@ -5,7 +5,7 @@
     <label for="country">Country:&nbsp;</label>{{(countries | filter:employee.country_code)[0].label}}
 </p>
 <p>
-    <label for="date_of_birth">Date of birth:&nbsp;</label>{{employee.date_of_birth | date:'medium'}}
+    <label for="date_of_birth">Date of birth:&nbsp;</label>{{employee.date_of_birth}}
 </p>
 <p>
     <label for="mobile_phone_number">Phone:&nbsp;</label>{{employee.mobile_phone_number}}
@@ -14,7 +14,7 @@
     <label for="school">School:&nbsp;</label>{{employee.school}}
 </p>
 <p>
-    <label for="join_date">Join date:&nbsp;</label>{{employee.join_date | date:'medium'}}
+    <label for="join_date">Join date:&nbsp;</label>{{employee.join_date}}
 </p>
 <p>
     <label for="race">Race:&nbsp;</label>{{(employeeStaticLabels.race | filter:employee.race_id)[0].label}}

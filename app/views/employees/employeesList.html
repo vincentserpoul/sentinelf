@@ -23,31 +23,43 @@
                         <button class="btn btn-default btn-xs pull-right" ng-show="showDetails" ng-click="toggleDetails()"><i class="fa fa-minus"></i></button>
                     </div>
                     <div class="panel-body" ng-show="showDetails">
-                        <accordion close-others="oneAtATime">
-                            <accordion-group heading="Profile" is-open="true">
-                                <div ng-show="busyLoadingProfile"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
-                                <div ng-include src="profileTemplate"></div>
-                            </accordion-group>
-                            <accordion-group heading="Unpaid assignments">
-                                Ass
-                            </accordion-group>
-                            <accordion-group heading="All assignments">
-                                All Ass
-                            </accordion-group>
-                        </accordion>
-
-                    <!--
-                        <tabset>
-                            <tab heading="Profile" select="showProfile()">
-                                <div ng-include src="'views/employees/employeeProfile.html'"></div>
-                            </tab>
-                            <tab heading="Assignments" select="showAssignments()">
-                                <div ng-include src="'views/employees/employeeAssignments.html'"></div>
-                            </tab>
-                            <tab heading="Unpaid assignments" select="showUnpaidAssignments()">
-                                <div ng-include src="'views/employees/employeeUnpaidAssignments.html'"></div>
-                            </tab>
-                        </tabset>-->
+                        <div class="col-md-6">
+                            <div ng-show="busyLoadingProfile"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                            <div ng-include src="profileTemplate"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Unpaid assignments</div>
+                                <div class="panel-body">
+                                    <div ng-show="busyLoadingUnpaidAssignments"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                    <div ng-include src="unpaidAssignmentsTemplate"></div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Remarks
+                                    <button class="btn btn-primary btn-xs pull-right" ng-click="toggleRemarks()"><i class="fa fa-plus fa-fw"></i></button>
+                                </div>
+                                <div class="panel-body">
+                                    <div ng-show="showNewRemarkForm">
+                                        <label for="new_remark">Add a new remark</label>
+                                        <textarea class="form-control input-sm" id="new_remark" ng-model="new_remark"></textarea>
+                                        <div class="btn-group button-edit pull-right">
+                                            <button type="button" class="btn btn-success btn-xs" ng-click="createNewRemark()"><i class="fa fa-save fa-fw"></i></button>
+                                            <button type="button" class="btn btn-default btn-xs" ng-click="!showNewRemarkForm"><i class="fa fa-ban fa-fw"></i></button>
+                                        </div>
+                                    </div>
+                                    <div ng-show="busyLoadingRemarks"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                    <div ng-include src="remarksTemplate"></div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Latest assignments</div>
+                                <div class="panel-body">
+                                    <div ng-show="busyLoadingLatestAssignments"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                    <div ng-include src="latestAssignmentsTemplate"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>
