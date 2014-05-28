@@ -1,0 +1,45 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">New Client</div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <label for="name">Name</label>
+                        <input class="form-control input-sm" type="text" id="name" ng-model="client.name" placeholder="Name"/>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="name">Address</label>
+                        <input class="form-control input-sm" type="text" id="address" ng-model="client.address" placeholder="Address"/>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="name">City</label>
+                        <input class="form-control input-sm" type="text" id="city" ng-model="client.city" placeholder="City"/>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="name">Postcode</label>
+                        <input class="form-control input-sm" type="text" id="postcode" ng-model="client.postcode" placeholder="Postcode"/>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <div class="col-md-3">
+                        <label for="country">Country</label>
+                        <select class="form-control input-sm" id="country" ng-model="client.country_code" ng-options="country.code as country.label for country in countries"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="name">Phone</label>
+                        <input class="form-control input-sm" type="text" id="phone" ng-model="client.phone" placeholder="Phone"/>
+                    </div>
+                    <div class="col-md-3">&nbsp;</div>
+                    <div class="col-md-3">
+                        <div class="btn-group button-edit">
+                            <button type="button" class="btn btn-success btn-xs" ng-click="createclient()"><i class="fa fa-save fa-fw"></i> </button>
+                            <button type="button" class="btn btn-default btn-xs" ng-click="cancelclient()"><i class="fa fa-ban fa-fw"></i> </button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

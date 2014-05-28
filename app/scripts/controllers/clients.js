@@ -1,7 +1,7 @@
 'use strict';
 
-sentinelfApp.controller('ClientsCtrl', ['$scope', 'crud', 'clientsFactory', 'clientDepartmentsFactory', 'modelIsoLabelsFactory', 'modelStaticLabelsFactory',
-    function($scope, crud, clientsFactory, clientDepartmentsFactory, modelIsoLabelsFactory, modelStaticLabelsFactory) {
+sentinelfApp.controller('ClientsCtrl', ['$scope', 'clientsFactory', 'clientDepartmentsFactory', 'modelIsoLabelsFactory', 'modelStaticLabelsFactory',
+    function($scope,clientsFactory, clientDepartmentsFactory, modelIsoLabelsFactory, modelStaticLabelsFactory) {
 
         /* Regroup init of the page in one single function */
         function init() {
@@ -22,42 +22,39 @@ sentinelfApp.controller('ClientsCtrl', ['$scope', 'crud', 'clientsFactory', 'cli
                 $scope.sexes = data.labels.sex;
             });
 
+            /* Get the labels necessary for the list of countries not to be only codes */
+            $scope.countryListResource = modelIsoLabelsFactory.get({model:'country'}, function(data){
+                $scope.countries = data.labels.country;
+            });
+            $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'}, function(data){
+                $scope.departments = data.labels.department;
+            });
+            $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'}, function(data){
+                $scope.currencies = data.labels.currency;
+            });
+
+            $scope.showNewClientForm = false;
+            $scope.defaultClient = {
+                'name':'Client\'s Name',
+                'address':'5 jalan bukit merah',
+                'city': 'Singapore',
+                'postcode' : '159960',
+                'country_code':'SGP',
+                'phone_number':'+6599999999'
+            };
+
         }
 
         init();
 
-        var obj = 'client';
-        var preselectedValues = {
-            'name':'Client\'s Name',
-            'address':'5 jalan bukit merah',
-            'city': 'Singapore',
-            'postcode' : '159960',
-            'country_code':'SGP',
-            'phone_number':'+6599999999'};
+        /* Display new form */
+        $scope.showNewClient= function () {
+            $scope.showNewClientForm = !$scope.showNewClientForm;
 
-
-        $scope.loadCountries = function () {
-            /* Get the labels necessary for the list of countries not to be only codes */
-            modelIsoLabelsFactory.get({model:'country'}, function (data){
-                $scope.countries = data['labels']['country'];
-            });
-        };
-
-        $scope.loadDepartmentLabels = function () {
-            $scope.departmentsStaticLabelsResource = modelStaticLabelsFactory.get({model:'department'});
-            $scope.currencyIsoLabelsResource = modelIsoLabelsFactory.get({model:'currency'});
-        };
-
-        $scope.newClient = function () {// preselected values for new client
-            crud.new($scope, obj, preselectedValues, $scope.loadCountries);
-        };
-
-        $scope.saveNewClient = function () {
-            crud.create($scope, obj, true);
-        };
-
-        $scope.cancelNewClient = function () {
-            crud.cancelNew($scope);
+            if($scope.showNewClientForm){
+                /* Create a default empty client*/
+                $scope.client = $scope.defaultClient;
+            }
         };
     }
 ]);

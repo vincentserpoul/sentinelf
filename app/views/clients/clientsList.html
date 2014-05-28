@@ -1,77 +1,42 @@
-    <h2>
-        Clients
-        <button type="button" class="btn btn-primary btn-sm" ng-click="newClient()"><i class="fa fa-plus fa-fw"></i> New</button>
-    </h2>
-    <div>
-        <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable repeat-animation">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{alert.message}}
-        </div>
+<h2>
+    Clients
+    <button type="button" class="btn btn-primary btn-sm" ng-click="showNewClient()"><i class="fa fa-plus fa-fw"></i> New</button>
+</h2>
+<div>
+    <div ng-repeat="alert in alerts" class="alert {{alert.type}} alert-dismissable repeat-animation">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{alert.message}}
     </div>
-    <div class="panel panel-primary" ng-show="showNew">
-        <div class="panel-heading">New Client</div>
-        <div class="panel-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>PostCode</th>
-                        <th>Country</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.name" /></td>
-                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.address" /></td>
-                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.city" /></td>
-                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.postcode" /></td>
-                        <td class="col-md-2">
-                            <label class="sr-only" for="country">Country</label>
-                            <select class="form-control input-sm" id="country" ng-model="new_client.country_code" ng-options="country.code as country.label for country in countries"></select>
-                        </td>
-                        <td class="col-md-1"><input type="text" class="form-control input-sm" ng-model="new_client.phone_number" /></td>
-                        <td class="btn-group btn-group-sm col-md-1">
-                            <button type="button" class="btn btn-success" ng-click="saveNewClient()"><i class="fa fa-save fa-fw"></i> </button>
-                            <button type="button" class="btn btn-default" ng-click="cancelNewClient()"><i class="fa fa-ban fa-fw"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <table class="table table-hover" ng-show="clients.length">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>PostCode</th>
-                <th>Country</th>
-                <th>Phone</th>
-                <th>Actions</th>
-                <th><i class="fa fa-list"></i> Sublists</th>
-            </tr>
-        </thead>
-        <!-- use ng-repeat to render clients' information rows -->
-        <tbody ng-repeat="client in clients" class="repeat-animation" ng-controller="ClientCtrl">
-            <!-- information row -->
-            <tr ng-include src="clientTemplate"></tr>
-            <tr style="border: none;">
-                <td colspan="9" style="border: none; padding: 0px;">
-                    <div ng-show="openDepartments" class="show-hide-animation" ng-include src="clientDepartmentsTemplate"></div>
-                </td>
-            </tr>
-            <!-- contacts row -->
-            <tr style="border: none;">
-                <td colspan="9" style="border: none; padding: 0px;">
-                    <div ng-show="openContacts" class="show-hide-animation" ng-include src="clientContactsTemplate"></div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div ng-hide="clients.length"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
 </div>
+<div class="show-hide-animation"  ng-show="showNewClientForm" ng-include src="'views/clients/clientNew.html'" ng-controller="ClientCtrl"></div>
+<table class="table table-hover" ng-show="clients.length">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>PostCode</th>
+            <th>Country</th>
+            <th>Phone</th>
+            <th>Actions</th>
+            <th><i class="fa fa-list"></i> Sublists</th>
+        </tr>
+    </thead>
+    <!-- use ng-repeat to render clients' information rows -->
+    <tbody ng-repeat="client in clients" class="repeat-animation" ng-controller="ClientCtrl">
+        <!-- information row -->
+        <tr ng-include src="clientTemplate"></tr>
+        <tr style="border: none;">
+            <td colspan="9" style="border: none; padding: 0px;">
+                <div ng-show="openDepartments" class="show-hide-animation" ng-include src="clientDepartmentsTemplate"></div>
+            </td>
+        </tr>
+        <!-- contacts row -->
+        <tr style="border: none;">
+            <td colspan="9" style="border: none; padding: 0px;">
+                <div ng-show="openContacts" class="show-hide-animation" ng-include src="clientContactsTemplate"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div ng-hide="clients.length"><i class="fa fa-spinner fa-spin fa-2x"></i> Loading...</div>
