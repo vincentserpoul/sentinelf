@@ -29,8 +29,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="panel panel-default">
-                                <div class="panel-heading">Unpaid assignments</div>
-                                <div class="panel-body">
+                                <div class="panel-heading">Unpaid assignments
+                                    <div class="btn-group pull-right">
+                                        <button class="btn btn-success btn-primary btn-xs" ng-click="payEmployee()"><i class="fa fa-money fa-fw"></i>Pay</button>
+                                        <button class="btn btn-primary btn-xs" ng-click="addTopayEmployee()"><i class="fa fa-plus fa-fw"></i></button>
+                                    </div>
+                                </div>
+                                <div class="panel-body">addTopayEmployee
+                                    <div ng-show="showNewTopayForm">
+                                        <label for="new_payment">Add a payment</label>
+                                        <textarea class="form-control input-sm" id="new_payment" ng-model="new_payment"></textarea>
+                                        <div class="btn-group button-edit pull-right">
+                                            <button type="button" class="btn btn-success btn-xs" ng-click="createNewPayment()"><i class="fa fa-save fa-fw"></i></button>
+                                            <button type="button" class="btn btn-default btn-xs" ng-click="!showNewTopayForm"><i class="fa fa-ban fa-fw"></i></button>
+                                        </div>
+                                    </div>
                                     <div ng-show="busyLoadingUnpaidAssignments"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
                                     <div ng-include src="unpaidAssignmentsTemplate"></div>
                                 </div>

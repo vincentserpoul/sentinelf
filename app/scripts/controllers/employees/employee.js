@@ -14,85 +14,6 @@ sentinelfApp.controller(
         };
 
         /* Display profile tab and hide the two others */
-        $scope.showUnpaidAssignments = function(){
-            if(!$scope.showDetails){
-                /* display loading  */
-                $scope.busyLoadingUnpaidAssignments = true;
-
-                /* get Data */
-                employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
-                    $scope.unpaidGlobaleventPeriods = data.globalevent_periods;
-                    /* Push the template to the page */
-                    $scope.unpaidAssignmentsTemplate = 'views/employees/employeeUnpaidAssignments.html';
-                    /* stop loading and display */
-                    $scope.busyLoadingUnpaidAssignments = false;
-                });
-            }
-        };
-
-        /* Display list of remarks */
-        $scope.showRemarks = function(){
-            if(!$scope.showDetails){
-                /* display loading  */
-                $scope.busyLoadingRemarks = true;
-                $scope.showNewRemarkForm = false;
-                /* get Data */
-                employeeRemarksFactory.get({employeeId: $scope.employee.id}, function(data){
-
-                    $scope.remarks = data.employee_remarks;
-                    /* Push the template to the page */
-                    $scope.remarksTemplate = 'views/employees/employeeRemarksFactory.html';
-                    /* stop loading and display */
-                    $scope.busyLoadingRemarks = false;
-                });
-            }
-        };
-
-        /* Display remark */
-        $scope.toggleRemarks = function(){
-            $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
-        };
-
-        /* Display new form */
-        $scope.createNewRemark = function(){
-            /* get Data */
-            /* Launch service to create new remark */
-            var newEmployeeRemark = new employeeRemarksFactory;
-            newEmployeeRemark.employeeId = $scope.employee.id;
-            newEmployeeRemark.remark = $scope.new_remark;
-            newEmployeeRemark.$save(
-                function(data){
-                    if(data && data.error === false){
-                        AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
-                        /* hide back the doc forms */
-                        $scope.remarks.unshift(data.employee_remark);
-                        $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
-                    }
-                }, function (error) {
-                    if (error.data){
-                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
-                    }
-                }
-            );
-        };
-
-        /* Display profile tab and hide the two others */
-        $scope.showLatestAssignments = function(){
-            if(!$scope.showDetails){
-                /* display loading  */
-                $scope.busyLatestAssignments = true;
-                /* get Data */
-                employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
-                    $scope.latestGlobaleventPeriods = data.globalevent_periods;
-                    /* Push the template to the page */
-                    $scope.latestAssignmentsTemplate = 'views/employees/employeeLatestAssignments.html';
-                    /* stop loading and display */
-                    $scope.busyLoadingLatestAssignments = false;
-                });
-            }
-        };
-
-        /* Display profile tab and hide the two others */
         $scope.showProfile = function(){
 
             /* get Data for the specific employee if it is not there yet (if sex_id is there, it means we got the employee) */
@@ -249,8 +170,124 @@ sentinelfApp.controller(
             $scope.employee.employee_identity_doc.unshift(angular.copy(this.newEmployeeIdentityDoc));
         };
 
+
+        /* Display list of remarks */
+        $scope.showRemarks = function(){
+            if(!$scope.showDetails){
+                /* display loading  */
+                $scope.busyLoadingRemarks = true;
+                $scope.showNewRemarkForm = false;
+                /* get Data */
+                employeeRemarksFactory.get({employeeId: $scope.employee.id}, function(data){
+
+                    $scope.remarks = data.employee_remarks;
+                    /* Push the template to the page */
+                    $scope.remarksTemplate = 'views/employees/employeeRemarks.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingRemarks = false;
+                });
+            }
+        };
+
+        /* Display remark */
+        $scope.toggleRemarks = function(){
+            $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
+        };
+
+        /* Display new form */
+        $scope.createNewRemark = function(){
+            /* get Data */
+            /* Launch service to create new remark */
+            var newEmployeeRemark = new employeeRemarksFactory;
+            newEmployeeRemark.employeeId = $scope.employee.id;
+            newEmployeeRemark.remark = $scope.new_remark;
+            newEmployeeRemark.$save(
+                function(data){
+                    if(data && data.error === false){
+                        AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                        /* hide back the doc forms */
+                        $scope.remarks.unshift(data.employee_remark);
+                        $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
+                    }
+                }, function (error) {
+                    if (error.data){
+                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
+                    }
+                }
+            );
+        };
+
+        /* Display latest 10 assignments */
+        $scope.showLatestAssignments = function(){
+            if(!$scope.showDetails){
+                /* display loading  */
+                $scope.busyLatestAssignments = true;
+                /* get Data */
+                employeesGlobaleventPeriodFactory.get({employeeId: $scope.employee.id}, function(data){
+                    $scope.latestGlobaleventPeriods = data.globalevent_periods;
+                    /* Push the template to the page */
+                    $scope.latestAssignmentsTemplate = 'views/employees/employeeLatestAssignments.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingLatestAssignments = false;
+                });
+            }
+        };
+
+
+        /* Display profile tab and hide the two others */
+        $scope.showUnpaidAssignments = function(){
+            if(!$scope.showDetails){
+                /* display loading  */
+                $scope.busyLoadingUnpaidAssignments = true;
+
+                /* get Data */
+                employeesGlobaleventPeriodUnpaidFactory.get({employeeId: $scope.employee.id}, function(data){
+                    $scope.unpaidGlobaleventPeriods = data.globalevent_periods;
+                    /* Push the template to the page */
+                    $scope.unpaidAssignmentsTemplate = 'views/employees/employeeUnpaidAssignments.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingUnpaidAssignments = false;
+                    $scope.topayGlobaleventPeriods = Array();
+                });
+            }
+        };
+
+        /* Add an assignment to payment */
+        $scope.removeFromPayment = function(){
+            /* Remove from unpaid */
+            var index = $scope.unpaidGlobaleventPeriods.indexOf(this.unpaidAssignment);
+            $scope.unpaidGlobaleventPeriods.splice(index, 1);
+        }
+
+        /* Add apayment from scratch */
+        $scope.createNewPayment() = function(){
+            /* get Data */
+            /* Launch service to create new remark */
+            var newPayment = new paymentFactory;
+            newPayment.amount = $scope.new_remark.amount;
+            newPayment.currency_code = $scope.new_remark.currency_code;
+            newPayment.employeeId = $scope.employee.id;
+
+
+            newPayment.$save(
+                function(data){
+                    if(data && data.error === false){
+                        AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                        /* hide back from unpaid */
+                        //$scope.remarks.unshift(data.employee_payment);
+                        $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
+                    }
+                }, function (error) {
+                    if (error.data){
+                        AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
+                    }
+                }
+            );
+        }
+
         /* Add employee identity doc */
         $scope.payEmployee = function(){
+            console.log($scope.selectedUnpaidGlobaleventPeriods);
 
             var modalInstance = formService.popup('Pay employee', 'Confirm you want to pay employee ?');
             modalInstance.result.then(function(){
