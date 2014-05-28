@@ -35,6 +35,12 @@ sentinelfApp.factory('employeesGlobaleventPeriodUnpaidFactory', ['$resource', 'S
                     {employeeId: '@id'});
 }]);
 
+sentinelfApp.factory('employeesGlobaleventPeriodpaidFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
+
+    return $resource( SENTINEL_API_END_POINT + '/employee/:employeeId/paid_globalevent_period',
+                    {employeeId: '@id'});
+}]);
+
 sentinelfApp.factory('employeesEventPeriodsFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
     return $resource( SENTINEL_API_END_POINT + '/employee/all_possible_globalevent_period/:event_id',
@@ -56,7 +62,7 @@ sentinelfApp.factory('assignedEmployeesFactory', ['$resource', 'SENTINEL_API_END
 
 }]);
 
-sentinelfApp.factory('employeeRemarks', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
+sentinelfApp.factory('employeeRemarksFactory', ['$resource', 'SENTINEL_API_END_POINT', function($resource, SENTINEL_API_END_POINT) {
 
     return $resource( SENTINEL_API_END_POINT + '/employee/:employeeId/remark',
                     {employeeId: '@employeeId'});

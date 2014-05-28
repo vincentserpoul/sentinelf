@@ -2,8 +2,8 @@
 
 sentinelfApp.controller(
     'EmployeeCtrl', [
-    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'employeeRemarks',
-    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, employeeRemarks){
+    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'employeeRemarksFactory', 'paymentFactory', 'employeesGlobaleventPeriodpaidFactory',
+    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, employeeRemarksFactory, paymentFactory, employeesGlobaleventPeriodpaidFactory){
 
         $scope.toggleDetails = function(){
             $scope.showProfile();
@@ -37,11 +37,11 @@ sentinelfApp.controller(
                 $scope.busyLoadingRemarks = true;
                 $scope.showNewRemarkForm = false;
                 /* get Data */
-                employeeRemarks.get({employeeId: $scope.employee.id}, function(data){
+                employeeRemarksFactory.get({employeeId: $scope.employee.id}, function(data){
 
                     $scope.remarks = data.employee_remarks;
                     /* Push the template to the page */
-                    $scope.remarksTemplate = 'views/employees/employeeRemarks.html';
+                    $scope.remarksTemplate = 'views/employees/employeeRemarksFactory.html';
                     /* stop loading and display */
                     $scope.busyLoadingRemarks = false;
                 });
@@ -51,13 +51,13 @@ sentinelfApp.controller(
         /* Display remark */
         $scope.toggleRemarks = function(){
             $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
-        }
+        };
 
         /* Display new form */
         $scope.createNewRemark = function(){
             /* get Data */
             /* Launch service to create new remark */
-            var newEmployeeRemark = new employeeRemarks;
+            var newEmployeeRemark = new employeeRemarksFactory;
             newEmployeeRemark.employeeId = $scope.employee.id;
             newEmployeeRemark.remark = $scope.new_remark;
             newEmployeeRemark.$save(
@@ -74,7 +74,7 @@ sentinelfApp.controller(
                     }
                 }
             );
-        }
+        };
 
         /* Display profile tab and hide the two others */
         $scope.showLatestAssignments = function(){
@@ -251,9 +251,27 @@ sentinelfApp.controller(
 
         /* Add employee identity doc */
         $scope.payEmployee = function(){
-            var modalInstance = formService.popup('Pay employee', 'Confirm you want to pay employee ?', 'update.html');
-            modalInstance.result.then(function(){
 
+            var modalInstance = formService.popup('Pay employee', 'Confirm you want to pay employee ?');
+            modalInstance.result.then(function(){
+                var payment = new paymentFactory;
+                payment.globalevent_period_ids = $scope.selectedUnpaidGlobaleventPeriods;
+                /* normal payments */
+                payment.payment_type_id = 1;
+                payment.$save(
+                    function(data){
+                        if(data && data.error === false){
+                            AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                            /* remove the payment from the list */
+                            var index = $scope.unpaidGlobaleventPeriods.indexOf($scope.selectedUnpaidGlobaleventPeriods);
+                            $scope.employee.employee_identity_doc.splice(index, 1);
+                        }
+                    }, function (error) {
+                        if (error.data){
+                            AlertService.show({ 'message': error.data.message, 'type': 'alert-danger' }, false);
+                        }
+                    }
+                );
             });
         };
     }
