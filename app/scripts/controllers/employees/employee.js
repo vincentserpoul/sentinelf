@@ -247,7 +247,6 @@ sentinelfApp.controller(
                     $scope.unpaidAssignmentsTemplate = 'views/employees/employeeUnpaidAssignments.html';
                     /* stop loading and display */
                     $scope.busyLoadingUnpaidAssignments = false;
-                    $scope.topayGlobaleventPeriods = Array();
                 });
             }
         };
@@ -257,15 +256,15 @@ sentinelfApp.controller(
             /* Remove from unpaid */
             var index = $scope.unpaidGlobaleventPeriods.indexOf(this.unpaidAssignment);
             $scope.unpaidGlobaleventPeriods.splice(index, 1);
-        }
+        };
 
         /* Add apayment from scratch */
-        $scope.createNewPayment() = function(){
+        $scope.createNewPayment = function(){
             /* get Data */
             /* Launch service to create new remark */
             var newPayment = new paymentFactory;
-            newPayment.amount = $scope.new_remark.amount;
-            newPayment.currency_code = $scope.new_remark.currency_code;
+            newPayment.amount = $scope.new_payment.amount;
+            newPayment.currency_code = $scope.new_payment.currency_code;
             newPayment.employeeId = $scope.employee.id;
 
 
@@ -287,12 +286,17 @@ sentinelfApp.controller(
 
         /* Add employee identity doc */
         $scope.payEmployee = function(){
-            console.log($scope.selectedUnpaidGlobaleventPeriods);
-
+            var topayGlobaleventPeriods = Array();
+            var topayGlobaleventPeriodsIndexes = Array();
+            /* Get global event period ids */
+            angular.forEach($scope.unpaidGlobaleventPeriods, function(globaleventPeriodEmployee, index){
+                topayGlobaleventPeriods.unshift(globaleventPeriodEmployee.globalevent_period_employee_id);
+                topayGlobaleventPeriodsIndexes.unshift(index);
+            })
             var modalInstance = formService.popup('Pay employee', 'Confirm you want to pay employee ?');
             modalInstance.result.then(function(){
                 var payment = new paymentFactory;
-                payment.globalevent_period_ids = $scope.selectedUnpaidGlobaleventPeriods;
+                payment.globalevent_period_employee_ids = topayGlobaleventPeriods;
                 /* normal payments */
                 payment.payment_type_id = 1;
                 payment.$save(
@@ -300,8 +304,9 @@ sentinelfApp.controller(
                         if(data && data.error === false){
                             AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
                             /* remove the payment from the list */
-                            var index = $scope.unpaidGlobaleventPeriods.indexOf($scope.selectedUnpaidGlobaleventPeriods);
-                            $scope.employee.employee_identity_doc.splice(index, 1);
+                            angular.forEach(topayGlobaleventPeriodsIndexes, function(value, index){
+                                $scope.unpaidGlobaleventPeriods.splice(value, 1);
+                            });
                         }
                     }, function (error) {
                         if (error.data){
