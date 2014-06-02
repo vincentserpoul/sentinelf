@@ -28,24 +28,41 @@
                             <div ng-include src="profileTemplate"></div>
                         </div>
                         <div class="col-md-6">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" ng-show="unpaidGlobaleventPeriods.length">
                                 <div class="panel-heading">Unpaid assignments
                                     <div class="btn-group pull-right">
                                         <button class="btn btn-success btn-primary btn-xs" ng-click="payEmployee()"><i class="fa fa-money fa-fw"></i>Pay</button>
-                                        <button class="btn btn-primary btn-xs" ng-click="addTopayEmployee()"><i class="fa fa-plus fa-fw"></i></button>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div ng-show="busyLoadingUnpaidAssignments"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                    <div ng-include src="unpaidAssignmentsTemplate"></div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Latest payments
+                                    <div class="btn-group pull-right">
+                                        <button class="btn btn-primary btn-xs" ng-click="togglePayments()"><i class="fa fa-plus fa-fw"></i></button>
                                     </div>
                                 </div>
                                 <div class="panel-body">
                                     <div ng-show="showNewTopayForm">
-                                        <label for="new_payment">Add a payment</label>
-                                        <textarea class="form-control input-sm" id="new_payment" ng-model="new_payment"></textarea>
-                                        <div class="btn-group button-edit pull-right">
-                                            <button type="button" class="btn btn-success btn-xs" ng-click="createNewPayment()"><i class="fa fa-save fa-fw"></i></button>
-                                            <button type="button" class="btn btn-default btn-xs" ng-click="!showNewTopayForm"><i class="fa fa-ban fa-fw"></i></button>
-                                        </div>
+                                        <fieldset>
+                                            <legend>Add a payment</legend>
+                                            <label for="amount">Amount</label>
+                                            <input type="numeric" class="form-control input-sm" id="new_payment.amount" ng-model="new_payment.amount" />
+                                            <label for="currency">Currency</label>
+                                            <select class="form-control input-sm" id="new_payment.currency_code" ng-model="new_payment.currency_code" ng-options="currency.code as currency.label for currency in currencies"></select>
+                                            <label for="detail">Detail</label>
+                                            <textarea class="form-control input-sm" id="new_payment.details" ng-model="new_payment.details"></textarea>
+                                            <div class="btn-group button-edit pull-right">
+                                                <button type="button" class="btn btn-success btn-xs" ng-click="createNewPayment()"><i class="fa fa-save fa-fw"></i></button>
+                                                <button type="button" class="btn btn-default btn-xs" ng-click="!showNewTopayForm"><i class="fa fa-ban fa-fw"></i></button>
+                                            </div>
+                                        </fieldset>
                                     </div>
-                                    <div ng-show="busyLoadingUnpaidAssignments"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
-                                    <div ng-include src="unpaidAssignmentsTemplate"></div>
+                                    <div ng-show="busyLoadingLatestPayments"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                    <div ng-include src="latestPaymentsTemplate"></div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
@@ -54,12 +71,15 @@
                                 </div>
                                 <div class="panel-body">
                                     <div ng-show="showNewRemarkForm">
-                                        <label for="new_remark">Add a new remark</label>
-                                        <textarea class="form-control input-sm" id="new_remark" ng-model="new_remark"></textarea>
-                                        <div class="btn-group button-edit pull-right">
-                                            <button type="button" class="btn btn-success btn-xs" ng-click="createNewRemark()"><i class="fa fa-save fa-fw"></i></button>
-                                            <button type="button" class="btn btn-default btn-xs" ng-click="!showNewRemarkForm"><i class="fa fa-ban fa-fw"></i></button>
-                                        </div>
+                                        <fieldset>
+                                            <legend>Add a new remark</legend>
+                                            <label for="new_remark">Remark</label>
+                                            <textarea class="form-control input-sm" id="new_remark" ng-model="new_remark"></textarea>
+                                            <div class="btn-group button-edit pull-right">
+                                                <button type="button" class="btn btn-success btn-xs" ng-click="createNewRemark()"><i class="fa fa-save fa-fw"></i></button>
+                                                <button type="button" class="btn btn-default btn-xs" ng-click="!showNewRemarkForm"><i class="fa fa-ban fa-fw"></i></button>
+                                            </div>
+                                        </fieldset>
                                     </div>
                                     <div ng-show="busyLoadingRemarks"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
                                     <div ng-include src="remarksTemplate"></div>

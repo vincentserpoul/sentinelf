@@ -18,6 +18,10 @@ sentinelfApp.controller(
                 $scope.countries = data.labels.country;
             });
 
+            $scope.currencyListResource = modelIsoLabelsFactory.get({model:'currency'}, function(data){
+                $scope.currencies = data.labels.currency;
+            });
+
             $scope.showNewEmployeeForm = false;
             $scope.defaultEmployee = {
                     'title_id':1,

@@ -2,14 +2,15 @@
 
 sentinelfApp.controller(
     'EmployeeCtrl', [
-    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'employeeRemarksFactory', 'paymentFactory', 'employeesGlobaleventPeriodpaidFactory',
-    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, employeeRemarksFactory, paymentFactory, employeesGlobaleventPeriodpaidFactory){
+    '$scope','formService', 'AlertService', 'employeesFactory', 'employeesGlobaleventPeriodFactory', 'employeesGlobaleventPeriodUnpaidFactory', 'employeeRemarksFactory', 'paymentFactory', 'employeesGlobaleventPeriodpaidFactory', 'employeePaymentsFactory',
+    function($scope, formService, AlertService, employeesFactory, employeesGlobaleventPeriodFactory, employeesGlobaleventPeriodUnpaidFactory, employeeRemarksFactory, paymentFactory, employeesGlobaleventPeriodpaidFactory, employeePaymentsFactory){
 
         $scope.toggleDetails = function(){
             $scope.showProfile();
             $scope.showUnpaidAssignments();
             $scope.showRemarks();
             $scope.showLatestAssignments();
+            $scope.showLatestPayments();
             $scope.showDetails = !$scope.showDetails;
         };
 
@@ -251,6 +252,22 @@ sentinelfApp.controller(
             }
         };
 
+        /* Display latest 10 assignments */
+        $scope.showLatestPayments = function(){
+            if(!$scope.showDetails){
+                /* display loading  */
+                $scope.busyLatestPayments = true;
+                /* get Data */
+                employeePaymentsFactory.get({employeeId: $scope.employee.id}, function(data){
+                    $scope.latestPayments = data.payments;
+                    /* Push the template to the page */
+                    $scope.latestPaymentsTemplate = 'views/employees/employeeLatestPayments.html';
+                    /* stop loading and display */
+                    $scope.busyLoadingLatestPayments = false;
+                });
+            }
+        };
+
         /* Add an assignment to payment */
         $scope.removeFromPayment = function(){
             /* Remove from unpaid */
@@ -265,16 +282,16 @@ sentinelfApp.controller(
             var newPayment = new paymentFactory;
             newPayment.amount = $scope.new_payment.amount;
             newPayment.currency_code = $scope.new_payment.currency_code;
-            newPayment.employeeId = $scope.employee.id;
-
+            newPayment.employee_id = $scope.employee.id;
+            newPayment.details = $scope.new_payment.details;
 
             newPayment.$save(
                 function(data){
                     if(data && data.error === false){
                         AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
                         /* hide back from unpaid */
-                        //$scope.remarks.unshift(data.employee_payment);
-                        $scope.showNewRemarkForm = !$scope.showNewRemarkForm;
+                        $scope.latestPayments.unshift(data.payment);
+                        $scope.showNewTopayForm = !$scope.showNewTopayForm;
                     }
                 }, function (error) {
                     if (error.data){
@@ -288,9 +305,10 @@ sentinelfApp.controller(
         $scope.payEmployee = function(){
             var topayGlobaleventPeriods = Array();
             var topayGlobaleventPeriodsIndexes = Array();
-            /* Get global event period ids */
+            /* Get global event period ids that were not deleted */
             angular.forEach($scope.unpaidGlobaleventPeriods, function(globaleventPeriodEmployee, index){
                 topayGlobaleventPeriods.unshift(globaleventPeriodEmployee.globalevent_period_employee_id);
+                /* keep in mind where they were in the table, to delete them when evrtg has worked */
                 topayGlobaleventPeriodsIndexes.unshift(index);
             })
             var modalInstance = formService.popup('Pay employee', 'Confirm you want to pay employee ?');
@@ -303,6 +321,8 @@ sentinelfApp.controller(
                     function(data){
                         if(data && data.error === false){
                             AlertService.show({ 'message': data.message, 'type': 'alert-success' }, true);
+                            /* Add to the latest payment list */
+                            $scope.latestPayments.unshift(data.payment);
                             /* remove the payment from the list */
                             angular.forEach(topayGlobaleventPeriodsIndexes, function(value, index){
                                 $scope.unpaidGlobaleventPeriods.splice(value, 1);
@@ -315,6 +335,11 @@ sentinelfApp.controller(
                     }
                 );
             });
+        };
+
+        /* Display remark */
+        $scope.togglePayments = function(){
+            $scope.showNewTopayForm = !$scope.showNewTopayForm;
         };
     }
 ]);
