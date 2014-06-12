@@ -5,16 +5,16 @@
     <label for="country">Country:&nbsp;</label>{{(countries | filter:employee.country_code)[0].label}}
 </p>
 <p>
-    <label for="date_of_birth">Date of birth:&nbsp;</label>{{employee.date_of_birth}}
+    <label for="date_of_birth">Date of birth:&nbsp;</label>{{employee.date_of_birth | stringDate:"yyyy MMM dd"}}
 </p>
 <p>
     <label for="mobile_phone_number">Phone:&nbsp;</label>{{employee.mobile_phone_number}}
 </p>
 <p>
-    <label for="school">School:&nbsp;</label>{{employee.school}}
+    <label for="school">School:&nbsp;</label>{{(employeeStaticLabels.school | filter:employee.school_id)[0].label}}
 </p>
 <p>
-    <label for="join_date">Join date:&nbsp;</label>{{employee.join_date}}
+    <label for="join_date">Join date:&nbsp;</label>{{employee.join_date | stringDate:"yyyy MMM dd"}}
 </p>
 <p>
     <label for="race">Race:&nbsp;</label>{{(employeeStaticLabels.race | filter:employee.race_id)[0].label}}
@@ -56,7 +56,7 @@
             <img ng-if="employee_identity_doc_unit.image_name != null"  ng-src="http://dev.sentinelb.com/images/employee_identity_docs/{{employee_identity_doc_unit.image_name}}" />
             {{(employeeStaticLabels['identity_doc_type'] | filter:employee_identity_doc_unit.identity_doc_type_id)[0].label}}:
             {{employee_identity_doc_unit.identity_doc_number}}
-            ({{employee_identity_doc_unit.identity_doc_validity_start}} - {{employee_identity_doc_unit.identity_doc_validity_end}})
+            ({{employee_identity_doc_unit.identity_doc_validity_start  | stringDate:"yyyy MMM dd"}} - {{employee_identity_doc_unit.identity_doc_validity_end | stringDate:"yyyy MMM dd"}})
             </p>
         </li>
     </ul>

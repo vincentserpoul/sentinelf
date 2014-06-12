@@ -1,5 +1,5 @@
 <ul>
     <li ng-repeat="latestPayment in latestPayments">
-        {{latestPayment.created_at}}: {{latestPayment.amount}} {{latestPayment.currency_code}}
+        {{latestPayment.created_at | stringDate:"yyyy MMM dd HH'h'mm"}}: {{latestPayment.amount}} {{latestPayment.currency_code}}
     </li>
 </ul>

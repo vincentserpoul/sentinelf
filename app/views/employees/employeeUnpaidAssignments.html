@@ -1,6 +1,6 @@
 <ul>
     <li ng-repeat="unpaidAssignment in unpaidGlobaleventPeriods">
-        {{unpaidAssignment.label}}: {{unpaidAssignment.real_start_datetime}} -> {{unpaidAssignment.real_end_datetime}}
+        {{unpaidAssignment.label}}: {{unpaidAssignment.real_start_datetime | stringDate:"yyyy MMM dd HH'h'mm"}} -> {{unpaidAssignment.real_end_datetime | stringDate:"yyyy MMM dd HH'h'mm"}}
         <button type="button" class="btn btn-danger btn-xs" ng-click="removeFromPayment()"><i class="fa fa-minus fa-fw"></i> </button>
     </li>
 </ul>

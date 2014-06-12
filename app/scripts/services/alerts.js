@@ -1,4 +1,4 @@
-'use strict'; 
+'use strict';
 
 sentinelfApp.factory('AlertService', function($rootScope, $timeout){
 	$rootScope.alerts = [];
@@ -11,7 +11,7 @@ sentinelfApp.factory('AlertService', function($rootScope, $timeout){
 					$rootScope.alerts = [];
 				}, 2000);
 			}
-		}, 
+		},
 		clear: function(){
 			$rootScope.alerts = [];
 		}

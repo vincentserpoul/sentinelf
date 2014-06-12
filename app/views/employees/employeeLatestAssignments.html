@@ -1,5 +1,5 @@
 <ul>
     <li ng-repeat="latestGlobaleventPeriod in latestGlobaleventPeriods">
-        {{latestGlobaleventPeriod.label}}: {{latestGlobaleventPeriod.real_start_datetime}} -> {{latestGlobaleventPeriod.real_end_datetime}}
+        {{latestGlobaleventPeriod.label}}: {{latestGlobaleventPeriod.real_start_datetime | stringDate:"yyyy MMM dd HH'h'mm"}} -> {{latestGlobaleventPeriod.real_end_datetime | stringDate:"yyyy MMM dd HH'h'mm"}}
     </li>
 </ul>

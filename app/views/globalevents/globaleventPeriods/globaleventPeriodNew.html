@@ -12,7 +12,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="datetime" ng-model="new_globaleventPeriod.start_datetime" value="{{new_globaleventPeriod.start_datetime | date:'yyyy-MM-dd HH:00'}}" /></td>
+                    <td><input type="datetime" ng-model="new_globaleventPeriod.start_datetime" value="{{new_globaleventPeriod.start_datetime | stringDate:'yyyy-MM-dd HH:00'}}" /></td>
                     <td><input type="datetime" ng-model="new_globaleventPeriod.end_datetime" /></td>
                     <td><input type="number" ng-model="new_globaleventPeriod.number_of_employee_needed" /></td>
                     <td>

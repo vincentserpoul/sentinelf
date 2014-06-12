@@ -20,7 +20,7 @@
 </p>
 <p>
     <label for="school">School</label>
-    <input class="form-control input-sm" type="text" id="school" ng-model="employee.school" />
+    <select class="form-control input-sm" id="school" ng-model="employee.school_id" ng-options="school.id as school.label for school in employeeStaticLabels['school']"></select>
 </p>
 <p>
     <label for="join_date">Join date</label>

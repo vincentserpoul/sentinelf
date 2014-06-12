@@ -1,5 +1,5 @@
 <ul>
     <li ng-repeat="remark in remarks">
-        {{remark.created_at | date:'dd'}} - {{remark.remark}}
+        {{remark.created_at | stringDate:"yyyy MMM dd HH'h'mm"}} - {{remark.remark}}
     </li>
 </ul>
